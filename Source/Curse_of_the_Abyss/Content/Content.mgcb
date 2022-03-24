@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin menu-font.ttf
+/copy:menu-font.ttf
+
 #begin SmileyWalk.png
 /importer:TextureImporter
 /processor:TextureProcessor
