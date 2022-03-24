@@ -61,6 +61,10 @@ namespace Curse_of_the_Abyss
                 {
                     _screen = MenuScreens.Quit;
                 }
+                else if (_screen == MenuScreens.ResolutionSettings)
+                {
+                    _screen = MenuScreens.Settings;
+                }
                 else
                 {
                     _screen = MenuScreens.Main;
@@ -143,7 +147,7 @@ namespace Curse_of_the_Abyss
             Label.Put("", 2);
             if (Button.Put("Back").Clicked)
             {
-                _screen = MenuScreens.Main;
+                _screen = MenuScreens.Settings;
             }
         }
 
