@@ -40,7 +40,11 @@ namespace Curse_of_the_Abyss
             Settings.Graphics = _graphics;
             Settings.IsFullscreen = false;
 
-            Window.AllowUserResizing = true;
+            /* window resizing disabled for now
+             * only 16:9 aspect ratio currently supported
+            Window.AllowUserResizing = true; 
+            */
+
             _graphics.ApplyChanges();
 
             base.Initialize();
