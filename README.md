@@ -8,7 +8,7 @@ Yan - collision detections + Dodging
 
 Marino - NPC
 
-Ellen - Sprites
+Ellen - Sprites + Egg counter
 
 Stefan - Level Editor
 
