@@ -5,7 +5,11 @@
 Current Tasks:
 
 Yan - collision detections + Dodging
+
 Marino - NPC
+
 Ellen - Sprites
+
 Stefan - Level Editor
+
 Henry - Submarine + Player
