@@ -13,7 +13,7 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State{Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight;//needed to decide if player moves left or right
+        public bool movingRight,dodging,wasdodging;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
 
 
@@ -38,8 +38,8 @@ namespace Curse_of_the_Abyss
 
             //check that player won't fall through ground
             //TO DO: once collision detection with ground is coded update this part
-            if (position.Y>890){
-                position.Y=890;
+            if (position.Y+position.Height>990){
+                position.Y=990-position.Height;
                 if(xVelocity == 0)
                     state = State.Standing;
                 else
@@ -57,6 +57,10 @@ namespace Curse_of_the_Abyss
             int height = texture.Width/4;
             Rectangle source = new Rectangle(0,0,width,height);
 
+            //check if player is doging
+            if (dodging && !wasdodging){ position.Height = 50; position.Y += 50; wasdodging = true; }
+            else if (!dodging && wasdodging){ position.Height = 100; position.Y -= 50; wasdodging = false; }
+
             //draw current frame
             spritebatch.Draw(texture, position, source, Color.White);
         }
@@ -72,6 +76,7 @@ namespace Curse_of_the_Abyss
             state = State.Standing;
             KB_preState = Keyboard.GetState();
             movingRight = false;
+            dodging = false;
         }
 
         private void Standing(){
@@ -82,54 +87,87 @@ namespace Curse_of_the_Abyss
             }else if(KB_curState.IsKeyDown(Keys.A)){ //move left
                 movingRight=false;
                 state=State.Running;
-            }else if(KB_curState.IsKeyDown(Keys.W)){ //jump
+            }
+            if (KB_curState.IsKeyDown(Keys.W) && !dodging)
+            {
                 lastY = position.Y;
-                yVelocity= Constants.jump_velocity;
-                state=State.Jumping;
+                state = State.Jumping;
+            }
+            else if (KB_curState.IsKeyDown(Keys.S) && !dodging)
+            {
+                dodging = true;
+            }
+            else if (!KB_curState.IsKeyDown(Keys.S) && dodging)
+            {
+                dodging = false;
             }
         }
 
-        private void Running(){
-            float max_v= 10;
+        private void Running()
+        {
+            double max_v = Constants.max_run_velocity;
+            if (dodging) { max_v = 0.5 * Constants.max_run_velocity; }
             xAcceleration = Constants.run_accelerate;
             //move right
-            if(KB_curState.IsKeyDown(Keys.D)){
+            if (KB_curState.IsKeyDown(Keys.D))
+            {
                 movingRight = true;
-                if(xVelocity<0){
-                    xAcceleration+=0.4f;
+                if (xVelocity < 0)
+                {
+                    xAcceleration += 0.2f;
                 }
-                if(xVelocity<max_v){
+                if (xVelocity < max_v)
+                {
                     xVelocity += xAcceleration;
                 }
-            }else if(KB_curState.IsKeyDown(Keys.A)){ //move left
+            }
+            else if (KB_curState.IsKeyDown(Keys.A))
+            { //move left
                 movingRight = false;
-                if(xVelocity>0){
-                    xAcceleration+=0.2f;
+                if (xVelocity > 0)
+                {
+                    xAcceleration += 0.2f;
                 }
-                if(xVelocity>-max_v){
+                if (xVelocity > -max_v)
+                {
                     xVelocity -= xAcceleration;
                 }
-            }else{                  //slow down until Standing
-                if(movingRight){
-                     if (xVelocity > 0)
-                        xVelocity -= xAcceleration * 7;
-                    else{
+            }
+            else
+            {                  //slow down until Standing
+                if (movingRight)
+                {
+                    if (xVelocity > 0)
+                        xVelocity -= xAcceleration * 5;
+                    else
+                    {
                         xVelocity = 0;
                         state = State.Standing;
                     }
-                }else{
-                     if (xVelocity < 0)
-                        xVelocity += xAcceleration * 7;
-                    else{
+                }
+                else
+                {
+                    if (xVelocity < 0)
+                        xVelocity += xAcceleration * 5;
+                    else
+                    {
                         xVelocity = 0;
                         state = State.Standing;
                     }
                 }
             }
-            if(KB_curState.IsKeyDown(Keys.W)){
+            if (KB_curState.IsKeyDown(Keys.W) && !dodging)
+            {
                 lastY = position.Y;
-                yVelocity= Constants.jump_velocity;
-                state=State.Jumping;
+                state = State.Jumping;
+            }
+            else if (KB_curState.IsKeyDown(Keys.S) && !dodging)
+            {
+                dodging = true;
+            }
+            else if (!KB_curState.IsKeyDown(Keys.S) && dodging)
+            {
+                dodging = false;
             }
         }
 
@@ -143,10 +181,10 @@ namespace Curse_of_the_Abyss
 
             //allows moving right and left during fall
             if(KB_curState.IsKeyDown(Keys.D)){
-                if(xVelocity<Constants.max_run_velocity-2)
+                if(xVelocity<0.6*Constants.max_run_velocity)
                     xVelocity += xAcceleration;
             }else if (KB_curState.IsKeyDown(Keys.A)){
-                if(xVelocity>-Constants.max_run_velocity+2)
+                if(xVelocity>-0.6*Constants.max_run_velocity)
                     xVelocity-= xAcceleration;
             }
             //switch to falling if wanted
@@ -163,10 +201,10 @@ namespace Curse_of_the_Abyss
             }
             //allows to move right and left during fall
             if (KB_curState.IsKeyDown(Keys.D)){
-                if (xVelocity < Constants.max_run_velocity-1)  
+                if (xVelocity < 0.6*Constants.max_run_velocity)  
                     xVelocity += xAcceleration;
             }else if (KB_curState.IsKeyDown(Keys.A)){
-                if (xVelocity > -Constants.max_run_velocity+1) 
+                if (xVelocity > -0.6*Constants.max_run_velocity) 
                     xVelocity -= xAcceleration;
             }
         }
