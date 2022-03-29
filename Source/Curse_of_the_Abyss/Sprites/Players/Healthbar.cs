@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
             position = new Rectangle(x, y, 10, 300);
             collidable = false;
             maxhealth = 5000;
-            curr_health = 100;
+            curr_health = maxhealth;
         }
 
         public static void LoadContent(ContentManager content)

@@ -43,7 +43,15 @@ namespace Curse_of_the_Abyss
 
         public virtual void reset()
         {
-
+            List<Sprite> toRemove = new List<Sprite>();
+            foreach (Sprite s in sprites)
+            {
+                toRemove.Add(s);   
+            }
+            foreach (Sprite s in toRemove)
+            {
+                sprites.Remove(s);
+            }
         }
     }
 

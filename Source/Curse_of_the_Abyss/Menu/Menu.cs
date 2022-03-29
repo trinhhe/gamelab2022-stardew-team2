@@ -21,9 +21,9 @@ namespace Curse_of_the_Abyss
             Game_over
         }
 
-        public MenuScreens _screen;
+        public MenuScreens _screen = MenuScreens.Main;
 
-        public Menu() { _screen = MenuScreens.Main; }
+        public Menu() {}
 
         public void CreateMenu()
         {
