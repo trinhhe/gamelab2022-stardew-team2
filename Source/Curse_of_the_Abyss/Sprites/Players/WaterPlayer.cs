@@ -77,6 +77,7 @@ namespace Curse_of_the_Abyss
             KB_preState = Keyboard.GetState();
             movingRight = false;
             dodging = false;
+            collidable = true;
         }
 
         private void Standing(){
@@ -141,7 +142,7 @@ namespace Curse_of_the_Abyss
                 }
                 else
                 {
-                    xVelocity = max_v;
+                    xVelocity = -max_v;
                 }
             }
             else//slow down until Standing

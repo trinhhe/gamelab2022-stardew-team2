@@ -12,6 +12,7 @@ namespace Curse_of_the_Abyss
         protected Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
         protected WaterPlayer waterPlayer;
+        protected Healthbar healthbar;
 
         public virtual void LoadContent(ContentManager content)
         {
