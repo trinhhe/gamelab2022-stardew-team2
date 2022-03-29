@@ -89,12 +89,14 @@ namespace Curse_of_the_Abyss
                 movingRight=false;
                 state=State.Running;
             }
+            //jumping
             if (KB_curState.IsKeyDown(Keys.W) && !dodging)
             {
                 lastY = position.Y;
                 state = State.Jumping;
             }
-            else if (KB_curState.IsKeyDown(Keys.S) && !dodging)
+            //dodging
+            else if (KB_curState.IsKeyDown(Keys.S))
             {
                 dodging = true;
             }
@@ -121,6 +123,10 @@ namespace Curse_of_the_Abyss
                 {
                     xVelocity += xAcceleration;
                 }
+                else
+                {
+                    xVelocity = max_v;
+                }
             }
             else if (KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
             { //move left
@@ -133,9 +139,13 @@ namespace Curse_of_the_Abyss
                 {
                     xVelocity -= xAcceleration;
                 }
+                else
+                {
+                    xVelocity = max_v;
+                }
             }
-            else
-            {                  //slow down until Standing
+            else//slow down until Standing
+            {     
                 if (movingRight)
                 {
                     if (xVelocity > 0)
@@ -157,12 +167,13 @@ namespace Curse_of_the_Abyss
                     }
                 }
             }
+            //jumping
             if (KB_curState.IsKeyDown(Keys.W) && !dodging)
             {
                 lastY = position.Y;
                 state = State.Jumping;
             }
-            else if (KB_curState.IsKeyDown(Keys.S) && !dodging)
+            else if (KB_curState.IsKeyDown(Keys.S))
             {
                 dodging = true;
             }

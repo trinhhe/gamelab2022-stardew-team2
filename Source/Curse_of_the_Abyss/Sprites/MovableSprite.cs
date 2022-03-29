@@ -6,7 +6,7 @@ namespace Curse_of_the_Abyss
 {
     public class MovableSprite : Sprite
     {
-        protected float xVelocity;
+        protected double xVelocity;
         protected float yVelocity;
         protected float xAcceleration;
         protected float yAcceleration;
