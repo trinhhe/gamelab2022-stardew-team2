@@ -13,6 +13,7 @@ namespace Curse_of_the_Abyss
             background = content.Load<Texture2D>("underwater_env");
             WaterPlayer.LoadContent(content);
             Healthbar.LoadContent(content);
+            StationaryShooterNPC.LoadContent(content);
         }
         public Level1(){
             mapRectangle = new Rectangle(0,0,1920,1080); //map always rendered at 1080p
@@ -26,8 +27,9 @@ namespace Curse_of_the_Abyss
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
-
+            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1400, 400,waterPlayer);
+            sprites.Add(stationaryNPC);
         }
     }
-
+    
 }
