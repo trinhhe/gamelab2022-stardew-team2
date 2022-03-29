@@ -16,19 +16,23 @@ namespace Curse_of_the_Abyss
             StationaryShooterNPC.LoadContent(content);
         }
         public Level1(){
-            mapRectangle = new Rectangle(0,0,1920,1080); //map always rendered at 1080p
-            healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(0,890);
-            sprites = new List<Sprite>();
-            sprites.Add(healthbar);
-            sprites.Add(waterPlayer);
-            InitSprites();
+            reset();
         }
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1400, 400,waterPlayer);
             sprites.Add(stationaryNPC);
+        }
+        public override void reset()
+        {
+            mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
+            healthbar = new Healthbar(0, 0);
+            waterPlayer = new WaterPlayer(0, 890);
+            sprites = new List<Sprite>();
+            sprites.Add(healthbar);
+            sprites.Add(waterPlayer);
+            InitSprites();
         }
     }
     

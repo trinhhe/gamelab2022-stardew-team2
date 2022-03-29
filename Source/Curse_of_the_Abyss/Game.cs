@@ -74,6 +74,13 @@ namespace Curse_of_the_Abyss
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 paused = true;
 
+            if (current_level.game_over)
+            {
+                _menu._screen = Menu.MenuScreens.Game_over;
+                paused = true;
+                current_level.reset();
+            }
+
             if (!paused)
             {
                 current_level.Update();

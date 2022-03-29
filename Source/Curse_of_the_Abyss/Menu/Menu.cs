@@ -11,19 +11,19 @@ namespace Curse_of_the_Abyss
     class Menu
     {
         private bool entered;
-        private bool leave;
 
-        private enum MenuScreens
+        public enum MenuScreens
         {
             Main,
             Settings,
             ResolutionSettings,
-            Quit
+            Quit,
+            Game_over
         }
 
-        private MenuScreens _screen = MenuScreens.Main;
+        public MenuScreens _screen;
 
-        public Menu() { }
+        public Menu() { _screen = MenuScreens.Main; }
 
         public void CreateMenu()
         {
@@ -40,6 +40,10 @@ namespace Curse_of_the_Abyss
             else if (_screen == MenuScreens.ResolutionSettings)
             {
                 SetupResolutionSettingsMenu();
+            }
+            else if(_screen == MenuScreens.Game_over)
+            {
+                SetupGameOver();
             }
             else
             {
@@ -95,6 +99,15 @@ namespace Curse_of_the_Abyss
             }
         }
 
+        private void SetupGameOver()
+        {
+            Label.Put("Game Over", 50);
+
+            if (Button.Put("Restart").Clicked)
+            {
+                _screen = MenuScreens.Main;
+            }
+        }
         private void SetupSettingsMenu()
         {
             Label.Put("Settings", 50);

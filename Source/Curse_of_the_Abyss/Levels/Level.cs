@@ -13,6 +13,7 @@ namespace Curse_of_the_Abyss
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
         protected WaterPlayer waterPlayer;
         protected Healthbar healthbar;
+        public bool game_over;
 
         public virtual void LoadContent(ContentManager content)
         {
@@ -21,6 +22,10 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update()
         {
+            if (healthbar.curr_health == 0)
+            {
+                game_over = true;
+            }
             foreach (Sprite s in sprites)
             {
                 s.Update();
@@ -34,6 +39,11 @@ namespace Curse_of_the_Abyss
             {
                 s.Draw(spritebatch);
             }
+        }
+
+        public virtual void reset()
+        {
+
         }
     }
 
