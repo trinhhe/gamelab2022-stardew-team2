@@ -12,7 +12,7 @@ namespace Curse_of_the_Abyss
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
-            background = content.Load<Texture2D>("bg");
+            background = content.Load<Texture2D>("underwater_env");
             WaterPlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
