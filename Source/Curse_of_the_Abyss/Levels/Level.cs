@@ -19,7 +19,7 @@ namespace Curse_of_the_Abyss
 
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             foreach (Sprite s in sprites)
             {

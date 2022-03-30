@@ -76,7 +76,7 @@ namespace Curse_of_the_Abyss
 
             if (!paused)
             {
-                current_level.Update();
+                current_level.Update(gameTime);
             }
 
             else
