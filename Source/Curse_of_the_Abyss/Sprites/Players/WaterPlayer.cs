@@ -19,7 +19,7 @@ namespace Curse_of_the_Abyss
 
         public WaterPlayer(int x, int y){
             name = "waterplayer";
-            position = new Rectangle(x,y,80,100);
+            position = new Rectangle(x,y,90,100);
             init(); //do rest there to keep this part of code clean
         }
 
