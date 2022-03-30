@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
 
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             if (healthbar.curr_health == 0)
             {

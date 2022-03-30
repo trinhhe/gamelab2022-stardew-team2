@@ -8,22 +8,22 @@ using static System.Math;
 namespace Curse_of_the_Abyss
 {
 
-    public class ShootingSprite : MovableSprite
+    public class TargetingNPC : MovableSprite
     {
         public static Texture2D texture;
         //states are needed to decide in which phase the player is actually
-        int targetx;
-        int targety;
+        
         int speed;
+        WaterPlayer player;
 
 
 
-        public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
+        public TargetingNPC(int x, int y, WaterPlayer player, int speed)
         {
-            name = "shootingSprite";
-            position = new Rectangle(x, y, 40, 50);
-            targetx = coordx;
-            targety = coordy;
+            name = "targetingNPC";
+            position = new Rectangle(x, y, 96, 120);
+            this.player = player;
+            
             this.speed = speed; //how fast the shooting sprite should be
             init(); //do rest there to keep this part of code clean
         }
@@ -35,8 +35,14 @@ namespace Curse_of_the_Abyss
         }
 
         public override void Update()
-        {   
-            
+        {
+            double xtemp = (player.position.X - position.X);
+            double ytemp = (player.position.Y - position.Y);
+            double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+            double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+            xVelocity = xunit * speed;
+            yVelocity = yunit * speed;
+
             //update position of Player 
             position.X += (int)xVelocity;
             position.Y += (int)yVelocity;
@@ -69,9 +75,9 @@ namespace Curse_of_the_Abyss
         }
         public void init()
         {
-            double xtemp = (targetx - position.X);
-            double ytemp = (targety - position.Y);
-            double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp,2) + System.Math.Pow(ytemp, 2));
+            double xtemp = (player.position.X - position.X);
+            double ytemp = (player.position.Y - position.Y);
+            double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
             double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
             xVelocity = xunit * speed;
             yVelocity = yunit * speed;

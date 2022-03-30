@@ -37,8 +37,10 @@ namespace Curse_of_the_Abyss
         public override void Update()
         {
             update++;
-            int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
-            int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
+            //int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
+            //int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
+            int targetx = 0;
+            int targety = position.Y;
             int speed = 10; // how fast the sprite should be
 
             if (update % 100 == 0)
