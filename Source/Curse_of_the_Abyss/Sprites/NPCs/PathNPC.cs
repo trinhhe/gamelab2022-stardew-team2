@@ -8,22 +8,31 @@ using static System.Math;
 namespace Curse_of_the_Abyss
 {
 
-    public class TargetingNPC : MovableSprite
+    public class PathNPC : MovableSprite
     {
         public static Texture2D texture;
         //states are needed to decide in which phase the player is actually
-        
+
         int speed;
-        WaterPlayer player;
+        int firstx;
+        int firsty;
+        int secondx;
+        int secondy;
+        int dir; // 0 - going to first  x,y ; 1 - going to second x,y
 
 
 
-        public TargetingNPC(int x, int y, WaterPlayer player, int speed)
+        public PathNPC( int firstx, int firsty, int secondx, int secondy, int speed)
         {
+            //spawn at first x,y
+            //move to second x,y and then alternate btw first and second x,y
             name = "targetingNPC";
-            position = new Rectangle(x, y, 96, 120);
-            this.player = player;
-            
+            position = new Rectangle(firstx, firsty, 96, 120);
+            this.firstx = firstx;
+            this.firsty = firsty;
+            this.secondx = secondx;
+            this.secondy = secondy;
+
             this.speed = speed; //how fast the shooting sprite should be
             init(); //do rest there to keep this part of code clean
         }
@@ -36,21 +45,50 @@ namespace Curse_of_the_Abyss
 
         public override void Update()
         {
-            double xtemp = (player.position.X - position.X);
-            double ytemp = (player.position.Y - position.Y);
-            if (System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2)) > 0.001)
+
+
+            if (dir == 1)
             {
-                double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-                double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-                xVelocity = xunit * speed;
-                yVelocity = yunit * speed;
+                double xtemp = (secondx - position.X);
+                double ytemp = (secondy - position.Y);
+                if (System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2)) < 3)
+                {
+                    dir = 0;
+                }
+                else
+                {
+                    double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                    double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                    xVelocity = xunit * speed;
+                    yVelocity = yunit * speed;
 
-                //update position of Player 
-                position.X += (int)xVelocity;
-                position.Y += (int)yVelocity;
+                    //update position of NPC 
+                    position.X += (int)xVelocity;
+                    position.Y += (int)yVelocity;
+                }
             }
-           
+            
+            else if (dir == 0)
+            {
+                double xtemp = (firstx - position.X);
+                double ytemp = (firsty - position.Y);
+                if (System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2)) < 3)
+                {
+                    dir = 1;
+                }
+                else
+                {
+                    double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                    double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                    xVelocity = xunit * speed;
+                    yVelocity = yunit * speed;
 
+                    //update position of NPC 
+                    position.X += (int)xVelocity;
+                    position.Y += (int)yVelocity;
+                }
+            }    
+            
         }
 
 
@@ -79,14 +117,8 @@ namespace Curse_of_the_Abyss
         }
         public void init()
         {
-            double xtemp = (player.position.X - position.X);
-            double ytemp = (player.position.Y - position.Y);
-            double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-            double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-            xVelocity = xunit * speed;
-            yVelocity = yunit * speed;
 
-
+            dir = 1;
             collidable = true;
 
         }
