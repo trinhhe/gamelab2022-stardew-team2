@@ -19,6 +19,7 @@ namespace Curse_of_the_Abyss
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
+            PathNPC.LoadContent(content);
         }
         public Level1(){
             reset();
@@ -29,6 +30,8 @@ namespace Curse_of_the_Abyss
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1400, 400,waterPlayer);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
+            PathNPC pathNPC = new PathNPC(900, 250, 1300, 250, 5);
+            sprites.Add(pathNPC)
         }
 
         public override void Update(GameTime gameTime)
