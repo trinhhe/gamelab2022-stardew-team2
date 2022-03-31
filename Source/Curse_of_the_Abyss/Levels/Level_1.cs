@@ -12,8 +12,10 @@ namespace Curse_of_the_Abyss
         public override void LoadContent(ContentManager content){
             background = content.Load<Texture2D>("underwater_env");
             WaterPlayer.LoadContent(content);
+            //SubmarinePlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
+            Submarine.LoadContent(content);
         }
         public Level1(){
             reset();
@@ -30,9 +32,11 @@ namespace Curse_of_the_Abyss
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
             waterPlayer = new WaterPlayer(0, 890);
+            //submarinePlayer = new SubmarinePlayer(15, 15);
+            submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
-            sprites.Add(healthbar);
             sprites.Add(waterPlayer);
+            sprites.Add(submarine);
             InitSprites();
         }
     }

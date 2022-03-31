@@ -11,7 +11,9 @@ namespace Curse_of_the_Abyss
         protected Texture2D background;
         protected Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
+        protected Submarine submarine;
         protected WaterPlayer waterPlayer;
+        //protected SubmarinePlayer submarinePlayer;
         protected Healthbar healthbar;
         public bool game_over;
 
@@ -34,7 +36,8 @@ namespace Curse_of_the_Abyss
 
         public virtual void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(background, mapRectangle, Color.White);
+            //adding last argument for layerDepth=1 (backmost layer) since sometimes submarine will be drawn behind background
+            spritebatch.Draw(background, mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
             foreach (Sprite s in sprites)
             {
                 s.Draw(spritebatch);

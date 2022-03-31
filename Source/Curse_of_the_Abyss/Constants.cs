@@ -9,6 +9,8 @@ namespace Curse_of_the_Abyss
         public static float run_accelerate = 0.1f;
         public static float max_jumping_height = 7;
 
+        public static float max_run_velocity_submarine = 3;
+        public static float run_accelerate_submarine = 0.1f;
     }
 
 }
