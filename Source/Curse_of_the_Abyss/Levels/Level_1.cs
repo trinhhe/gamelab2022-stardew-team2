@@ -77,7 +77,7 @@ namespace Curse_of_the_Abyss
             }
 
         }
-        public override void reset()
+        public override void Reset()
         {
             game_over = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
