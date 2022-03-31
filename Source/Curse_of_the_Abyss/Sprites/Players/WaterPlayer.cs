@@ -38,8 +38,8 @@ namespace Curse_of_the_Abyss
 
             //check that player won't fall through ground
             //TO DO: once collision detection with ground is coded update this part
-            if (position.Y+position.Height>990){
-                position.Y=990-position.Height;
+            if (position.Y+position.Height>1022){
+                position.Y=1022-position.Height;
                 if(xVelocity == 0)
                     state = State.Standing;
                 else

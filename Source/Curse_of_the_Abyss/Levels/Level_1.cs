@@ -12,7 +12,7 @@ namespace Curse_of_the_Abyss
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
-            background = content.Load<Texture2D>("underwater_env");
+            background = content.Load<Texture2D>("bg");
             WaterPlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
             game_over = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(0, 890);
+            waterPlayer = new WaterPlayer(0, 930);
             sprites = new List<Sprite>();
             sprites.Add(healthbar);
             sprites.Add(waterPlayer);
