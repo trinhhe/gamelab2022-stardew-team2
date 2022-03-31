@@ -82,7 +82,7 @@ namespace Curse_of_the_Abyss
             game_over = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(0, 890,healthbar);
+            waterPlayer = new WaterPlayer(0, 930, healthbar);
             sprites = new List<Sprite>();
             shooters = new List<StationaryShooterNPC>();
             sprites.Add(healthbar);
