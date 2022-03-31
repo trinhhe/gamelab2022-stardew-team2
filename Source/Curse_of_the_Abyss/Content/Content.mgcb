@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:bar.png
 
+#begin bg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:bg.png
+
 #begin bfish.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -56,6 +68,9 @@
 /processorParam:TextureFormat=Color
 /build:health.png
 
+#begin maps/map_lvl1.tmx
+/copy:maps/map_lvl1.tmx
+
 #begin MCRunSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -70,6 +85,18 @@
 
 #begin menu-font.ttf
 /copy:menu-font.ttf
+
+#begin sand_tiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sand_tiles.png
 
 #begin octopuss.png
 /importer:TextureImporter

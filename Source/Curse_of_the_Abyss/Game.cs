@@ -64,6 +64,7 @@ namespace Curse_of_the_Abyss
             // game contents
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             current_level.LoadContent(Content);
+            current_level.InitMapManager(_spriteBatch);
 
             // always render at 1080p but display at user-defined resolution after
             renderTarget = new RenderTarget2D(GraphicsDevice, 1920, 1080);
@@ -78,7 +79,7 @@ namespace Curse_of_the_Abyss
             {
                 _menu._screen = Menu.MenuScreens.Game_over;
                 paused = true;
-                current_level.reset();
+                current_level.Reset();
             }
 
             if (!paused)
@@ -111,6 +112,9 @@ namespace Curse_of_the_Abyss
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
             current_level.Draw(_spriteBatch); //draw map
             _spriteBatch.End();
+
+            // draw map
+            current_level.MapManager.Draw(current_level.matrix);
 
             // render at 1080p
             GraphicsDevice.SetRenderTarget(null);

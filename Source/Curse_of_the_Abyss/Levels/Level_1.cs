@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using TiledSharp;
 
 namespace Curse_of_the_Abyss 
 {
@@ -14,15 +15,20 @@ namespace Curse_of_the_Abyss
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
-            background = content.Load<Texture2D>("underwater_env");
+            tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
+            background = content.Load<Texture2D>("bg");
             WaterPlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
             PathNPC.LoadContent(content);
         }
-        public Level1(){
-            reset();
+        public Level1()
+        {
+            // load tile map 
+            TileMap = new TmxMap("Content/maps/map_lvl1.tmx");
+            Initialize();
+            Reset();
         }
 
         //inits every item/character that is not a player or submarine
@@ -83,6 +89,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             InitSprites();
         }
+        
     }
     
 }
