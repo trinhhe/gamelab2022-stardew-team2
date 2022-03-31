@@ -6,9 +6,11 @@ using System.Collections.Generic;
 
 namespace Curse_of_the_Abyss 
 {
-    
     public class Level1:Level{
         int randomTimer = 0;
+        int shooterupdate = 0;
+        protected List<StationaryShooterNPC> shooters;
+        
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
@@ -26,13 +28,26 @@ namespace Curse_of_the_Abyss
         public void InitSprites(){
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1400, 400,waterPlayer);
             sprites.Add(stationaryNPC);
+            shooters.Add(stationaryNPC);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            
+            //shooting objects
+            shooterupdate++;
+            if (shooterupdate % 100 == 0)
+            {
+                foreach (StationaryShooterNPC shooter in shooters)
+                {
+                    int targetx = 0;
+                    int targety = shooter.position.Y;
+                    int speed = 10;
+                    ShootingSprite shootS = new ShootingSprite(shooter.position.X, shooter.position.Y + shooter.position.Width / 2, targetx, targety, speed);
+                    sprites.Add(shootS);
+                }
+            }
             if (gameTime.TotalGameTime.Milliseconds % 10000 == 0)
             { //10 sec
                 //targeting npc
@@ -41,7 +56,7 @@ namespace Curse_of_the_Abyss
                     randomTimer++;
                 }
                 else
-                {
+                { 
                     int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
                     int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
                     int speed = 2;
@@ -58,8 +73,9 @@ namespace Curse_of_the_Abyss
             game_over = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(0, 890);
+            waterPlayer = new WaterPlayer(0, 890,healthbar);
             sprites = new List<Sprite>();
+            shooters = new List<StationaryShooterNPC>();
             sprites.Add(healthbar);
             sprites.Add(waterPlayer);
             InitSprites();

@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
     public class Sprite
     {
         public Rectangle position;
-        public bool collidable;
+        public bool collidable,remove;
         public string name;
         public Sprite()
         {
@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
         {
             position = pos;
         }
-        public virtual void Update()
+        public virtual void Update(List<Sprite> sprites)
         {
 
         }
@@ -33,7 +33,7 @@ namespace Curse_of_the_Abyss
             foreach (Sprite s in sprites)
             {
                 if (this == s) continue;
-                if (s.collidable || collidable) continue;
+                if (!s.collidable || !collidable) continue;
                 if (position.Intersects(s.position))
                 {
                     return s;

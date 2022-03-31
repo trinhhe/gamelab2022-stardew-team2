@@ -15,11 +15,13 @@ namespace Curse_of_the_Abyss
         public State state;
         public bool movingRight,dodging,wasdodging;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
+        Healthbar health;
 
 
-        public WaterPlayer(int x, int y){
+        public WaterPlayer(int x, int y,Healthbar healthbar){
             name = "waterplayer";
             position = new Rectangle(x,y,80,100);
+            health = healthbar;
             init(); //do rest there to keep this part of code clean
         }
 
@@ -28,13 +30,24 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("MCRunSprite");
         }
 
-        public override void Update(){
+        public override void Update(List<Sprite> sprites)
+        {
             KB_curState = Keyboard.GetState();
             getState();// decides current frame and handles state mechanics
-        
-            //update position of Player 
+
+            //update position of Player and check for collisions
+            Sprite s = null;
             position.X += (int)xVelocity;
-            position.Y += (int)yVelocity;
+            s = CheckCollision(sprites);
+            if (s != null) XCollision(s);
+            else
+            {
+                position.X -= (int)xVelocity;
+                position.Y += (int)yVelocity;
+                s = CheckCollision(sprites);
+                if (s != null) YCollision(s);
+                position.X += (int)xVelocity;
+            }
 
             //check that player won't fall through ground
             //TO DO: once collision detection with ground is coded update this part
@@ -67,10 +80,30 @@ namespace Curse_of_the_Abyss
 
 
         public override void XCollision(Sprite s){
-            //TO DO: decide what happens upon collision with different objects/characters
+            switch (s.name)
+            {
+                case ("shootingSprite"):
+                    s.remove = true;
+                    health.curr_health -= health.maxhealth / 10;
+                    break;
+                case ("targetingNPC"):
+                    s.remove = true;
+                    health.curr_health -= health.maxhealth / 10;
+                    break;
+            }
         }
         public override void YCollision(Sprite s){
-            //TO DO: decide what happens upon collision with different objects/characters
+            switch (s.name)
+            {
+                case ("shootingSprite"):
+                    s.remove = true;
+                    health.curr_health -= health.maxhealth / 10;
+                    break;
+                case ("targetingNPC"):
+                    s.remove = true;
+                    health.curr_health -= health.maxhealth / 10;
+                    break;
+            }
         }
         public void init(){
             state = State.Standing;

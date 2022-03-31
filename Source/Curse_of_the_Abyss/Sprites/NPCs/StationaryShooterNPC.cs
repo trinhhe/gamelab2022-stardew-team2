@@ -12,7 +12,6 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         //states are needed to decide in which phase the player is actually
         private static WaterPlayer waterPlayer;
-        protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
         private int update = 0;
 
 
@@ -23,7 +22,6 @@ namespace Curse_of_the_Abyss
             name = "stationaryNPC";
             position = new Rectangle(x, y, 80, 100);
             waterPlayer = player;
-            init(); //do rest there to keep this part of code clean
         }
 
         public static void LoadContent(ContentManager content)
@@ -34,25 +32,9 @@ namespace Curse_of_the_Abyss
 
         }
 
-        public override void Update()
+        public override void Update(List<Sprite> sprites)
         {
-            update++;
-            //int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
-            //int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
-            int targetx = 0;
-            int targety = position.Y;
-            int speed = 10; // how fast the sprite should be
-
-            if (update % 100 == 0)
-            {
-                ShootingSprite shootS = new ShootingSprite(position.X, position.Y + position.Width / 2, targetx, targety, speed);
-                sprites.Add(shootS);
-            }
-
-            foreach (Sprite s in sprites)
-            {
-                s.Update();
-            }
+            
         }
 
 
@@ -68,12 +50,6 @@ namespace Curse_of_the_Abyss
 
             //draw current frame
             spritebatch.Draw(texture, position, source, Color.White);
-            
-            foreach (Sprite s in sprites)
-            {
-                s.Draw(spritebatch);
-            }
-            
         }
 
 
@@ -84,54 +60,6 @@ namespace Curse_of_the_Abyss
         public override void YCollision(Sprite s)
         {
             //TO DO: decide what happens upon collision with different objects/characters
-        }
-        public void init()
-        {
-            sprites = new List<Sprite>();
-
-        }
-
-        private void Standing()
-        {
-           
-        }
-
-        private void Running()
-        {
-            
-        }
-
-        private void Jumping()
-        {
-           
-        }
-
-        private void Falling()
-        {
-            
-        }
-
-        //calls function depending on state
-        //TO DO: decide on needed frame
-        private void getState()
-        {
-            /*
-            switch (state)
-            {
-                case State.Standing:
-                    Standing();
-                    break;
-                case State.Running:
-                    Running();
-                    break;
-                case State.Jumping:
-                    Jumping();
-                    break;
-                case State.Falling:
-                    Falling();
-                    break;
-            }
-            */
         }
     }
 }

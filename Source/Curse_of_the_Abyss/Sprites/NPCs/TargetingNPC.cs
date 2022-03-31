@@ -34,7 +34,7 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("SmileyWalk");
         }
 
-        public override void Update()
+        public override void Update(List<Sprite> sprites)
         {
             double xtemp = (player.position.X - position.X);
             double ytemp = (player.position.Y - position.Y);

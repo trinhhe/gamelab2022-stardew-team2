@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -28,7 +29,7 @@ namespace Curse_of_the_Abyss
             font = content.Load<SpriteFont>("O2");
         }
 
-        public override void Update()
+        public override void Update(List<Sprite> sprites)
         {
             curr_health -= 1;
         }

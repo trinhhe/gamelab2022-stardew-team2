@@ -28,7 +28,19 @@ namespace Curse_of_the_Abyss
             }
             foreach (Sprite s in sprites)
             {
-                s.Update();
+                s.Update(sprites);
+            }
+            List<Sprite> toRemove = new List<Sprite>();
+            foreach(Sprite s in sprites)
+            {
+                if (s.remove)
+                {
+                    toRemove.Add(s);
+                }
+            }
+            foreach(Sprite s in toRemove)
+            {
+                sprites.Remove(s);
             }
         }
 
