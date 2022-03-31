@@ -18,14 +18,14 @@ namespace Curse_of_the_Abyss
         public StationaryShooterNPC(int x, int y, WaterPlayer player)
         {
             name = "stationaryNPC";
-            position = new Rectangle(x, y, 80, 100);
+            position = new Rectangle(x, y, 96, 120);
             waterPlayer = player;
         }
 
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("SmileyWalk");
+            texture = content.Load<Texture2D>("octopuss");
             ShootingSprite.LoadContent(content);
 
         }
@@ -40,8 +40,8 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width / 4;
-            int height = texture.Width / 4;
+            int width = texture.Width;
+            int height = texture.Width;
             Rectangle source = new Rectangle(0, 0, width, height);
 
            
