@@ -49,8 +49,9 @@ namespace Curse_of_the_Abyss
                 position.X += (int)xVelocity;
             }
 
+            lasthit += gametime.ElapsedGameTime.Milliseconds;
             //reset hit
-            if (gametime.TotalGameTime.Seconds - lasthit >= 2)
+            if (lasthit >= 2000&& hit)
                 hit = false;
 
             //check that player won't fall through ground
@@ -89,7 +90,7 @@ namespace Curse_of_the_Abyss
                     if (!hit)
                     {
                         hit = true;
-                        lasthit = gametime.TotalGameTime.Seconds;
+                        lasthit = 0;
                         s.remove = true;
                         health.curr_health -= health.maxhealth / 10;
                     }
@@ -99,7 +100,7 @@ namespace Curse_of_the_Abyss
                     if (!hit)
                     {
                         hit = true;
-                        lasthit = gametime.TotalGameTime.Seconds;
+                        lasthit = 0;
                         health.curr_health -= health.maxhealth / 10;
                     }
                     position.Y += (int)yVelocity;
@@ -113,7 +114,7 @@ namespace Curse_of_the_Abyss
                     if (!hit)
                     {
                         hit = true;
-                        lasthit = gametime.TotalGameTime.Milliseconds;
+                        lasthit = 0;
                         s.remove = true;
                         health.curr_health -= health.maxhealth / 10;
                     }
@@ -123,7 +124,7 @@ namespace Curse_of_the_Abyss
                     if (!hit)
                     {
                         hit = true;
-                        lasthit = gametime.TotalGameTime.Milliseconds;
+                        lasthit = 0;
                         health.curr_health -= health.maxhealth / 10;
                     }
                     break;
