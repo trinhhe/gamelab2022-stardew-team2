@@ -106,14 +106,6 @@ namespace Curse_of_the_Abyss
         }
 
 
-        public override void XCollision(Sprite s)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
-        public override void YCollision(Sprite s)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
         public void init()
         {
 
