@@ -29,7 +29,7 @@ namespace Curse_of_the_Abyss
             font = content.Load<SpriteFont>("O2");
         }
 
-        public override void Update(List<Sprite> sprites)
+        public override void Update(List<Sprite> sprites, GameTime gametime)
         {
             curr_health -= 1;
         }

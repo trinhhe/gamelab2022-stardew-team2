@@ -13,8 +13,8 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State{Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight,dodging,wasdodging;//needed for different situations in states
-        private int lastY;//needed to decide how heigh player can jump
+        public bool movingRight,dodging,wasdodging, hit;//needed for different situations in states
+        private int lastY,lasthit;//needed to decide how heigh player can jump
         Healthbar health;
 
 
@@ -30,7 +30,7 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("MCRunSprite");
         }
 
-        public override void Update(List<Sprite> sprites)
+        public override void Update(List<Sprite> sprites, GameTime gametime)
         {
             KB_curState = Keyboard.GetState();
             getState();// decides current frame and handles state mechanics
@@ -39,15 +39,19 @@ namespace Curse_of_the_Abyss
             Sprite s = null;
             position.X += (int)xVelocity;
             s = CheckCollision(sprites);
-            if (s != null) XCollision(s);
+            if (s != null) XCollision(s, gametime);
             else
             {
                 position.X -= (int)xVelocity;
                 position.Y += (int)yVelocity;
                 s = CheckCollision(sprites);
-                if (s != null) YCollision(s);
+                if (s != null) YCollision(s, gametime);
                 position.X += (int)xVelocity;
             }
+
+            //reset hit
+            if (gametime.TotalGameTime.Seconds - lasthit >= 2)
+                hit = false;
 
             //check that player won't fall through ground
             //TO DO: once collision detection with ground is coded update this part
@@ -79,29 +83,48 @@ namespace Curse_of_the_Abyss
         }
 
 
-        public override void XCollision(Sprite s){
+        public override void XCollision(Sprite s, GameTime gametime)
+        {
             switch (s.name)
             {
                 case ("shootingSprite"):
-                    s.remove = true;
-                    health.curr_health -= health.maxhealth / 10;
+                    if (!hit)
+                    {
+                        hit = true;
+                        lasthit = gametime.TotalGameTime.Seconds;
+                        s.remove = true;
+                        health.curr_health -= health.maxhealth / 10;
+                    }
                     break;
                 case ("targetingNPC"):
-                    s.remove = true;
-                    health.curr_health -= health.maxhealth / 10;
+                    if (!hit)
+                    {
+                        hit = true;
+                        lasthit = gametime.TotalGameTime.Seconds;
+                        health.curr_health -= health.maxhealth / 10;
+                    }
                     break;
             }
         }
-        public override void YCollision(Sprite s){
+        public override void YCollision(Sprite s, GameTime gametime){
             switch (s.name)
             {
                 case ("shootingSprite"):
-                    s.remove = true;
-                    health.curr_health -= health.maxhealth / 10;
+                    if (!hit)
+                    {
+                        hit = true;
+                        lasthit = gametime.TotalGameTime.Milliseconds;
+                        s.remove = true;
+                        health.curr_health -= health.maxhealth / 10;
+                    }
                     break;
                 case ("targetingNPC"):
-                    s.remove = true;
-                    health.curr_health -= health.maxhealth / 10;
+                    if (!hit)
+                    {
+                        hit = true;
+                        lasthit = gametime.TotalGameTime.Milliseconds;
+                        health.curr_health -= health.maxhealth / 10;
+                    }
                     break;
             }
         }

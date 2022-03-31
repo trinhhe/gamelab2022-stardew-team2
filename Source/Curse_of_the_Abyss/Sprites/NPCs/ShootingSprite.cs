@@ -34,7 +34,7 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("SmileyWalk");
         }
 
-        public override void Update(List<Sprite> sprites)
+        public override void Update(List<Sprite> sprites, GameTime gametime)
         {   
             
             //update position of Player 
@@ -59,11 +59,11 @@ namespace Curse_of_the_Abyss
         }
 
 
-        public override void XCollision(Sprite s)
+        public override void XCollision(Sprite s, GameTime gametime)
         {
             //TO DO: decide what happens upon collision with different objects/characters
         }
-        public override void YCollision(Sprite s)
+        public override void YCollision(Sprite s, GameTime gametime)
         {
             //TO DO: decide what happens upon collision with different objects/characters
         }

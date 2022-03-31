@@ -22,13 +22,13 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update(GameTime gameTime)
         {
-            if (healthbar.curr_health == 0)
+            if (healthbar.curr_health <= 0)
             {
                 game_over = true;
             }
             foreach (Sprite s in sprites)
             {
-                s.Update(sprites);
+                s.Update(sprites, gameTime);
             }
             List<Sprite> toRemove = new List<Sprite>();
             foreach(Sprite s in sprites)

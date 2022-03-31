@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
         {
             position = pos;
         }
-        public virtual void Update(List<Sprite> sprites)
+        public virtual void Update(List<Sprite> sprites,GameTime gametime)
         {
 
         }
@@ -41,11 +41,11 @@ namespace Curse_of_the_Abyss
             }
             return null;
         }
-        public virtual void XCollision(Sprite s)
+        public virtual void XCollision(Sprite s, GameTime gameTime)
         {
 
         }
-        public virtual void YCollision(Sprite s)
+        public virtual void YCollision(Sprite s, GameTime gametime)
         {
 
         }
