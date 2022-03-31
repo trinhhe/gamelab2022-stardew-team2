@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("bfish");
         }
 
-        public override void Update()
+        public override void Update(List<Sprite> sprites, GameTime gametime)
         {
 
 

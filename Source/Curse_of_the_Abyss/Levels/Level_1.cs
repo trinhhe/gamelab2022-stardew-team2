@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
             PathNPC pathNPC = new PathNPC(900, 250, 1300, 250, 5);
-            sprites.Add(pathNPC)
+            sprites.Add(pathNPC);
         }
 
         public override void Update(GameTime gameTime)
