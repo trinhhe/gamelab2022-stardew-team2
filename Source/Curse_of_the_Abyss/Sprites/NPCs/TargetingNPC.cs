@@ -19,7 +19,8 @@ namespace Curse_of_the_Abyss
 
 
         public TargetingNPC(int x, int y, WaterPlayer player, int speed)
-        {
+        {   
+            //spawns at x,y and targets player with speed speed
             name = "targetingNPC";
             position = new Rectangle(x, y, 96, 120);
             this.player = player;

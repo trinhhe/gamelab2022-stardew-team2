@@ -11,7 +11,6 @@ namespace Curse_of_the_Abyss
     public class PathNPC : MovableSprite
     {
         public static Texture2D texture;
-        //states are needed to decide in which phase the player is actually
 
         int speed;
         int firstx;
@@ -26,14 +25,14 @@ namespace Curse_of_the_Abyss
         {
             //spawn at first x,y
             //move to second x,y and then alternate btw first and second x,y
-            name = "targetingNPC";
+            name = "pathNPC";
             position = new Rectangle(firstx, firsty, 96, 120);
             this.firstx = firstx;
             this.firsty = firsty;
             this.secondx = secondx;
             this.secondy = secondy;
 
-            this.speed = speed; //how fast the shooting sprite should be
+            this.speed = speed; //how fast the path NPC should be
             init(); //do rest there to keep this part of code clean
         }
 
