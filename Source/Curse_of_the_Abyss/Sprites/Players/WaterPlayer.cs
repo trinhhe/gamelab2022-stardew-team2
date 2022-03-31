@@ -9,7 +9,7 @@ namespace Curse_of_the_Abyss
 
     public class WaterPlayer:MovableSprite{
         public static Texture2D texture;
-        private KeyboardState KB_curState, KB_preState;
+        private KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
         public enum State{Standing, Running, Jumping, Falling};
         public State state;
@@ -62,8 +62,6 @@ namespace Curse_of_the_Abyss
                 else
                     state = State.Running;
             }
-
-            KB_preState = KB_curState;
         }
 
 
@@ -96,6 +94,7 @@ namespace Curse_of_the_Abyss
                         health.curr_health -= health.maxhealth / 10;
                     }
                     break;
+                case ("PathNPC"):
                 case ("targetingNPC"):
                     if (!hit)
                     {
@@ -103,6 +102,7 @@ namespace Curse_of_the_Abyss
                         lasthit = gametime.TotalGameTime.Seconds;
                         health.curr_health -= health.maxhealth / 10;
                     }
+                    position.Y += (int)yVelocity;
                     break;
             }
         }
@@ -118,6 +118,7 @@ namespace Curse_of_the_Abyss
                         health.curr_health -= health.maxhealth / 10;
                     }
                     break;
+                case ("pathNPC"):
                 case ("targetingNPC"):
                     if (!hit)
                     {
@@ -130,7 +131,6 @@ namespace Curse_of_the_Abyss
         }
         public void init(){
             state = State.Standing;
-            KB_preState = Keyboard.GetState();
             movingRight = false;
             dodging = false;
             collidable = true;
