@@ -32,7 +32,7 @@ namespace Curse_of_the_Abyss
             // all submarine features' positions are relative to how the assets are drawn on the submarine.
             // Need to figure out numbers when we have the final submarine access.
             // start position for player: x + 170,y + 125
-            this.submarinePlayer = new SubmarinePlayer(x+770, y+125, x+105, x+860);
+            this.submarinePlayer = new SubmarinePlayer(x+170, y+125, x+105, x+860);
             this.oxyPosition = new Rectangle(x+110, y+125, 20, 80);
             this.machineGunPosition = new Rectangle(x+770, y+125, 20, 80);
             this.steerPosition = new Rectangle(x+630, y+125, 20, 80);
