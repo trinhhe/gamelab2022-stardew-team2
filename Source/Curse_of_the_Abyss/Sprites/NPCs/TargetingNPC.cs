@@ -38,14 +38,18 @@ namespace Curse_of_the_Abyss
         {
             double xtemp = (player.position.X - position.X);
             double ytemp = (player.position.Y - position.Y);
-            double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-            double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-            xVelocity = xunit * speed;
-            yVelocity = yunit * speed;
+            if (System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2)) > 0.001)
+            {
+                double xunit = xtemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                double yunit = ytemp / System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                xVelocity = xunit * speed;
+                yVelocity = yunit * speed;
 
-            //update position of Player 
-            position.X += (int)xVelocity;
-            position.Y += (int)yVelocity;
+                //update position of Player 
+                position.X += (int)xVelocity;
+                position.Y += (int)yVelocity;
+            }
+           
 
         }
 
