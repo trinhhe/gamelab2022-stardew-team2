@@ -102,7 +102,8 @@ namespace Curse_of_the_Abyss
         {
             double max_v = Constants.max_run_velocity;
             xAcceleration = Constants.run_accelerate;
-            if (position.Right <= rightBound && position.Left >= leftBound)
+            // -2 to avoid to overshoot boundaries in some cases
+            if (position.Right - 2 < rightBound && position.Left + 2> leftBound)
             {
                 //move right
                 if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))
@@ -161,7 +162,7 @@ namespace Curse_of_the_Abyss
                     }
                 }
             }
-            else if (position.Right > rightBound)
+            else if (position.Right >= rightBound)
             {
                 //stop immediately
                 if (KB_curState.IsKeyDown(Keys.Right))

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace Curse_of_the_Abyss
 {
@@ -12,11 +13,15 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         private KeyboardState KB_curState, KB_preState;
         //states are needed to decide in which phase the submarine is actually
-        public enum State {Standing, Driving, Oxygen, MachineGun};
+        public enum State {Standing, Driving, OxygenMode, MachineGunMode};
         public State state;
         private SubmarinePlayer submarinePlayer;
         private Healthbar healthbar;
-        public Rectangle oxyPosition, machineGunPosition, steerPosition;
+        private MachineGun machineGun;
+        private List<Bullet> bullets;
+        private Rectangle oxyPosition, machineGunPosition, steerPosition;
+        private int shootingFrequency, shootingCount;
+        private Vector2 shootingFixDirection;
 
         public bool movingRight;//needed for different situations in states
         public bool machineGunOn, steeringOn;
@@ -27,11 +32,17 @@ namespace Curse_of_the_Abyss
             // all submarine features' positions are relative to how the assets are drawn on the submarine.
             // Need to figure out numbers when we have the final submarine access.
             // start position for player: x + 170,y + 125
-            this.submarinePlayer = new SubmarinePlayer(x+170, y+125, x+105, x+860);
+            this.submarinePlayer = new SubmarinePlayer(x+770, y+125, x+105, x+860);
             this.oxyPosition = new Rectangle(x+110, y+125, 20, 80);
             this.machineGunPosition = new Rectangle(x+770, y+125, 20, 80);
             this.steerPosition = new Rectangle(x+630, y+125, 20, 80);
             this.healthbar = healthbar;
+            this.machineGun = new MachineGun(x+820,y+250);
+            this.shootingFrequency = 50;
+            //figure out fix s.t bullet coming from weapon
+            this.shootingFixDirection = new Vector2(0,0.8f);
+            //small change to align bullets to machinegun weapon
+
             init(); //do rest there to keep this part of code clean
         }
 
@@ -41,6 +52,8 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("submarine");
             SubmarinePlayer.LoadContent(content);
             Healthbar.LoadContent(content);
+            MachineGun.LoadContent(content);
+            Bullet.LoadContent(content);
         }
 
         public override void Update()
@@ -55,10 +68,16 @@ namespace Curse_of_the_Abyss
             steerPosition.X += (int)xVelocity;
             submarinePlayer.position.X += (int)xVelocity;
             submarinePlayer.changeBounds((int)xVelocity);
+            machineGun.position.X += (int)xVelocity;
 
             KB_preState = KB_curState;
             submarinePlayer.Update();
             healthbar.Update();
+            machineGun.Update();
+            foreach (Sprite b in bullets)
+            {
+                b.Update();
+            }
         }
 
 
@@ -74,6 +93,11 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(texture, position, source, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f); 
             submarinePlayer.Draw(spritebatch);
             healthbar.Draw(spritebatch);
+            machineGun.Draw(spritebatch);
+            foreach (Sprite b in bullets)
+            {
+                b.Draw(spritebatch);
+            }
         }
 
 
@@ -93,6 +117,8 @@ namespace Curse_of_the_Abyss
             collidable = false;
             machineGunOn = false;
             steeringOn = false;
+            shootingCount = 0;
+            bullets = new List<Bullet>();
         }
 
         private void Standing()
@@ -102,8 +128,8 @@ namespace Curse_of_the_Abyss
             //player at oxygenstation and preparing to fill
             if (submarinePlayer.position.Intersects(oxyPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
-                healthbar.toggleLoadingOn();
-                state = State.Oxygen;
+                healthbar.ToggleLoadingOn();
+                state = State.OxygenMode;
             }
 
             if (submarinePlayer.position.Intersects(steerPosition) && KB_curState.IsKeyDown(Keys.Down))
@@ -126,6 +152,15 @@ namespace Curse_of_the_Abyss
             if (steeringOn)
                 state = State.Driving;
 
+            if (submarinePlayer.position.Intersects(machineGunPosition) && KB_curState.IsKeyDown(Keys.Down))
+            {
+                machineGunOn = !machineGunOn;
+                submarinePlayer.toggleToMove();
+                state = State.MachineGunMode;
+            }
+
+            if (machineGunOn)
+                state = State.MachineGunMode;
         }
 
         private void Driving()
@@ -197,20 +232,46 @@ namespace Curse_of_the_Abyss
             }        
         }
 
-        private void Oxygen()
+        private void OxygenMode()
         {
             //moving away from oxystation or not pressing down arrow
             if (!submarinePlayer.position.Intersects(oxyPosition) || (submarinePlayer.position.Intersects(oxyPosition) && !KB_curState.IsKeyDown(Keys.Down)))
             {
-                healthbar.toggleLoadingOn();
+                healthbar.ToggleLoadingOn();
                 state = State.Standing;
             }
 
         }
 
-        private void MachineGun()
+        private void MachineGunMode()
         {
-            
+            if (KB_curState.IsKeyDown(Keys.Up) && machineGunOn)
+            {
+                machineGunOn = !machineGunOn;
+                submarinePlayer.toggleToMove();
+                state = State.Standing;
+            }
+            else if (machineGunOn)
+            {
+                shootingCount++;
+                if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))
+                {
+                    machineGun.rotation -= MathHelper.ToRadians(machineGun.rotationVelocity);
+                }
+                else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right))
+                {
+                    machineGun.rotation += MathHelper.ToRadians(machineGun.rotationVelocity);
+                }
+
+                machineGun.direction = new Vector2((float)Math.Cos(machineGun.rotation), (float)Math.Sin(machineGun.rotation));
+                if (shootingCount % shootingFrequency == 0)
+                {
+                    Bullet bullet = new Bullet((int)machineGun.position.X, (int)machineGun.position.Y, Constants.submarine_bullet_velocity);
+                    bullet.direction = machineGun.direction + shootingFixDirection;
+                    bullets.Add(bullet);
+                }
+
+            }
         }
 
         //calls function depending on state
@@ -225,11 +286,11 @@ namespace Curse_of_the_Abyss
                 case State.Driving:
                     Driving();
                     break;
-                case State.Oxygen:
-                    Oxygen();
+                case State.OxygenMode:
+                    OxygenMode();
                     break;
-                case State.MachineGun:
-                    MachineGun();
+                case State.MachineGunMode:
+                    MachineGunMode();
                     break;
             }
         }

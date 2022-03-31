@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
             if (!loadingOn)
                 curr_health -= 1;
             else
-                curr_health += 2;
+                curr_health += Constants.health_gain;
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -52,7 +52,7 @@ namespace Curse_of_the_Abyss
             spritebatch.DrawString(font,"O2",new Vector2(position.X,position.Bottom+1),Color.Black); 
         }
 
-        public void toggleLoadingOn()
+        public void ToggleLoadingOn()
         {
             loadingOn = !loadingOn;
         }
