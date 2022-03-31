@@ -11,12 +11,9 @@ namespace Curse_of_the_Abyss
     public class ShootingSprite : MovableSprite
     {
         public static Texture2D texture;
-        //states are needed to decide in which phase the player is actually
         int targetx;
         int targety;
         int speed;
-
-
 
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
@@ -43,7 +40,6 @@ namespace Curse_of_the_Abyss
 
         }
 
-
         public override void Draw(SpriteBatch spritebatch)
         {
             //this block currently chooses one specific frame to draw
@@ -58,15 +54,6 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(texture, position, source, Color.White);
         }
 
-
-        public override void XCollision(Sprite s, GameTime gametime)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
-        public override void YCollision(Sprite s, GameTime gametime)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
         public void init()
         {
             double xtemp = (targetx - position.X);
@@ -79,49 +66,6 @@ namespace Curse_of_the_Abyss
 
             collidable = true;
 
-        }
-
-        private void Standing()
-        {
-
-        }
-
-        private void Running()
-        {
-
-        }
-
-        private void Jumping()
-        {
-
-        }
-
-        private void Falling()
-        {
-
-        }
-
-        //calls function depending on state
-        //TO DO: decide on needed frame
-        private void getState()
-        {
-            /*
-            switch (state)
-            {
-                case State.Standing:
-                    Standing();
-                    break;
-                case State.Running:
-                    Running();
-                    break;
-                case State.Jumping:
-                    Jumping();
-                    break;
-                case State.Falling:
-                    Falling();
-                    break;
-            }
-            */
         }
     }
 }

@@ -10,9 +10,7 @@ namespace Curse_of_the_Abyss
     public class StationaryShooterNPC : MovableSprite
     {
         public static Texture2D texture;
-        //states are needed to decide in which phase the player is actually
         private static WaterPlayer waterPlayer;
-        private int update = 0;
 
 
 
@@ -50,16 +48,6 @@ namespace Curse_of_the_Abyss
 
             //draw current frame
             spritebatch.Draw(texture, position, source, Color.White);
-        }
-
-
-        public override void XCollision(Sprite s, GameTime gametime)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
-        public override void YCollision(Sprite s, GameTime gametime)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
         }
     }
 }

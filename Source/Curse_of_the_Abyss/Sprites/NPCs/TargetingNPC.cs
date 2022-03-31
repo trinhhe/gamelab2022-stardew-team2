@@ -11,7 +11,6 @@ namespace Curse_of_the_Abyss
     public class TargetingNPC : MovableSprite
     {
         public static Texture2D texture;
-        //states are needed to decide in which phase the player is actually
         
         int speed;
         WaterPlayer player;
@@ -24,7 +23,7 @@ namespace Curse_of_the_Abyss
             position = new Rectangle(x, y, 96, 120);
             this.player = player;
             
-            this.speed = speed; //how fast the shooting sprite should be
+            this.speed = speed; //how fast the NPC should be
             init(); //do rest there to keep this part of code clean
         }
 
@@ -49,10 +48,7 @@ namespace Curse_of_the_Abyss
                 position.X += (int)xVelocity;
                 position.Y += (int)yVelocity;
             }
-           
-
         }
-
 
         public override void Draw(SpriteBatch spritebatch)
         {
@@ -68,15 +64,6 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(texture, position, source, Color.White);
         }
 
-
-        public override void XCollision(Sprite s, GameTime gametime)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
-        public override void YCollision(Sprite s, GameTime gametime)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
         public void init()
         {
             double xtemp = (player.position.X - position.X);
@@ -89,49 +76,6 @@ namespace Curse_of_the_Abyss
 
             collidable = true;
 
-        }
-
-        private void Standing()
-        {
-
-        }
-
-        private void Running()
-        {
-
-        }
-
-        private void Jumping()
-        {
-
-        }
-
-        private void Falling()
-        {
-
-        }
-
-        //calls function depending on state
-        //TO DO: decide on needed frame
-        private void getState()
-        {
-            /*
-            switch (state)
-            {
-                case State.Standing:
-                    Standing();
-                    break;
-                case State.Running:
-                    Running();
-                    break;
-                case State.Jumping:
-                    Jumping();
-                    break;
-                case State.Falling:
-                    Falling();
-                    break;
-            }
-            */
         }
     }
 }
