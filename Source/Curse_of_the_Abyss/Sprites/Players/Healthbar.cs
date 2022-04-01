@@ -12,6 +12,7 @@ namespace Curse_of_the_Abyss
         public static Texture2D bar, currhealth_text;
         public int maxhealth, curr_health;
         public static SpriteFont font;
+        private bool loadingOn;
 
         public Healthbar(int x, int y)
         {
@@ -31,7 +32,10 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
-            curr_health -= 1;
+            if (!loadingOn)
+                curr_health -= 1;
+            else
+                curr_health += Constants.health_gain;
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -46,6 +50,11 @@ namespace Curse_of_the_Abyss
 
             //draw text
             spritebatch.DrawString(font,"O2",new Vector2(position.X,position.Bottom+1),Color.Black); 
+        }
+
+        public void toggleLoadingOn()
+        {
+            loadingOn = !loadingOn;
         }
     }
 }

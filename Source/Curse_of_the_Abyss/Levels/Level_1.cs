@@ -18,6 +18,7 @@ namespace Curse_of_the_Abyss
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             WaterPlayer.LoadContent(content);
+            //SubmarinePlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
@@ -85,8 +86,11 @@ namespace Curse_of_the_Abyss
             waterPlayer = new WaterPlayer(0, 930, healthbar);
             sprites = new List<Sprite>();
             shooters = new List<StationaryShooterNPC>();
-            sprites.Add(healthbar);
+            // sprites.Add(healthbar);
+            submarine = new Submarine(10, 10, healthbar);
+            sprites = new List<Sprite>();
             sprites.Add(waterPlayer);
+            sprites.Add(submarine);
             InitSprites();
         }
         
