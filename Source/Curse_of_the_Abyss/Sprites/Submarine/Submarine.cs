@@ -21,9 +21,7 @@ namespace Curse_of_the_Abyss
         private List<Bullet> bullets;
         private List<Bomb> bombs;
         private Rectangle oxyPosition, machineGunPosition, steerPosition, bombPosition;
-        private int shootingFrequency, shootingCount;
-        private Vector2 shootingFixDirection;
-
+        private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown;
         public bool movingRight;//needed for different situations in states
         public bool machineGunOn, steeringOn;
         public Submarine(int x, int y, Healthbar healthbar)
@@ -39,7 +37,7 @@ namespace Curse_of_the_Abyss
             this.steerPosition = new Rectangle(x+630, y+125, 20, 80);
             this.bombPosition = new Rectangle(x+230, y+125, 20, 80);
             this.healthbar = healthbar;
-            this.machineGun = new MachineGun(x+820,y+250);
+            this.machineGun = new MachineGun(x+820,y+250, 2.35f, -0.64f);
             this.shootingFrequency = Constants.machine_gun_shooting_frequency;
 
             init(); //do rest there to keep this part of code clean
@@ -59,7 +57,7 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
             KB_curState = Keyboard.GetState();
-            getState();// decides current frame and handles state mechanics
+            getState(gametime);// decides current frame and handles state mechanics
 
             //update position of submarine 
             position.X += (int)xVelocity;
@@ -70,6 +68,8 @@ namespace Curse_of_the_Abyss
             submarinePlayer.changeBounds((int)xVelocity);
             machineGun.position.X += (int)xVelocity;
             bombPosition.X += (int)xVelocity;
+            bombCooldown += gametime.ElapsedGameTime.Milliseconds;
+            machineGunCooldown += gametime.ElapsedGameTime.Milliseconds;
 
             KB_preState = KB_curState;
             submarinePlayer.Update(sprites, gametime);
@@ -120,15 +120,16 @@ namespace Curse_of_the_Abyss
             shootingCount = 0;
             bullets = new List<Bullet>();
             bombs = new List<Bomb>();
+            bombCooldown = Constants.submarine_bomb_cooldown;
+            machineGunCooldown = Constants.submarine_machine_gun_cooldown;
         }
 
-        private void Standing()
+        private void Standing(GameTime gametime)
         {
-            
-            
             //player at oxygenstation and preparing to fill
             if (submarinePlayer.position.Intersects(oxyPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
+                submarinePlayer.setVelocityZero();
                 healthbar.toggleLoadingOn();
                 state = State.OxygenMode;
             }
@@ -137,6 +138,7 @@ namespace Curse_of_the_Abyss
             {
                 steeringOn = !steeringOn;
                 submarinePlayer.toggleToMove();
+                submarinePlayer.setVelocityZero();
                 xVelocity = 0;
                 if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))
                 { //move right
@@ -155,16 +157,25 @@ namespace Curse_of_the_Abyss
 
             if (submarinePlayer.position.Intersects(machineGunPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
-                machineGunOn = !machineGunOn;
-                submarinePlayer.toggleToMove();
-                state = State.MachineGunMode;
+                submarinePlayer.setVelocityZero();
+                if (machineGunCooldown > Constants.submarine_machine_gun_cooldown)
+                {
+                    machineGunOn = !machineGunOn;
+                    submarinePlayer.toggleToMove();
+                    state = State.MachineGunMode;
+                }
+                
             }
 
             if (submarinePlayer.position.Intersects(bombPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
-                Bomb bomb = new Bomb(bombPosition.X, bombPosition.Y + 50);
-                bombs.Add(bomb);
-                state = State.Standing;
+                if (bombCooldown > Constants.submarine_bomb_cooldown) 
+                {
+                    Bomb bomb = new Bomb(bombPosition.X, bombPosition.Y + 50);
+                    bombs.Add(bomb);
+                    bombCooldown = 0;
+                }
+                
             }
         }
 
@@ -255,16 +266,18 @@ namespace Curse_of_the_Abyss
                 machineGunOn = !machineGunOn;
                 submarinePlayer.toggleToMove();
                 state = State.Standing;
+                // CD when stop using machinegun
+                machineGunCooldown = 0;
             }
             else if (machineGunOn)
             {
                 shootingCount++;
-                if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))
+                if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left) && machineGun.rotation > machineGun.rotationRightBound)
                 {
                     machineGun.rotation -= MathHelper.ToRadians(machineGun.rotationVelocity);
                     // Console.WriteLine(machineGun.rotation);
                 }
-                else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right))
+                else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right) && machineGun.rotation < machineGun.rotationLeftBound)
                 {
                     machineGun.rotation += MathHelper.ToRadians(machineGun.rotationVelocity);
                     // Console.WriteLine(machineGun.rotation);
@@ -281,19 +294,14 @@ namespace Curse_of_the_Abyss
             }
         }
 
-        private void BombMode()
-        {
-            
-        }
-
         //calls function depending on state
         //TO DO: decide on needed frame
-        private void getState()
+        private void getState(GameTime gametime)
         {
             switch (state)
             {
                 case State.Standing:
-                    Standing();
+                    Standing(gametime);
                     break;
                 case State.Driving:
                     Driving();
