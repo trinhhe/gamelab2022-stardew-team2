@@ -44,14 +44,15 @@ namespace Curse_of_the_Abyss
                 position.Y += (int)yVelocity;
                 s = CheckCollision(sprites);
                 if (s != null) YCollision(s, gametime);
+                else
+                {
+                    position.Y += 1;
+                    s = CheckCollision(sprites);
+                    if (s == null && state != State.Jumping) state = State.Falling;
+                    position.Y -= 1;
+                }
                 position.X += (int)xVelocity;
             }
-
-            //check if player is in the air without jumping
-            position.Y += 1;
-            s = CheckCollision(sprites);
-            if ((s == null ||s.GetType() != typeof(Obstacle)) && state != State.Jumping) state = State.Falling;
-            position.Y -= 1;
 
             //reset hit
             lasthit += gametime.ElapsedGameTime.Milliseconds;
@@ -88,7 +89,7 @@ namespace Curse_of_the_Abyss
                             s.remove = true;
                             health.curr_health -= health.maxhealth / 10;
                         }
-                        else position.X += (int)xVelocity;
+                        else
                         position.Y += (int)yVelocity;
                         break;
                     }
@@ -101,7 +102,7 @@ namespace Curse_of_the_Abyss
                             lasthit = 0;
                             health.curr_health -= health.maxhealth / 10;
                         }
-                        else position.X += (int)xVelocity;
+                        else
                         position.Y += (int)yVelocity;
                         break;
                     }
@@ -120,6 +121,9 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
+                default:
+                    position.Y += (int)yVelocity;
+                    break;
             }
         }
         public override void YCollision(Sprite s, GameTime gametime){
@@ -158,7 +162,7 @@ namespace Curse_of_the_Abyss
                         }
                         else
                         {
-                            position.Y = s.position.Bottom;
+                            position.Y = s.position.Bottom+1;
                             yVelocity = 1;
                             state = State.Falling;
                         }

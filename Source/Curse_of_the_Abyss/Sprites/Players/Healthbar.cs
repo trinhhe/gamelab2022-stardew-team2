@@ -33,8 +33,8 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
             if (!loadingOn)
-                curr_health -= 1;
-            else
+                curr_health -= Constants.health_loss;
+            else if(curr_health<=maxhealth)
                 curr_health += Constants.health_gain;
         }
 

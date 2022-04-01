@@ -85,15 +85,13 @@ namespace Curse_of_the_Abyss
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
             waterPlayer = new WaterPlayer(600, 922, healthbar);
-            sprites = new List<Sprite>();
             shooters = new List<StationaryShooterNPC>();
-            // sprites.Add(healthbar);
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
+            Initialize();
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
-            Initialize();
         }
         
     }

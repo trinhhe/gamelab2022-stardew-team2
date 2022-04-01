@@ -83,6 +83,30 @@ namespace Curse_of_the_Abyss
             {
                 b.Update(sprites, gametime);
             }
+
+            //remove bullets and bombs
+            List<Sprite> toRemove = new List<Sprite>();
+            foreach (Bullet b in bullets)
+            {
+                if (b.remove) toRemove.Add(b);
+            }
+            foreach (Bomb b in bombs)
+            {
+                if (b.remove) toRemove.Add(b);
+            }
+            foreach (Sprite s in toRemove)
+            {
+                if (s.GetType() == typeof(Bomb))
+                {
+                    Bomb b = s as Bomb;
+                    bombs.Remove(b);
+                }
+                else if (s.GetType() == typeof(Bullet))
+                {
+                    Bullet b = s as Bullet;
+                    bullets.Remove(b);
+                }
+            }
         }
 
 

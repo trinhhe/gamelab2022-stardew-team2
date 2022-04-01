@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
     public class TargetingNPC : MovableSprite
     {
         public static Texture2D texture;
-        
+        public int health = 3;
         int speed;
         WaterPlayer player;
 
@@ -48,6 +48,7 @@ namespace Curse_of_the_Abyss
                 position.X += (int)xVelocity;
                 position.Y += (int)yVelocity;
             }
+            if (health <= 0) remove = true;
         }
 
         public override void Draw(SpriteBatch spritebatch)

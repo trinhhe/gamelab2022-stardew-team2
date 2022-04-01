@@ -16,6 +16,7 @@ namespace Curse_of_the_Abyss
             this.name = "bullet";
             this.position = new Rectangle(x, y, 10, 10);
             this.linearVelocity = Constants.submarine_bullet_velocity;
+            this.collidable = true;
         }
         public static void LoadContent(ContentManager content)
         {
@@ -25,12 +26,38 @@ namespace Curse_of_the_Abyss
         {
             Vector2 inc = direction * linearVelocity;
             position.X += (int)inc.X;
-            position.Y += (int)inc.Y;
+            Sprite s = CheckCollision(sprites);
+            if (s!= null && s.name == "targetingNPC") XCollision(s, gametime);
+            else
+            {
+                position.X -= (int)inc.X;
+                position.Y += (int)inc.Y;
+                s = CheckCollision(sprites);
+                if (s!=null && s.name == "targetingNPC") YCollision(s, gametime);
+                position.X += (int)inc.X;
+            }
         }
 
         public override void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(texture, position, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
+        }
+
+        public override void XCollision(Sprite s, GameTime gameTime)
+        {
+            TargetingNPC t = s as TargetingNPC;
+            t.health -= 1;
+            remove = true;
+        }
+
+        public override void YCollision(Sprite s, GameTime gameTime)
+        {
+            if (s.name == "targetingNPC")
+            {
+                TargetingNPC t = s as TargetingNPC;
+                t.health -= 1;
+                remove = true;
+            }
         }
     }
 

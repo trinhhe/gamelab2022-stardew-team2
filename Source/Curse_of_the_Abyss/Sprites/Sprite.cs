@@ -34,7 +34,7 @@ namespace Curse_of_the_Abyss
             {
                 if (this == s) continue;
                 if (!s.collidable || !collidable) continue;
-                if (position.Intersects(s.position))
+                if (this.position.Intersects(s.position))
                 {
                     return s;
                 }
