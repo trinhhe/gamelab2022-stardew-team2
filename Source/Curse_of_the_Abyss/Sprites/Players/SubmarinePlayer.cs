@@ -65,15 +65,6 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(texture, position, source, Color.White,0,Vector2.Zero, SpriteEffects.None, 0.0f);
         }
 
-
-        public override void XCollision(Sprite s)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
-        public override void YCollision(Sprite s)
-        {
-            //TO DO: decide what happens upon collision with different objects/characters
-        }
         public void init()
         {
             state = State.Standing;

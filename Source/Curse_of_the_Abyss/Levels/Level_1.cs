@@ -23,6 +23,7 @@ namespace Curse_of_the_Abyss
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
             PathNPC.LoadContent(content);
+            Submarine.LoadContent(content);
         }
         public Level1()
         {
