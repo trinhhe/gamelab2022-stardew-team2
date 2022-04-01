@@ -36,7 +36,16 @@ namespace Curse_of_the_Abyss
             
             //update position of Player 
             position.X += (int)xVelocity;
-            position.Y += (int)yVelocity;
+            Sprite s = CheckCollision(sprites);
+            if (s != null) XCollision(s, gametime);
+            else
+            {
+                position.X -= (int)xVelocity;
+                position.Y += (int)yVelocity;
+                s = CheckCollision(sprites);
+                if (s != null) YCollision(s, gametime);
+                position.X += (int)xVelocity;
+            }
 
         }
 
@@ -53,7 +62,14 @@ namespace Curse_of_the_Abyss
             //draw current frame
             spritebatch.Draw(texture, position, source, Color.White);
         }
-
+        public override void XCollision(Sprite s, GameTime gameTime)
+        {
+            if (s.name == "obstacle") remove = true;
+        }
+        public override void YCollision(Sprite s, GameTime gameTime)
+        {
+            if (s.name == "obstacle") remove = true;
+        }
         public void init()
         {
             double xtemp = (targetx - position.X);

@@ -35,9 +35,8 @@ namespace Curse_of_the_Abyss
             getState();// decides current frame and handles state mechanics
 
             //update position of Player and check for collisions
-            Sprite s = null;
             position.X += (int)xVelocity;
-            s = CheckCollision(sprites);
+            Sprite s = CheckCollision(sprites);
             if (s != null) XCollision(s, gametime);
             else
             {
@@ -45,10 +44,6 @@ namespace Curse_of_the_Abyss
                 position.Y += (int)yVelocity;
                 s = CheckCollision(sprites);
                 if (s != null) YCollision(s, gametime);
-                else
-                {
-                    checkfall = true;
-                }
                 position.X += (int)xVelocity;
             }
 
