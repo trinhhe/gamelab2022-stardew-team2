@@ -96,7 +96,7 @@ namespace Curse_of_the_Abyss
                         position.Y += (int)yVelocity;
                         break;
                     }
-                case ("PathNPC"):
+                case ("pathNPC"):
                 case ("targetingNPC"):
                     {
                         if (!hit)
