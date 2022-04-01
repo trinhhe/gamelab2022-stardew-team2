@@ -27,8 +27,8 @@ namespace Curse_of_the_Abyss
         {
             // load tile map 
             TileMap = new TmxMap("Content/maps/map_lvl1.tmx");
-            Initialize();
             Reset();
+            
         }
 
         //inits every item/character that is not a player or submarine
@@ -82,12 +82,13 @@ namespace Curse_of_the_Abyss
             game_over = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(0, 930, healthbar);
+            waterPlayer = new WaterPlayer(600, 922, healthbar);
             sprites = new List<Sprite>();
             shooters = new List<StationaryShooterNPC>();
             sprites.Add(healthbar);
             sprites.Add(waterPlayer);
             InitSprites();
+            Initialize();
         }
         
     }

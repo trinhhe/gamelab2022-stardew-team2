@@ -18,7 +18,6 @@ namespace Curse_of_the_Abyss
         protected TmxMap TileMap;
         public MapManager MapManager;
         public Matrix matrix;
-        public List<Sprite> collisionObjects;
         public bool game_over;
 
         public virtual void Initialize()
@@ -29,10 +28,9 @@ namespace Curse_of_the_Abyss
             matrix = Matrix.CreateScale(new Vector3(GameSize / MapSize, 1));
 
             // add all tiles in map to collisionObjects list
-            collisionObjects = new List<Sprite>();
             foreach (var o in TileMap.ObjectGroups["Collisions"].Objects)
             {
-                collisionObjects.Add(new Sprite(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
+                sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
             }
         }
 

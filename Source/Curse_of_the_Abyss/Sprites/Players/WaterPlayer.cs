@@ -46,6 +46,13 @@ namespace Curse_of_the_Abyss
                 position.Y += (int)yVelocity;
                 s = CheckCollision(sprites);
                 if (s != null) YCollision(s, gametime);
+                else
+                {
+                    position.Y += 1;
+                    s = CheckCollision(sprites);
+                    if (s != null && state != State.Jumping) state = State.Falling;
+                    position.Y -= 1;
+                }
                 position.X += (int)xVelocity;
             }
 
@@ -53,25 +60,15 @@ namespace Curse_of_the_Abyss
             //reset hit
             if (lasthit >= 2000&& hit)
                 hit = false;
-
-            //check that player won't fall through ground
-            //TO DO: once collision detection with ground is coded update this part
-            if (position.Y+position.Height>1022){
-                position.Y=1022-position.Height;
-                if(xVelocity == 0)
-                    state = State.Standing;
-                else
-                    state = State.Running;
-            }
         }
 
 
         public override void Draw(SpriteBatch spritebatch){
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width/5;
+            int width = texture.Width/5 - 18;
             int height = texture.Height;
-            Rectangle source = new Rectangle(0,0,width,height);
+            Rectangle source = new Rectangle(5,0,width,height);
 
             //check if player is doging
             if (dodging && !wasdodging){ position.Height = 50; position.Y += 50; wasdodging = true; }
@@ -87,47 +84,90 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("shootingSprite"):
-                    if (!hit)
                     {
-                        hit = true;
-                        lasthit = 0;
-                        s.remove = true;
-                        health.curr_health -= health.maxhealth / 10;
+                        if (!hit)
+                        {
+                            hit = true;
+                            lasthit = 0;
+                            s.remove = true;
+                            health.curr_health -= health.maxhealth / 10;
+                        }
+                        else position.X += (int)xVelocity;
+                        position.Y += (int)yVelocity;
+                        break;
                     }
-                    break;
                 case ("PathNPC"):
                 case ("targetingNPC"):
-                    if (!hit)
                     {
-                        hit = true;
-                        lasthit = 0;
-                        health.curr_health -= health.maxhealth / 10;
+                        if (!hit)
+                        {
+                            hit = true;
+                            lasthit = 0;
+                            health.curr_health -= health.maxhealth / 10;
+                        }
+                        else position.X += (int)xVelocity;
+                        position.Y += (int)yVelocity;
+                        break;
                     }
-                    position.Y += (int)yVelocity;
-                    break;
+                case ("stationaryNPC"):
+                case ("obstacle"):
+                    {
+                        if (position.Left < s.position.Left)
+                        {
+                            position.X = s.position.Left - position.Width;
+                            xVelocity = 0;
+                        }
+                        else if (position.Right > s.position.Right)
+                        {
+                            position.X = s.position.Right;
+                            xVelocity = 0;
+                        }
+                        break;
+                    }
             }
         }
         public override void YCollision(Sprite s, GameTime gametime){
             switch (s.name)
             {
                 case ("shootingSprite"):
-                    if (!hit)
                     {
-                        hit = true;
-                        lasthit = 0;
-                        s.remove = true;
-                        health.curr_health -= health.maxhealth / 10;
+                        if (!hit)
+                        {
+                            hit = true;
+                            lasthit = 0;
+                            s.remove = true;
+                            health.curr_health -= health.maxhealth / 10;
+                        }
+                        break;
                     }
-                    break;
                 case ("pathNPC"):
                 case ("targetingNPC"):
-                    if (!hit)
                     {
-                        hit = true;
-                        lasthit = 0;
-                        health.curr_health -= health.maxhealth / 10;
+                        if (!hit)
+                        {
+                            hit = true;
+                            lasthit = 0;
+                            health.curr_health -= health.maxhealth / 10;
+                        }
+                        break;
                     }
-                    break;
+                case ("stationaryNPC"):
+                case ("obstacle"):
+                    {
+                        if (position.Top < s.position.Top)
+                        {
+                            position.Y = s.position.Top - position.Height;
+                            yVelocity = 0;
+                            state = State.Running;
+                        }
+                        else
+                        {
+                            position.Y = s.position.Bottom;
+                            yVelocity = 1;
+                            state = State.Falling;
+                        }
+                        break;
+                    }
             }
         }
         public void init(){
