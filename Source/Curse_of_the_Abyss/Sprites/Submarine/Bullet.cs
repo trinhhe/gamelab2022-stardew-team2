@@ -11,11 +11,11 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         public int ground;
         public float linearVelocity;
-        public Bullet(int x, int y, float linVel)
+        public Bullet(int x, int y)
         {
             this.name = "bullet";
             this.position = new Rectangle(x, y, 10, 10);
-            this.linearVelocity = linVel;
+            this.linearVelocity = Constants.submarine_bullet_velocity;
         }
         public static void LoadContent(ContentManager content)
         {

@@ -16,8 +16,8 @@ namespace Curse_of_the_Abyss
             int width, height;
             width = height = 50;
             position = new Rectangle(x, y, width, height);
-            rotationVelocity = 3f;
-            Origin = new Vector2(width / 2, height / 2);
+            rotationVelocity = Constants.machine_gun_turn_velocity;
+            rotationOrigin = new Vector2(width / 2, height / 2);
         }
 
         public static void LoadContent(ContentManager content)
@@ -33,7 +33,7 @@ namespace Curse_of_the_Abyss
         public override void Draw(SpriteBatch spritebatch)
         {          
             //draw current frame
-            spritebatch.Draw(texture, position, null, Color.White, rotation, Origin, SpriteEffects.None, 0.4f);
+            spritebatch.Draw(texture, position, null, Color.White, rotation, rotationOrigin, SpriteEffects.None, 0.4f);
         }
 
     }

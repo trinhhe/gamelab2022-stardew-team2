@@ -13,6 +13,8 @@ namespace Curse_of_the_Abyss
         public static float run_accelerate_submarine = 0.1f;
         public static int health_gain = 4;
         public static float submarine_bullet_velocity = 4f;
+        public static float machine_gun_turn_velocity = 2.5f;
+        public static int machine_gun_shooting_frequency = 50;
     }
 
 }

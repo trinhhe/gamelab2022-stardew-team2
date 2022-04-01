@@ -52,7 +52,7 @@ namespace Curse_of_the_Abyss
             spritebatch.DrawString(font,"O2",new Vector2(position.X,position.Bottom+1),Color.Black); 
         }
 
-        public void ToggleLoadingOn()
+        public void toggleLoadingOn()
         {
             loadingOn = !loadingOn;
         }
