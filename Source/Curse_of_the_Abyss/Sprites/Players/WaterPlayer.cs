@@ -65,7 +65,6 @@ namespace Curse_of_the_Abyss
             }
         }
 
-
         public override void Draw(SpriteBatch spritebatch){
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
@@ -229,6 +228,7 @@ namespace Curse_of_the_Abyss
             if (KB_curState.IsKeyDown(Keys.W) && !dodging)
             {
                 lastY = position.Y;
+                yVelocity = Constants.jump_velocity;
                 state = State.Jumping;
             }
             else if (KB_curState.IsKeyDown(Keys.S))
