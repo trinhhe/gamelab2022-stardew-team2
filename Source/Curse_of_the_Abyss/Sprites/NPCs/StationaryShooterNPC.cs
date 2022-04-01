@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace Curse_of_the_Abyss
@@ -10,16 +9,15 @@ namespace Curse_of_the_Abyss
     public class StationaryShooterNPC : MovableSprite
     {
         public static Texture2D texture;
-        private static WaterPlayer waterPlayer;
 
 
 
 
-        public StationaryShooterNPC(int x, int y, WaterPlayer player)
+        public StationaryShooterNPC(int x, int y)
         {
             name = "stationaryNPC";
             position = new Rectangle(x, y, 96, 120);
-            waterPlayer = player;
+            collidable = true;
         }
 
         public static void LoadContent(ContentManager content)
