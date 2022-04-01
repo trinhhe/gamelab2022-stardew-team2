@@ -193,6 +193,7 @@ namespace Curse_of_the_Abyss
             {
                 lastY = position.Y;
                 state = State.Jumping;
+                yVelocity = Constants.jump_velocity;
             }
             //dodging
             else if (KB_curState.IsKeyDown(Keys.S))
