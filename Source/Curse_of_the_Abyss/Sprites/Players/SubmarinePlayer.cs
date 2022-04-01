@@ -224,12 +224,18 @@ namespace Curse_of_the_Abyss
         public void toggleToMove()
         {
             toMove = !toMove;
+            // if(!toMove)
+            //     xVelocity = 0;
         }
 
         public void changeBounds(int xVelocity)
         {
             leftBound += xVelocity;
             rightBound += xVelocity;
+        }
+        public void setVelocityZero()
+        {
+            xVelocity = 0;
         }
     }
 }
