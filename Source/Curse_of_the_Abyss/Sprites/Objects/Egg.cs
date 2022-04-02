@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
 
         }
 
-        public void LoadContent(ContentManager content)
+        public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
             texture = content.Load<Texture2D>("SmileyWalk");
@@ -32,12 +32,12 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width;
-            int height = texture.Width;
+            int width = texture.Width/4;
+            int height = texture.Width/4;
             Rectangle source = new Rectangle(0, 0, width, height);
 
             //draw current frame
-            spritebatch.Draw(texture, position, Color.White);
+            spritebatch.Draw(texture, position, source, Color.White);
         }
 
     }
@@ -102,33 +102,17 @@ namespace Curse_of_the_Abyss
             return eggsTotal == eggsCollected;
         }
 
-        public void LoadContent(ContentManager content)
-        {
-            //get enumerator of hashset
-            HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
-
-            
-
-            while (em.MoveNext())
-            {   
-                Egg curEgg = em.Current;
-                curEgg.LoadContent( content);
-                
-
-            }
-        }
-
         public void Draw(SpriteBatch spritebatch)
         {
             //get enumerator of hashset
             HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
 
 
-
+            
             while (em.MoveNext())
             {
-                Console.Write("ddd");
                 (em.Current).Draw(spritebatch);
+                Console.Write(em.Current.position.X);
             }
         }
 
