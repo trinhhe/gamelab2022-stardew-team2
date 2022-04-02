@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using TiledSharp;
+using System;
 
 namespace Curse_of_the_Abyss 
 {
@@ -35,10 +36,10 @@ namespace Curse_of_the_Abyss
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
-            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1400, 400);
+            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1800, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
-            PathNPC pathNPC = new PathNPC(900, 250, 1300, 250, 5);
+            PathNPC pathNPC = new PathNPC(1200, 700, 1500, 700, 5);
             sprites.Add(pathNPC);
         }
 
@@ -62,7 +63,8 @@ namespace Curse_of_the_Abyss
             if (gameTime.TotalGameTime.Milliseconds % 10000 == 0)
             { //10 sec
                 //targeting npc
-                if (randomTimer < 10)
+                int seconds = 10; // set for time btw spwaning of targeting npcs
+                if (randomTimer < seconds)
                 {
                     randomTimer++;
                 }
@@ -71,7 +73,12 @@ namespace Curse_of_the_Abyss
                     int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
                     int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
                     int speed = 2;
-                    TargetingNPC targetingNPC = new TargetingNPC(2100, 400, waterPlayer, speed);
+                    var rand = new Random();
+                    int x_index = rand.Next(2);
+                    int y_index = rand.Next(2);
+                    var x_pos = new List<int>{-100,2100};
+                    var y_pos = new List<int> { 400, 900 };
+                    TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
                     sprites.Add(targetingNPC);
                     randomTimer = 0;
                 }
