@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
         {   
             //spawns at x,y and targets player with speed speed
             name = "targetingNPC";
-            position = new Rectangle(x, y, 96, 120);
+            position = new Rectangle(x, y, 60, 80);
             this.player = player;
             
             this.speed = speed; //how fast the NPC should be
@@ -62,7 +62,8 @@ namespace Curse_of_the_Abyss
 
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            Rectangle pos = new Rectangle(position.X - 15, position.Y - 15, 90, 110);
+            spritebatch.Draw(texture, pos, source, Color.White);
         }
 
         public void init()
