@@ -62,7 +62,7 @@ namespace Curse_of_the_Abyss
 
 
             //draw current frame
-            Rectangle pos = new Rectangle(position.X - 15, position.Y - 15, 90, 110);
+            Rectangle pos = new Rectangle(position.X - 18, position.Y - 20, 96, 120);
             spritebatch.Draw(texture, pos, source, Color.White);
         }
 
