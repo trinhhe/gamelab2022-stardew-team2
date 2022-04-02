@@ -53,11 +53,6 @@ namespace Curse_of_the_Abyss
                 }
                 position.X += (int)xVelocity;
             }
-
-            //reset hit
-            lasthit += gametime.ElapsedGameTime.Milliseconds;
-            if (lasthit >= 2000&& hit)
-                hit = false;
         }
 
         public override void Draw(SpriteBatch spritebatch){
@@ -81,31 +76,17 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("shootingSprite"):
-                    {
-                        if (!hit)
-                        {
-                            hit = true;
-                            lasthit = 0;
-                            s.remove = true;
-                            health.curr_health -= health.maxhealth / 10;
-                        }
-                        else
-                        position.Y += (int)yVelocity;
-                        break;
-                    }
-                case ("pathNPC"):
                 case ("targetingNPC"):
-                    {
-                        if (!hit)
-                        {
-                            hit = true;
-                            lasthit = 0;
-                            health.curr_health -= health.maxhealth / 10;
-                        }
-                        else
+                        s.remove = true;
+                        health.curr_health -= health.maxhealth / 10;
+                        
                         position.Y += (int)yVelocity;
                         break;
-                    }
+                case ("pathNPC"):
+                    
+                        health.curr_health -= health.maxhealth / 10;
+                        position.Y += (int)yVelocity;
+                        break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
                     {
@@ -130,25 +111,22 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("shootingSprite"):
+                case ("targetingNPC"):
                     {
-                        if (!hit)
-                        {
+                        
                             hit = true;
                             lasthit = 0;
                             s.remove = true;
                             health.curr_health -= health.maxhealth / 10;
-                        }
                         break;
                     }
                 case ("pathNPC"):
-                case ("targetingNPC"):
                     {
-                        if (!hit)
-                        {
-                            hit = true;
-                            lasthit = 0;
-                            health.curr_health -= health.maxhealth / 10;
-                        }
+                        
+                        hit = true;
+                        lasthit = 0;
+                        health.curr_health -= health.maxhealth / 10;
+                        
                         break;
                     }
                 case ("stationaryNPC"):
