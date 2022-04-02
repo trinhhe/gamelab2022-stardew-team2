@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using System;
 
 namespace Curse_of_the_Abyss
 {
@@ -36,7 +37,7 @@ namespace Curse_of_the_Abyss
             Rectangle source = new Rectangle(0, 0, width, height);
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            spritebatch.Draw(texture, position, Color.White);
         }
 
     }
@@ -65,20 +66,31 @@ namespace Curse_of_the_Abyss
             eggsTotal += 1;
         }
 
+        //TODO the way I implemented this it must not be possible
+        //to collect two eggs from the same position
         public void collectIfPossible(Rectangle player)
         {
             //get enumerator of hashset
             HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
+
+            Egg toRemove = null;
+            bool gotEgg = false;
 
             while (em.MoveNext())
             {
                 Egg curEgg = em.Current;
                 if (player.Intersects(curEgg.position))
                 {
-                    eggs.Remove(curEgg);
+                    gotEgg = true;
                     eggsCollected += 1;
+                    toRemove = curEgg;
                 }
 
+            }
+
+            if (gotEgg)
+            {
+                eggs.Remove(toRemove);
             }
 
  
@@ -115,8 +127,22 @@ namespace Curse_of_the_Abyss
 
             while (em.MoveNext())
             {
-                Egg curEgg = em.Current;
-                curEgg.Draw(spritebatch);
+                Console.Write("ddd");
+                (em.Current).Draw(spritebatch);
+            }
+        }
+
+
+        public void UpdateAll()
+        {
+            //get enumerator of hashset
+            HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
+
+
+
+            while (em.MoveNext())
+            {
+                (em.Current).Update();
 
 
             }

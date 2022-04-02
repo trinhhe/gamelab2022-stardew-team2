@@ -12,6 +12,7 @@ namespace Curse_of_the_Abyss
         protected Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
         protected WaterPlayer waterPlayer;
+        protected EggCollection eggs;
 
         public virtual void LoadContent(ContentManager content)
         {
@@ -24,6 +25,9 @@ namespace Curse_of_the_Abyss
             {
                 s.Update();
             }
+
+            eggs.collectIfPossible(waterPlayer.position);
+            eggs.UpdateAll();
         }
 
         public virtual void Draw(SpriteBatch spritebatch)
@@ -33,6 +37,8 @@ namespace Curse_of_the_Abyss
             {
                 s.Draw(spritebatch);
             }
+
+            eggs.Draw(spritebatch);
         }
     }
 
