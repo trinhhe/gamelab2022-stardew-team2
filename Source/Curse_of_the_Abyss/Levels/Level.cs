@@ -9,9 +9,9 @@ namespace Curse_of_the_Abyss
 {
     public class Level
     {
-        protected Texture2D background;
+        public Texture2D background;
         protected Texture2D tileset;
-        protected Rectangle mapRectangle;
+        public Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
         protected Submarine submarine;
         protected WaterPlayer waterPlayer;
@@ -69,7 +69,6 @@ namespace Curse_of_the_Abyss
         public virtual void Draw(SpriteBatch spritebatch)
         {
             //adding last argument for layerDepth=1 (backmost layer) since sometimes submarine will be drawn behind background
-            spritebatch.Draw(background, mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
             foreach (Sprite s in sprites)
             {
                 s.Draw(spritebatch);

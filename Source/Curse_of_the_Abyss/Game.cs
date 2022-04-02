@@ -110,11 +110,15 @@ namespace Curse_of_the_Abyss
 
             // draw sprites
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
-            current_level.Draw(_spriteBatch); //draw map
+            _spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
             _spriteBatch.End();
 
             // draw map
             current_level.MapManager.Draw(current_level.matrix);
+
+            _spriteBatch.Begin(SpriteSortMode.BackToFront);
+            current_level.Draw(_spriteBatch); //draw map
+            _spriteBatch.End();
 
             // render at 1080p
             GraphicsDevice.SetRenderTarget(null);

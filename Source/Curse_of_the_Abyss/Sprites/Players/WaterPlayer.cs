@@ -13,8 +13,8 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State{Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight,dodging,wasdodging, hit,checkfall;//needed for different situations in states
-        private int lastY,lasthit;//needed to decide how heigh player can jump
+        public bool movingRight,dodging,wasdodging,checkfall;//needed for different situations in states
+        private int lastY;//needed to decide how heigh player can jump
         Healthbar health;
 
 
@@ -114,8 +114,7 @@ namespace Curse_of_the_Abyss
                 case ("targetingNPC"):
                     {
                         
-                            hit = true;
-                            lasthit = 0;
+                            
                             s.remove = true;
                             health.curr_health -= health.maxhealth / 10;
                         break;
@@ -123,8 +122,7 @@ namespace Curse_of_the_Abyss
                 case ("pathNPC"):
                     {
                         
-                        hit = true;
-                        lasthit = 0;
+                       
                         health.curr_health -= health.maxhealth / 10;
                         
                         break;

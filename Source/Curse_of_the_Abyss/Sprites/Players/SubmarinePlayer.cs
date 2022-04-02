@@ -32,7 +32,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("SmileyWalk");
+            texture = content.Load<Texture2D>("MCRunSprite");
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -55,14 +55,12 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width / 4;
-            int height = texture.Width / 4;
-            Rectangle source = new Rectangle(0, 0, width, height);
-
-
+            int width = texture.Width / 5 - 18;
+            int height = texture.Height;
+            Rectangle source = new Rectangle(10, 0, width, height);
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White,0,Vector2.Zero, SpriteEffects.None, 0.0f);
+            spritebatch.Draw(texture, position, source, Color.White);
         }
 
         public void init()
