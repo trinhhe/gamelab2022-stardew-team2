@@ -36,7 +36,7 @@ namespace Curse_of_the_Abyss
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
-            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1800, 410);
+            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
             PathNPC pathNPC = new PathNPC(1200, 700, 1500, 700, 5);

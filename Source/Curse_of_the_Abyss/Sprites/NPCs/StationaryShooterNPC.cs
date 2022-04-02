@@ -16,7 +16,7 @@ namespace Curse_of_the_Abyss
         public StationaryShooterNPC(int x, int y)
         {
             name = "stationaryNPC";
-            position = new Rectangle(x, y, 96, 120);
+            position = new Rectangle(x, y, 128, 160);
             collidable = true;
         }
 
