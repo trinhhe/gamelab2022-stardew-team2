@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
             name = "shootingSprite";
-            position = new Rectangle(x, y, 40, 50);
+            position = new Rectangle(x, y, 32, 40);
             targetx = coordx;
             targety = coordy;
             this.speed = speed; //how fast the shooting sprite should be
@@ -28,7 +28,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("octopuss");
+            texture = content.Load<Texture2D>("cannonball");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
