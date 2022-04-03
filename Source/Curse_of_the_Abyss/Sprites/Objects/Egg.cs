@@ -117,7 +117,7 @@ namespace Curse_of_the_Abyss
         }
 
 
-        public void UpdateAll()
+        public void UpdateAll(List<Sprite> Sprites, GameTime gameTime)
         {
             //get enumerator of hashset
             HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
@@ -126,7 +126,7 @@ namespace Curse_of_the_Abyss
 
             while (em.MoveNext())
             {
-                (em.Current).Update();
+                (em.Current).Update(null, gameTime);
 
 
             }
