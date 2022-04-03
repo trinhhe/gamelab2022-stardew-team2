@@ -17,7 +17,7 @@ namespace Curse_of_the_Abyss
         public Healthbar(int x, int y)
         {
             name = "healthbar";
-            position = new Rectangle(x, y, 10, 300);
+            position = new Rectangle(x, y, 40, 310);
             collidable = false;
             maxhealth = 5000;
             curr_health = maxhealth;
