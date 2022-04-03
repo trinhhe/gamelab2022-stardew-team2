@@ -87,8 +87,36 @@ namespace Curse_of_the_Abyss
                 }
             }
 
+            Sprite s = CheckCollision(sprites);
+            if (s != null) YCollision(s, gametime);
+
         }
 
+        public override void YCollision(Sprite s, GameTime gametime)
+        {
+            switch (s.name)
+            {
+                case ("waterplayer"):
+                {
+                    System.Diagnostics.Debug.WriteLine("YCOLLISON");
+                    if (s.position.Top < position.Top)
+                    {
+                        s.position.Y = position.Top - s.position.Height - (int)yVelocity;
+                        ((MovableSprite)s).yVelocity = 0;
+                        ((WaterPlayer)s).state = WaterPlayer.State.Running;
+                    }
+                    else
+                    {
+                        s.position.Y = position.Bottom + 1;
+                        ((MovableSprite)s).yVelocity = 1;
+                        ((WaterPlayer)s).state = WaterPlayer.State.Falling;
+                    }
+                    break;
+                }
+
+            }
+            
+        }
 
         public override void Draw(SpriteBatch spritebatch)
         {

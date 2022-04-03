@@ -102,9 +102,6 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
-                case ("movingPlatform"):
-                    System.Diagnostics.Debug.WriteLine("XCOLLISION");
-                    break;
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
@@ -146,9 +143,25 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
-                case ("movingPlatform"):
-                    System.Diagnostics.Debug.WriteLine("YCOLLISION");
-                    break;
+                /*
+                    {
+                        System.Diagnostics.Debug.WriteLine("YCOLLISON");
+                        if (position.Top < s.position.Top)
+                        {
+                            position.X += (int)xVelocity;
+                            position.Y = s.position.Top - position.Height - (int)((MovableSprite)s).yVelocity;
+                            yVelocity = 0;
+                            state = State.Running;
+                        }
+                        else
+                        {
+                            position.Y = s.position.Bottom + 1;
+                            yVelocity = 1;
+                            state = State.Falling;
+                        }
+                        break;
+                    }
+                */
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
