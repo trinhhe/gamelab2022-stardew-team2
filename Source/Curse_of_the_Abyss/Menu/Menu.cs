@@ -18,7 +18,8 @@ namespace Curse_of_the_Abyss
             Settings,
             ResolutionSettings,
             Quit,
-            Game_over
+            Game_over,
+            Demo_end
         }
 
         public MenuScreens _screen = MenuScreens.Main;
@@ -44,6 +45,10 @@ namespace Curse_of_the_Abyss
             else if(_screen == MenuScreens.Game_over)
             {
                 SetupGameOver();
+            }
+            else if (_screen == MenuScreens.Demo_end)
+            {
+                SetupDemoEnd();
             }
             else
             {
@@ -82,7 +87,7 @@ namespace Curse_of_the_Abyss
             Label.Put("A Submariner's Tale", 20);
             Label.Put("", 10);
 
-            if (Button.Put("Play").Clicked)
+            if (Button.Put("  Play  ").Clicked)
             {
                 entered = false;
                 Game.paused = false;
@@ -93,7 +98,7 @@ namespace Curse_of_the_Abyss
                 _screen = MenuScreens.Settings;
             }
             Label.Put("", 2);
-            if (Button.Put("Quit").Clicked)
+            if (Button.Put("  Quit  ").Clicked)
             {
                 _screen = MenuScreens.Quit;
             }
@@ -108,6 +113,19 @@ namespace Curse_of_the_Abyss
                 _screen = MenuScreens.Main;
             }
         }
+
+        private void SetupDemoEnd()
+        {
+            Label.Put("Demo completed", 50);
+            Label.Put("Congratulations!", 20);
+            Label.Put("", 10);
+
+            if (Button.Put("Restart").Clicked)
+            {
+                _screen = MenuScreens.Main;
+            }
+        }
+
         private void SetupSettingsMenu()
         {
             Label.Put("Settings", 50);
@@ -117,7 +135,7 @@ namespace Curse_of_the_Abyss
                 Settings.ToggleFullscreen();
             }
             Label.Put("", 2);
-            if (Button.Put("Change resolution").Clicked)
+            if (Button.Put(" Change resolution ").Clicked)
             {
                 _screen = MenuScreens.ResolutionSettings;
             }
@@ -168,12 +186,12 @@ namespace Curse_of_the_Abyss
         {
             Label.Put("Are you sure you want to quit?", 50);
             Label.Put("", 2);
-            if (Button.Put("Yes").Clicked)
+            if (Button.Put("   Yes   ").Clicked)
             {
                 InputHelper.Game.Exit();
             }
             Label.Put("", 2);
-            if (Button.Put("No").Clicked)
+            if (Button.Put("   No    ").Clicked)
             {
                 _screen = MenuScreens.Main;
             }

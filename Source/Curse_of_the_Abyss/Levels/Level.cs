@@ -22,6 +22,7 @@ namespace Curse_of_the_Abyss
         public MapManager MapManager;
         public Matrix matrix;
         public bool game_over;
+        public bool completed;
 
         public virtual void Initialize()
         {
@@ -35,6 +36,12 @@ namespace Curse_of_the_Abyss
             {
                 sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
             }
+
+            Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
+            Sprite rightborder = new Obstacle(new Rectangle(1925, 0, 50, 700));
+            
+            sprites.Add(leftborder);
+            sprites.Add(rightborder);
         }
 
 
@@ -49,6 +56,7 @@ namespace Curse_of_the_Abyss
             {
                 game_over = true;
             }
+
             foreach (Sprite s in sprites)
             {
                 s.Update(sprites, gameTime);
@@ -72,7 +80,6 @@ namespace Curse_of_the_Abyss
 
         public virtual void Draw(SpriteBatch spritebatch)
         {
-            //adding last argument for layerDepth=1 (backmost layer) since sometimes submarine will be drawn behind background
             foreach (Sprite s in sprites)
             {
                 s.Draw(spritebatch);

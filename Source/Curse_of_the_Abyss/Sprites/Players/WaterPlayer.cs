@@ -102,6 +102,12 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
+                case ("movingPlatform"):
+                    System.Diagnostics.Debug.WriteLine("XCOLLISION");
+                    break;
+                case ("SeaUrchin"):
+                    health.curr_health = 0;
+                    break;
                 default:
                     position.Y += (int)yVelocity;
                     break;
@@ -113,16 +119,12 @@ namespace Curse_of_the_Abyss
                 case ("shootingSprite"):
                 case ("targetingNPC"):
                     {
-                        
-                            
                             s.remove = true;
                             health.curr_health -= health.maxhealth / 10;
                         break;
                     }
                 case ("pathNPC"):
                     {
-                        
-                       
                         health.curr_health -= health.maxhealth / 10;
                         
                         break;
@@ -144,6 +146,12 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
+                case ("movingPlatform"):
+                    System.Diagnostics.Debug.WriteLine("YCOLLISION");
+                    break;
+                case ("SeaUrchin"):
+                    health.curr_health = 0;
+                    break;
             }
         }
         public void init(){
