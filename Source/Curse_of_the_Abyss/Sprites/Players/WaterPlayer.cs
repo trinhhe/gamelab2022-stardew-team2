@@ -9,6 +9,8 @@ namespace Curse_of_the_Abyss
 
     public class WaterPlayer:MovableSprite{
         public static Texture2D texture;
+        public static Dictionary<string, Animation> animations;
+        protected AnimationManager animationManager;
         private KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
         public enum State{Standing, Running, Jumping, Falling};
@@ -21,18 +23,32 @@ namespace Curse_of_the_Abyss
         public WaterPlayer(int x, int y,Healthbar healthbar){
             name = "waterplayer";
             health = healthbar;
-            position = new Rectangle(x,y,45,90);
+            position = new Rectangle(x,y,65,100);
             init(); //do rest there to keep this part of code clean
         }
 
-        public static void LoadContent(ContentManager content){
+        public static void LoadContent(ContentManager content)
+        {
             texture = content.Load<Texture2D>("MCRunSprite");
+            animations = new Dictionary<string, Animation>()
+            {
+                {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.2f, true) },
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.05f, false) }
+            };
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
             KB_curState = Keyboard.GetState();
             getState();// decides current frame and handles state mechanics
+
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animations.First().Value);
+                //Console.WriteLine("{0}\n", animationManager.animation.FrameWidth);
+            }
+            setAnimation();
+            animationManager.Update(gametime);
 
             //update position of Player and check for collisions
             position.X += (int)xVelocity;
@@ -58,21 +74,17 @@ namespace Curse_of_the_Abyss
         public override void Draw(SpriteBatch spritebatch){
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width/5 - 18;
-            int height = texture.Height;
-            Rectangle source = new Rectangle(10,0,width,height);
+            //int width = texture.Width;
+            //int height = texture.Height;
+            //Rectangle source = new Rectangle(0,0,width,height);
 
             //check if player is doging
-            if (dodging && !wasdodging){ position.Height = 45; position.Y += 45; wasdodging = true; }
-            else if (!dodging && wasdodging){ position.Height = 90; position.Y -= 45; wasdodging = false; }
+
+            if (dodging && !wasdodging){ position.Height = 50; position.Y += 50; wasdodging = true; }
+            else if (!dodging && wasdodging){ position.Height = 100; position.Y -= 50; wasdodging = false; }
 
             //draw current frame
-            Rectangle pos;
-            if (!dodging)
-                pos = new Rectangle(position.X - 5, position.Y-10, 65, 100);
-            else
-                pos = new Rectangle(position.X - 5, position.Y-5, 65, 50);
-            spritebatch.Draw(texture, pos, source, Color.White);
+            spritebatch.Draw(texture, position, source, Color.White);
         }
 
 
@@ -327,6 +339,27 @@ namespace Curse_of_the_Abyss
                     Falling();
                     break;
             }
+        }
+
+        private void setAnimation()
+        {
+            if (dodging)
+            {
+                if (state == State.Standing || state == State.Running || state == State.Falling)
+                {
+                    animationManager.Play(animations["Crouch"]);
+                    //keep crouching
+                    if (animationManager.animation.CurrentFrame == 4)
+                        animationManager.Stop(4);                   
+                }           
+            }
+            else
+            {
+                animationManager.Play(animations["Run"]);
+                if (state == State.Standing || state == State.Jumping || state == State.Falling)
+                    animationManager.Stop(0);
+            }
+
         }
     }
 }
