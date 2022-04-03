@@ -21,7 +21,7 @@ namespace Curse_of_the_Abyss
         public WaterPlayer(int x, int y,Healthbar healthbar){
             name = "waterplayer";
             health = healthbar;
-            position = new Rectangle(x,y,65,100);
+            position = new Rectangle(x,y,45,90);
             init(); //do rest there to keep this part of code clean
         }
 
@@ -63,11 +63,16 @@ namespace Curse_of_the_Abyss
             Rectangle source = new Rectangle(10,0,width,height);
 
             //check if player is doging
-            if (dodging && !wasdodging){ position.Height = 50; position.Y += 50; wasdodging = true; }
-            else if (!dodging && wasdodging){ position.Height = 100; position.Y -= 50; wasdodging = false; }
+            if (dodging && !wasdodging){ position.Height = 45; position.Y += 45; wasdodging = true; }
+            else if (!dodging && wasdodging){ position.Height = 90; position.Y -= 45; wasdodging = false; }
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            Rectangle pos;
+            if (!dodging)
+                pos = new Rectangle(position.X - 5, position.Y-10, 65, 100);
+            else
+                pos = new Rectangle(position.X - 5, position.Y-5, 65, 50);
+            spritebatch.Draw(texture, pos, source, Color.White);
         }
 
 
