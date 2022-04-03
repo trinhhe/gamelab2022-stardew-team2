@@ -79,7 +79,7 @@ namespace Curse_of_the_Abyss
                     
                 }
             }
-            Console.WriteLine("CurrentFrame: {0} \n", animation.CurrentFrame);
+            //Console.WriteLine("CurrentFrame: {0} \n", animation.CurrentFrame);
         }
     }
 }
