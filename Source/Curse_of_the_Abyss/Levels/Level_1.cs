@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System;
 
 namespace Curse_of_the_Abyss 
 { 
@@ -23,9 +22,9 @@ namespace Curse_of_the_Abyss
             InitSprites();
             eggs = new EggCollection();
 
-            eggs.addEgg(0, 1200);
-            eggs.addEgg(50, 890);
-            Console.Write("start");
+            //Add eggs here
+            eggs.addEgg(700, 850);
+            eggs.addEgg(800, 800);
         }
 
         //inits every item/character that is not a player or submarine
