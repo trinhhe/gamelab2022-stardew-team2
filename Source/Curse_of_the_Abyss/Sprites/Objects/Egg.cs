@@ -127,8 +127,6 @@ namespace Curse_of_the_Abyss
             while (em.MoveNext())
             {
                 (em.Current).Update(null, gameTime);
-
-
             }
         }
 
