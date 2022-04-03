@@ -43,8 +43,8 @@
   <object id="25" x="32.75" y="321" width="254.083" height="62.6667"/>
   <object id="36" x="256.458" y="672.667" width="64.4163" height="353"/>
   <object id="38" x="321.125" y="672.667" width="61.7497" height="64"/>
-  <object id="39" x="1216.96" y="832.5" width="94.583" height="193"/>
-  <object id="40" x="1376.21" y="833" width="192.083" height="192.667"/>
+	 <object id="39" x="1216.96" y="832.5" width="94.583" height="193"/>
+	 <object id="40" x="1376.21" y="833" width="192.083" height="192.667"/>
   <object id="41" x="544.625" y="576.833" width="126.083" height="61.6667"/>
   <object id="42" x="352.746" y="448.833" width="126.628" height="62.5758"/>
   <object id="43" x="416.625" y="961.5" width="126.583" height="63"/>
@@ -57,3 +57,4 @@
   <object id="50" x="0.291833" y="1025.83" width="1919.75" height="61.6667"/>
  </objectgroup>
 </map>
+

@@ -29,6 +29,7 @@ namespace Curse_of_the_Abyss
             PathNPC.LoadContent(content);
             Submarine.LoadContent(content);
             Egg.LoadContent(content);
+            Rock.LoadContent(content);
         }
         public Level1()
         {
@@ -50,6 +51,10 @@ namespace Curse_of_the_Abyss
             shooters.Add(stationaryNPC);
             PathNPC pathNPC = new PathNPC(1200, 700, 1500, 700, 5);
             sprites.Add(pathNPC);
+            Rock rock1 = new Rock(new Rectangle(1216, 831,94,193));
+            Rock rock2 = new Rock(new Rectangle(1376, 831, 94, 193));
+            Rock rock3 = new Rock(new Rectangle(1480, 831, 94, 193));
+            sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
         }
 
         public override void Update(GameTime gameTime)
@@ -106,7 +111,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(20, 922, healthbar);
+            waterPlayer = new WaterPlayer(600, 922, healthbar);
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
