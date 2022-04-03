@@ -10,7 +10,9 @@ namespace Curse_of_the_Abyss
 
     public class Submarine : MovableSprite
     {
-        public static Texture2D texture;
+        public static Texture2D SubmarineTexture, O2ButtonTexture, ButtonTexture, BombTexture, ShootingTerminalTexture, ShutTexture, ControlDeskTexture, LeverTexture;
+        public static Dictionary<string, Animation> animations;
+        protected AnimationManager animationManager;
         private KeyboardState KB_curState, KB_preState;
         //states are needed to decide in which phase the submarine is actually
         public enum State {Standing, Driving, OxygenMode, MachineGunMode, BombMode};
@@ -20,24 +22,24 @@ namespace Curse_of_the_Abyss
         private MachineGun machineGun;
         private List<Bullet> bullets;
         private List<Bomb> bombs;
-        private Rectangle oxyPosition, machineGunPosition, steerPosition, bombPosition;
+        private Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition;
         private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown;
         public bool movingRight;//needed for different situations in states
         public bool machineGunOn, steeringOn;
         public Submarine(int x, int y, Healthbar healthbar)
         {
             name = "submarine";
-            position = new Rectangle(x, y, 900, 300);
+            position = new Rectangle(x, y, 400, 200);
             // all submarine features' positions are relative to how the assets are drawn on the submarine.
             // Need to figure out numbers when we have the final submarine access.
-            // start position for player: x + 170,y + 125
-            this.submarinePlayer = new SubmarinePlayer(x+170, y+125, x+105, x+860);
-            this.oxyPosition = new Rectangle(x+110, y+125, 20, 80);
-            this.machineGunPosition = new Rectangle(x+770, y+125, 20, 80);
-            this.steerPosition = new Rectangle(x+630, y+125, 20, 80);
-            this.bombPosition = new Rectangle(x+230, y+125, 20, 80);
+            // start position for player: x + 78,y + 90 , 
+            this.submarinePlayer = new SubmarinePlayer(x+78, y+90, x+78, y+339);
+            this.oxyPosition = new Rectangle(x+75, y+100, 8, 15);
+            this.machineGunTerminalPosition = new Rectangle(x+329, y+118, 11, 20);
+            this.steerPosition = new Rectangle(x+265, y+122, 22, 16);
+            this.bombButtonPosition = new Rectangle(x+152, y+125, 12, 7);
             this.healthbar = healthbar;
-            this.machineGun = new MachineGun(x+820,y+250, 2.35f, -0.64f);
+            this.machineGun = new MachineGun(x+360,y+185, 2.35f, -0.64f);
             this.shootingFrequency = Constants.machine_gun_shooting_frequency;
 
             init(); //do rest there to keep this part of code clean
@@ -46,7 +48,13 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: asset for submarine
-            texture = content.Load<Texture2D>("submarine");
+            SubmarineTexture = content.Load<Texture2D>("submarine");
+            O2ButtonTexture = content.Load<Texture2D>("O2Button");
+            ButtonTexture = content.Load<Texture2D>("Button");
+            ShootingTerminalTexture = content.Load<Texture2D>("Shoot_terminal");
+            ShutTexture = content.Load<Texture2D>("Shut");
+            ControlDeskTexture = content.Load<Texture2D>("Control_Desk");
+            LeverTexture = content.Load<Texture2D>("lever");
             SubmarinePlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             MachineGun.LoadContent(content);
@@ -59,15 +67,20 @@ namespace Curse_of_the_Abyss
             KB_curState = Keyboard.GetState();
             getState(gametime);// decides current frame and handles state mechanics
 
+            //GET MOUSE POSITION
+            var xd = Mouse.GetState();
+            Console.WriteLine("{0} {1} \n", xd.X+10, xd.Y+10);
+            //
+
             //update position of submarine 
             position.X += (int)xVelocity;
             oxyPosition.X += (int)xVelocity;
-            machineGunPosition.X += (int)xVelocity;
+            machineGunTerminalPosition.X += (int)xVelocity;
             steerPosition.X += (int)xVelocity;
             submarinePlayer.position.X += (int)xVelocity;
             submarinePlayer.changeBounds((int)xVelocity);
             machineGun.position.X += (int)xVelocity;
-            bombPosition.X += (int)xVelocity;
+            bombButtonPosition.X += (int)xVelocity;
             bombCooldown += gametime.ElapsedGameTime.Milliseconds;
             machineGunCooldown += gametime.ElapsedGameTime.Milliseconds;
 
@@ -114,12 +127,17 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width;
-            int height = texture.Height;
+            int width = SubmarineTexture.Width;
+            int height = SubmarineTexture.Height;
             Rectangle source = new Rectangle(0, 0, width, height);
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f); 
+            spritebatch.Draw(SubmarineTexture, position, source, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
+            spritebatch.Draw(O2ButtonTexture, oxyPosition, new Rectangle(0,0,8,15), Color.White,0,Vector2.Zero,SpriteEffects.None,0.4f);
+            spritebatch.Draw(ButtonTexture, bombButtonPosition, new Rectangle(0, 0, 12, 7), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            spritebatch.Draw(ShootingTerminalTexture, machineGunTerminalPosition, new Rectangle(0, 0, 11, 20), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            spritebatch.Draw(ControlDeskTexture, steerPosition, new Rectangle(0, 0, 22, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+
             submarinePlayer.Draw(spritebatch);
             healthbar.Draw(spritebatch);
             machineGun.Draw(spritebatch);
@@ -179,7 +197,7 @@ namespace Curse_of_the_Abyss
             if (steeringOn)
                 state = State.Driving;
 
-            if (submarinePlayer.position.Intersects(machineGunPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(machineGunTerminalPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
                 submarinePlayer.setVelocityZero();
                 if (machineGunCooldown > Constants.submarine_machine_gun_cooldown)
@@ -191,11 +209,11 @@ namespace Curse_of_the_Abyss
                 
             }
 
-            if (submarinePlayer.position.Intersects(bombPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(bombButtonPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
                 if (bombCooldown > Constants.submarine_bomb_cooldown) 
                 {
-                    Bomb bomb = new Bomb(bombPosition.X, bombPosition.Y + 50);
+                    Bomb bomb = new Bomb(bombButtonPosition.X, bombButtonPosition.Y + 50);
                     bombs.Add(bomb);
                     bombCooldown = 0;
                 }

@@ -14,7 +14,7 @@ namespace Curse_of_the_Abyss
         public Bomb(int x, int y)
         {
             this.name = "bomb";
-            this.position = new Rectangle(x, y, 150, 150);
+            this.position = new Rectangle(x, y, 16, 26);
             this.linearVelocity = Constants.submarine_bomb_velocity;
         }
         public static void LoadContent(ContentManager content)
