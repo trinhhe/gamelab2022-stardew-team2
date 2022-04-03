@@ -4,21 +4,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace Curse_of_the_Abyss
 {
     public class AnimationManager
     {
-        private Animation animation;
+        public Animation animation;
         private float timer;
-        public Rectangle position;
+        //public Rectangle position;
 
         public AnimationManager(Animation animation)
         {
             this.animation = animation;
         }
 
-        public void Draw(SpriteBatch spritebatch, float layerDepth)
+        public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth)
         {
             spritebatch.Draw(animation.Texture,
                 position,
@@ -38,11 +39,11 @@ namespace Curse_of_the_Abyss
             this.animation.CurrentFrame = 0;
             timer = 0;
         }
-
-        public void Stop()
+        //stop at this frame
+        public void Stop(int currentFrame)
         {
             timer = 0;
-            animation.CurrentFrame = 0;
+            animation.CurrentFrame = currentFrame;
         }
         //update to next frame
         public void Update(GameTime gameTime)
@@ -52,11 +53,33 @@ namespace Curse_of_the_Abyss
             if (timer > animation.FrameSpeed)
             {
                 timer = 0;
-                animation.CurrentFrame++;
-
-                if (animation.CurrentFrame >= animation.FrameCount)
-                    animation.CurrentFrame = 0;
+                //looping spritesheet
+                if(animation.IsLooping)
+                    animation.CurrentFrame++;
+                    if (animation.CurrentFrame >= animation.FrameCount)
+                        animation.CurrentFrame = 0;
+                //reverse spritesheet
+                else
+                {
+                    if (animation.reverseFlag)
+                        animation.CurrentFrame--;
+                    else
+                        animation.CurrentFrame++;
+                    if (animation.CurrentFrame >= animation.FrameCount)
+                    {
+                        animation.CurrentFrame--;
+                        animation.reverseFlag = true;
+                    }
+                    else if (animation.CurrentFrame < 0)
+                    {
+                        animation.CurrentFrame++;
+                        animation.reverseFlag = false;
+                    }
+                        
+                    
+                }
             }
+            Console.WriteLine("CurrentFrame: {0} \n", animation.CurrentFrame);
         }
     }
 }

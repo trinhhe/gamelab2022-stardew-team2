@@ -55,9 +55,9 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width / 5 - 18;
+            int width = texture.Width/5;
             int height = texture.Height;
-            Rectangle source = new Rectangle(10, 0, width, height);
+            Rectangle source = new Rectangle(0, 0, width, height);
 
             //draw current frame
             spritebatch.Draw(texture, position, source, Color.White);
