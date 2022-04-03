@@ -22,7 +22,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("SmileyWalk");
+            texture = content.Load<Texture2D>("Egg");
         }
 
 
