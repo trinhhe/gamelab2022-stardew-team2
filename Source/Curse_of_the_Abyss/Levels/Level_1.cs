@@ -12,12 +12,14 @@ namespace Curse_of_the_Abyss
         int randomTimer = 0;
         int shooterupdate = 0;
         protected List<StationaryShooterNPC> shooters;
-        
+
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
+            SeaUrchin.LoadContent(content);
+            MovingPlatform.LoadContent(content);
             WaterPlayer.LoadContent(content);
             //SubmarinePlayer.LoadContent(content);
             Healthbar.LoadContent(content);
@@ -36,6 +38,10 @@ namespace Curse_of_the_Abyss
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
+            SeaUrchin seaUrchin = new SeaUrchin(50, 380);
+            sprites.Add(seaUrchin);
+            MovingPlatform movableObstacle = new MovingPlatform(120, 890, 120, 550, 2);
+            sprites.Add(movableObstacle);
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
@@ -46,6 +52,11 @@ namespace Curse_of_the_Abyss
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (waterPlayer.position.X > 1920)
+            {
+                completed = true;
+            }
 
             //shooting objects
             shooterupdate++;
@@ -76,7 +87,7 @@ namespace Curse_of_the_Abyss
                     var rand = new Random();
                     int x_index = rand.Next(2);
                     int y_index = rand.Next(2);
-                    var x_pos = new List<int>{-100,2100};
+                    var x_pos = new List<int> { -100, 2100 };
                     var y_pos = new List<int> { 400, 900 };
                     TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
                     sprites.Add(targetingNPC);
@@ -89,9 +100,10 @@ namespace Curse_of_the_Abyss
         public override void Reset()
         {
             game_over = false;
+            completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(600, 922, healthbar);
+            waterPlayer = new WaterPlayer(20, 922, healthbar);
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();

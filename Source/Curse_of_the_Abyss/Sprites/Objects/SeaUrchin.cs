@@ -1,48 +1,39 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace Curse_of_the_Abyss
 {
-
-    public class StationaryShooterNPC : Sprite
+    class SeaUrchin : Sprite
     {
         public static Texture2D texture;
-
-        public StationaryShooterNPC(int x, int y)
+        public SeaUrchin(int x, int y)
         {
-            name = "stationaryNPC";
-            position = new Rectangle(x, y, 128, 160);
+            name = "SeaUrchin";
+            position = new Rectangle(x, y, 190, 140);
             collidable = true;
         }
 
         public static void LoadContent(ContentManager content)
         {
-            //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("octopuss");
+            texture = content.Load<Texture2D>("sea_urchin");
             ShootingSprite.LoadContent(content);
-
         }
-
-        public override void Update(List<Sprite> sprites, GameTime gametime)
-        {
-            
-        }
-
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
             int width = texture.Width;
             int height = texture.Width;
             Rectangle source = new Rectangle(0, 0, width, height);
 
-           
+            Rectangle texturebox = position;
+            texturebox.Height = 220;
+            texturebox.Width = 212;
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            spritebatch.Draw(texture, texturebox, source, Color.White);
         }
     }
 }

@@ -82,6 +82,13 @@ namespace Curse_of_the_Abyss
                 current_level.Reset();
             }
 
+            if (current_level.completed)
+            {
+                _menu._screen = Menu.MenuScreens.Demo_end;
+                paused = true;
+                current_level.Reset();
+            }
+
             if (!paused)
             {
                 current_level.Update(gameTime);
@@ -108,7 +115,7 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // draw sprites
+            // draw background
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
             _spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
             _spriteBatch.End();
@@ -116,8 +123,9 @@ namespace Curse_of_the_Abyss
             // draw map
             current_level.MapManager.Draw(current_level.matrix);
 
+            // draw sprites
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
-            current_level.Draw(_spriteBatch); //draw map
+            current_level.Draw(_spriteBatch); 
             _spriteBatch.End();
 
             // render at 1080p
