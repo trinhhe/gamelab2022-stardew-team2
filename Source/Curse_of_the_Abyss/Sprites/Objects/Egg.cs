@@ -19,7 +19,7 @@ namespace Curse_of_the_Abyss
 
         }
 
-        public void LoadContent(ContentManager content)
+        public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
             texture = content.Load<Texture2D>("SmileyWalk");
@@ -101,33 +101,18 @@ namespace Curse_of_the_Abyss
             return eggsTotal == eggsCollected;
         }
 
-        public void LoadContent(ContentManager content)
-        {
-            //get enumerator of hashset
-            HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
-
-            
-
-            while (em.MoveNext())
-            {   
-                Egg curEgg = em.Current;
-                curEgg.LoadContent( content);
-                
-
-            }
-        }
-
         public void Draw(SpriteBatch spritebatch)
         {
             //get enumerator of hashset
             HashSet<Egg>.Enumerator em = eggs.GetEnumerator();
 
 
-
+            
             while (em.MoveNext())
             {
 
                 (em.Current).Draw(spritebatch);
+          
             }
         }
 
