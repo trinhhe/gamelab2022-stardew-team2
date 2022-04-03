@@ -85,28 +85,25 @@ namespace Curse_of_the_Abyss
             }
 
             //remove bullets and bombs
-            List<Sprite> toRemove = new List<Sprite>();
+            List<Bullet> bulletsToRemove = new List<Bullet>();
             foreach (Bullet b in bullets)
             {
-                if (b.remove) toRemove.Add(b);
+                if (b.remove) bulletsToRemove.Add(b);
             }
+            foreach (Bullet b in bulletsToRemove)
+            {
+                bullets.Remove(b);
+            }
+            List<Bomb> bombsToRemove = new List<Bomb>();
             foreach (Bomb b in bombs)
             {
-                if (b.remove) toRemove.Add(b);
+                if (b.remove) bombsToRemove.Add(b);
             }
-            foreach (Sprite s in toRemove)
+            foreach (Bomb b in bombsToRemove)
             {
-                if (s.GetType() == typeof(Bomb))
-                {
-                    Bomb b = s as Bomb;
-                    bombs.Remove(b);
-                }
-                else if (s.GetType() == typeof(Bullet))
-                {
-                    Bullet b = s as Bullet;
-                    bullets.Remove(b);
-                }
+                bombs.Remove(b);
             }
+
         }
 
 

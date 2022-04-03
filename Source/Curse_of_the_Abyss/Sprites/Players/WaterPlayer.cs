@@ -119,12 +119,13 @@ namespace Curse_of_the_Abyss
                         position.Y += (int)yVelocity;
                         break;
                 case ("pathNPC"):
-                    
-                        health.curr_health -= health.maxhealth / 10;
+                    s.remove = true;
+                        health.curr_health -= health.maxhealth / 40;
                         position.Y += (int)yVelocity;
                         break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
+                case ("rock"):
                     {
                         if (position.Left < s.position.Left)
                         {
@@ -157,12 +158,15 @@ namespace Curse_of_the_Abyss
                         break;
                     }
                 case ("pathNPC"):
-                    {  
+                    {
+                        s.remove = true;
                         health.curr_health -= health.maxhealth / 10;
+                        
                         break;
                     }
                 case ("stationaryNPC"):
                 case ("obstacle"):
+                case ("rock"):
                     {
                         if (position.Top < s.position.Top)
                         {
