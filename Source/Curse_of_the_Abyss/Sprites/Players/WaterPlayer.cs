@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
         public enum State { Standing, Running, Jumping, Falling };
         public State state;
         public bool movingRight, dodging, wasdodging, hit, checkfall;//needed for different situations in states
-        private int lastY, lasthit;//needed to decide how heigh player can jump
+        private int lastY;//needed to decide how heigh player can jump
         Healthbar health;
 
 
