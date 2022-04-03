@@ -14,7 +14,7 @@ namespace Curse_of_the_Abyss
         public Bomb(int x, int y)
         {
             this.name = "bomb";
-            this.position = new Rectangle(x, y, 60, 60);
+            this.position = new Rectangle(x, y, 30, 50);
             this.linearVelocity = Constants.submarine_bomb_velocity;
             collidable = true;
         }
@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            Rectangle pos = new Rectangle(position.X-15, position.Y,position.Width+30,position.Height+20);
+            Rectangle pos = new Rectangle(position.X-5, position.Y,position.Width+10,position.Height+10);
             spritebatch.Draw(texture, pos, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
         }
 

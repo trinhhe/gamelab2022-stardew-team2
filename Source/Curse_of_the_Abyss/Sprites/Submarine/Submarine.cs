@@ -10,10 +10,10 @@ namespace Curse_of_the_Abyss
 
     public class Submarine : MovableSprite
     {
-        public static Texture2D SubmarineTexture, O2ButtonTexture, ButtonTexture, BombTexture, ShootingTerminalTexture, ShutTexture, ControlDeskTexture, LeverTexture;
+        public static Texture2D SubmarineTexture, O2ButtonTexture, ButtonTexture, BombTexture, ShootingTerminalTexture, ShutTexture, ControlDeskTexture, LeverTexture,bar,cooldown;
         public static Dictionary<string, Animation> animations;
         protected AnimationManager animationManager;
-        private KeyboardState KB_curState, KB_preState;
+        private KeyboardState KB_curState;
         //states are needed to decide in which phase the submarine is actually
         public enum State {Standing, Driving, OxygenMode, MachineGunMode, BombMode};
         public State state;
@@ -60,6 +60,8 @@ namespace Curse_of_the_Abyss
             MachineGun.LoadContent(content);
             Bullet.LoadContent(content);
             Bomb.LoadContent(content);
+            bar = content.Load<Texture2D>("bar");
+            cooldown = content.Load<Texture2D>("health");
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -84,7 +86,6 @@ namespace Curse_of_the_Abyss
             bombCooldown += gametime.ElapsedGameTime.Milliseconds;
             machineGunCooldown += gametime.ElapsedGameTime.Milliseconds;
 
-            KB_preState = KB_curState;
             submarinePlayer.Update(sprites, gametime);
             healthbar.Update(sprites, gametime);
             // machineGun.Update();
@@ -146,12 +147,23 @@ namespace Curse_of_the_Abyss
             {
                 b.Draw(spritebatch);
             }
+            if (bombCooldown < Constants.submarine_bomb_cooldown)
+            {
+                spritebatch.Draw(bar, new Rectangle(bombButtonPosition.Right + 10, position.Y+150, 10, 30), Color.White);
+                int curr_ypos = position.Y + 180 - 30 * bombCooldown / Constants.submarine_bomb_cooldown + 1;
+                spritebatch.Draw(cooldown, new Rectangle(bombButtonPosition.Right + 10, curr_ypos, 10, 30 * bombCooldown / Constants.submarine_bomb_cooldown - 2), Color.White);
+            }
+            if (machineGunCooldown < Constants.submarine_machine_gun_cooldown)
+            {
+                spritebatch.Draw(bar, new Rectangle(machineGun.position.Right -100, position.Y+150, 10, 30), Color.White);
+                int curr_ypos = position.Y + 180 - 30 * machineGunCooldown / Constants.submarine_machine_gun_cooldown + 1;
+                spritebatch.Draw(cooldown, new Rectangle(machineGun.position.Right -100, curr_ypos, 10, 30 * machineGunCooldown / Constants.submarine_machine_gun_cooldown - 2), Color.White);
+            }
         }
 
         public void init()
         {
             state = State.Standing;
-            KB_preState = Keyboard.GetState();
             movingRight = false;
             collidable = false;
             machineGunOn = false;
