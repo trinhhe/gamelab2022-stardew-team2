@@ -138,9 +138,6 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
-                case ("movingPlatform"):
-                    System.Diagnostics.Debug.WriteLine("XCOLLISION");
-                    break;
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
@@ -181,9 +178,6 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
-                case ("movingPlatform"):
-                    System.Diagnostics.Debug.WriteLine("YCOLLISION");
-                    break;
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
