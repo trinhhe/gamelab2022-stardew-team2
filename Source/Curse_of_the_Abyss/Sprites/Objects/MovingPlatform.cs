@@ -17,8 +17,10 @@ namespace Curse_of_the_Abyss
         int secondx;
         int secondy;
         int dir; // 0 - going to first (x,y) ; 1 - going to second (x,y)
+        bool changedir;
+        bool first_collision;
 
-        public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed)
+        public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed, bool changedir)
         {
             // place platform at first (x,y)
             // and move to second (x,y) and then alternate between first and second (x,y)
@@ -28,6 +30,7 @@ namespace Curse_of_the_Abyss
             this.firsty = firsty;
             this.secondx = secondx;
             this.secondy = secondy;
+            this.changedir = changedir;
 
             this.speed = speed; //how fast the platform should move
 
@@ -42,53 +45,98 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
-            if (dir == 1)
+            if(first_collision)
             {
-                double xtemp = (secondx - position.X);
-                double ytemp = (secondy - position.Y);
-                double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-                if (dist < 3)
+                if (dir == 1)
                 {
-                    dir = 0;
-                }
-                else
-                {
-                    double xunit = xtemp / dist;
-                    double yunit = ytemp / dist;
-                    
-                    xVelocity = xunit * speed;
-                    yVelocity = yunit * speed;
+                    double xtemp = (secondx - position.X);
+                    double ytemp = (secondy - position.Y);
+                    double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                    if (dist < 3)
+                    {
+                        if(changedir)
+                            dir = 0;
+                        else
+                        {
+                            first_collision = false;
+                        }
+                    }
+                    else
+                    {
+                        double xunit = xtemp / dist;
+                        double yunit = ytemp / dist;
 
-                    //update position 
-                    position.X += (int)xVelocity;
-                    position.Y += (int)yVelocity;
+                        xVelocity = xunit * speed;
+                        yVelocity = yunit * speed;
+
+                        //update position 
+                        position.X += (int)xVelocity;
+                        position.Y += (int)yVelocity;
+                    }
+                }
+
+                else if (dir == 0)
+                {
+                    double xtemp = (firstx - position.X);
+                    double ytemp = (firsty - position.Y);
+                    double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
+                    if (dist < 3 && changedir)
+                    {
+                        if (changedir)
+                            dir = 1;
+                        else
+                        {
+                            first_collision = false;
+                        }
+                    }
+                    else
+                    {
+                        double xunit = xtemp / dist;
+                        double yunit = ytemp / dist;
+                        xVelocity = xunit * speed;
+                        yVelocity = yunit * speed;
+
+                        //update position 
+                        position.X += (int)xVelocity;
+                        position.Y += (int)yVelocity;
+                    }
                 }
             }
 
-            else if (dir == 0)
+            Sprite s = CheckCollision(sprites);
+            if (s != null && s.name == "waterplayer")
             {
-                double xtemp = (firstx - position.X);
-                double ytemp = (firsty - position.Y);
-                double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
-                if (dist < 3)
-                {
-                    dir = 1;
-                }
-                else
-                {
-                    double xunit = xtemp / dist;
-                    double yunit = ytemp / dist;
-                    xVelocity = xunit * speed;
-                    yVelocity = yunit * speed;
-
-                    //update position 
-                    position.X += (int)xVelocity;
-                    position.Y += (int)yVelocity;
-                }
+                if (!first_collision)
+                    first_collision = true;
+                YCollision(s, gametime);
             }
 
         }
 
+        public override void YCollision(Sprite s, GameTime gametime)
+        {
+            switch (s.name)
+            {
+                case ("waterplayer"):
+                {
+                    if (s.position.Top < position.Top)
+                    {
+                        s.position.Y = position.Top - s.position.Height - (int)yVelocity;
+                        ((MovableSprite)s).yVelocity = 0;
+                        ((WaterPlayer)s).state = WaterPlayer.State.Running;
+                    }
+                    else
+                    {
+                        s.position.Y = position.Bottom + 1;
+                        ((MovableSprite)s).yVelocity = 1;
+                        ((WaterPlayer)s).state = WaterPlayer.State.Falling;
+                    }
+                    break;
+                }
+
+            }
+            
+        }
 
         public override void Draw(SpriteBatch spritebatch)
         {

@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
         public void InitSprites(){
             SeaUrchin seaUrchin = new SeaUrchin(50, 380);
             sprites.Add(seaUrchin);
-            MovingPlatform movableObstacle = new MovingPlatform(120, 890, 120, 550, 2);
+            MovingPlatform movableObstacle = new MovingPlatform(120, 900, 120, 540, 2, changedir: false);
             sprites.Add(movableObstacle);
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
@@ -109,7 +109,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(600, 922, healthbar);
+            waterPlayer = new WaterPlayer(20, 922, healthbar);
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
