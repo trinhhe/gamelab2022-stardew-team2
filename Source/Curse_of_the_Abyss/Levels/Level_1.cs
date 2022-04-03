@@ -34,10 +34,8 @@ namespace Curse_of_the_Abyss
         public Level1()
         {
             // load tile map 
-            TileMap = new TmxMap("Content/maps/map_lvl1.tmx");
+            TileMap = new TmxMap("../../../Content/maps/map_lvl1.tmx");
             Reset();
-            
-            
         }
 
         //inits every item/character that is not a player or submarine
@@ -49,7 +47,7 @@ namespace Curse_of_the_Abyss
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
-            PathNPC pathNPC = new PathNPC(1200, 700, 1500, 700, 5);
+            PathNPC pathNPC = new PathNPC(1300, 700, 1600, 700, 5);
             sprites.Add(pathNPC);
             Rock rock1 = new Rock(new Rectangle(1216, 831,94,193));
             Rock rock2 = new Rock(new Rectangle(1376, 831, 94, 193));

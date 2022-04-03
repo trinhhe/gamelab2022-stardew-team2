@@ -3,36 +3,56 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Curse_of_the_Abyss 
-{ 
-
-    public class WaterPlayer:MovableSprite{
+{
+    public class WaterPlayer : MovableSprite
+    {
         public static Texture2D texture;
+        public static Dictionary<string, Animation> animations;
+        protected AnimationManager animationManager;
         private KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
-        public enum State{Standing, Running, Jumping, Falling};
+        public enum State { Standing, Running, Jumping, Falling };
         public State state;
-        public bool movingRight,dodging,wasdodging,checkfall;//needed for different situations in states
-        private int lastY;//needed to decide how heigh player can jump
+        public bool movingRight, dodging, wasdodging, hit, checkfall;//needed for different situations in states
+        private int lastY, lasthit;//needed to decide how heigh player can jump
         Healthbar health;
 
 
-        public WaterPlayer(int x, int y,Healthbar healthbar){
+        public WaterPlayer(int x, int y, Healthbar healthbar)
+        {
             name = "waterplayer";
             health = healthbar;
-            position = new Rectangle(x,y,45,90);
+            position = new Rectangle(x, y, 45, 90);
             init(); //do rest there to keep this part of code clean
         }
 
-        public static void LoadContent(ContentManager content){
-            texture = content.Load<Texture2D>("MCRunSprite");
+        public static void LoadContent(ContentManager content)
+        {
+            //texture = content.Load<Texture2D>("MCRunSprite");
+            animations = new Dictionary<string, Animation>()
+            {
+                {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.2f, true) },
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.05f, false) }
+            };
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
+            
             KB_curState = Keyboard.GetState();
             getState();// decides current frame and handles state mechanics
+
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animations.First().Value);
+                //Console.WriteLine("{0}\n", animationManager.animation.FrameWidth);
+            }
+            setAnimation();
+            animationManager.Update(gametime);
 
             //update position of Player and check for collisions
             position.X += (int)xVelocity;
@@ -53,26 +73,37 @@ namespace Curse_of_the_Abyss
                 }
                 position.X += (int)xVelocity;
             }
+
         }
 
         public override void Draw(SpriteBatch spritebatch){
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width/5 - 18;
-            int height = texture.Height;
-            Rectangle source = new Rectangle(10,0,width,height);
+            //int width = texture.Width;
+            //int height = texture.Height;
+            //Rectangle source = new Rectangle(0,0,width,height);
 
             //check if player is doging
-            if (dodging && !wasdodging){ position.Height = 45; position.Y += 45; wasdodging = true; }
-            else if (!dodging && wasdodging){ position.Height = 90; position.Y -= 45; wasdodging = false; }
+            if (dodging && !wasdodging) { position.Height = 45; position.Y += 45; wasdodging = true; }
+            else if (!dodging && wasdodging) { position.Height = 90; position.Y -= 45; wasdodging = false; }
+
+
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animations.First().Value);
+            }
 
             //draw current frame
-            Rectangle pos;
-            if (!dodging)
-                pos = new Rectangle(position.X - 5, position.Y-10, 65, 100);
+            //spritebatch.Draw(texture, position, source, Color.White);
+            if (dodging)
+            {
+                //draw entire crouch rectangle but actual position height is 45 to dodge spriteshoots
+                Rectangle tmp = new Rectangle(position.X, position.Y - 45, position.Width, 90);
+                animationManager.Draw(spritebatch, tmp, 0f);
+            }
             else
-                pos = new Rectangle(position.X - 5, position.Y-5, 65, 50);
-            spritebatch.Draw(texture, pos, source, Color.White);
+                animationManager.Draw(spritebatch, position, 0f);
+                
         }
 
 
@@ -124,7 +155,7 @@ namespace Curse_of_the_Abyss
             {
                 case ("shootingSprite"):
                 case ("targetingNPC"):
-                    {
+                    {                       
                             s.remove = true;
                             health.curr_health -= health.maxhealth / 10;
                         break;
@@ -132,7 +163,7 @@ namespace Curse_of_the_Abyss
                 case ("pathNPC"):
                     {
                         s.remove = true;
-                        health.curr_health -= health.maxhealth / 40;
+                        health.curr_health -= health.maxhealth / 10;
                         
                         break;
                     }
@@ -173,7 +204,7 @@ namespace Curse_of_the_Abyss
             yVelocity = xVelocity = 0;
             if(KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A)){ //move right
                 movingRight=true;
-                state=State.Running;
+                state = State.Running;
             }else if(KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
             { //move left
                 movingRight=false;
@@ -330,6 +361,27 @@ namespace Curse_of_the_Abyss
                     Falling();
                     break;
             }
+        }
+
+        private void setAnimation()
+        {
+            if (dodging)
+            {
+                if (state == State.Standing || state == State.Running || state == State.Falling)
+                {
+                    animationManager.Play(animations["Crouch"]);
+                    //keep crouching
+                    if (animationManager.animation.CurrentFrame == 4)
+                        animationManager.Stop(4);                   
+                }           
+            }
+            else
+            {
+                animationManager.Play(animations["Run"]);
+                if (state == State.Standing || state == State.Jumping || state == State.Falling)
+                    animationManager.Stop(0);
+            }
+
         }
     }
 }
