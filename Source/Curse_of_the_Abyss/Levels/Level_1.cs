@@ -121,8 +121,9 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            eggs.addEgg(700, 850);
-            eggs.addEgg(800, 800);
+            eggs.addEgg(390, 425);
+            eggs.addEgg(1335, 1000);
+            eggs.addEgg(1620, 552);
         }
         
     }
