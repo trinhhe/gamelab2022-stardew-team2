@@ -33,10 +33,8 @@ namespace Curse_of_the_Abyss
         public Level1()
         {
             // load tile map 
-            TileMap = new TmxMap("Content/maps/map_lvl1.tmx");
+            TileMap = new TmxMap("../../../Content/maps/map_lvl1.tmx");
             Reset();
-            
-            
         }
 
         //inits every item/character that is not a player or submarine
