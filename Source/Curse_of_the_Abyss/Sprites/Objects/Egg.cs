@@ -90,9 +90,6 @@ namespace Curse_of_the_Abyss
             {
                 eggs.Remove(toRemove);
             }
-
- 
-            
         }
 
         public bool allCollected()
