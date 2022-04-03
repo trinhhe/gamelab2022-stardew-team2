@@ -18,6 +18,7 @@ namespace Curse_of_the_Abyss
         //protected SubmarinePlayer submarinePlayer;
         protected Healthbar healthbar;
         protected TmxMap TileMap;
+        protected EggCollection eggs;
         public MapManager MapManager;
         public Matrix matrix;
         public bool game_over;
@@ -64,6 +65,9 @@ namespace Curse_of_the_Abyss
             {
                 sprites.Remove(s);
             }
+
+            eggs.collectIfPossible(waterPlayer.position);
+            eggs.UpdateAll(null, gameTime);
         }
 
         public virtual void Draw(SpriteBatch spritebatch)
@@ -73,6 +77,8 @@ namespace Curse_of_the_Abyss
             {
                 s.Draw(spritebatch);
             }
+
+            eggs.Draw(spritebatch);
         }
 
         public void InitMapManager(SpriteBatch _spriteBatch)

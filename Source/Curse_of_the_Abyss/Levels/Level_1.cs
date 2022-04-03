@@ -19,18 +19,21 @@ namespace Curse_of_the_Abyss
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             WaterPlayer.LoadContent(content);
+
             //SubmarinePlayer.LoadContent(content);
             Healthbar.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
             PathNPC.LoadContent(content);
             Submarine.LoadContent(content);
+            Egg.LoadContent(content);
         }
         public Level1()
         {
             // load tile map 
             TileMap = new TmxMap("Content/maps/map_lvl1.tmx");
             Reset();
+            
             
         }
 
@@ -99,6 +102,12 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
+
+            eggs = new EggCollection();
+
+            //Add eggs here
+            eggs.addEgg(700, 850);
+            eggs.addEgg(800, 800);
         }
         
     }
