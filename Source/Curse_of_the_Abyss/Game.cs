@@ -34,8 +34,8 @@ namespace Curse_of_the_Abyss
             paused = true;
 
             // default resolution
-            _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
 
             Settings.Graphics = _graphics;
             Settings.IsFullscreen = false;

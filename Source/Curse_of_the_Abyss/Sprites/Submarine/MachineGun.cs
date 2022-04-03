@@ -15,7 +15,7 @@ namespace Curse_of_the_Abyss
         {
             name = "machinegun";
             int width, height;
-            width = height = 50;
+            width = height = 40;
             position = new Rectangle(x, y, width, height);
             rotationVelocity = Constants.machine_gun_turn_velocity;
             rotationOrigin = new Vector2(width / 2, height / 2);
@@ -25,7 +25,7 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("machinegun");
+            texture = content.Load<Texture2D>("Canon");
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)

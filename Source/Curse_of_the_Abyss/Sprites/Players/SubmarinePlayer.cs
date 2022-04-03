@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         public SubmarinePlayer(int x, int y, int leftBound, int rightBound)
         {
             name = "submarineplayer";
-            position = new Rectangle(x, y, 45, 90);
+            position = new Rectangle(x, y, 20, 45);
             this.leftBound = leftBound;
             this.rightBound = rightBound;
             init(); //do rest there to keep this part of code clean
@@ -60,7 +60,7 @@ namespace Curse_of_the_Abyss
             Rectangle source = new Rectangle(0, 0, width, height);
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            spritebatch.Draw(texture, position, source, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
         }
 
         public void init()
