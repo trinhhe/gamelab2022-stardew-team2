@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
             width = height = 40;
             position = new Rectangle(x, y, width, height);
             rotationVelocity = Constants.machine_gun_turn_velocity;
-            rotationOrigin = new Vector2(width / 2, height / 2);
+            rotationOrigin = new Vector2(8, 8);
             this.rotationLeftBound = rotLeftBound;
             this.rotationRightBound = rotRightBound;
         }

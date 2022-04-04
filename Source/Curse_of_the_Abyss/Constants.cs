@@ -15,10 +15,10 @@ namespace Curse_of_the_Abyss
         public static int health_loss = 1;
         public static float submarine_bomb_velocity = 1;
         public static int submarine_bomb_cooldown = 3000;
-        public static float submarine_bullet_velocity = 4f;
+        public static float submarine_bullet_velocity = 10f;
         public static int submarine_machine_gun_cooldown = 3000; //milliseconds
-        public static float machine_gun_turn_velocity = 2.5f;
-        public static int machine_gun_shooting_frequency = 25; //lower is more bullets
+        public static float machine_gun_turn_velocity = 1.5f;
+        public static int machine_gun_shooting_frequency = 30; //lower is more bullets
     }
 
 }

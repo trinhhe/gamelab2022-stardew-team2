@@ -36,7 +36,7 @@ namespace Curse_of_the_Abyss
             animations = new Dictionary<string, Animation>()
             {
                 {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.2f, true) },
-                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.05f, false) }
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.1f, false) }
             };
         }
 

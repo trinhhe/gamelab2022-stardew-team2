@@ -21,6 +21,9 @@ namespace Curse_of_the_Abyss
 
         public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth)
         {
+            //Console.WriteLine("currentFrame: {0}\n", animation.CurrentFrame);
+            //Console.WriteLine("frameWidth: {0}\n", animation.FrameWidth);
+            //Console.WriteLine("index: {0}\n", animation.CurrentFrame * animation.FrameWidth);
             spritebatch.Draw(animation.Texture,
                 position,
                 new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.FrameHeight),
@@ -49,15 +52,16 @@ namespace Curse_of_the_Abyss
         public void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             if (timer > animation.FrameSpeed)
-            {
+            { 
                 timer = 0;
                 //looping spritesheet
-                if(animation.IsLooping)
+                if (animation.IsLooping)
+                    //Console.WriteLine("UPDATE before: {0}\n",  animation.CurrentFrame);
                     animation.CurrentFrame++;
+                    //Console.WriteLine("UPDATE after: {0}\n",  animation.CurrentFrame);
                     if (animation.CurrentFrame >= animation.FrameCount)
-                        animation.CurrentFrame = 0;
+                            animation.CurrentFrame = 0;
                 //reverse spritesheet
                 else
                 {

@@ -41,11 +41,14 @@ namespace Curse_of_the_Abyss
             {
                 KB_curState = Keyboard.GetState();
                 getState();// decides current frame and handles state mechanics
+                KB_preState = KB_curState;
 
                 //update position of Player 
+                if (position.X + (int)xVelocity < leftBound || position.X + (int)xVelocity > rightBound)
+                    return;
                 position.X += (int)xVelocity;
 
-                KB_preState = KB_curState;
+               
             }
             
         }
@@ -92,7 +95,7 @@ namespace Curse_of_the_Abyss
             double max_v = Constants.max_run_velocity;
             xAcceleration = Constants.run_accelerate;
             // -2 to avoid to overshoot boundaries in some cases
-            if (position.Right - 2 < rightBound && position.Left + 2> leftBound)
+            if (position.Right < rightBound && position.Left > leftBound)
             {
                 //move right
                 if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))

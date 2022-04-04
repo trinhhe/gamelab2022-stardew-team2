@@ -323,6 +323,18 @@
 /processorParam:TextureFormat=Color
 /build:submarine.png
 
+#begin submarine_animation.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:submarine_animation.png
+
 #begin underwater_env.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
