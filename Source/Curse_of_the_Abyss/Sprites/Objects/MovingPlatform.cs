@@ -25,7 +25,7 @@ namespace Curse_of_the_Abyss
             // place platform at first (x,y)
             // and move to second (x,y) and then alternate between first and second (x,y)
             name = "movingPlatform";
-            position = new Rectangle(firstx, firsty, 128, 96);
+            position = new Rectangle(firstx, firsty, 128, 25);
             this.firstx = firstx;
             this.firsty = firsty;
             this.secondx = secondx;
@@ -106,8 +106,6 @@ namespace Curse_of_the_Abyss
             Sprite s = CheckCollision(sprites);
             if (s != null && s.name == "waterplayer")
             {
-                if (!first_collision)
-                    first_collision = true;
                 YCollision(s, gametime);
             }
 
@@ -121,6 +119,8 @@ namespace Curse_of_the_Abyss
                 {
                     if (s.position.Top < position.Top)
                     {
+                        if (!first_collision)
+                            first_collision = true;
                         s.position.Y = position.Top - s.position.Height - (int)yVelocity;
                         ((MovableSprite)s).yVelocity = 0;
                         ((WaterPlayer)s).state = WaterPlayer.State.Running;
@@ -143,8 +143,17 @@ namespace Curse_of_the_Abyss
             int width = texture.Width;
             int height = texture.Width;
             Rectangle source = new Rectangle(0, 0, width, height);
+            Rectangle texturebox = position;
+            texturebox.Height = 96;
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            spritebatch.Draw(texture,
+                texturebox,
+                source,
+                Color.White,
+                0,
+                Vector2.Zero,
+                SpriteEffects.None,
+                1);
         }
     }
 }

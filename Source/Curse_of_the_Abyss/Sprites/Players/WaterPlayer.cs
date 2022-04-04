@@ -26,7 +26,7 @@ namespace Curse_of_the_Abyss
         {
             name = "waterplayer";
             health = healthbar;
-            position = new Rectangle(x, y, 45, 90);
+            position = new Rectangle(x, y, 41, 60); //the correct texture dimensions are 41x59 but 59 not divisible by 2 for crouch animation
             init(); //do rest there to keep this part of code clean
         }
 
@@ -36,7 +36,7 @@ namespace Curse_of_the_Abyss
             animations = new Dictionary<string, Animation>()
             {
                 {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.5f, true) },
-                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.03f, false) }
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) }
             };
         }
 
@@ -49,7 +49,6 @@ namespace Curse_of_the_Abyss
             if (animationManager == null)
             {
                 animationManager = new AnimationManager(animations.First().Value);
-                //Console.WriteLine("{0}\n", animationManager.animation.FrameWidth);
             }
             setAnimation();
             animationManager.Update(gametime);
@@ -76,16 +75,12 @@ namespace Curse_of_the_Abyss
 
         }
 
-        public override void Draw(SpriteBatch spritebatch){
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
-            //int width = texture.Width;
-            //int height = texture.Height;
-            //Rectangle source = new Rectangle(0,0,width,height);
+        public override void Draw(SpriteBatch spritebatch)
+        {
 
             //check if player is doging
-            if (dodging && !wasdodging) { position.Height = 45; position.Y += 45; wasdodging = true; }
-            else if (!dodging && wasdodging) { position.Height = 90; position.Y -= 45; wasdodging = false; }
+            if (dodging && !wasdodging) { position.Height = 30; position.Y += 30; wasdodging = true; }
+            else if (!dodging && wasdodging) { position.Height = 60; position.Y -= 30; wasdodging = false; }
 
 
             if (animationManager == null)
@@ -94,11 +89,10 @@ namespace Curse_of_the_Abyss
             }
 
             //draw current frame
-            //spritebatch.Draw(texture, position, source, Color.White);
             if (dodging)
             {
-                //draw entire crouch rectangle but actual position height is 45 to dodge spriteshoots
-                Rectangle tmp = new Rectangle(position.X, position.Y - 45, position.Width, 90);
+                //draw entire crouch rectangle but actual position height is 30 to dodge spriteshoots
+                Rectangle tmp = new Rectangle(position.X, position.Y - 30, position.Width, 60);
                 animationManager.Draw(spritebatch, tmp, 0f);
             }
             else
@@ -153,8 +147,8 @@ namespace Curse_of_the_Abyss
                 case ("shootingSprite"):
                 case ("targetingNPC"):
                     {                       
-                            s.remove = true;
-                            health.curr_health -= health.maxhealth / 10;
+                        s.remove = true;
+                        health.curr_health -= health.maxhealth / 10;
                         break;
                     }
                 case ("pathNPC"):
@@ -340,7 +334,6 @@ namespace Curse_of_the_Abyss
         }
 
         //calls function depending on state
-        //TO DO: decide on needed frame
         private void getState(){
             switch(state){
                 case State.Standing:

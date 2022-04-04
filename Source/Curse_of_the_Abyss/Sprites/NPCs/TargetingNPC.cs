@@ -15,12 +15,11 @@ namespace Curse_of_the_Abyss
         WaterPlayer player;
 
 
-
         public TargetingNPC(int x, int y, WaterPlayer player, int speed)
         {   
             //spawns at x,y and targets player with speed speed
             name = "targetingNPC";
-            position = new Rectangle(x, y, 60, 80);
+            position = new Rectangle(x, y, 40, 60);
             this.player = player;
             
             this.speed = speed; //how fast the NPC should be
@@ -64,7 +63,7 @@ namespace Curse_of_the_Abyss
 
 
             //draw current frame
-            Rectangle pos = new Rectangle(position.X - 18, position.Y - 20, 96, 120);
+            Rectangle pos = new Rectangle(position.X - 13, position.Y - 14, 67, 84);
             if (health > 2)
             {
                 spritebatch.Draw(texture, pos, source, Color.White);
