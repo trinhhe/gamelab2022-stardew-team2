@@ -188,6 +188,9 @@
 /processorParam:TextureFormat=Color
 /build:machinegun.png
 
+#begin maps/map_lvl1_new.tmx
+/copy:maps/map_lvl1_new.tmx
+
 #begin MCCrouchSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -262,6 +265,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:sand_tiles.png
+
+#begin sand_tiles.tsx
+/copy:sand_tiles.tsx
 
 #begin sea_urchin.png
 /importer:TextureImporter
