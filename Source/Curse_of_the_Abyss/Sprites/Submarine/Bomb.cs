@@ -14,7 +14,7 @@ namespace Curse_of_the_Abyss
         public Bomb(int x, int y)
         {
             this.name = "bomb";
-            this.position = new Rectangle(x, y, 30, 50);
+            this.position = new Rectangle(x, y, 30, 30);
             this.linearVelocity = Constants.submarine_bomb_velocity;
             collidable = true;
         }
