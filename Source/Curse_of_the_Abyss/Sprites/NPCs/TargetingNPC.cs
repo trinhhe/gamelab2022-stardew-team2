@@ -34,7 +34,8 @@ namespace Curse_of_the_Abyss
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
-        {
+        {   
+            
             double xtemp = (player.position.X - position.X);
             double ytemp = (player.position.Y - position.Y);
             if (System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2)) > 0.001)
@@ -48,6 +49,7 @@ namespace Curse_of_the_Abyss
                 position.X += (int)xVelocity;
                 position.Y += (int)yVelocity;
             }
+            
             if (health <= 0) remove = true;
         }
 
@@ -63,7 +65,19 @@ namespace Curse_of_the_Abyss
 
             //draw current frame
             Rectangle pos = new Rectangle(position.X - 18, position.Y - 20, 96, 120);
-            spritebatch.Draw(texture, pos, source, Color.White);
+            if (health > 2)
+            {
+                spritebatch.Draw(texture, pos, source, Color.White);
+            }
+            else if (health == 2)
+            {
+                Color color = new Color(255, 153, 153);
+                spritebatch.Draw(texture, pos, source, color);
+            }
+            else if (health == 1)
+            {
+                spritebatch.Draw(texture, pos, source, Color.Red);
+            }
         }
 
         public void init()

@@ -15,24 +15,23 @@ namespace Curse_of_the_Abyss
         public Egg(int x, int y)
         {
             name = "egg";
-            position = new Rectangle(x, y, 40, 50);
+            position = new Rectangle(x, y, 18, 18);
 
         }
 
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("SmileyWalk");
+            texture = content.Load<Texture2D>("Egg");
         }
-
 
 
         public override void Draw(SpriteBatch spritebatch)
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width/4;
-            int height = texture.Width/4;
+            int width = texture.Width;
+            int height = texture.Width;
             Rectangle source = new Rectangle(0, 0, width, height);
 
             //draw current frame
@@ -91,9 +90,6 @@ namespace Curse_of_the_Abyss
             {
                 eggs.Remove(toRemove);
             }
-
- 
-            
         }
 
         public bool allCollected()

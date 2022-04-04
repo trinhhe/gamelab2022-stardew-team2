@@ -29,27 +29,30 @@ namespace Curse_of_the_Abyss
             PathNPC.LoadContent(content);
             Submarine.LoadContent(content);
             Egg.LoadContent(content);
+            Rock.LoadContent(content);
         }
         public Level1()
         {
             // load tile map 
-            TileMap = new TmxMap("Content/maps/map_lvl1.tmx");
+            TileMap = new TmxMap("../../../Content/maps/map_lvl1.tmx");
             Reset();
-            
-            
         }
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
             SeaUrchin seaUrchin = new SeaUrchin(50, 380);
             sprites.Add(seaUrchin);
-            MovingPlatform movableObstacle = new MovingPlatform(120, 890, 120, 550, 2);
+            MovingPlatform movableObstacle = new MovingPlatform(120, 900, 120, 540, 2, changedir: false);
             sprites.Add(movableObstacle);
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
-            PathNPC pathNPC = new PathNPC(1200, 700, 1500, 700, 5);
+            PathNPC pathNPC = new PathNPC(1300, 700, 1600, 700, 5);
             sprites.Add(pathNPC);
+            Rock rock1 = new Rock(new Rectangle(1216, 831,94,193));
+            Rock rock2 = new Rock(new Rectangle(1376, 831, 94, 193));
+            Rock rock3 = new Rock(new Rectangle(1480, 831, 94, 193));
+            sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
         }
 
         public override void Update(GameTime gameTime)
@@ -118,8 +121,9 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            eggs.addEgg(700, 850);
-            eggs.addEgg(800, 800);
+            eggs.addEgg(100, 298);
+            eggs.addEgg(1335, 1000);
+            eggs.addEgg(1620, 552);
         }
         
     }

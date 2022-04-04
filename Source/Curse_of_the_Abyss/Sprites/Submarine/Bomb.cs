@@ -14,8 +14,9 @@ namespace Curse_of_the_Abyss
         public Bomb(int x, int y)
         {
             this.name = "bomb";
-            this.position = new Rectangle(x, y, 16, 26);
+            this.position = new Rectangle(x, y, 30, 50);
             this.linearVelocity = Constants.submarine_bomb_velocity;
+            collidable = true;
         }
         public static void LoadContent(ContentManager content)
         {
@@ -24,11 +25,31 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
             position.Y += (int)linearVelocity;
+            Sprite s = CheckCollision(sprites);
+            if (s != null) YCollision(s,gametime);
         }
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, position, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
+            Rectangle pos = new Rectangle(position.X-5, position.Y,position.Width+10,position.Height+10);
+            spritebatch.Draw(texture, pos, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
+        }
+
+        public override void YCollision(Sprite s, GameTime gametime)
+        {
+            switch (s.name)
+            {
+                case ("obstacle"):
+                case ("stationaryNPC"):
+                case ("pathNPC"):
+                    remove = true;
+                    break;
+                case ("rock"):
+                case ("targetingNPC"):
+                    remove = true;
+                    s.remove = true;
+                    break;
+            }
         }
     }
 }

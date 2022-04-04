@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
         public enum State { Standing, Running, Jumping, Falling };
         public State state;
         public bool movingRight, dodging, wasdodging, hit, checkfall;//needed for different situations in states
-        private int lastY, lasthit;//needed to decide how heigh player can jump
+        private int lastY;//needed to decide how heigh player can jump
         Healthbar health;
 
 
@@ -119,12 +119,13 @@ namespace Curse_of_the_Abyss
                         position.Y += (int)yVelocity;
                         break;
                 case ("pathNPC"):
-                    
-                        health.curr_health -= health.maxhealth / 10;
+                        s.remove = true;
+                        health.curr_health -= health.maxhealth / 40;
                         position.Y += (int)yVelocity;
                         break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
+                case ("rock"):
                     {
                         if (position.Left < s.position.Left)
                         {
@@ -138,9 +139,6 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
-                case ("movingPlatform"):
-                    System.Diagnostics.Debug.WriteLine("XCOLLISION");
-                    break;
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
@@ -160,12 +158,15 @@ namespace Curse_of_the_Abyss
                         break;
                     }
                 case ("pathNPC"):
-                    {  
+                    {
+                        s.remove = true;
                         health.curr_health -= health.maxhealth / 10;
+                        
                         break;
                     }
                 case ("stationaryNPC"):
                 case ("obstacle"):
+                case ("rock"):
                     {
                         if (position.Top < s.position.Top)
                         {
@@ -181,9 +182,6 @@ namespace Curse_of_the_Abyss
                         }
                         break;
                     }
-                case ("movingPlatform"):
-                    System.Diagnostics.Debug.WriteLine("YCOLLISION");
-                    break;
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
