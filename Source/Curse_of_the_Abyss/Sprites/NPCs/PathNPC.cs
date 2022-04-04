@@ -26,7 +26,7 @@ namespace Curse_of_the_Abyss
             //spawn at first x,y
             //move to second x,y and then alternate btw first and second x,y
             name = "pathNPC";
-            position = new Rectangle(firstx, firsty, 96, 120);
+            position = new Rectangle(firstx, firsty, 106, 70);
             this.firstx = firstx;
             this.firsty = firsty;
             this.secondx = secondx;
@@ -39,7 +39,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("bfish");
+            texture = content.Load<Texture2D>("shark");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -95,14 +95,22 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width;
-            int height = texture.Width;
-            Rectangle source = new Rectangle(0, 0, width, height);
-
-
+            int width = texture.Width/2;
+            int height = texture.Height;
+            
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            if(dir == 0)
+            {
+                Rectangle source = new Rectangle(0, 0, width, height);
+                spritebatch.Draw(texture, position, source, Color.White);
+            }
+            
+            else
+            {
+                Rectangle source = new Rectangle(texture.Width/2, 0, width, height);
+                spritebatch.Draw(texture, position, source, Color.White);
+            }
         }
 
 
