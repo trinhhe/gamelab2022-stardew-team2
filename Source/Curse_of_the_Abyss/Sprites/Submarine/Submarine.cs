@@ -85,10 +85,6 @@ namespace Curse_of_the_Abyss
             else
                 animationManager1.Stop(0);
             
-            //GET MOUSE POSITION
-            //var xd = Mouse.GetState();
-            //Console.WriteLine("{0} {1} \n", xd.X + 10, xd.Y + 10);
-
             //update position of submarine 
             position.X += (int)xVelocity;
             oxyPosition.X += (int)xVelocity;
@@ -362,12 +358,10 @@ namespace Curse_of_the_Abyss
                 if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left) && machineGun.rotation > machineGun.rotationRightBound)
                 {
                     machineGun.rotation -= MathHelper.ToRadians(machineGun.rotationVelocity);
-                    // Console.WriteLine(machineGun.rotation);
                 }
                 else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right) && machineGun.rotation < machineGun.rotationLeftBound)
                 {
                     machineGun.rotation += MathHelper.ToRadians(machineGun.rotationVelocity);
-                    // Console.WriteLine(machineGun.rotation);
                 }
                 //-5.4 to adjust direction since machinegun points to bottomright at beginning
                 machineGun.direction = new Vector2((float)Math.Cos(machineGun.rotation-5.5), (float)Math.Sin(machineGun.rotation-5.5));
