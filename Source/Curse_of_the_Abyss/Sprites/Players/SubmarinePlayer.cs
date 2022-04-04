@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         public SubmarinePlayer(int x, int y, int leftBound, int rightBound)
         {
             name = "submarineplayer";
-            position = new Rectangle(x, y, 20, 45);
+            position = new Rectangle(x, y, 20, 30);
             this.leftBound = leftBound;
             this.rightBound = rightBound;
             init(); //do rest there to keep this part of code clean
@@ -92,8 +92,8 @@ namespace Curse_of_the_Abyss
 
         private void Running()
         {
-            double max_v = Constants.max_run_velocity;
-            xAcceleration = Constants.run_accelerate;
+            double max_v = Constants.submarineplayer_max_run_velocity;
+            xAcceleration = Constants.submarineplayer_run_accelerate;
             // -2 to avoid to overshoot boundaries in some cases
             if (position.Right < rightBound && position.Left > leftBound)
             {
