@@ -35,10 +35,10 @@ namespace Curse_of_the_Abyss
             // start position for player: x + 85,y + 90 , 
             this.submarinePlayer = new SubmarinePlayer(x+85, y+107, x+78, y+339);
             this.oxyPosition = new Rectangle(x+70, y+100, 10, 15);  
-            this.machineGunTerminalPosition = new Rectangle(x+329, y+118, 11, 20);
-            this.steerPosition = new Rectangle(x+255, y+122, 22, 16);
-            this.lightLeverPosition = new Rectangle(x+205, y+125,15,12);
-            this.bombButtonPosition = new Rectangle(x+152, y+125, 12, 7);
+            this.machineGunTerminalPosition = new Rectangle(x+329, y+119, 11, 20);
+            this.steerPosition = new Rectangle(x+255, y+123, 22, 16);
+            this.lightLeverPosition = new Rectangle(x+205, y+127,15,12);
+            this.bombButtonPosition = new Rectangle(x+152, y+132, 12, 7);
             this.shutPosition = new Rectangle(x+140, y+157, 35, 22);
             this.healthbar = healthbar;
             this.machineGun = new MachineGun(x+335,y+165, 2.2f, -0.64f);
@@ -246,7 +246,7 @@ namespace Curse_of_the_Abyss
             {
                 if (bombCooldown > Constants.submarine_bomb_cooldown) 
                 {
-                    Bomb bomb = new Bomb(bombButtonPosition.X, bombButtonPosition.Y + 50);
+                    Bomb bomb = new Bomb(bombButtonPosition.X-5, bombButtonPosition.Y + 50);
                     bombs.Add(bomb);
                     bombCooldown = 0;
                     animationManager3.Stop(0);
