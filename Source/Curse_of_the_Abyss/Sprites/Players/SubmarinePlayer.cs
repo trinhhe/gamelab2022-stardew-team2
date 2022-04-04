@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         public SubmarinePlayer(int x, int y, int leftBound, int rightBound)
         {
             name = "submarineplayer";
-            position = new Rectangle(x, y, 20, 30);
+            position = new Rectangle(x, y, 14, 28);
             this.leftBound = leftBound;
             this.rightBound = rightBound;
             init(); //do rest there to keep this part of code clean
@@ -32,7 +32,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("MCRunSprite");
+            texture = content.Load<Texture2D>("Submarine_Player");
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -58,7 +58,7 @@ namespace Curse_of_the_Abyss
         {
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width/5;
+            int width = texture.Width;
             int height = texture.Height;
             Rectangle source = new Rectangle(0, 0, width, height);
 
