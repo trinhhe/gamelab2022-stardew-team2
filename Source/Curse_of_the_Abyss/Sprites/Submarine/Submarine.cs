@@ -178,9 +178,9 @@ namespace Curse_of_the_Abyss
             }
             if (machineGunCooldown < Constants.submarine_machine_gun_cooldown)
             {
-                spritebatch.Draw(bar, new Rectangle(machineGun.position.Right -100, position.Y+150, 10, 30), Color.White);
+                spritebatch.Draw(bar, new Rectangle(machineGun.position.Right -70, position.Y+150, 10, 30), Color.White);
                 int curr_ypos = position.Y + 180 - 30 * machineGunCooldown / Constants.submarine_machine_gun_cooldown + 1;
-                spritebatch.Draw(cooldown, new Rectangle(machineGun.position.Right -100, curr_ypos, 10, 30 * machineGunCooldown / Constants.submarine_machine_gun_cooldown - 2), Color.White);
+                spritebatch.Draw(cooldown, new Rectangle(machineGun.position.Right -70, curr_ypos, 10, 30 * machineGunCooldown / Constants.submarine_machine_gun_cooldown - 2), Color.White);
             }
         }
 
