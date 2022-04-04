@@ -13,7 +13,7 @@ namespace Curse_of_the_Abyss
         public StationaryShooterNPC(int x, int y)
         {
             name = "stationaryNPC";
-            position = new Rectangle(x, y, 128, 160);
+            position = new Rectangle(x, y, 148, 162);
             collidable = true;
         }
 
@@ -36,7 +36,7 @@ namespace Curse_of_the_Abyss
             //this block currently chooses one specific frame to draw
             //TO DO: Decide current frame in getState method instead of here
             int width = texture.Width;
-            int height = texture.Width;
+            int height = texture.Height;
             Rectangle source = new Rectangle(0, 0, width, height);
 
            
