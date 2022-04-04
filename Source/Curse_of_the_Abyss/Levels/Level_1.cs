@@ -72,7 +72,7 @@ namespace Curse_of_the_Abyss
                     int targetx = 0;
                     int targety = shooter.position.Y;
                     int speed = 10;
-                    ShootingSprite shootS = new ShootingSprite(shooter.position.X, shooter.position.Y + shooter.position.Width / 2, targetx, targety, speed);
+                    ShootingSprite shootS = new ShootingSprite(shooter.position.X, shooter.position.Y + shooter.position.Width / 2 + 15, targetx, targety, speed);
                     sprites.Add(shootS);
                 }
             }
