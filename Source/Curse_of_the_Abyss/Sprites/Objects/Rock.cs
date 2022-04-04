@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, position, Color.White);
+            spritebatch.Draw(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
         }
     }
 }

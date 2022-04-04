@@ -3,7 +3,7 @@ namespace Curse_of_the_Abyss
 
     public static class Constants{
         //waterplayer
-        public static float max_run_velocity = 6;
+        public static float max_run_velocity = 4;
         public static float jump_velocity = -3;
         public static float fall_velocity = 0.15f;
         public static float max_y_velocity = 5;

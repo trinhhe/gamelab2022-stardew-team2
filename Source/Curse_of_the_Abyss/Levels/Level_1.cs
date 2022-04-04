@@ -42,12 +42,12 @@ namespace Curse_of_the_Abyss
         public void InitSprites(){
             SeaUrchin seaUrchin = new SeaUrchin(50, 380);
             sprites.Add(seaUrchin);
-            MovingPlatform movableObstacle = new MovingPlatform(120, 900, 120, 540, 2, changedir: false);
+            MovingPlatform movableObstacle = new MovingPlatform(120, 839, 120, 540, 2, changedir: false);
             sprites.Add(movableObstacle);
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
-            PathNPC pathNPC = new PathNPC(1300, 700, 1600, 700, 5);
+            PathNPC pathNPC = new PathNPC(1300, 700, 1800, 700, 5);
             sprites.Add(pathNPC);
             Rock rock1 = new Rock(new Rectangle(1216, 831, 94, 193));
             Rock rock2 = new Rock(new Rectangle(1376, 831, 94, 193));
@@ -77,31 +77,24 @@ namespace Curse_of_the_Abyss
                     sprites.Add(shootS);
                 }
             }
-            if (gameTime.TotalGameTime.Milliseconds % 10000 == 0)
-            { //10 sec
+            randomTimer += gameTime.ElapsedGameTime.Milliseconds;
+            //10 sec
                 //targeting npc
-                int seconds = 10; // set for time btw spwaning of targeting npcs
-                if (randomTimer < seconds)
-                {
-                    randomTimer++;
-                }
-                else
-                { 
-                    int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
-                    int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
-                    int speed = 2;
-                    var rand = new Random();
-                    int x_index = rand.Next(2);
-                    int y_index = rand.Next(2);
-                    var x_pos = new List<int> { -100, 2100 };
-                    var y_pos = new List<int> { 400, 900 };
-                    TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
-                    sprites.Add(targetingNPC);
-                    randomTimer = 0;
-                }
-                
+            int milliseconds = 5000; // set for time btw spwaning of targeting npcs
+            if (randomTimer > milliseconds)
+            { 
+                int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
+                int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
+                int speed = 2;
+                var rand = new Random();
+                int x_index = rand.Next(2);
+                int y_index = rand.Next(2);
+                var x_pos = new List<int> { -100, 2100 };
+                var y_pos = new List<int> { 400, 900 };
+                TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
+                sprites.Add(targetingNPC);
+                randomTimer = 0;
             }
-
         }
         public override void Reset()
         {

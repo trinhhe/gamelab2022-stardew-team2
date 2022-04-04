@@ -27,13 +27,13 @@ namespace Curse_of_the_Abyss
             Vector2 inc = direction * linearVelocity;
             position.X += (int)inc.X;
             Sprite s = CheckCollision(sprites);
-            if (s!= null && s.name == "targetingNPC") XCollision(s, gametime);
+            if (s!= null) XCollision(s, gametime);
             else
             {
                 position.X -= (int)inc.X;
                 position.Y += (int)inc.Y;
                 s = CheckCollision(sprites);
-                if (s!=null && s.name == "targetingNPC") YCollision(s, gametime);
+                if (s!=null) YCollision(s, gametime);
                 position.X += (int)inc.X;
             }
         }
@@ -41,6 +41,20 @@ namespace Curse_of_the_Abyss
         public override void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(texture, position, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
+        }
+
+        public override Sprite CheckCollision(List<Sprite> sprites)
+        {
+            foreach (Sprite s in sprites)
+            {
+                if (this == s) continue;
+                if (!s.collidable || !collidable) continue;
+                if (s.name == "targetingNPC" && this.position.Intersects(s.position))
+                {
+                    return s;
+                }
+            }
+            return null;
         }
 
         public override void XCollision(Sprite s, GameTime gameTime)

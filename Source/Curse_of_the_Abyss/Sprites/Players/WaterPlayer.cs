@@ -35,8 +35,8 @@ namespace Curse_of_the_Abyss
             //texture = content.Load<Texture2D>("MCRunSprite");
             animations = new Dictionary<string, Animation>()
             {
-                {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.2f, true) },
-                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.1f, false) }
+                {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.5f, true) },
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"),5, 0.03f, false) }
             };
         }
 
@@ -120,7 +120,7 @@ namespace Curse_of_the_Abyss
                         break;
                 case ("pathNPC"):
                         s.remove = true;
-                        health.curr_health -= health.maxhealth / 40;
+                        health.curr_health -= health.maxhealth / 2;
                         position.Y += (int)yVelocity;
                         break;
                 case ("stationaryNPC"):
@@ -160,7 +160,7 @@ namespace Curse_of_the_Abyss
                 case ("pathNPC"):
                     {
                         s.remove = true;
-                        health.curr_health -= health.maxhealth / 10;
+                        health.curr_health -= health.maxhealth / 2;
                         
                         break;
                     }
@@ -233,7 +233,7 @@ namespace Curse_of_the_Abyss
                 movingRight = true;
                 if (xVelocity < 0)
                 {
-                    xAcceleration += 0.2f;
+                    xAcceleration += 2.0f;
                 }
                 if (xVelocity < max_v)
                 {
@@ -249,7 +249,7 @@ namespace Curse_of_the_Abyss
                 movingRight = false;
                 if (xVelocity > 0)
                 {
-                    xAcceleration += 0.2f;
+                    xAcceleration += 2.0f;
                 }
                 if (xVelocity > -max_v)
                 {
@@ -305,6 +305,7 @@ namespace Curse_of_the_Abyss
 
             //switch to falling if jumped heigh enough
             if ((lastY-position.Y)>Constants.max_jumping_height){
+                yVelocity += Constants.fall_velocity;
                 state = State.Falling;
             }
 

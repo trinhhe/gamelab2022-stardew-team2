@@ -143,7 +143,6 @@ namespace Curse_of_the_Abyss
             int width = texture.Width;
             int height = texture.Width;
             Rectangle source = new Rectangle(0, 0, width, height);
-
             //draw current frame
             spritebatch.Draw(texture, position, source, Color.White);
         }
