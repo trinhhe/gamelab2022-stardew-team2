@@ -50,7 +50,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: asset for submarine
-            ShootingTerminalTexture = content.Load<Texture2D>("Shoot_terminal");
+            ShootingTerminalTexture = content.Load<Texture2D>("Shoot_Terminal");
             ControlDeskTexture = content.Load<Texture2D>("Control_Desk");
             //LeverTexture = content.Load<Texture2D>("lever");
             animations = new Dictionary<string, Animation>()
