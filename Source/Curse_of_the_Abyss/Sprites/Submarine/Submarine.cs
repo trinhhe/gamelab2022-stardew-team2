@@ -203,7 +203,7 @@ namespace Curse_of_the_Abyss
             machineGunOn = false;
             steeringOn = false;
             lightOn = false;
-            mouseMode = false;
+            mouseMode = true;
             shootingCount = 0;
             bullets = new List<Bullet>();
             bombs = new List<Bomb>();
@@ -400,12 +400,13 @@ namespace Curse_of_the_Abyss
                 {
                     MouseState mouse = Mouse.GetState();
                     direction = new Vector2(mouse.X - machineGun.position.X, mouse.Y - machineGun.position.Y);
-                    direction.Normalize(); 
+                    direction.Normalize();
+                    machineGun.rotation = (float)Math.Atan2(direction.Y, direction.X) +5.5f;
                 }
 
                 if (shootingCount % shootingFrequency == 0)
                 {
-                    Bullet bullet = new Bullet((int)machineGun.position.X, (int)machineGun.position.Y);
+                    Bullet bullet = new Bullet((int)machineGun.position.X-4, (int)machineGun.position.Y-5);
                     bullet.direction = direction;
                     bullets.Add(bullet);
                 }
@@ -439,9 +440,9 @@ namespace Curse_of_the_Abyss
                 case State.Driving:
                     Driving();
                     break;
-                case State.OxygenMode:
-                    //OxygenMode();
-                    break;
+                //case State.OxygenMode:
+                //    OxygenMode();
+                //    break;
                 case State.MachineGunMode:
                     MachineGunMode();
                     break;
