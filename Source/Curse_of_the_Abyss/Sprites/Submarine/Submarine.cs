@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         private List<Bullet> bullets;
         private List<Bomb> bombs;
         private Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition, lightLeverPosition, shutPosition;
-        private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown;
+        private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown, oxygenCooldown;
         public bool movingRight;//needed for different situations in states
         public bool machineGunOn, steeringOn, lightOn, mouseMode;
         public Submarine(int x, int y, Healthbar healthbar)
@@ -86,6 +86,8 @@ namespace Curse_of_the_Abyss
             {
                 animationManager6.Update(gametime);
             }
+            if (oxygenCooldown >= Constants.submarine_oxygen_cooldown)
+                animationManager2.Stop(1);
             if (state == State.Driving)
                 animationManager1.Update(gametime);
             else
@@ -108,6 +110,7 @@ namespace Curse_of_the_Abyss
             shutPosition.X += (int)xVelocity;
             bombCooldown += gametime.ElapsedGameTime.Milliseconds;
             machineGunCooldown += gametime.ElapsedGameTime.Milliseconds;
+            oxygenCooldown += gametime.ElapsedGameTime.Milliseconds;
 
             submarinePlayer.Update(sprites, gametime);
             healthbar.Update(sprites, gametime);
@@ -206,6 +209,7 @@ namespace Curse_of_the_Abyss
             bombs = new List<Bomb>();
             bombCooldown = Constants.submarine_bomb_cooldown;
             machineGunCooldown = Constants.submarine_machine_gun_cooldown;
+            oxygenCooldown = Constants.submarine_oxygen_cooldown;
         }
 
         private void Standing(GameTime gametime)
@@ -213,9 +217,18 @@ namespace Curse_of_the_Abyss
             //player at oxygenstation and preparing to fill
             if (submarinePlayer.position.Intersects(oxyPosition) && KB_curState.IsKeyDown(Keys.Down))
             {
-                submarinePlayer.setVelocityZero();
-                healthbar.toggleLoadingOn();
-                state = State.OxygenMode;
+                //submarinePlayer.setVelocityZero();
+                //healthbar.toggleLoadingOn();
+                //state = State.OxygenMode;
+                if (oxygenCooldown > Constants.submarine_oxygen_cooldown)
+                {
+                    if (healthbar.curr_health + Constants.health_gain > healthbar.maxhealth)
+                        healthbar.curr_health = healthbar.maxhealth;
+                    else
+                        healthbar.curr_health += Constants.health_gain;
+                    oxygenCooldown = 0;
+                    animationManager2.Stop(0);
+                }
             }
 
             if (submarinePlayer.position.Intersects(steerPosition) && KB_curState.IsKeyDown(Keys.Down))
@@ -341,19 +354,19 @@ namespace Curse_of_the_Abyss
             }        
         }
 
-        private void OxygenMode()
-        {
-            //moving away from oxystation or not pressing down arrow
-            if (!submarinePlayer.position.Intersects(oxyPosition) || (submarinePlayer.position.Intersects(oxyPosition) && !KB_curState.IsKeyDown(Keys.Down)))
-            {
-                healthbar.toggleLoadingOn();
-                state = State.Standing;
-                animationManager2.Stop(0);
-                return;
-            }
-            animationManager2.Stop(1);
+        //private void OxygenMode()
+        //{
+        //    //moving away from oxystation or not pressing down arrow
+        //    if (!submarinePlayer.position.Intersects(oxyPosition) || (submarinePlayer.position.Intersects(oxyPosition) && !KB_curState.IsKeyDown(Keys.Down)))
+        //    {
+        //        healthbar.toggleLoadingOn();
+        //        state = State.Standing;
+        //        animationManager2.Stop(0);
+        //        return;
+        //    }
+        //    animationManager2.Stop(1);
 
-        }
+        //}
 
         private void MachineGunMode()
         {
@@ -427,7 +440,7 @@ namespace Curse_of_the_Abyss
                     Driving();
                     break;
                 case State.OxygenMode:
-                    OxygenMode();
+                    //OxygenMode();
                     break;
                 case State.MachineGunMode:
                     MachineGunMode();
