@@ -200,7 +200,7 @@ namespace Curse_of_the_Abyss
             machineGunOn = false;
             steeringOn = false;
             lightOn = false;
-            mouseMode = false;
+            mouseMode = true;
             shootingCount = 0;
             bullets = new List<Bullet>();
             bombs = new List<Bomb>();
