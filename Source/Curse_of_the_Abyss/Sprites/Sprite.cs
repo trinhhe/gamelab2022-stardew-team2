@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Curse_of_the_Abyss
 {
@@ -28,13 +29,13 @@ namespace Curse_of_the_Abyss
         {
 
         }
-        public virtual Sprite CheckCollision(List<Sprite> sprites)
+        public virtual Sprite CheckCollision(List<Sprite> sprites, string[] collidables)
         {
             foreach (Sprite s in sprites)
             {
                 if (this == s) continue;
                 if (!s.collidable || !collidable) continue;
-                if (this.position.Intersects(s.position))
+                if ((this.position.Intersects(s.position)) && (collidables.Contains(s.name)))
                 {
                     return s;
                 }

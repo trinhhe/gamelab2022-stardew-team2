@@ -11,6 +11,7 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         public int ground;
         public float linearVelocity;
+        private string[] collidables = {"obstacle", "targetingNPC", "rock" };
         public Bomb(int x, int y)
         {
             this.name = "bomb";
@@ -25,7 +26,7 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
             position.Y += (int)linearVelocity;
-            Sprite s = CheckCollision(sprites);
+            Sprite s = CheckCollision(sprites,collidables);
             if (s != null) YCollision(s,gametime);
         }
 

@@ -19,6 +19,7 @@ namespace Curse_of_the_Abyss
         int dir; // 0 - going to first (x,y) ; 1 - going to second (x,y)
         bool changedir;
         bool first_collision;
+        private string[] collidables = { "waterplayer" };
 
         public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed, bool changedir)
         {
@@ -103,7 +104,7 @@ namespace Curse_of_the_Abyss
                 }
             }
 
-            Sprite s = CheckCollision(sprites);
+            Sprite s = CheckCollision(sprites,collidables);
             if (s != null && s.name == "waterplayer")
             {
                 YCollision(s, gametime);

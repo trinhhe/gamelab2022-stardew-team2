@@ -14,6 +14,7 @@ namespace Curse_of_the_Abyss
         int targetx;
         int targety;
         int speed;
+        private string[] collidables = { "obstacle" };
 
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
@@ -36,13 +37,13 @@ namespace Curse_of_the_Abyss
             
             //update position of Player 
             position.X += (int)xVelocity;
-            Sprite s = CheckCollision(sprites);
+            Sprite s = CheckCollision(sprites, collidables);
             if (s != null) XCollision(s, gametime);
             else
             {
                 position.X -= (int)xVelocity;
                 position.Y += (int)yVelocity;
-                s = CheckCollision(sprites);
+                s = CheckCollision(sprites, collidables);
                 if (s != null) YCollision(s, gametime);
                 position.X += (int)xVelocity;
             }
