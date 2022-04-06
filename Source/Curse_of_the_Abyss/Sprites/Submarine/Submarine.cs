@@ -200,7 +200,7 @@ namespace Curse_of_the_Abyss
             machineGunOn = false;
             steeringOn = false;
             lightOn = false;
-            mouseMode = true;
+            mouseMode = false;
             shootingCount = 0;
             bullets = new List<Bullet>();
             bombs = new List<Bomb>();
@@ -386,13 +386,13 @@ namespace Curse_of_the_Abyss
                 else
                 {
                     MouseState mouse = Mouse.GetState();
-                    direction = new Vector2(mouse.X - machineGun.position.X-4, mouse.Y - machineGun.position.Y-5);
+                    direction = new Vector2(mouse.X - machineGun.position.X, mouse.Y - machineGun.position.Y);
                     direction.Normalize(); 
                 }
 
                 if (shootingCount % shootingFrequency == 0)
                 {
-                    Bullet bullet = new Bullet((int)machineGun.position.X-4, (int)machineGun.position.Y-5);
+                    Bullet bullet = new Bullet((int)machineGun.position.X, (int)machineGun.position.Y);
                     bullet.direction = direction;
                     bullets.Add(bullet);
                 }
