@@ -29,7 +29,7 @@ namespace Curse_of_the_Abyss
                 SpriteEffects.None,
                 layerDepth);
         }
-
+        //use Play if one asset has multiple different animation sprite sheets (e.g. moving up,left,right,down animation)
         public void Play(Animation animation)
         {
             if (this.animation == animation)
@@ -38,7 +38,7 @@ namespace Curse_of_the_Abyss
             this.animation.CurrentFrame = 0;
             timer = 0;
         }
-        //stop at this frame
+        //stop at this currentFrame
         public void Stop(int currentFrame)
         {
             timer = 0;
@@ -53,9 +53,11 @@ namespace Curse_of_the_Abyss
                 timer = 0;
                 //looping spritesheet
                 if (animation.IsLooping)
+                {
                     animation.CurrentFrame++;
                     if (animation.CurrentFrame >= animation.FrameCount)
-                            animation.CurrentFrame = 0;
+                        animation.CurrentFrame = 0;
+                }
                 //reverse spritesheet
                 else
                 {
@@ -73,8 +75,6 @@ namespace Curse_of_the_Abyss
                         animation.CurrentFrame++;
                         animation.reverseFlag = false;
                     }
-                        
-                    
                 }
             }
         }
