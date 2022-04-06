@@ -20,6 +20,7 @@ namespace Curse_of_the_Abyss
         public bool movingRight, dodging, wasdodging, hit, checkfall;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
         Healthbar health;
+        private string[] collidables = {"obstacle","targetingNPC","shootingSprite","pathNPC","stationaryNPC","rock","SeaUrchin" };
 
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
@@ -55,18 +56,18 @@ namespace Curse_of_the_Abyss
 
             //update position of Player and check for collisions
             position.X += (int)xVelocity;
-            Sprite s = CheckCollision(sprites);
+            Sprite s = CheckCollision(sprites,collidables);
             if (s != null) XCollision(s, gametime);
             else
             {
                 position.X -= (int)xVelocity;
                 position.Y += (int)yVelocity;
-                s = CheckCollision(sprites);
+                s = CheckCollision(sprites,collidables);
                 if (s != null) YCollision(s, gametime);
                 else
                 {
                     position.Y += 1;
-                    s = CheckCollision(sprites);
+                    s = CheckCollision(sprites,collidables);
                     if (s == null && state != State.Jumping) state = State.Falling;
                     position.Y -= 1;
                 }
