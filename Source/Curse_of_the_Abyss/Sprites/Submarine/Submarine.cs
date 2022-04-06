@@ -25,7 +25,7 @@ namespace Curse_of_the_Abyss
         private Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition, lightLeverPosition, shutPosition;
         private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown;
         public bool movingRight;//needed for different situations in states
-        public bool machineGunOn, steeringOn, lightOn;
+        public bool machineGunOn, steeringOn, lightOn, mouseMode;
         public Submarine(int x, int y, Healthbar healthbar)
         {
             name = "submarine";
@@ -94,7 +94,7 @@ namespace Curse_of_the_Abyss
             var mousestate = Mouse.GetState();
             //Console.WriteLine("{0} X, {1} Y \n", mousestate.X - position.X, mousestate.Y - position.Y);
             //Console.WriteLine("{0}", ((float)Constants.submarine_machine_gun_cooldown / 1000) / 7.0f, true);
-            Console.WriteLine("{0}", animations["BombCD"].CurrentFrame);
+            //Console.WriteLine("{0}", animations["BombCD"].CurrentFrame);
             //update position of submarine 
             position.X += (int)xVelocity;
             oxyPosition.X += (int)xVelocity;
@@ -200,6 +200,7 @@ namespace Curse_of_the_Abyss
             machineGunOn = false;
             steeringOn = false;
             lightOn = false;
+            mouseMode = false;
             shootingCount = 0;
             bullets = new List<Bullet>();
             bombs = new List<Bomb>();
@@ -367,20 +368,32 @@ namespace Curse_of_the_Abyss
             else if (machineGunOn)
             {
                 shootingCount++;
-                if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left) && machineGun.rotation > machineGun.rotationRightBound)
+                Vector2 direction;
+                if (!mouseMode)
                 {
-                    machineGun.rotation -= MathHelper.ToRadians(machineGun.rotationVelocity);
+                    if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left) && machineGun.rotation > machineGun.rotationRightBound)
+                    {
+                        machineGun.rotation -= MathHelper.ToRadians(machineGun.rotationVelocity);
+                    }
+                    else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right) && machineGun.rotation < machineGun.rotationLeftBound)
+                    {
+                        machineGun.rotation += MathHelper.ToRadians(machineGun.rotationVelocity);
+                    }
+                    //-5.4 to adjust direction since machinegun points to bottomright at beginning
+                    machineGun.direction = new Vector2((float)Math.Cos(machineGun.rotation - 5.5), (float)Math.Sin(machineGun.rotation - 5.5));
+                    direction = machineGun.direction;
                 }
-                else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right) && machineGun.rotation < machineGun.rotationLeftBound)
+                else
                 {
-                    machineGun.rotation += MathHelper.ToRadians(machineGun.rotationVelocity);
+                    MouseState mouse = Mouse.GetState();
+                    direction = new Vector2(mouse.X - machineGun.position.X-4, mouse.Y - machineGun.position.Y-5);
+                    direction.Normalize(); 
                 }
-                //-5.4 to adjust direction since machinegun points to bottomright at beginning
-                machineGun.direction = new Vector2((float)Math.Cos(machineGun.rotation-5.5), (float)Math.Sin(machineGun.rotation-5.5));
+
                 if (shootingCount % shootingFrequency == 0)
                 {
                     Bullet bullet = new Bullet((int)machineGun.position.X-4, (int)machineGun.position.Y-5);
-                    bullet.direction = machineGun.direction;
+                    bullet.direction = direction;
                     bullets.Add(bullet);
                 }
 
