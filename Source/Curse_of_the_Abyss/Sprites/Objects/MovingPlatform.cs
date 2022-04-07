@@ -105,10 +105,8 @@ namespace Curse_of_the_Abyss
             }
 
             Sprite s = CheckCollision(sprites,collidables);
-            if (s != null && s.name == "waterplayer")
-            {
-                YCollision(s, gametime);
-            }
+            if (s != null) YCollision(s, gametime);
+            else dir = 0;
 
         }
 
@@ -122,9 +120,10 @@ namespace Curse_of_the_Abyss
                     {
                         if (!first_collision)
                             first_collision = true;
-                        s.position.Y = position.Top - s.position.Height - (int)yVelocity;
+                        s.position.Y = position.Top - s.position.Height;
                         ((MovableSprite)s).yVelocity = 0;
                         ((WaterPlayer)s).state = WaterPlayer.State.Running;
+                        dir = 1;
                     }
                     else
                     {
