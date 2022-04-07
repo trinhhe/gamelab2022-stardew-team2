@@ -55,12 +55,7 @@ namespace Curse_of_the_Abyss
                     double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
                     if (dist < 3)
                     {
-                        if(changedir)
-                            dir = 0;
-                        else
-                        {
-                            first_collision = false;
-                        }
+                        dir = 0;
                     }
                     else
                     {
@@ -83,12 +78,7 @@ namespace Curse_of_the_Abyss
                     double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
                     if (dist < 3 && changedir)
                     {
-                        if (changedir)
-                            dir = 1;
-                        else
-                        {
-                            first_collision = false;
-                        }
+                        dir = 1;
                     }
                     else
                     {
@@ -116,7 +106,7 @@ namespace Curse_of_the_Abyss
             {
                 case ("waterplayer"):
                 {
-                    if (s.position.Top < position.Top)
+                    if (s.position.Bottom -10 < position.Top)
                     {
                         if (!first_collision)
                             first_collision = true;
@@ -124,12 +114,6 @@ namespace Curse_of_the_Abyss
                         ((MovableSprite)s).yVelocity = 0;
                         ((WaterPlayer)s).state = WaterPlayer.State.Running;
                         dir = 1;
-                    }
-                    else
-                    {
-                        s.position.Y = position.Bottom + 1;
-                        ((MovableSprite)s).yVelocity = 1;
-                        ((WaterPlayer)s).state = WaterPlayer.State.Falling;
                     }
                     break;
                 }

@@ -17,10 +17,11 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State { Standing, Running, Jumping, Falling };
         public State state;
-        public bool movingRight, dodging, wasdodging, hit, checkfall;//needed for different situations in states
+        public bool movingRight, dodging, wasdodging;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
         Healthbar health;
-        private string[] collidables = {"obstacle","targetingNPC","shootingSprite","pathNPC","stationaryNPC","rock","SeaUrchin" };
+        //list of objects the player can collide with
+        private string[] collidables = {"obstacle","targetingNPC","shootingSprite","pathNPC","stationaryNPC","rock","SeaUrchin"};
 
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
@@ -54,7 +55,7 @@ namespace Curse_of_the_Abyss
             setAnimation();
             animationManager.Update(gametime);
 
-            //update position of Player and check for collisions
+            //update position of Player and check for collisions(in both directions)
             position.X += (int)xVelocity;
             Sprite s = CheckCollision(sprites,collidables);
             if (s != null) XCollision(s, gametime);
@@ -62,7 +63,7 @@ namespace Curse_of_the_Abyss
             position.Y += (int)yVelocity;
             s = CheckCollision(sprites,collidables);
             if (s != null) YCollision(s, gametime);
-            else
+            else //gravity
             {
                 position.Y += 1;
                 s = CheckCollision(sprites,collidables);
@@ -214,8 +215,7 @@ namespace Curse_of_the_Abyss
         private void Running()
         {
             double max_v = Constants.max_run_velocity;
-            if (dodging) { max_v = 0.5 * Constants.max_run_velocity; }
-            xAcceleration = Constants.run_accelerate;
+            if (dodging) { max_v *= 0.5; }
             //move right
             if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
             {
@@ -226,7 +226,7 @@ namespace Curse_of_the_Abyss
                 }
                 if (xVelocity < max_v)
                 {
-                    xVelocity += xAcceleration;
+                    xVelocity += Constants.run_accelerate;
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace Curse_of_the_Abyss
                 }
                 if (xVelocity > -max_v)
                 {
-                    xVelocity -= xAcceleration;
+                    xVelocity -= Constants.run_accelerate;
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace Curse_of_the_Abyss
                 if (movingRight)
                 {
                     if (xVelocity > 0)
-                        xVelocity -= xAcceleration * 5;
+                        xVelocity -= Constants.run_accelerate * 5;
                     else
                     {
                         xVelocity = 0;
@@ -264,7 +264,7 @@ namespace Curse_of_the_Abyss
                 else
                 {
                     if (xVelocity < 0)
-                        xVelocity += xAcceleration * 5;
+                        xVelocity += Constants.run_accelerate * 5;
                     else
                     {
                         xVelocity = 0;
@@ -278,7 +278,7 @@ namespace Curse_of_the_Abyss
                 lastY = position.Y;
                 yVelocity = Constants.jump_velocity;
                 state = State.Jumping;
-            }
+            }//dodging
             else if (KB_curState.IsKeyDown(Keys.S))
             {
                 dodging = true;
@@ -304,14 +304,14 @@ namespace Curse_of_the_Abyss
             if (KB_curState.IsKeyDown(Keys.D))
             {
                 if (xVelocity < 0.6 * Constants.max_run_velocity)
-                    xVelocity += xAcceleration;
+                    xVelocity += Constants.run_accelerate;
                 else
                     xVelocity = 0.6 * Constants.max_run_velocity;
             }
             else if (KB_curState.IsKeyDown(Keys.A))
             {
                 if (xVelocity > -0.6 * Constants.max_run_velocity)
-                    xVelocity -= xAcceleration;
+                    xVelocity -= Constants.run_accelerate;
                 else
                     xVelocity = -0.6 * Constants.max_run_velocity;
             }
@@ -335,17 +335,18 @@ namespace Curse_of_the_Abyss
             if (KB_curState.IsKeyDown(Keys.D))
             {
                 if (xVelocity < 0.6 * Constants.max_run_velocity)
-                    xVelocity += xAcceleration;
+                    xVelocity += Constants.run_accelerate;
                 else
                     xVelocity = 0.6 * Constants.max_run_velocity;
             }
             else if (KB_curState.IsKeyDown(Keys.A))
             {
                 if (xVelocity > -0.6 * Constants.max_run_velocity)
-                    xVelocity -= xAcceleration;
+                    xVelocity -= Constants.run_accelerate;
                 else
                     xVelocity = -0.6 * Constants.max_run_velocity;
             }
+            //stop dodging in air
             if (!KB_curState.IsKeyDown(Keys.S) && dodging)
             {
                 dodging = false;
