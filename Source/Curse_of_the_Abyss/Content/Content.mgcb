@@ -145,6 +145,18 @@
 /processorParam:TextureFormat=Color
 /build:Egg.png
 
+#begin explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:explosion.png
+
 #begin File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -217,6 +229,12 @@
 
 #begin menu-font.ttf
 /copy:menu-font.ttf
+
+#begin mixkit-sea-mine-explosion-1184.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:mixkit-sea-mine-explosion-1184.wav
 
 #begin O2Button.png
 /importer:TextureImporter
