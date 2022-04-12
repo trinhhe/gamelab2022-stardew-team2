@@ -36,12 +36,6 @@ namespace Curse_of_the_Abyss
             {
                 sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
             }
-
-            Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
-            Sprite rightborder = new Obstacle(new Rectangle(1925, 0, 50, 700));
-            
-            sprites.Add(leftborder);
-            sprites.Add(rightborder);
         }
 
 

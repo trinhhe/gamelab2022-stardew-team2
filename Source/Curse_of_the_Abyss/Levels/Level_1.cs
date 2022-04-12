@@ -39,6 +39,11 @@ namespace Curse_of_the_Abyss
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
+            Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
+            Sprite rightborder = new Obstacle(new Rectangle(1925, 0, 50, 700));
+
+            sprites.Add(leftborder);
+            sprites.Add(rightborder);
             SeaUrchin seaUrchin = new SeaUrchin(80, 380);
             sprites.Add(seaUrchin);
             MovingPlatform movableObstacle = new MovingPlatform(120, 1022, 120, 540, 2, changedir: true);
