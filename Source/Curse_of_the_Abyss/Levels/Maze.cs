@@ -17,6 +17,8 @@ namespace Curse_of_the_Abyss
             Healthbar.LoadContent(content);
             Submarine.LoadContent(content);
             Egg.LoadContent(content);
+            PathNPC.LoadContent(content);
+            TargetingNPC.LoadContent(content);
         }
 
         public Maze()
@@ -28,7 +30,11 @@ namespace Curse_of_the_Abyss
         //inits every item/character that is not a player or submarine
         public void InitSprites()
         {
-            
+            PathNPC pathNPC = new PathNPC(1400,450,1520,450,1);
+            sprites.Add(pathNPC);
+            TargetingNPC target = new TargetingNPC(200,500,waterPlayer,5);
+            target.objectcollision = true;
+            sprites.Add(target);
         }
 
         public override void Update(GameTime gameTime)
