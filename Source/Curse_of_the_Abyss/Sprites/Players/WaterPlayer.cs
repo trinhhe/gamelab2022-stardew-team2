@@ -15,9 +15,9 @@ namespace Curse_of_the_Abyss
         protected AnimationManager animationManager;
         private KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
-        public enum State { Standing, Running, Jumping, Falling };
+        public enum State { Standing, Running, Jumping, Falling, Swimming };
         public State state;
-        public bool movingRight, dodging, wasdodging;//needed for different situations in states
+        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
         Healthbar health;
         //list of objects the player can collide with
@@ -63,7 +63,7 @@ namespace Curse_of_the_Abyss
             position.Y += (int)yVelocity;
             s = CheckCollision(sprites,collidables);
             if (s != null) YCollision(s, gametime);
-            else //gravity
+            else if(!maze)//gravity
             {
                 position.Y += 1;
                 s = CheckCollision(sprites,collidables);
@@ -353,22 +353,138 @@ namespace Curse_of_the_Abyss
             }
         }
 
-
+        private void Swimming()
+        {
+            if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
+            {//swim right
+                if (!swimmingRight)
+                {
+                    movingRight = true;
+                    xVelocity = 2;
+                }
+                if (xVelocity < Constants.max_run_velocity)
+                {
+                    xVelocity += Constants.run_accelerate;
+                }
+                else
+                {
+                    xVelocity = Constants.max_run_velocity;
+                }
+            }
+            else if (KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
+            { //swim left
+                if (swimmingRight)
+                {
+                    swimmingRight = false;
+                    xVelocity = -2;
+                }
+                if (xVelocity > -Constants.max_run_velocity)
+                {
+                    xVelocity -= Constants.run_accelerate;
+                }
+                else
+                {
+                    xVelocity = -Constants.max_run_velocity;
+                }
+            }
+            else//slow down until Standing
+            {
+                if (swimmingRight)
+                {
+                    if (xVelocity > 0)
+                        xVelocity -= Constants.run_accelerate * 5;
+                    else
+                    {
+                        xVelocity = 0;
+                    }
+                }
+                else
+                {
+                    if (xVelocity < 0)
+                        xVelocity += Constants.run_accelerate * 5;
+                    else
+                    {
+                        xVelocity = 0;
+                    }
+                }
+            }
+            if (KB_curState.IsKeyDown(Keys.W) && !KB_curState.IsKeyDown(Keys.S))
+            {//swim up
+                if (!swimmingUp)
+                {
+                    swimmingUp = true;
+                    yVelocity = -2;
+                }
+                if (yVelocity > Constants.max_run_velocity)
+                {
+                    yVelocity -= Constants.run_accelerate;
+                }
+                else
+                {
+                    yVelocity = -Constants.max_run_velocity;
+                }
+            }
+            else if (KB_curState.IsKeyDown(Keys.S) && !KB_curState.IsKeyDown(Keys.W))
+            { //swim down
+                if (swimmingUp)
+                {
+                    swimmingUp = false;
+                    yVelocity = 2;
+                }
+                if (yVelocity < Constants.max_run_velocity)
+                {
+                    yVelocity += Constants.run_accelerate;
+                }
+                else
+                {
+                    yVelocity = Constants.max_run_velocity;
+                }
+            }
+            else//slow down until Standing
+            {
+                if (swimmingUp)
+                {
+                    if (yVelocity < 0)
+                        yVelocity += Constants.run_accelerate * 5;
+                    else
+                    {
+                        yVelocity = 0;
+                    }
+                }
+                else
+                {
+                    if (yVelocity > 0)
+                        yVelocity -= Constants.run_accelerate * 5;
+                    else
+                    {
+                        yVelocity = 0;
+                    }
+                }
+            }
+        }
         //calls function depending on state
         private void getState(){
-            switch(state){
-                case State.Standing:
-                    Standing();
-                    break;
-                case State.Running:
-                    Running();
-                    break;
-                case State.Jumping:
-                    Jumping();
-                    break;
-                case State.Falling:
-                    Falling();
-                    break;
+            if (!maze)
+            {
+                switch (state)
+                {
+                    case State.Standing:
+                        Standing();
+                        break;
+                    case State.Running:
+                        Running();
+                        break;
+                    case State.Jumping:
+                        Jumping();
+                        break;
+                    case State.Falling:
+                        Falling();
+                        break;
+                }
+            }
+            else
+            {
+                Swimming();
             }
         }
 

@@ -74,6 +74,14 @@ namespace Curse_of_the_Abyss
         {
             KB_curState = Keyboard.GetState();
             getState(gametime);// decides current frame and handles state mechanics
+            if (animationManager1 == null)
+            {
+                animationManager1 = new AnimationManager(animations["Drive"]);
+                animationManager2 = new AnimationManager(animations["Oxygen"]);
+                animationManager3 = new AnimationManager(animations["Bomb"]);
+                animationManager4 = new AnimationManager(animations["Light"]);
+                animationManager5 = new AnimationManager(animations["Shut"]);
+            }
 
             if (bombCooldown > Constants.submarine_bomb_cooldown)
             {

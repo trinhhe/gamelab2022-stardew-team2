@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TiledSharp;
 using System;
 
-namespace Curse_of_the_Abyss.Levels
+namespace Curse_of_the_Abyss
 {
     class Maze:Level
     {
@@ -21,7 +21,7 @@ namespace Curse_of_the_Abyss.Levels
 
         public Maze()
         {
-            new TmxMap("./Content/maps/maze.tmx");
+            TileMap = new TmxMap("./Content/maps/maze.tmx");
             Reset();
         }
 
@@ -49,6 +49,7 @@ namespace Curse_of_the_Abyss.Levels
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
+            waterPlayer.maze = true;
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
             Initialize();
@@ -59,9 +60,7 @@ namespace Curse_of_the_Abyss.Levels
             eggs = new EggCollection();
 
             //Add eggs here
-            eggs.addEgg(100, 298);
-            eggs.addEgg(1335, 1000);
-            eggs.addEgg(1620, 552);
+            
         }
 
     }
