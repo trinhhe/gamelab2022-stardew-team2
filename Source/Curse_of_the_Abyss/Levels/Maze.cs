@@ -48,7 +48,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(20, 962, healthbar);
+            waterPlayer = new WaterPlayer(20, 990, healthbar);
             waterPlayer.maze = true;
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
@@ -60,7 +60,11 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            
+            eggs.addEgg(160,400);
+            eggs.addEgg(520, 1030);
+            eggs.addEgg(850, 430);
+            eggs.addEgg(1120, 910);
+            eggs.addEgg(1650, 400);
         }
 
     }

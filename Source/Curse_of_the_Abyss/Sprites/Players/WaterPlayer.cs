@@ -15,7 +15,7 @@ namespace Curse_of_the_Abyss
         protected AnimationManager animationManager;
         private KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
-        public enum State { Standing, Running, Jumping, Falling, Swimming };
+        public enum State { Standing, Running, Jumping, Falling};
         public State state;
         public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
