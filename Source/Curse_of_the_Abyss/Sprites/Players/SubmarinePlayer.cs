@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         public SubmarinePlayer(int x, int y, int leftBound, int rightBound)
         {
             name = "submarineplayer";
-            position = new Rectangle(x, y, 32, 32);
+            position = new Rectangle(x, y, 32, 58);
             this.leftBound = leftBound;
             this.rightBound = rightBound;
             init(); //do rest there to keep this part of code clean

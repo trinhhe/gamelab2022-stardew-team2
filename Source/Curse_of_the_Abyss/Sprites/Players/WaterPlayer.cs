@@ -37,7 +37,8 @@ namespace Curse_of_the_Abyss
             //texture = content.Load<Texture2D>("MCRunSprite");
             animations = new Dictionary<string, Animation>()
             {
-                {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.5f, true) },
+                {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 9, 0.15f, true) },
+                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),9,0.15f,true) },
                 {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) }
             };
         }
@@ -176,7 +177,7 @@ namespace Curse_of_the_Abyss
         }
         public void init(){
             state = State.Standing;
-            movingRight = false;
+            movingRight = true;
             dodging = false;
             collidable = true;
         }
@@ -322,6 +323,8 @@ namespace Curse_of_the_Abyss
             }
             else
                 yVelocity += Constants.fall_velocity;
+
+            movingRight = xVelocity > 0 ? true : false; //reset movingright while falling
         }
 
         private void Falling()
@@ -351,6 +354,8 @@ namespace Curse_of_the_Abyss
             {
                 dodging = false;
             }
+
+            movingRight = xVelocity > 0 ? true : false;
         }
 
         private void Swimming()
@@ -500,11 +505,22 @@ namespace Curse_of_the_Abyss
                         animationManager.Stop(4);                   
                 }           
             }
+            else if (state != State.Standing && !maze && xVelocity !=0)
+            {
+                if (movingRight) 
+                    animationManager.Play(animations["RunRight"]);
+                else
+                    animationManager.Play(animations["RunLeft"]);
+                if(state != State.Running)
+                {
+                    int extra = movingRight ? 1 : 0;
+                    animationManager.Stop(3-extra);
+                }
+            }
             else
             {
-                animationManager.Play(animations["Run"]);
-                if (state == State.Standing || state == State.Jumping || state == State.Falling)
-                    animationManager.Stop(0);
+                animationManager.Play(animations["Crouch"]);
+                animationManager.Stop(0);
             }
 
         }

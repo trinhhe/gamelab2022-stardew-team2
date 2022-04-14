@@ -57,6 +57,11 @@ namespace Curse_of_the_Abyss
                     if (s != null) YCollision(s, gametime);
                     position.X += (int)xVelocity;
                 }
+                else
+                {
+                    position.X += (int)xVelocity;
+                    position.Y += (int)yVelocity;
+                }
             }
             
             if (health <= 0) remove = true;

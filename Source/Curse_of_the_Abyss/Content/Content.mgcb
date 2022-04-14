@@ -233,7 +233,7 @@
 /processorParam:TextureFormat=Color
 /build:MCCrouchSprite.png
 
-#begin MCRunSprite.png
+#begin MCSiderun_left.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -243,7 +243,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MCRunSprite.png
+/build:MCSiderun_left.png
+
+#begin MCSiderun_right.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MCSiderun_right.png
 
 #begin menu-font.ttf
 /copy:menu-font.ttf
@@ -352,18 +364,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Shut.png
-
-#begin SmileyWalk.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SmileyWalk.png
 
 #begin submarine.png
 /importer:TextureImporter
