@@ -12,10 +12,12 @@ namespace Curse_of_the_Abyss
         public int ground;
         public float linearVelocity;
         private string[] collidables = {"targetingNPC"};
-        public Bullet(int x, int y)
+        public Vector2 real_position;
+        public Bullet(float x, float y)
         {
             this.name = "bullet";
-            this.position = new Rectangle(x, y, 10, 10);
+            real_position = new Vector2(x,y);
+            this.position = new Rectangle((int)x, (int)y, 10, 10);
             this.linearVelocity = Constants.submarine_bullet_velocity;
             this.collidable = true;
         }
@@ -26,16 +28,20 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
             Vector2 inc = direction * linearVelocity;
-            position.X += (int)inc.X;
+            real_position.X += inc.X;
+            this.position.X = (int)Math.Round((double)real_position.X);
             Sprite s = CheckCollision(sprites, collidables);
             if (s!= null) XCollision(s, gametime);
             else
             {
-                position.X -= (int)inc.X;
-                position.Y += (int)inc.Y;
+                real_position.X -= inc.X;
+                this.position.X = (int)Math.Round((double)real_position.X);
+                real_position.Y += inc.Y;
+                this.position.Y = (int)Math.Round((double)real_position.Y);
                 s = CheckCollision(sprites, collidables);
                 if (s!=null) YCollision(s, gametime);
-                position.X += (int)inc.X;
+                real_position.X += inc.X;
+                this.position.X = (int)Math.Round((double)real_position.X);
             }
         }
 

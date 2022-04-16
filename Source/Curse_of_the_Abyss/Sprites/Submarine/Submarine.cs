@@ -78,7 +78,7 @@ namespace Curse_of_the_Abyss
             var mousestate = Mouse.GetState();
             var mouseposition = new Vector2(mousestate.X, mousestate.Y);
             scaledMousePosition = Vector2.Transform(mouseposition, Matrix.Invert(Constants.transform_matrix));
-            
+            // Console.WriteLine("X: {0}, Y: {1}", scaledMousePosition.X, scaledMousePosition.Y);
             KB_curState = Keyboard.GetState();
             getState(gametime);// decides current frame and handles state mechanics
             if (animationManager1 == null)

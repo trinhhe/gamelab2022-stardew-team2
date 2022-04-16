@@ -113,8 +113,8 @@ namespace Curse_of_the_Abyss
             if (!paused)
             {
                 current_level.Update(gameTime);
-                // IsMouseVisible = false;
-                IsMouseVisible = true;
+                IsMouseVisible = false;
+                // IsMouseVisible = true;
             }
 
             else
