@@ -82,6 +82,7 @@ namespace Curse_of_the_Abyss
                 animationManager3 = new AnimationManager(animations["Bomb"]);
                 animationManager4 = new AnimationManager(animations["Light"]);
                 animationManager5 = new AnimationManager(animations["Shut"]);
+                animationManager6 = new AnimationManager(animations["BombCD"]);
             }
 
             if (bombCooldown >= Constants.submarine_bomb_cooldown)
