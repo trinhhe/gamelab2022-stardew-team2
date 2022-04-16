@@ -39,9 +39,14 @@ namespace Curse_of_the_Abyss
 
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
+            Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
+            Sprite rightborder = new Obstacle(new Rectangle(1925, 0, 50, 700));
+
+            sprites.Add(leftborder);
+            sprites.Add(rightborder);
             SeaUrchin seaUrchin = new SeaUrchin(80, 380);
             sprites.Add(seaUrchin);
-            MovingPlatform movableObstacle = new MovingPlatform(120, 1022, 120, 540, 1, changedir: false);
+            MovingPlatform movableObstacle = new MovingPlatform(120, 1022, 120, 540, 2, changedir: true);
             sprites.Add(movableObstacle);
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
@@ -82,20 +87,18 @@ namespace Curse_of_the_Abyss
             int milliseconds = 5000; // set for time btw spwaning of targeting npcs
             if (randomTimer > milliseconds)
             { 
-                int targetx = waterPlayer.position.X + waterPlayer.position.Width / 2; // target x coord
-                int targety = waterPlayer.position.Y + waterPlayer.position.Height / 2; // target y coord
                 int speed = 2;
                 var rand = new Random();
                 int x_index;
-                if (waterPlayer.position.X < 960)
+                if (waterPlayer.position.X < 300)
                 {
                     x_index = 1;
                 }
-                else
+                else if(waterPlayer.position.X >1700)
                 {
                     x_index = 0;
-                }
-                //int x_index = rand.Next(2);
+                }else
+                    x_index = rand.Next(2);
                 int y_index = rand.Next(2);
                 var x_pos = new List<int> { -100, 2100 };
                 var y_pos = new List<int> { 400, 900 };

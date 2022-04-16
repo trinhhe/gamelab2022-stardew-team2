@@ -13,7 +13,8 @@ namespace Curse_of_the_Abyss
         public int health = 3;
         int speed;
         WaterPlayer player;
-
+        public bool objectcollision;
+        string[] collidables = {"obstacle"};
 
         public TargetingNPC(int x, int y, WaterPlayer player, int speed)
         {   
@@ -45,8 +46,22 @@ namespace Curse_of_the_Abyss
                 yVelocity = yunit * speed;
 
                 //update position of Player 
-                position.X += (int)xVelocity;
-                position.Y += (int)yVelocity;
+                if (objectcollision)
+                {
+                    position.X += (int)xVelocity;
+                    Sprite s = CheckCollision(sprites, collidables);
+                    if (s != null) XCollision(s, gametime);
+                    position.X -= (int)xVelocity;
+                    position.Y += (int)yVelocity;
+                    s = CheckCollision(sprites, collidables);
+                    if (s != null) YCollision(s, gametime);
+                    position.X += (int)xVelocity;
+                }
+                else
+                {
+                    position.X += (int)xVelocity;
+                    position.Y += (int)yVelocity;
+                }
             }
             
             if (health <= 0) remove = true;
@@ -79,6 +94,43 @@ namespace Curse_of_the_Abyss
             }
         }
 
+        public override void XCollision(Sprite s, GameTime gameTime)
+        {
+            switch (s.name)
+            {
+                case ("obstacle"):
+                    if (position.Left < s.position.Left)
+                    {
+                        position.X = s.position.Left - position.Width;
+                        xVelocity = 0;
+                    }
+                    else if (position.Right > s.position.Right)
+                    {
+                        position.X = s.position.Right;
+                        xVelocity = 0;
+                    }
+                    break;
+            }
+        }
+
+        public override void YCollision(Sprite s, GameTime gametime)
+        {
+            switch (s.name)
+            {
+                case ("obstacle"):
+                        if (position.Top < s.position.Top)
+                        {
+                            position.Y = s.position.Top - position.Height;
+                            yVelocity = 0;
+                        }
+                        else
+                        {
+                            position.Y = s.position.Bottom + 1;
+                            yVelocity = 1;
+                        }
+                        break;
+            }
+        }
         public void init()
         {
             double xtemp = (player.position.X - position.X);

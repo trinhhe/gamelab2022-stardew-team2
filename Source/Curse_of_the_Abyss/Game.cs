@@ -19,6 +19,8 @@ namespace Curse_of_the_Abyss
         public static bool paused;
 
         Level current_level;
+        Level[] levels;
+        int levelcounter;
 
         public Game()
         {
@@ -26,7 +28,9 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            current_level = new Level1();
+            levels = new Level[] { new Level1(), new Maze() };
+            current_level = levels[0];
+            levelcounter = 0;
         }
 
         protected override void Initialize()
@@ -84,9 +88,22 @@ namespace Curse_of_the_Abyss
 
             if (current_level.completed)
             {
-                _menu._screen = Menu.MenuScreens.Demo_end;
-                paused = true;
+                Content.Unload();
+                if (levelcounter == levels.Length - 1)
+                {
+                    _menu._screen = Menu.MenuScreens.Demo_end;
+                    paused = true;
+                    current_level = levels[0];
+                    levelcounter = 0;
+                }
+                else
+                {
+                    levelcounter++;
+                    current_level = levels[levelcounter];
+                }
+                current_level.LoadContent(Content);
                 current_level.Reset();
+                current_level.InitMapManager(_spriteBatch);
             }
 
             if (!paused)
@@ -104,7 +121,7 @@ namespace Curse_of_the_Abyss
 
                 GuiHelper.UpdateCleanup();
             }
-            
+
             base.Update(gameTime);
         }
 

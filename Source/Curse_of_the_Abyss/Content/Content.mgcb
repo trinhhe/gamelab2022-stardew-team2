@@ -145,6 +145,18 @@
 /processorParam:TextureFormat=Color
 /build:Egg.png
 
+#begin explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:explosion.png
+
 #begin File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -191,6 +203,24 @@
 #begin maps/map_lvl1.tmx
 /copy:maps/map_lvl1.tmx
 
+#begin maps/maze.tmx
+/copy:maps/maze.tmx
+
+#begin Maze.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maze.png
+
+#begin Maze.tsx
+/copy:Maze.tsx
+
 #begin MCCrouchSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -203,7 +233,7 @@
 /processorParam:TextureFormat=Color
 /build:MCCrouchSprite.png
 
-#begin MCRunSprite.png
+#begin MCSiderun_left.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -213,10 +243,28 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MCRunSprite.png
+/build:MCSiderun_left.png
+
+#begin MCSiderun_right.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MCSiderun_right.png
 
 #begin menu-font.ttf
 /copy:menu-font.ttf
+
+#begin mixkit-sea-mine-explosion-1184.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:mixkit-sea-mine-explosion-1184.wav
 
 #begin O2Button.png
 /importer:TextureImporter
@@ -316,18 +364,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Shut.png
-
-#begin SmileyWalk.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SmileyWalk.png
 
 #begin submarine.png
 /importer:TextureImporter
