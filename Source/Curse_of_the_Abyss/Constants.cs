@@ -1,7 +1,12 @@
+using Microsoft.Xna.Framework;
+
 namespace Curse_of_the_Abyss 
 { 
 
     public static class Constants{
+
+        //screen related
+        public static Matrix transform_matrix;
         //waterplayer
         public static float max_run_velocity = 5;
         public static float jump_velocity = -2;

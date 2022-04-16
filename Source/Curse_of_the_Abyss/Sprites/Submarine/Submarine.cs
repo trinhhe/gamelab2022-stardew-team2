@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
 
     public class Submarine : MovableSprite
     {
-        public static Texture2D SubmarineTexture, O2ButtonTexture, ButtonTexture, BombTexture, ShootingTerminalTexture, ShutTexture, ControlDeskTexture, LeverTexture, bar, cooldown, BombCooldownTexture;
+        public static Texture2D SubmarineTexture, O2ButtonTexture, ButtonTexture, BombTexture, ShootingTerminalTexture, ShutTexture, ControlDeskTexture, LeverTexture, bar, cooldown, BombCooldownTexture, CrosshairTexture;
         public static Dictionary<string, Animation> animations;
         protected AnimationManager animationManager1, animationManager2, animationManager3, animationManager4, animationManager5, animationManager6;
         private KeyboardState KB_curState;
@@ -23,6 +23,7 @@ namespace Curse_of_the_Abyss
         private List<Bullet> bullets;
         private List<Bomb> bombs;
         private Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition, lightLeverPosition, shutPosition;
+        private Vector2 scaledMousePosition;
         private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown, oxygenCooldown;
         public bool movingRight;//needed for different situations in states
         public bool machineGunOn, steeringOn, lightOn, mouseMode;
@@ -32,7 +33,7 @@ namespace Curse_of_the_Abyss
             position = new Rectangle(x, y, 600, 200);
             // all submarine features' positions are relative to how the assets are drawn on the submarine.
             // Need to figure out numbers when we have the final submarine access.
-            // start position for player: x + 85,y + 90 , 
+            // start position for player: x + 128,y + 80 , 
             this.submarinePlayer = new SubmarinePlayer(x+128, y+80, x+128, x+532);
             this.oxyPosition = new Rectangle(x+120, y+110, 10, 15);  
             this.machineGunTerminalPosition = new Rectangle(x+520, y+120, 11, 20);
@@ -52,7 +53,7 @@ namespace Curse_of_the_Abyss
             //TO DO: asset for submarine
             ShootingTerminalTexture = content.Load<Texture2D>("Shoot_Terminal");
             ControlDeskTexture = content.Load<Texture2D>("Control_Desk");
-            //LeverTexture = content.Load<Texture2D>("lever");
+            CrosshairTexture = content.Load<Texture2D>("crosshair");
             animations = new Dictionary<string, Animation>()
             {
                 {"Drive", new Animation(content.Load<Texture2D>("submarine_animation"), 4, 0.05f, false)},
@@ -73,6 +74,11 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
+            
+            var mousestate = Mouse.GetState();
+            var mouseposition = new Vector2(mousestate.X, mousestate.Y);
+            scaledMousePosition = Vector2.Transform(mouseposition, Matrix.Invert(Constants.transform_matrix));
+            // Console.WriteLine("X: {0}, Y: {1}", scaledMousePosition.X, scaledMousePosition.Y);
             KB_curState = Keyboard.GetState();
             getState(gametime);// decides current frame and handles state mechanics
             if (animationManager1 == null)
@@ -102,10 +108,6 @@ namespace Curse_of_the_Abyss
             else
                 animationManager1.Stop(0);
 
-            var mousestate = Mouse.GetState();
-            //Console.WriteLine("{0} X, {1} Y \n", mousestate.X - position.X, mousestate.Y - position.Y);
-            //Console.WriteLine("{0}", ((float)Constants.submarine_machine_gun_cooldown / 1000) / 7.0f, true);
-            //Console.WriteLine("{0}", animations["BombCD"].CurrentFrame);
             //update position of submarine 
             position.X += (int)xVelocity;
             oxyPosition.X += (int)xVelocity;
@@ -177,7 +179,11 @@ namespace Curse_of_the_Abyss
             animationManager6.Draw(spritebatch, new Rectangle(shutPosition.Right + 10, shutPosition.Y,16,16), 0.2f);
             spritebatch.Draw(ShootingTerminalTexture, machineGunTerminalPosition, new Rectangle(0, 0, 11, 20), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
             spritebatch.Draw(ControlDeskTexture, steerPosition, new Rectangle(0, 0, 22, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
-            //spritebatch.Draw(LeverTexture, lightLeverPosition, new Rectangle(0, 0, 15, 12), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            if (machineGunOn)
+            {
+                Rectangle crosspos = new Rectangle((int) scaledMousePosition.X - CrosshairTexture.Width, (int) scaledMousePosition.Y - CrosshairTexture.Height, 30,30);
+                spritebatch.Draw(CrosshairTexture, crosspos, new Rectangle(0, 0, CrosshairTexture.Width, CrosshairTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
+            }
 
             submarinePlayer.Draw(spritebatch);
             healthbar.Draw(spritebatch);
@@ -401,15 +407,16 @@ namespace Curse_of_the_Abyss
                     {
                         machineGun.rotation += MathHelper.ToRadians(machineGun.rotationVelocity);
                     }
-                    //-5.4 to adjust direction since machinegun points to bottomright at beginning
+                    //-5.5 to adjust direction since machinegun points to bottomright at beginning
                     machineGun.direction = new Vector2((float)Math.Cos(machineGun.rotation - 5.5), (float)Math.Sin(machineGun.rotation - 5.5));
                     direction = machineGun.direction;
                 }
                 else
                 {
                     MouseState mouse = Mouse.GetState();
-                    direction = new Vector2(mouse.X - machineGun.position.X, mouse.Y - machineGun.position.Y);
-                    direction.Normalize();
+                    direction = new Vector2(scaledMousePosition.X - (float) machineGun.position.X, scaledMousePosition.Y - (float) machineGun.position.Y);
+                    if (direction != Vector2.Zero)
+                        direction.Normalize();
                     machineGun.rotation = (float)Math.Atan2(direction.Y, direction.X) +5.5f;
                 }
 
