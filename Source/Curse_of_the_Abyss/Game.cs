@@ -97,6 +97,7 @@ namespace Curse_of_the_Abyss
                 {
                     _menu._screen = Menu.MenuScreens.Demo_end;
                     paused = true;
+                    IsMouseVisible = true;
                     current_level = levels[0];
                     levelcounter = 0;
                 }
@@ -134,9 +135,9 @@ namespace Curse_of_the_Abyss
         protected override void Draw(GameTime gameTime)
         {
             // Constants.scale = (float)(GraphicsDevice.Viewport.Height / 1080f);
-            var scaleX = GraphicsDevice.Viewport.Width/1900f;
+            var scaleX = GraphicsDevice.Viewport.Width/1920f;
             var scaleY = GraphicsDevice.Viewport.Height/1080f;
-            // global constant matrix to translate mouse position from virtual resolution (1900,1080) <---> actual resolution
+            // global constant matrix to translate mouse position from virtual resolution (1920,1080) <---> actual resolution
             Constants.transform_matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
             GraphicsDevice.SetRenderTarget(renderTarget);
