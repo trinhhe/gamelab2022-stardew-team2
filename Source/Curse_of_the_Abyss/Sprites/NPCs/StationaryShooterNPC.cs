@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
            
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            spritebatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
         }
     }
 }
