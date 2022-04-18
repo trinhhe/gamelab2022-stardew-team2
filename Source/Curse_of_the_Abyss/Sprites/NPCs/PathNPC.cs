@@ -103,13 +103,13 @@ namespace Curse_of_the_Abyss
             if(dir == 0)
             {
                 Rectangle source = new Rectangle(0, 0, width, height);
-                spritebatch.Draw(texture, position, source, Color.White);
+                spritebatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
             }
             
             else
             {
                 Rectangle source = new Rectangle(texture.Width/2, 0, width, height);
-                spritebatch.Draw(texture, position, source, Color.White);
+                spritebatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
             }
         }
 

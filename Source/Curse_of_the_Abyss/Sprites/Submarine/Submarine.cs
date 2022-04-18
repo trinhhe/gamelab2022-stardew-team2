@@ -177,12 +177,12 @@ namespace Curse_of_the_Abyss
             animationManager4.Draw(spritebatch, lightLeverPosition, 0.2f);
             animationManager5.Draw(spritebatch, shutPosition, 0.2f);
             animationManager6.Draw(spritebatch, new Rectangle(shutPosition.Right + 10, shutPosition.Y,16,16), 0.2f);
-            spritebatch.Draw(ShootingTerminalTexture, machineGunTerminalPosition, new Rectangle(0, 0, 11, 20), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            spritebatch.Draw(ShootingTerminalTexture, machineGunTerminalPosition, new Rectangle(0, 0, 11, 20), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             spritebatch.Draw(ControlDeskTexture, steerPosition, new Rectangle(0, 0, 22, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             if (machineGunOn)
             {
                 Rectangle crosspos = new Rectangle((int) scaledMousePosition.X - CrosshairTexture.Width, (int) scaledMousePosition.Y - CrosshairTexture.Height, 30,30);
-                spritebatch.Draw(CrosshairTexture, crosspos, new Rectangle(0, 0, CrosshairTexture.Width, CrosshairTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
+                spritebatch.Draw(CrosshairTexture, crosspos, new Rectangle(0, 0, CrosshairTexture.Width, CrosshairTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.0f);
             }
 
             submarinePlayer.Draw(spritebatch);

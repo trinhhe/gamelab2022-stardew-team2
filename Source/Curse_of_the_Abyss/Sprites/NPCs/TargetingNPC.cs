@@ -81,16 +81,16 @@ namespace Curse_of_the_Abyss
             Rectangle pos = new Rectangle(position.X - 13, position.Y - 14, 67, 84);
             if (health > 2)
             {
-                spritebatch.Draw(texture, pos, source, Color.White);
+                spritebatch.Draw(texture, pos, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (health == 2)
             {
                 Color color = new Color(255, 153, 153);
-                spritebatch.Draw(texture, pos, source, color);
+                spritebatch.Draw(texture, pos, source, color, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (health == 1)
             {
-                spritebatch.Draw(texture, pos, source, Color.Red);
+                spritebatch.Draw(texture, pos, source, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
         }
 
