@@ -358,13 +358,14 @@ namespace Curse_of_the_Abyss
             movingRight = xVelocity > 0 ? true : false;
         }
 
+        //movement in maze
         private void Swimming()
         {
             if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
             {//swim right
                 if (!swimmingRight)
                 {
-                    movingRight = true;
+                    swimmingRight = true;
                     xVelocity = 2;
                 }
                 if (xVelocity < Constants.max_run_velocity)
