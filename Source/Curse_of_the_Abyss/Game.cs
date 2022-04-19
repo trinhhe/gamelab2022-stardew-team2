@@ -1,6 +1,7 @@
 ﻿using Apos.Gui;
 using FontStashSharp;
 using System;
+using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,17 +14,23 @@ namespace Curse_of_the_Abyss
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
-        // public float scale;
+
+        // menu
         private IMGUI _ui;
         private Menu _menu;
         public static bool paused;
 
+        // screen and camera
         public static int RenderHeight, RenderWidth;
         private Camera _camera;
 
+        // levels
         Level current_level;
         Level[] levels;
         int levelcounter;
+
+        // scrolling backgrounds
+        private List<ScrollingBackground> _scrollingBackgrounds;
 
         public Game()
         {
@@ -76,6 +83,9 @@ namespace Curse_of_the_Abyss
             current_level.LoadContent(Content);
             current_level.InitMapManager(_spriteBatch);
 
+            // scrolling backgrounds
+            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, levelcounter);
+
             // camera
             _camera = new Camera(current_level.num_parts);
 
@@ -97,6 +107,9 @@ namespace Curse_of_the_Abyss
                 paused = true;
                 IsMouseVisible = true;
                 current_level.Reset();
+
+                // reset scrolling backgrounds
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, levelcounter);
             }
 
             if (current_level.completed)
@@ -119,13 +132,21 @@ namespace Curse_of_the_Abyss
                 current_level.Reset();
                 current_level.InitMapManager(_spriteBatch);
 
+                // set new scrolling backgrounds based on level
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, levelcounter);
+
                 // set camera to match number of "screen widths" in the new level
                 _camera = new Camera(current_level.num_parts);
+
             }
 
             if (!paused)
             {
                 current_level.Update(gameTime);
+
+                foreach (var sb in _scrollingBackgrounds)
+                    sb.Update(gameTime);
+
                 _camera.Follow(current_level.waterPlayer);
                 IsMouseVisible = false;
                 // IsMouseVisible = true;
@@ -157,8 +178,13 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // draw background
-            _spriteBatch.Begin(SpriteSortMode.BackToFront);
-            _spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            //_spriteBatch.Begin(SpriteSortMode.BackToFront);
+            //_spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            //_spriteBatch.End();
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp);
+            foreach (var sb in _scrollingBackgrounds)
+                sb.Draw(gameTime, _spriteBatch);
+
             _spriteBatch.End();
 
             // draw map
