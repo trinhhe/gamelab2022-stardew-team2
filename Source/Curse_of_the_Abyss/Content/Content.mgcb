@@ -278,7 +278,7 @@
 /processorParam:TextureFormat=Color
 /build:O2Button.png
 
-#begin octopuss.png
+#begin Octopus.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -288,7 +288,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:octopuss.png
+/build:Octopus.png
 
 #begin rock.png
 /importer:TextureImporter
