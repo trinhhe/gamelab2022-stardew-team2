@@ -188,7 +188,7 @@ namespace Curse_of_the_Abyss
             if (machineGunOn)
             {
                 crossPosition = new Rectangle((int) scaledMousePosition.X - CrosshairTexture.Width, (int) scaledMousePosition.Y - CrosshairTexture.Height, 30,30);
-                // I moved it to Game.cs because the crosshair should render after the darkness rendertarget.
+                // I moved it to DarknessRender.cs because the crosshair should render after the darkness rendertarget.
                 // spritebatch.Draw(CrosshairTexture, crosspos, new Rectangle(0, 0, CrosshairTexture.Width, CrosshairTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.0f);
             }
 
