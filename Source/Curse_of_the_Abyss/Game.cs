@@ -12,7 +12,7 @@ namespace Curse_of_the_Abyss
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private RenderTarget2D renderTarget;
+        private RenderTarget2D renderTarget, darkness;
         // public float scale;
         private IMGUI _ui;
         private Menu _menu;
@@ -72,6 +72,9 @@ namespace Curse_of_the_Abyss
 
             // always render at 1080p but display at user-defined resolution after
             renderTarget = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+
+            //darkness
+            darkness = new RenderTarget2D(GraphicsDevice, 1920, 1080);
         }
 
         protected override void Update(GameTime gameTime)
@@ -143,6 +146,17 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //darkness
+            var blend = new BlendState
+            {
+                AlphaBlendFunction = BlendFunction.ReverseSubtract,
+                AlphaSourceBlend = Blend.One,
+                AlphaDestinationBlend = Blend.One,
+                // AlphaDestinationBlend = Blend.SourceAlpha,
+            };
+            var mask = Content.Load<Texture2D>("light");
+        
+
             // draw background
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
             _spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
@@ -156,6 +170,10 @@ namespace Curse_of_the_Abyss
             current_level.Draw(_spriteBatch); 
             _spriteBatch.End();
 
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, blendState: blend);
+            _spriteBatch.Draw(mask, new Rectangle(200,200, mask.Width, mask.Height), Color.White);
+            _spriteBatch.End();
+            
             // render at 1080p
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.CornflowerBlue);

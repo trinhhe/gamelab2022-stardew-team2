@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         public Matrix matrix;
         public bool game_over;
         public bool completed;
-
+        public bool darkness;
         public virtual void Initialize()
         {
             // required for map manager
