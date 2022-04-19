@@ -13,8 +13,8 @@ namespace Curse_of_the_Abyss
         protected Texture2D tileset;
         public Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
-        protected Submarine submarine;
-        protected WaterPlayer waterPlayer;
+        public Submarine submarine;
+        public WaterPlayer waterPlayer;
         //protected SubmarinePlayer submarinePlayer;
         protected Healthbar healthbar;
         protected TmxMap TileMap;

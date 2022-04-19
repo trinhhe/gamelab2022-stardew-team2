@@ -18,13 +18,13 @@ namespace Curse_of_the_Abyss
             this.animation = animation;
         }
 
-        public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth)
+        public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth, float rotation)
         {
             spritebatch.Draw(animation.Texture,
                 position,
                 new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.FrameHeight),
                 Color.White,
-                0,
+                rotation,
                 Vector2.Zero,
                 SpriteEffects.None,
                 layerDepth);

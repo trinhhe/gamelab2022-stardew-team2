@@ -93,10 +93,10 @@ namespace Curse_of_the_Abyss
             {
                 //draw entire crouch rectangle but actual position height is 30 to dodge spriteshoots
                 Rectangle tmp = new Rectangle(position.X, position.Y - 30, position.Width, 60);
-                animationManager.Draw(spritebatch, tmp, 0.1f);
+                animationManager.Draw(spritebatch, tmp, 0.1f, 0f);
             }
             else
-                animationManager.Draw(spritebatch, position, 0.1f);
+                animationManager.Draw(spritebatch, position, 0.1f, 0f);
                 
         }
 

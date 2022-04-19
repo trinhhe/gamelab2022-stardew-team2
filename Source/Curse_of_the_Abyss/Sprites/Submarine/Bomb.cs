@@ -51,12 +51,12 @@ namespace Curse_of_the_Abyss
             if (animationManager.animation == animations["bomb"])
             {
                 Rectangle pos = new Rectangle(position.X - 5, position.Y, position.Width + 10, position.Height + 10);
-                animationManager.Draw(spritebatch, pos,0f);
+                animationManager.Draw(spritebatch, pos,0f, 0f);
             }
             else
             {
                 Rectangle pos = new Rectangle(position.X-20, position.Y-20, position.Width + 40, position.Height + 40);
-                animationManager.Draw(spritebatch, pos, 1f);
+                animationManager.Draw(spritebatch, pos, 1f, 0f);
                 if(animationManager.animation.CurrentFrame == 5)
                 {
                     animationManager.animation.FrameSpeed = 0.4f;
