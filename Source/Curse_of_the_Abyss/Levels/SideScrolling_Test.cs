@@ -1,64 +1,64 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using TiledSharp;
 using System;
 
 namespace Curse_of_the_Abyss
 {
-    class Maze:Level
+    public class SideScrollingTest : Level
     {
+        protected List<StationaryShooterNPC> shooters;
+
+
+        //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
         {
-            num_parts = 1;
+            num_parts = 2;
             InitMap(num_parts);
 
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
-            background = content.Load<Texture2D>("bg");
+            background = content.Load<Texture2D>("bg_wide");
             WaterPlayer.LoadContent(content);
+
             Healthbar.LoadContent(content);
             Submarine.LoadContent(content);
-            Egg.LoadContent(content);
-            PathNPC.LoadContent(content);
-            TargetingNPC.LoadContent(content);
-        }
 
-        public Maze()
+            Egg.LoadContent(content);
+        }
+        public SideScrollingTest()
         {
-            TileMap = new TmxMap("./Content/maps/maze.tmx");
+            // load tile map 
+            TileMap = new TmxMap("./Content/maps/large_testmap.tmx");
             Reset();
         }
 
         //inits every item/character that is not a player or submarine
         public void InitSprites()
         {
-            PathNPC pathNPC = new PathNPC(1400,450,1520,450,1);
-            sprites.Add(pathNPC);
-            TargetingNPC target = new TargetingNPC(200,500,waterPlayer,5);
-            target.objectcollision = true;
-            sprites.Add(target);
+            Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
+
+            sprites.Add(leftborder);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (waterPlayer.position.X > 1920)
+            if (waterPlayer.position.X > 3840)
             {
                 completed = true;
             }
-
-            
         }
         public override void Reset()
         {
             game_over = false;
             completed = false;
-            mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
+            
             healthbar = new Healthbar(0, 0);
-            waterPlayer = new WaterPlayer(20, 990, healthbar);
-            waterPlayer.maze = true;
+            waterPlayer = new WaterPlayer(20, 962, healthbar);
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
             Initialize();
@@ -69,12 +69,9 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            eggs.addEgg(160,400);
-            eggs.addEgg(520, 1030);
-            eggs.addEgg(850, 430);
-            eggs.addEgg(1120, 910);
-            eggs.addEgg(1650, 400);
+            eggs.addEgg(100, 298);
         }
 
     }
+
 }

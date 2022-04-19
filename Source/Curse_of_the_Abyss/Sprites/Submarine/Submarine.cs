@@ -17,12 +17,12 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the submarine is actually
         public enum State {Standing, Driving, OxygenMode, MachineGunMode, LightMode};
         public State state, prev_state;
-        private SubmarinePlayer submarinePlayer;
+        public SubmarinePlayer submarinePlayer;
         private Healthbar healthbar;
         private MachineGun machineGun;
         private List<Bullet> bullets;
         private List<Bomb> bombs;
-        private Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition, lightLeverPosition, shutPosition;
+        public Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition, lightLeverPosition, shutPosition;
         private Vector2 scaledMousePosition;
         private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown, oxygenCooldown;
         public bool movingRight;//needed for different situations in states
@@ -64,7 +64,6 @@ namespace Curse_of_the_Abyss
                 {"Shut", new Animation(content.Load<Texture2D>("Shut"), 2, 0.2f, true)}
             };
             SubmarinePlayer.LoadContent(content);
-            Healthbar.LoadContent(content);
             MachineGun.LoadContent(content);
             Bullet.LoadContent(content);
             Bomb.LoadContent(content);
@@ -186,7 +185,6 @@ namespace Curse_of_the_Abyss
             }
 
             submarinePlayer.Draw(spritebatch);
-            healthbar.Draw(spritebatch);
             machineGun.Draw(spritebatch);
             foreach (Sprite b in bullets)
             {
@@ -442,6 +440,22 @@ namespace Curse_of_the_Abyss
                 return;
             }
             animationManager4.Stop(1);
+        }
+
+        public void SetPos(int pos)
+        {
+            int offset = submarinePlayer.position.X - submarinePlayer.leftBound;
+            position.X = pos;
+            oxyPosition.X = pos + 120;
+            machineGunTerminalPosition.X = pos+520;
+            steerPosition.X = pos + 427;
+            lightLeverPosition.X = pos + 325;
+            submarinePlayer.position.X = pos + 128 + offset;
+            submarinePlayer.leftBound = pos + 128;
+            submarinePlayer.rightBound = pos + 532;
+            machineGun.position.X = pos + 505;
+            bombButtonPosition.X = pos + 219;
+            shutPosition.X = pos + 206;
         }
 
         //calls function depending on state

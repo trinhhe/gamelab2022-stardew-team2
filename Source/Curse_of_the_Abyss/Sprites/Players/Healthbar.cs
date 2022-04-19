@@ -44,7 +44,7 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(bar, position, Color.White);
 
             //draw current health
-            int curr_ypos = position.Y + position.Height - position.Height*curr_health / maxhealth +1;
+            int curr_ypos = position.Y + position.Height - position.Height*curr_health / maxhealth;
             Rectangle healthbar = new Rectangle(position.X,curr_ypos, position.Width,position.Height*curr_health/maxhealth-2);
             spritebatch.Draw(currhealth_text, healthbar, Color.White);
 

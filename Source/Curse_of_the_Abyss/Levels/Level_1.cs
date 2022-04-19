@@ -16,6 +16,9 @@ namespace Curse_of_the_Abyss
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
+            num_parts = 1;
+            InitMap(num_parts);
+
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             SeaUrchin.LoadContent(content);
@@ -112,7 +115,7 @@ namespace Curse_of_the_Abyss
             game_over = false;
             completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
-            healthbar = new Healthbar(0, 0);
+            healthbar = new Healthbar(1, 1);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar);
