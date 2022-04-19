@@ -71,6 +71,7 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(850, 430);
             eggs.addEgg(1120, 910);
             eggs.addEgg(1650, 400);
+            // darkness = true;
         }
 
     }

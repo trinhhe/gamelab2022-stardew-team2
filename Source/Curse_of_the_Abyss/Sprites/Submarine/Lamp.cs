@@ -32,6 +32,9 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
+            if (animationManager == null)
+                animationManager = new AnimationManager(animation);
+            
             if (lightOn)
                 animationManager.Stop(1);
             else
