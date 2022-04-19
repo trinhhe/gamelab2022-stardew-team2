@@ -18,6 +18,9 @@ namespace Curse_of_the_Abyss
         private Menu _menu;
         public static bool paused;
 
+        public static int RenderHeight, RenderWidth;
+        private Camera _camera;
+
         Level current_level;
         Level[] levels;
         int levelcounter;
@@ -28,7 +31,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new Maze() };
+            levels = new Level[] { new SideScrollingTest(), new Maze() };
             current_level = levels[0];
             levelcounter = 0;
         }
@@ -48,6 +51,9 @@ namespace Curse_of_the_Abyss
              * only 16:9 aspect ratio currently supported
             Window.AllowUserResizing = true; 
             */
+
+            RenderHeight = 1080;
+            RenderWidth = 1920;
 
             _graphics.ApplyChanges();
 
@@ -70,8 +76,11 @@ namespace Curse_of_the_Abyss
             current_level.LoadContent(Content);
             current_level.InitMapManager(_spriteBatch);
 
+            // camera
+            _camera = new Camera(current_level.num_parts);
+
             // always render at 1080p but display at user-defined resolution after
-            renderTarget = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+            renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
         }
 
         protected override void Update(GameTime gameTime)
@@ -109,11 +118,15 @@ namespace Curse_of_the_Abyss
                 current_level.LoadContent(Content);
                 current_level.Reset();
                 current_level.InitMapManager(_spriteBatch);
+
+                // set camera to match number of "screen widths" in the new level
+                _camera = new Camera(current_level.num_parts);
             }
 
             if (!paused)
             {
                 current_level.Update(gameTime);
+                _camera.Follow(current_level.waterPlayer);
                 IsMouseVisible = false;
                 // IsMouseVisible = true;
             }
@@ -135,8 +148,8 @@ namespace Curse_of_the_Abyss
         protected override void Draw(GameTime gameTime)
         {
             // Constants.scale = (float)(GraphicsDevice.Viewport.Height / 1080f);
-            var scaleX = GraphicsDevice.Viewport.Width/1920f;
-            var scaleY = GraphicsDevice.Viewport.Height/1080f;
+            var scaleX = GraphicsDevice.Viewport.Width/(float)RenderWidth;
+            var scaleY = GraphicsDevice.Viewport.Height/(float)RenderHeight;
             // global constant matrix to translate mouse position from virtual resolution (1920,1080) <---> actual resolution
             Constants.transform_matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
@@ -160,8 +173,13 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+            _spriteBatch.Begin(transformMatrix: _camera.Transform * Constants.transform_matrix); 
             _spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            _spriteBatch.End();
+
+            // draw UI
+            _spriteBatch.Begin();
+            current_level.healthbar.Draw(_spriteBatch);
             _spriteBatch.End();
 
             // menu

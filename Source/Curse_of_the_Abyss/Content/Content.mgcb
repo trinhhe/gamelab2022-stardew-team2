@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:bg.png
 
+#begin bg_wide.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:bg_wide.png
+
 #begin bomb.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -199,6 +211,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:lever.png
+
+#begin maps/large_testmap.tmx
+/copy:maps/large_testmap.tmx
 
 #begin maps/map_lvl1.tmx
 /copy:maps/map_lvl1.tmx
