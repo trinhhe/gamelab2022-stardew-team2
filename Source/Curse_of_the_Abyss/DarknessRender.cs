@@ -11,12 +11,11 @@ namespace Curse_of_the_Abyss
 {   
     public class DarknessRender
     {
-        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask;
+        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, health_lightmask;
         BlendState blend;
         RenderTarget2D darkness;
         GraphicsDevice graphicsDevice;
-        // private SpriteBatch _spriteBatch;
-        // Level current_level;
+        Color color;
         public DarknessRender(GraphicsDevice graphicsDevice){
             // this.current_level = current_level;
             // this._spriteBatch = _spriteBatch;
@@ -28,6 +27,7 @@ namespace Curse_of_the_Abyss
                 AlphaSourceBlend = Blend.One,
                 AlphaDestinationBlend = Blend.One,
             };
+            color = new Color(0,0,0,255);
         }
         public static void LoadContent(ContentManager content)
         {
@@ -36,35 +36,36 @@ namespace Curse_of_the_Abyss
             waterplayer_lightmask = content.Load<Texture2D>("Lightmask/waterplayer_lightmask");
             lamp_lightmask = content.Load<Texture2D>("Lightmask/lamp_lightmask");
             machinegun_lightmask = content.Load<Texture2D>("Lightmask/machinegun_lightmask");
-            //healthbar mask, bomb, bullets
+            health_lightmask = content.Load<Texture2D>("Lightmask/health_lightmask");
         }
 
         public void LightMasking(Level current_level, SpriteBatch _spriteBatch){
             graphicsDevice.SetRenderTarget(darkness);
-                graphicsDevice.Clear(new Color(0,0,0,255));
+                graphicsDevice.Clear(color);
                 _spriteBatch.Begin(blendState: blend);
                 //lightcone
                 if(current_level.submarine.lightOn)
                 {
                     _spriteBatch.Draw(
                         lightmask, 
-                        new Vector2(current_level.submarine.lamp.position.X,current_level.submarine.lamp.position.Y), 
+                        new Rectangle(current_level.submarine.lamp.position.X,current_level.submarine.lamp.position.Y, (int) ((float)lightmask.Width * Constants.light_width_scale), (int) ((float) lightmask.Height * Constants.light_height_scale)), 
                         null, 
-                        Color.Black * 1f, 
+                        color * 1f, 
                         current_level.submarine.lamp.rotation + 5.5f, 
                         new Vector2(lightmask.Width/2,0), 
-                        1,
                         SpriteEffects.None,
                         0f
-                    ); //adjusting Color.Black * 1f lower will make light area brighter
+                    ); //adjusting color * 1f lower will make light area darker
                 }
                 
+                var width = (int) ((float)waterplayer_lightmask.Width * Constants.waterplayer_light_width_scale);
+                var height = (int) ((float) waterplayer_lightmask.Height * Constants.waterplayer_light_height_scale);
                 //lightcircle around waterplayer
                 _spriteBatch.Draw(
                     waterplayer_lightmask,
-                    new Rectangle(current_level.waterPlayer.position.X - 30, current_level.waterPlayer.position.Y - 40, waterplayer_lightmask.Width, waterplayer_lightmask.Height),
+                    new Rectangle(current_level.waterPlayer.position.X - (width-current_level.waterPlayer.position.Width)/2, current_level.waterPlayer.position.Y - (height-current_level.waterPlayer.position.Height)/2, width, height),
                     null, 
-                    Color.Black * 1f,
+                    color * 1f,
                     0, 
                     Vector2.Zero, 
                     SpriteEffects.None,
@@ -75,7 +76,7 @@ namespace Curse_of_the_Abyss
                     submarine_lightmask,
                     new Rectangle(current_level.submarine.position.X, current_level.submarine.position.Y, current_level.submarine.position.Width, current_level.submarine.position.Height),
                     new Rectangle(Submarine.animations["Drive"].CurrentFrame * Submarine.animations["Drive"].FrameWidth, 0, Submarine.animations["Drive"].FrameWidth, Submarine.animations["Drive"].FrameHeight),
-                    Color.Black * 1f, 
+                    color * 1f, 
                     0, 
                     Vector2.Zero, 
                     SpriteEffects.None, 
@@ -86,7 +87,7 @@ namespace Curse_of_the_Abyss
                     machinegun_lightmask,
                     new Vector2(current_level.submarine.machineGun.position.X, current_level.submarine.machineGun.position.Y),
                     null, 
-                    Color.Black * 1f, 
+                    color * 1f, 
                     current_level.submarine.machineGun.rotation, 
                     Vector2.Zero, 
                     1, 
@@ -98,9 +99,20 @@ namespace Curse_of_the_Abyss
                     lamp_lightmask,
                     new Rectangle(current_level.submarine.lamp.position.X, current_level.submarine.lamp.position.Y, current_level.submarine.lamp.position.Width, current_level.submarine.lamp.position.Height),
                     new Rectangle(Lamp.animation.CurrentFrame * Lamp.animation.FrameWidth, 0, Lamp.animation.FrameWidth, Lamp.animation.FrameHeight), 
-                    Color.Black * 1f,
+                    color * 1f,
                     current_level.submarine.lamp.rotation, 
                     Vector2.Zero, 
+                    SpriteEffects.None, 
+                    0f
+                );
+                // lightmask health
+                _spriteBatch.Draw(
+                    health_lightmask,
+                    new Rectangle(current_level.healthbar.position.X, current_level.healthbar.position.Y, current_level.healthbar.position.Width, current_level.healthbar.position.Height),
+                    null, 
+                    color * 1f, 
+                    0, 
+                    Vector2.Zero,  
                     SpriteEffects.None, 
                     0f
                 );
@@ -123,6 +135,15 @@ namespace Curse_of_the_Abyss
                     SpriteEffects.None, 
                     0.0f
                 );
+            }
+
+            foreach (Sprite b in current_level.submarine.bullets)
+            {
+                b.Draw(_spriteBatch);
+            }
+            foreach (Sprite b in current_level.submarine.bombs)
+            {
+                b.Draw(_spriteBatch);
             }
         }
     }

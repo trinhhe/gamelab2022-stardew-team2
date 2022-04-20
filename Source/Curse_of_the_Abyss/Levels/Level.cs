@@ -16,7 +16,7 @@ namespace Curse_of_the_Abyss
         public Submarine submarine;
         public WaterPlayer waterPlayer;
         //protected SubmarinePlayer submarinePlayer;
-        protected Healthbar healthbar;
+        public Healthbar healthbar;
         protected TmxMap TileMap;
         protected EggCollection eggs;
         public MapManager MapManager;

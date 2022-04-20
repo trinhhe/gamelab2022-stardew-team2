@@ -20,8 +20,8 @@ namespace Curse_of_the_Abyss
         private SubmarinePlayer submarinePlayer;
         private Healthbar healthbar;
         public MachineGun machineGun;
-        private List<Bullet> bullets;
-        private List<Bomb> bombs;
+        public List<Bullet> bullets;
+        public List<Bomb> bombs;
         public Rectangle oxyPosition, machineGunTerminalPosition, steerPosition, bombButtonPosition, lightLeverPosition, shutPosition, crossPosition, lampPosition;
         private Vector2 scaledMousePosition;
         private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown, oxygenCooldown, lightCooldown;
@@ -196,14 +196,15 @@ namespace Curse_of_the_Abyss
             healthbar.Draw(spritebatch);
             machineGun.Draw(spritebatch);
             lamp.Draw(spritebatch);
-            foreach (Sprite b in bullets)
-            {
-                b.Draw(spritebatch);
-            }
-            foreach (Sprite b in bombs)
-            {
-                b.Draw(spritebatch);
-            }
+            //moved to DarknessRender to render after darkness map
+            // foreach (Sprite b in bullets)
+            // {
+            //     b.Draw(spritebatch);
+            // }
+            // foreach (Sprite b in bombs)
+            // {
+            //     b.Draw(spritebatch);
+            // }
 
             if (machineGunCooldown < Constants.submarine_machine_gun_cooldown)
             {
