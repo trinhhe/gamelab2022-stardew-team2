@@ -52,8 +52,8 @@ namespace Curse_of_the_Abyss
         {
             // move submarine so that it's never out of bounds of the screen
             int posdiff = submarine.position.X - waterPlayer.position.X;
-            int rightbound = ((num_parts - 1) * 1920 + 960);
-            int leftbound = 910;
+            int rightbound = ((num_parts - 1) * 1920 + 880);
+            int leftbound = 880;
 
             if(waterPlayer.position.X <= leftbound)
             {
@@ -61,15 +61,15 @@ namespace Curse_of_the_Abyss
                 {
                     submarine.SetPos(-30);
                 }
-                else if (submarine.position.X > 1380)
+                else if (submarine.position.X > 1325)
                 {
-                    submarine.SetPos(1380);
+                    submarine.SetPos(1325);
                 }
             }
             else if (waterPlayer.position.X >= rightbound)
             {
                 int posleft = (num_parts - 1) * 1920 - 30;
-                int posright = (num_parts - 1) * 1920 + 1380;
+                int posright = (num_parts - 1) * 1920 + 1325;
                 if (submarine.position.X < posleft)
                 {
                     submarine.SetPos(posleft);
@@ -83,9 +83,9 @@ namespace Curse_of_the_Abyss
             {
                 submarine.SetPos(waterPlayer.position.X - 960);
             }
-            else if (posdiff > 414)
+            else if (posdiff > 444)
             {
-                submarine.SetPos(waterPlayer.position.X + 414);
+                submarine.SetPos(waterPlayer.position.X + 444);
             }
 
             // update egg counter
