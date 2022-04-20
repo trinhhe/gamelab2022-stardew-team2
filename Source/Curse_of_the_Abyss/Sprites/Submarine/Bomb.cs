@@ -57,9 +57,9 @@ namespace Curse_of_the_Abyss
             {
                 Rectangle pos = new Rectangle(position.X-20, position.Y-20, position.Width + 40, position.Height + 40);
                 animationManager.Draw(spritebatch, pos, 1f);
-                if(animationManager.animation.CurrentFrame == 5)
+                if (animationManager.animation.CurrentFrame == 5)
                 {
-                    animationManager.animation.FrameSpeed = 0.4f;
+                    animationManager.animation.FrameSpeed = 0.2f;
                     if (other != null) other.remove = true;
                 }
                 if(animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)
@@ -96,7 +96,7 @@ namespace Curse_of_the_Abyss
         private void startExplosion()
         {
             animationManager.Play(animations["explosion"]);
-            explosion.Play();
+            explosion.Play(0.2f, 0, 0);
         }
     }
 }
