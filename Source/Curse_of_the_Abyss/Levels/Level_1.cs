@@ -115,8 +115,8 @@ namespace Curse_of_the_Abyss
         {
             game_over = false;
             completed = false;
-            darkness = true;
-            // darkness = false;
+            darkness = false;
+            lightTargets = new List<Sprite>();
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(1, 1,darkness);
             eggcounter = new Eggcounter(1875, 10);

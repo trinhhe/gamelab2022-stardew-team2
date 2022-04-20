@@ -26,6 +26,7 @@ namespace Curse_of_the_Abyss
         public bool game_over;
         public bool completed;
         public bool darkness;
+        public List<Sprite> lightTargets;
         public virtual void Initialize()
         {
             // required for map manager

@@ -38,6 +38,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(pathNPC);
             TargetingNPC target = new TargetingNPC(200,500,waterPlayer,5);
             target.objectcollision = true;
+            lightTargets.Add(target);
             sprites.Add(target);
         }
 
@@ -56,7 +57,8 @@ namespace Curse_of_the_Abyss
         {
             game_over = false;
             completed = false;
-            // darkness = true;
+            darkness = true;
+            lightTargets = new List<Sprite>();
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0, darkness);
             eggcounter = new Eggcounter(1875, 10);

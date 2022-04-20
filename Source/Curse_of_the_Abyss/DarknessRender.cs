@@ -11,7 +11,7 @@ namespace Curse_of_the_Abyss
 {   
     public class DarknessRender
     {
-        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, health_lightmask;
+        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, health_lightmask, debug;
         BlendState blend;
         RenderTarget2D darkness;
         GraphicsDevice graphicsDevice;
@@ -37,86 +37,104 @@ namespace Curse_of_the_Abyss
             lamp_lightmask = content.Load<Texture2D>("Lightmask/lamp_lightmask");
             machinegun_lightmask = content.Load<Texture2D>("Lightmask/machinegun_lightmask");
             health_lightmask = content.Load<Texture2D>("Lightmask/health_lightmask");
+            debug = content.Load<Texture2D>("Bullet");
         }
 
         public void LightMasking(Level current_level, SpriteBatch _spriteBatch){
             graphicsDevice.SetRenderTarget(darkness);
-                graphicsDevice.Clear(color);
-                _spriteBatch.Begin(blendState: blend);
-                //lightcone
-                if(current_level.submarine.lightOn)
-                {
-                    _spriteBatch.Draw(
-                        lightmask, 
-                        new Rectangle(current_level.submarine.lamp.position.X,current_level.submarine.lamp.position.Y, (int) ((float)lightmask.Width * Constants.light_width_scale), (int) ((float) lightmask.Height * Constants.light_height_scale)), 
-                        null, 
-                        color * 1f, 
-                        current_level.submarine.lamp.rotation + 5.5f, 
-                        new Vector2(lightmask.Width/2,0), 
-                        SpriteEffects.None,
-                        0f
-                    ); //adjusting color * 1f lower will make light area darker
-                }
-                
-                var width = (int) ((float)waterplayer_lightmask.Width * Constants.waterplayer_light_width_scale);
-                var height = (int) ((float) waterplayer_lightmask.Height * Constants.waterplayer_light_height_scale);
-                //lightcircle around waterplayer
+            graphicsDevice.Clear(color);
+            markTargets(current_level,_spriteBatch);
+            _spriteBatch.Begin(blendState: blend);
+
+            //lightcone
+            if(current_level.submarine.lightOn)
+            {
                 _spriteBatch.Draw(
-                    waterplayer_lightmask,
-                    new Rectangle(current_level.waterPlayer.position.X - (width-current_level.waterPlayer.position.Width)/2, current_level.waterPlayer.position.Y - (height-current_level.waterPlayer.position.Height)/2, width, height),
+                    lightmask, 
+                    new Rectangle(current_level.submarine.lamp.position.X,current_level.submarine.lamp.position.Y, (int) ((float)lightmask.Width * Constants.light_width_scale), (int) ((float) lightmask.Height * Constants.light_height_scale)), 
                     null, 
-                    color * 1f,
-                    0, 
-                    Vector2.Zero, 
+                    color * 1f, 
+                    current_level.submarine.lamp.rotation + 5.5f, 
+                    new Vector2(lightmask.Width/2,0), 
                     SpriteEffects.None,
                     0f
-                );
-                //lightmask submarine
-                _spriteBatch.Draw(
-                    submarine_lightmask,
-                    new Rectangle(current_level.submarine.position.X, current_level.submarine.position.Y, current_level.submarine.position.Width, current_level.submarine.position.Height),
-                    new Rectangle(Submarine.animations["Drive"].CurrentFrame * Submarine.animations["Drive"].FrameWidth, 0, Submarine.animations["Drive"].FrameWidth, Submarine.animations["Drive"].FrameHeight),
-                    color * 1f, 
-                    0, 
-                    Vector2.Zero, 
-                    SpriteEffects.None, 
-                    0f
-                );
-                // lightmask machinegun
-                _spriteBatch.Draw(
-                    machinegun_lightmask,
-                    new Vector2(current_level.submarine.machineGun.position.X, current_level.submarine.machineGun.position.Y),
-                    null, 
-                    color * 1f, 
-                    current_level.submarine.machineGun.rotation, 
-                    Vector2.Zero, 
-                    1, 
-                    SpriteEffects.None, 
-                    0f
-                );
-                // lightmask lightlamp
-                _spriteBatch.Draw(
-                    lamp_lightmask,
-                    new Rectangle(current_level.submarine.lamp.position.X, current_level.submarine.lamp.position.Y, current_level.submarine.lamp.position.Width, current_level.submarine.lamp.position.Height),
-                    new Rectangle(Lamp.animation.CurrentFrame * Lamp.animation.FrameWidth, 0, Lamp.animation.FrameWidth, Lamp.animation.FrameHeight), 
-                    color * 1f,
-                    current_level.submarine.lamp.rotation, 
-                    Vector2.Zero, 
-                    SpriteEffects.None, 
-                    0f
-                );
-                // lightmask health
-                // _spriteBatch.Draw(
-                //     health_lightmask,
-                //     new Rectangle(current_level.healthbar.position.X, current_level.healthbar.position.Y, current_level.healthbar.position.Width, current_level.healthbar.position.Height),
-                //     null, 
-                //     color * 1f, 
-                //     0, 
-                //     Vector2.Zero,  
-                //     SpriteEffects.None, 
-                //     0f
-                // );
-                _spriteBatch.End();
+                ); //adjusting color * 1f lower will make light area darker
+            }
+                
+            var width = (int) ((float)waterplayer_lightmask.Width * Constants.waterplayer_light_width_scale);
+            var height = (int) ((float) waterplayer_lightmask.Height * Constants.waterplayer_light_height_scale);
+            //lightcircle around waterplayer
+            _spriteBatch.Draw(
+                waterplayer_lightmask,
+                new Rectangle(current_level.waterPlayer.position.X - (width-current_level.waterPlayer.position.Width)/2, current_level.waterPlayer.position.Y - (height-current_level.waterPlayer.position.Height)/2, width, height),
+                null, 
+                color * 1f,
+                0, 
+                Vector2.Zero, 
+                SpriteEffects.None,
+                0f
+            );
+            //lightmask submarine
+            _spriteBatch.Draw(
+                submarine_lightmask,
+                new Rectangle(current_level.submarine.position.X, current_level.submarine.position.Y, current_level.submarine.position.Width, current_level.submarine.position.Height),
+                new Rectangle(Submarine.animations["Drive"].CurrentFrame * Submarine.animations["Drive"].FrameWidth, 0, Submarine.animations["Drive"].FrameWidth, Submarine.animations["Drive"].FrameHeight),
+                color * 1f, 
+                0, 
+                Vector2.Zero, 
+                SpriteEffects.None, 
+                0f
+            );
+            // lightmask machinegun
+            _spriteBatch.Draw(
+                machinegun_lightmask,
+                new Vector2(current_level.submarine.machineGun.position.X, current_level.submarine.machineGun.position.Y),
+                null, 
+                color * 1f, 
+                current_level.submarine.machineGun.rotation, 
+                Vector2.Zero, 
+                1, 
+                SpriteEffects.None, 
+                0f
+            );
+            // lightmask lightlamp
+            _spriteBatch.Draw(
+                lamp_lightmask,
+                new Rectangle(current_level.submarine.lamp.position.X, current_level.submarine.lamp.position.Y, current_level.submarine.lamp.position.Width, current_level.submarine.lamp.position.Height),
+                new Rectangle(Lamp.animation.CurrentFrame * Lamp.animation.FrameWidth, 0, Lamp.animation.FrameWidth, Lamp.animation.FrameHeight), 
+                color * 1f,
+                current_level.submarine.lamp.rotation, 
+                Vector2.Zero, 
+                SpriteEffects.None, 
+                0f
+            );
+
+            foreach(Sprite s in current_level.lightTargets)
+            {
+                if (s.lightmask)
+                    _spriteBatch.Draw(
+                        waterplayer_lightmask,
+                        new Rectangle(s.position.X-20, s.position.Y-20, s.position.Width+40, s.position.Height+20),
+                        null,
+                        color * 1f,
+                        0,
+                        Vector2.Zero,
+                        SpriteEffects.None,
+                        0f
+                    );
+            }
+            // lightmask health
+            // _spriteBatch.Draw(
+            //     health_lightmask,
+            //     new Rectangle(current_level.healthbar.position.X, current_level.healthbar.position.Y, current_level.healthbar.position.Width, current_level.healthbar.position.Height),
+            //     null, 
+            //     color * 1f, 
+            //     0, 
+            //     Vector2.Zero,  
+            //     SpriteEffects.None, 
+            //     0f
+            // );
+            _spriteBatch.End();
         }
 
         public void Draw(Level current_level, SpriteBatch _spriteBatch){
@@ -161,6 +179,40 @@ namespace Curse_of_the_Abyss
                 }
                 
             }
+        }
+
+        private void markTargets(Level current,SpriteBatch spriteBatch)
+        {
+            Rectangle lightcone = new Rectangle(current.submarine.lamp.position.X, current.submarine.lamp.position.Y, (int)((float)lightmask.Width * Constants.light_width_scale), (int)((float)lightmask.Height * Constants.light_height_scale));
+            Vector2 lightconePos = new Vector2(lightcone.X, lightcone.Y);
+            Vector2 bottomLeft = Vector2.Transform(new Vector2(lightcone.X, lightcone.Y+ lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) +lightconePos ;
+            Vector2 bottomRight = Vector2.Transform(new Vector2(lightcone.X+ lightcone.Width, lightcone.Y + lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) + lightconePos;
+            if (current.submarine.lightOn)
+            {
+                foreach (Sprite s in current.lightTargets)
+                {
+                    
+                    if (inTriangle(new Vector2(s.position.X,s.position.Y),lightconePos,bottomLeft,bottomRight)||
+                        inTriangle(new Vector2(s.position.X+s.position.Width, s.position.Y), lightconePos, bottomLeft, bottomRight)||
+                        inTriangle(new Vector2(s.position.X, s.position.Y+s.position.Height), lightconePos, bottomLeft, bottomRight)||
+                        inTriangle(new Vector2(s.position.X+s.position.Width, s.position.Y+s.position.Height), lightconePos, bottomLeft, bottomRight))
+                        s.lightmask = true;
+                }
+            }
+        }
+
+        private bool inTriangle(Vector2 s, Vector2 a, Vector2 b, Vector2 c)
+        {
+            int as_x = (int)(s.X - a.X);
+            int as_y = (int)(s.Y - a.Y);
+
+            bool s_ab = (b.X - a.X) * as_y - (b.Y - a.Y) * as_x > 0;
+
+            if ((c.X - a.X) * as_y - (c.Y - a.Y) * as_x > 0 == s_ab) return false;
+
+            if ((c.X - b.X) * (s.Y - b.Y) - (c.Y - b.Y) * (s.X - b.X) > 0 != s_ab) return false;
+
+            return true;
         }
     }
 }
