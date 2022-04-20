@@ -32,7 +32,14 @@ namespace Curse_of_the_Abyss
         public static float submarine_bullet_velocity = 20f;
         public static int submarine_machine_gun_cooldown = 3000; //milliseconds
         public static float machine_gun_turn_velocity = 1.5f;
-        public static int machine_gun_shooting_frequency = 30; //lower is more bullets     
+        public static int machine_gun_shooting_frequency = 30; //lower is more bullets
+        public static int submarine_light_cooldown = 2000;
+
+        //darkness
+        public static float light_width_scale = 1.2f;
+        public static float light_height_scale = 1.5f;
+        public static float waterplayer_light_width_scale = 1.5f;
+        public static float waterplayer_light_height_scale = 1.1f;
     }
 
 }

@@ -32,6 +32,7 @@ namespace Curse_of_the_Abyss
         // scrolling backgrounds
         private List<ScrollingBackground> _scrollingBackgrounds;
 
+        public DarknessRender darknessrender;
         public Game()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -91,6 +92,9 @@ namespace Curse_of_the_Abyss
 
             // always render at 1080p but display at user-defined resolution after
             renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+            
+            darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+            DarknessRender.LoadContent(Content); 
         }
 
         protected override void Update(GameTime gameTime)
@@ -174,6 +178,12 @@ namespace Curse_of_the_Abyss
             // global constant matrix to translate mouse position from virtual resolution (1920,1080) <---> actual resolution
             Constants.transform_matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
+            if(current_level.darkness)
+            {
+                //setup darkness map with light sources masking
+                darknessrender.LightMasking(current_level, _spriteBatch);
+            }
+            
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
@@ -190,14 +200,18 @@ namespace Curse_of_the_Abyss
             // draw sprites
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
             current_level.Draw(_spriteBatch); 
-            _spriteBatch.End();
-
+            _spriteBatch.End();               
+            
             // render at 1080p
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(transformMatrix: _camera.Transform * Constants.transform_matrix); 
             _spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            
+            // draw darkness map with lightmasks and other sprites that have to render after darkness map
+            darknessrender.Draw(current_level, _spriteBatch);
+            
             _spriteBatch.End();
 
             // draw UI

@@ -115,8 +115,10 @@ namespace Curse_of_the_Abyss
         {
             game_over = false;
             completed = false;
+            darkness = true;
+            // darkness = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
-            healthbar = new Healthbar(1, 1);
+            healthbar = new Healthbar(1, 1,darkness);
             eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             shooters = new List<StationaryShooterNPC>();
@@ -133,6 +135,8 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(100, 298);
             eggs.addEgg(1335, 1000);
             eggs.addEgg(1620, 552);
+
+            
         }
         
     }

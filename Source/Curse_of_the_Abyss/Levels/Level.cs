@@ -14,9 +14,8 @@ namespace Curse_of_the_Abyss
         protected Texture2D tileset;
         public Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
-        protected Submarine submarine;
+        public Submarine submarine;
         public WaterPlayer waterPlayer;
-        //protected SubmarinePlayer submarinePlayer;
         public Healthbar healthbar;
         public Eggcounter eggcounter;
         protected TmxMap TileMap;
@@ -26,7 +25,7 @@ namespace Curse_of_the_Abyss
         public int num_parts; // number of "screen widths" (i.e. multiples of 1920) that the level is composed of
         public bool game_over;
         public bool completed;
-
+        public bool darkness;
         public virtual void Initialize()
         {
             // required for map manager
