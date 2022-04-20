@@ -18,6 +18,7 @@ namespace Curse_of_the_Abyss
         public WaterPlayer waterPlayer;
         //protected SubmarinePlayer submarinePlayer;
         public Healthbar healthbar;
+        public Eggcounter eggcounter;
         protected TmxMap TileMap;
         protected EggCollection eggs;
         public MapManager MapManager;
@@ -49,6 +50,7 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update(GameTime gameTime)
         {
+            // move submarine so that it's never out of bounds of the screen
             int posdiff = submarine.position.X - waterPlayer.position.X;
             int rightbound = ((num_parts - 1) * 1920 + 960);
             int leftbound = 910;
@@ -86,12 +88,16 @@ namespace Curse_of_the_Abyss
                 submarine.SetPos(waterPlayer.position.X + 414);
             }
 
+            // update egg counter
+            eggcounter.set(eggs.eggsCollected);
 
+            // game over if oxygen runs out
             if (healthbar.curr_health <= 0)
             {
                 game_over = true;
             }
 
+            // update sprites
             foreach (Sprite s in sprites)
             {
                 s.Update(sprites, gameTime);

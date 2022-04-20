@@ -49,7 +49,7 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(currhealth_text, healthbar, Color.White);
 
             //draw text
-            spritebatch.DrawString(font,"O2",new Vector2(position.X,position.Bottom+1),Color.Black); 
+            spritebatch.DrawString(font,"O2",new Vector2(position.X+6,position.Bottom+1),Color.Black); 
         }
 
         public void toggleLoadingOn()

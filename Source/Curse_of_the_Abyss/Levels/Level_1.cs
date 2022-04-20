@@ -26,6 +26,7 @@ namespace Curse_of_the_Abyss
             WaterPlayer.LoadContent(content);
 
             Healthbar.LoadContent(content);
+            Eggcounter.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
             PathNPC.LoadContent(content);
@@ -116,6 +117,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(1, 1);
+            eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar);

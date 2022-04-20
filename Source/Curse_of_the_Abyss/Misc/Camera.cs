@@ -16,11 +16,11 @@ namespace Curse_of_the_Abyss
         public void Follow(Sprite target)
         {
             var targetX = MathHelper.Clamp(target.position.X, 
-                (int)Game.RenderWidth / 2 - 20, 
-                (int)((n_parts-1) * Game.RenderWidth) + Game.RenderWidth / 2 - 20);
+                (int)Game.RenderWidth / 2 - 80, 
+                (int)((n_parts-1) * Game.RenderWidth) + Game.RenderWidth / 2 - 80);
 
             var position = Matrix.CreateTranslation(
-              -targetX - (target.position.Width / 2),
+              -targetX - (target.position.Width / 2) - 60,
               0,
               0);
 

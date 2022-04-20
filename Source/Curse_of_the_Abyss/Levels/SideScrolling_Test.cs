@@ -20,10 +20,11 @@ namespace Curse_of_the_Abyss
             InitMap(num_parts);
 
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
-            background = content.Load<Texture2D>("bg_wide");
+
             WaterPlayer.LoadContent(content);
 
             Healthbar.LoadContent(content);
+            Eggcounter.LoadContent(content);
             Submarine.LoadContent(content);
 
             Egg.LoadContent(content);
@@ -58,6 +59,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             
             healthbar = new Healthbar(0, 0);
+            eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
@@ -69,7 +71,7 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            eggs.addEgg(100, 298);
+            eggs.addEgg(100, 900);
         }
 
     }

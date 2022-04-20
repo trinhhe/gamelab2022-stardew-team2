@@ -84,7 +84,7 @@ namespace Curse_of_the_Abyss
             current_level.InitMapManager(_spriteBatch);
 
             // scrolling backgrounds
-            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, levelcounter);
+            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
 
             // camera
             _camera = new Camera(current_level.num_parts);
@@ -109,7 +109,7 @@ namespace Curse_of_the_Abyss
                 current_level.Reset();
 
                 // reset scrolling backgrounds
-                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, levelcounter);
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
             }
 
             if (current_level.completed)
@@ -133,7 +133,7 @@ namespace Curse_of_the_Abyss
                 current_level.InitMapManager(_spriteBatch);
 
                 // set new scrolling backgrounds based on level
-                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, levelcounter);
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
 
                 // set camera to match number of "screen widths" in the new level
                 _camera = new Camera(current_level.num_parts);
@@ -177,10 +177,7 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // draw background
-            //_spriteBatch.Begin(SpriteSortMode.BackToFront);
-            //_spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            //_spriteBatch.End();
+            // draw backgrounds
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp);
             foreach (var sb in _scrollingBackgrounds)
                 sb.Draw(gameTime, _spriteBatch);
@@ -204,8 +201,9 @@ namespace Curse_of_the_Abyss
             _spriteBatch.End();
 
             // draw UI
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
             current_level.healthbar.Draw(_spriteBatch);
+            current_level.eggcounter.Draw(_spriteBatch);
             _spriteBatch.End();
 
             // menu

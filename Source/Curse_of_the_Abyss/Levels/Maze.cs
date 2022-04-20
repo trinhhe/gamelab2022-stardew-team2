@@ -18,6 +18,7 @@ namespace Curse_of_the_Abyss
             background = content.Load<Texture2D>("bg");
             WaterPlayer.LoadContent(content);
             Healthbar.LoadContent(content);
+            Eggcounter.LoadContent(content);
             Submarine.LoadContent(content);
             Egg.LoadContent(content);
             PathNPC.LoadContent(content);
@@ -57,6 +58,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(0, 0);
+            eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 990, healthbar);
             waterPlayer.maze = true;
             submarine = new Submarine(10, 10, healthbar);

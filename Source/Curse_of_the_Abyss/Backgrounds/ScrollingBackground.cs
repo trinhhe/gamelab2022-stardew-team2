@@ -20,6 +20,8 @@ namespace Curse_of_the_Abyss
 
         private WaterPlayer _player;
 
+        private int _num_parts;
+
         private float _speed;
 
         public float Layer
@@ -34,25 +36,32 @@ namespace Curse_of_the_Abyss
             }
         }
 
-        public ScrollingBackground(Texture2D texture, WaterPlayer player, float scrollingSpeed, bool constantSpeed = false)
-          : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, constantSpeed)
+        public ScrollingBackground(Texture2D texture, WaterPlayer player, float scrollingSpeed, int num_parts, bool constantSpeed = false)
+          : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, num_parts, constantSpeed)
         {
 
         }
 
-        public ScrollingBackground(List<Texture2D> textures, WaterPlayer player, float scrollingSpeed, bool constantSpeed = false)
+        public ScrollingBackground(List<Texture2D> textures, WaterPlayer player, float scrollingSpeed, int num_parts, bool constantSpeed = false)
         {
             _player = player;
+
+            _num_parts = num_parts;
 
             _sprites = new List<BackgroundSprite>();
 
             for (int i = 0; i < textures.Count; i++)
             {
                 var texture = textures[i];
+                int offset = -30;
+                if(scrollingSpeed == 0)
+                {
+                    offset = 0;
+                }
 
                 _sprites.Add(new BackgroundSprite(texture)
                 {
-                    Position = new Vector2(i * texture.Width - Math.Min(i, i + 1), Game.RenderHeight - texture.Height),
+                    Position = new Vector2(offset + i * texture.Width - Math.Min(i, i + 1), Game.RenderHeight - texture.Height),
                 });
             }
 
@@ -70,7 +79,7 @@ namespace Curse_of_the_Abyss
 
         private void ApplySpeed(GameTime gameTime)
         {
-            if(_player.position.X > 20) { 
+            if(_player.position.X > (Game.RenderWidth/2) - 80 && _player.position.X < ((_num_parts-1)*Game.RenderWidth) + Game.RenderWidth/2 - 80) { 
                 _speed = (float)(_scrollingSpeed * gameTime.ElapsedGameTime.TotalSeconds);
             
                 if (!_constantSpeed || _player.xVelocity > 0)

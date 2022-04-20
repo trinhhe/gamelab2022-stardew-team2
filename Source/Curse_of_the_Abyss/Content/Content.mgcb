@@ -217,6 +217,13 @@
 /processorParam:TextureFormat=Color
 /build:Egg.png
 
+#begin Eggcounter.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Eggcounter.spritefont
+
 #begin explosion.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -228,13 +235,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:explosion.png
-
-#begin File.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:File.spritefont;O2.spritefont
 
 #begin health.png
 /importer:TextureImporter
@@ -328,6 +328,13 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:mixkit-sea-mine-explosion-1184.wav
+
+#begin O2.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:O2.spritefont
 
 #begin O2Button.png
 /importer:TextureImporter
