@@ -42,11 +42,8 @@ namespace Curse_of_the_Abyss
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //draw bar
-            if(!darkness)
-                spritebatch.Draw(bar, position, Color.White);
-            else
-                spritebatch.Draw(darkbar, position, Color.White);
+            // always draw dark bar (imo it looks better)
+            spritebatch.Draw(darkbar, position, Color.White);
             //draw current health
             int curr_ypos = position.Y + position.Height - position.Height*curr_health / maxhealth;
             Rectangle healthbar = new Rectangle(position.X,curr_ypos, position.Width,position.Height*curr_health/maxhealth-2);

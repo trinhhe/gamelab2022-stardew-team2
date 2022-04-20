@@ -123,7 +123,7 @@ namespace Curse_of_the_Abyss
             if (current_level.darkness)
                 _spriteBatch.Draw(darkness, Vector2.Zero, Color.White * 0.99f); //adjust Color.White * 0.99 lower will make background behind darkness more visible
 
-            current_level.submarine.healthbar.Draw(_spriteBatch);
+            //current_level.submarine.healthbar.Draw(_spriteBatch);
             if (current_level.submarine.machineGunOn)
             {
                 _spriteBatch.Draw(

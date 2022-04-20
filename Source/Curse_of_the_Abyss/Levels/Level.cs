@@ -78,9 +78,9 @@ namespace Curse_of_the_Abyss
                     submarine.SetPos(posright);
                 }
             }
-            else if (posdiff < -960)
+            else if (posdiff < - 920)
             {
-                submarine.SetPos(waterPlayer.position.X - 960);
+                submarine.SetPos(waterPlayer.position.X - 920);
             }
             else if (posdiff > 444)
             {
