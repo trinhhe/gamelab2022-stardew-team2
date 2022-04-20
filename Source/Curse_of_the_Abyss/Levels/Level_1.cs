@@ -17,7 +17,6 @@ namespace Curse_of_the_Abyss
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
             num_parts = 1;
-            InitMap(num_parts);
 
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
@@ -117,7 +116,6 @@ namespace Curse_of_the_Abyss
             completed = false;
             darkness = true;
             // darkness = false;
-            mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(1, 1,darkness);
             eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
