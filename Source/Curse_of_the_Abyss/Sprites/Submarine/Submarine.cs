@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
         public enum State {Standing, Driving, OxygenMode, MachineGunMode, LightMode};
         public State state, prev_state;
         private SubmarinePlayer submarinePlayer;
-        private Healthbar healthbar;
+        public Healthbar healthbar;
         public MachineGun machineGun;
         public List<Bullet> bullets;
         public List<Bomb> bombs;
@@ -193,7 +193,8 @@ namespace Curse_of_the_Abyss
             }
 
             submarinePlayer.Draw(spritebatch);
-            healthbar.Draw(spritebatch);
+            //moved to darknessRender
+            // healthbar.Draw(spritebatch);
             machineGun.Draw(spritebatch);
             lamp.Draw(spritebatch);
             //moved to DarknessRender to render after darkness map
@@ -201,10 +202,10 @@ namespace Curse_of_the_Abyss
             // {
             //     b.Draw(spritebatch);
             // }
-            // foreach (Sprite b in bombs)
-            // {
-            //     b.Draw(spritebatch);
-            // }
+            foreach (Sprite b in bombs)
+            {
+                b.Draw(spritebatch);
+            }
 
             if (machineGunCooldown < Constants.submarine_machine_gun_cooldown)
             {

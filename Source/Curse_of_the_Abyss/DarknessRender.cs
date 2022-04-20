@@ -106,16 +106,16 @@ namespace Curse_of_the_Abyss
                     0f
                 );
                 // lightmask health
-                _spriteBatch.Draw(
-                    health_lightmask,
-                    new Rectangle(current_level.healthbar.position.X, current_level.healthbar.position.Y, current_level.healthbar.position.Width, current_level.healthbar.position.Height),
-                    null, 
-                    color * 1f, 
-                    0, 
-                    Vector2.Zero,  
-                    SpriteEffects.None, 
-                    0f
-                );
+                // _spriteBatch.Draw(
+                //     health_lightmask,
+                //     new Rectangle(current_level.healthbar.position.X, current_level.healthbar.position.Y, current_level.healthbar.position.Width, current_level.healthbar.position.Height),
+                //     null, 
+                //     color * 1f, 
+                //     0, 
+                //     Vector2.Zero,  
+                //     SpriteEffects.None, 
+                //     0f
+                // );
                 _spriteBatch.End();
         }
 
@@ -123,6 +123,7 @@ namespace Curse_of_the_Abyss
             if (current_level.darkness)
                 _spriteBatch.Draw(darkness, Vector2.Zero, Color.White * 0.99f); //adjust Color.White * 0.99 lower will make background behind darkness more visible
 
+            current_level.submarine.healthbar.Draw(_spriteBatch);
             if (current_level.submarine.machineGunOn)
             {
                 _spriteBatch.Draw(
@@ -141,9 +142,24 @@ namespace Curse_of_the_Abyss
             {
                 b.Draw(_spriteBatch);
             }
-            foreach (Sprite b in current_level.submarine.bombs)
+            foreach (Bomb b in current_level.submarine.bombs)
             {
-                b.Draw(_spriteBatch);
+                // b.Draw(_spriteBatch);
+                if(b.animationManager.animation == Bomb.animations["explosion"]){
+                    Rectangle pos = new Rectangle(b.position.X-20, b.position.Y-20, b.position.Width + 40, b.position.Height + 40);
+                    b.animationManager.Draw(_spriteBatch, pos, 1f, 0f);
+                    if(b.animationManager.animation.CurrentFrame == 5)
+                    {
+                        b.animationManager.animation.FrameSpeed = 0.4f;
+                        if (b.other != null) b.other.remove = true;
+                    }
+                    if(b.animationManager.animation.CurrentFrame == b.animationManager.animation.FrameCount-1)
+                    {
+                        b.animationManager.animation.FrameSpeed = 0.1f;
+                        b.remove = true;
+                    }
+                }
+                
             }
         }
     }

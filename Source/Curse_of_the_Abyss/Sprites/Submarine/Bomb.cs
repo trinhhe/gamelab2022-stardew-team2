@@ -11,9 +11,9 @@ namespace Curse_of_the_Abyss
         public int ground;
         public float linearVelocity;
         private string[] collidables = {"obstacle", "targetingNPC", "rock" };
-        protected AnimationManager animationManager;
+        public AnimationManager animationManager;
         public static Dictionary<string, Animation> animations;
-        Sprite other;
+        public Sprite other;
         public static SoundEffect explosion;
         public Bomb(int x, int y)
         {
@@ -55,18 +55,20 @@ namespace Curse_of_the_Abyss
             }
             else
             {
-                Rectangle pos = new Rectangle(position.X-20, position.Y-20, position.Width + 40, position.Height + 40);
-                animationManager.Draw(spritebatch, pos, 1f, 0f);
-                if(animationManager.animation.CurrentFrame == 5)
-                {
-                    animationManager.animation.FrameSpeed = 0.4f;
-                    if (other != null) other.remove = true;
-                }
-                if(animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)
-                {
-                    animationManager.animation.FrameSpeed = 0.1f;
-                    remove = true;
-                }
+                //moved to darknessrender
+
+                // Rectangle pos = new Rectangle(position.X-20, position.Y-20, position.Width + 40, position.Height + 40);
+                // animationManager.Draw(spritebatch, pos, 1f, 0f);
+                // if(animationManager.animation.CurrentFrame == 5)
+                // {
+                //     animationManager.animation.FrameSpeed = 0.4f;
+                //     if (other != null) other.remove = true;
+                // }
+                // if(animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)
+                // {
+                //     animationManager.animation.FrameSpeed = 0.1f;
+                //     remove = true;
+                // }
             }
         }
 
