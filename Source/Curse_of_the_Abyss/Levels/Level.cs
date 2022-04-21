@@ -12,7 +12,6 @@ namespace Curse_of_the_Abyss
     {
         public Texture2D background;
         protected Texture2D tileset;
-        public Rectangle mapRectangle;
         protected List<Sprite> sprites; //list of sprites in this level should include player sprites and submarine
         public Submarine submarine;
         public WaterPlayer waterPlayer;
@@ -80,9 +79,9 @@ namespace Curse_of_the_Abyss
                     submarine.SetPos(posright);
                 }
             }
-            else if (posdiff < -960)
+            else if (posdiff < - 920)
             {
-                submarine.SetPos(waterPlayer.position.X - 960);
+                submarine.SetPos(waterPlayer.position.X - 920);
             }
             else if (posdiff > 444)
             {
@@ -138,11 +137,6 @@ namespace Curse_of_the_Abyss
             var TileSetTilesWide = tileset.Width / tileWidth;
 
             MapManager = new MapManager(_spriteBatch, TileMap, tileset, TileSetTilesWide, tileWidth, tileHeight);
-        }
-
-        public void InitMap(int num_parts)
-        {
-            mapRectangle = new Rectangle(0, 0, num_parts * 1920, 1080);
         }
 
         public virtual void Reset()

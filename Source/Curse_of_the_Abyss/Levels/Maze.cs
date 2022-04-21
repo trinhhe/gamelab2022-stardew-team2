@@ -12,7 +12,6 @@ namespace Curse_of_the_Abyss
         public override void LoadContent(ContentManager content)
         {
             num_parts = 1;
-            InitMap(num_parts);
 
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
