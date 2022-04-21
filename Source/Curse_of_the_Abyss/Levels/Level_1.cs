@@ -9,7 +9,6 @@ using System;
 namespace Curse_of_the_Abyss 
 {
     public class Level1:Level{
-        int randomTimer = 0;
         int shooterupdate = 0;
         protected List<StationaryShooterNPC> shooters;
 
@@ -85,31 +84,7 @@ namespace Curse_of_the_Abyss
                     sprites.Add(shootS);
                 }
             }
-            randomTimer += gameTime.ElapsedGameTime.Milliseconds;
-            //10 sec
-                //targeting npc
-            int milliseconds = 5000; // set for time btw spwaning of targeting npcs
-            if (randomTimer > milliseconds)
-            { 
-                int speed = 2;
-                var rand = new Random();
-                int x_index;
-                if (waterPlayer.position.X < 300)
-                {
-                    x_index = 1;
-                }
-                else if(waterPlayer.position.X >1700)
-                {
-                    x_index = 0;
-                }else
-                    x_index = rand.Next(2);
-                int y_index = rand.Next(2);
-                var x_pos = new List<int> { -100, 2100 };
-                var y_pos = new List<int> { 400, 900 };
-                TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
-                sprites.Add(targetingNPC);
-                randomTimer = 0;
-            }
+            SpawnNPCs(10000,gameTime,false);
         }
         public override void Reset()
         {
@@ -117,6 +92,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             darkness = false;
             lightTargets = new List<Sprite>();
+            randomTimer = 0;
             mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
             healthbar = new Healthbar(1, 1,darkness);
             eggcounter = new Eggcounter(1875, 10);

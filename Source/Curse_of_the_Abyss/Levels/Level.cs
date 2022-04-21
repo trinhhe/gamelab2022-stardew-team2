@@ -27,6 +27,7 @@ namespace Curse_of_the_Abyss
         public bool completed;
         public bool darkness;
         public List<Sprite> lightTargets;
+        public int randomTimer;
         public virtual void Initialize()
         {
             // required for map manager
@@ -153,6 +154,35 @@ namespace Curse_of_the_Abyss
             foreach (Sprite s in toRemove)
             {
                 sprites.Remove(s);
+            }
+        }
+
+        //spawns Targeting NPCs in given time interval (time in milliseconds)
+        public void SpawnNPCs(int time,GameTime gameTime,bool lightTarget)
+        {
+            randomTimer += gameTime.ElapsedGameTime.Milliseconds;
+            if (randomTimer > time)
+            {
+                int speed = 2;
+                var rand = new Random();
+                int x_index;
+                if (waterPlayer.position.X < 300)
+                {
+                    x_index = 1;
+                }
+                else if (waterPlayer.position.X > 1700)
+                {
+                    x_index = 0;
+                }
+                else
+                    x_index = rand.Next(2);
+                int y_index = rand.Next(2);
+                var x_pos = new List<int> { -100, 2100 };
+                var y_pos = new List<int> { 400, 900 };
+                TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
+                sprites.Add(targetingNPC);
+                randomTimer = 0;
+                if (lightTarget) lightTargets.Add(targetingNPC);
             }
         }
     }

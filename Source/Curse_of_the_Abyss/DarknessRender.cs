@@ -181,17 +181,17 @@ namespace Curse_of_the_Abyss
             }
         }
 
+        //every NPC targeted by the lightbeam should start glowing
         private void markTargets(Level current,SpriteBatch spriteBatch)
         {
             Rectangle lightcone = new Rectangle(current.submarine.lamp.position.X, current.submarine.lamp.position.Y, (int)((float)lightmask.Width * Constants.light_width_scale), (int)((float)lightmask.Height * Constants.light_height_scale));
             Vector2 lightconePos = new Vector2(lightcone.X, lightcone.Y);
-            Vector2 bottomLeft = Vector2.Transform(new Vector2(lightcone.X, lightcone.Y+ lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) +lightconePos ;
-            Vector2 bottomRight = Vector2.Transform(new Vector2(lightcone.X+ lightcone.Width, lightcone.Y + lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) + lightconePos;
+            Vector2 bottomLeft = Vector2.Transform(new Vector2(lightcone.X-lightcone.Width/2, lightcone.Y+ lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) +lightconePos ;
+            Vector2 bottomRight = Vector2.Transform(new Vector2(lightcone.X+ lightcone.Width/2, lightcone.Y + lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) + lightconePos;
             if (current.submarine.lightOn)
             {
                 foreach (Sprite s in current.lightTargets)
-                {
-                    
+                {  
                     if (inTriangle(new Vector2(s.position.X,s.position.Y),lightconePos,bottomLeft,bottomRight)||
                         inTriangle(new Vector2(s.position.X+s.position.Width, s.position.Y), lightconePos, bottomLeft, bottomRight)||
                         inTriangle(new Vector2(s.position.X, s.position.Y+s.position.Height), lightconePos, bottomLeft, bottomRight)||
@@ -201,6 +201,7 @@ namespace Curse_of_the_Abyss
             }
         }
 
+        //checks if given point lies in triangle
         private bool inTriangle(Vector2 s, Vector2 a, Vector2 b, Vector2 c)
         {
             int as_x = (int)(s.X - a.X);

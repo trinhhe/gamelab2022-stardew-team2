@@ -36,10 +36,6 @@ namespace Curse_of_the_Abyss
         {
             PathNPC pathNPC = new PathNPC(1400,450,1520,450,1);
             sprites.Add(pathNPC);
-            TargetingNPC target = new TargetingNPC(200,500,waterPlayer,5);
-            target.objectcollision = true;
-            lightTargets.Add(target);
-            sprites.Add(target);
         }
 
         public override void Update(GameTime gameTime)
@@ -51,7 +47,7 @@ namespace Curse_of_the_Abyss
                 completed = true;
             }
 
-            
+            SpawnNPCs(15000,gameTime,true);
         }
         public override void Reset()
         {
