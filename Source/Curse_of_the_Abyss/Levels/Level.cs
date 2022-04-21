@@ -114,6 +114,7 @@ namespace Curse_of_the_Abyss
             foreach(Sprite s in toRemove)
             {
                 sprites.Remove(s);
+                if (lightTargets.Contains(s)) lightTargets.Remove(s);
             }
 
             eggs.collectIfPossible(waterPlayer.position);
@@ -154,6 +155,7 @@ namespace Curse_of_the_Abyss
             foreach (Sprite s in toRemove)
             {
                 sprites.Remove(s);
+                if (lightTargets.Contains(s)) lightTargets.Remove(s);
             }
         }
 

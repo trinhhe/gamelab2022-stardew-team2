@@ -5,13 +5,12 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Curse_of_the_Abyss
 {   
     public class DarknessRender
     {
-        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, health_lightmask, debug;
+        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, health_lightmask;
         BlendState blend;
         RenderTarget2D darkness;
         GraphicsDevice graphicsDevice;
@@ -37,13 +36,12 @@ namespace Curse_of_the_Abyss
             lamp_lightmask = content.Load<Texture2D>("Lightmask/lamp_lightmask");
             machinegun_lightmask = content.Load<Texture2D>("Lightmask/machinegun_lightmask");
             health_lightmask = content.Load<Texture2D>("Lightmask/health_lightmask");
-            debug = content.Load<Texture2D>("Bullet");
         }
 
         public void LightMasking(Level current_level, SpriteBatch _spriteBatch){
             graphicsDevice.SetRenderTarget(darkness);
             graphicsDevice.Clear(color);
-            markTargets(current_level,_spriteBatch);
+            markTargets(current_level);
             _spriteBatch.Begin(blendState: blend);
 
             //lightcone
@@ -182,7 +180,7 @@ namespace Curse_of_the_Abyss
         }
 
         //every NPC targeted by the lightbeam should start glowing
-        private void markTargets(Level current,SpriteBatch spriteBatch)
+        private void markTargets(Level current)
         {
             Rectangle lightcone = new Rectangle(current.submarine.lamp.position.X, current.submarine.lamp.position.Y, (int)((float)lightmask.Width * Constants.light_width_scale), (int)((float)lightmask.Height * Constants.light_height_scale));
             Vector2 lightconePos = new Vector2(lightcone.X, lightcone.Y);
