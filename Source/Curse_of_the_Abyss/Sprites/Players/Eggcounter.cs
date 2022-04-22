@@ -12,12 +12,14 @@ namespace Curse_of_the_Abyss
         public static Texture2D egg;
         public static SpriteFont font;
         private int eggcount;
+        private bool darkness;
 
-        public Eggcounter(int x, int y)
+        public Eggcounter(int x, int y, bool darkness)
         {
             name = "eggcounter";
             position = new Rectangle(x, y, 36, 36);
             collidable = false;
+            this.darkness = darkness;
         }
 
         public void set(int val)
@@ -37,7 +39,10 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(egg, position, Color.White);
 
             // draw egg counter
-            spritebatch.DrawString(font, eggcount.ToString(), new Vector2(position.X - 30, position.Y - 6), Color.Black);
+            if (!darkness)
+                spritebatch.DrawString(font, eggcount.ToString(), new Vector2(position.X - 30, position.Y - 6), Color.Black);
+            else
+                spritebatch.DrawString(font, eggcount.ToString(), new Vector2(position.X - 30, position.Y - 6), Color.White);
         }
     }
 }

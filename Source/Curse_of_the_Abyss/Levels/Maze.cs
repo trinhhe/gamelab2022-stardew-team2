@@ -56,7 +56,7 @@ namespace Curse_of_the_Abyss
             lightTargets = new List<Sprite>();
             
             healthbar = new Healthbar(0, 0, darkness);
-            eggcounter = new Eggcounter(1875, 10);
+            eggcounter = new Eggcounter(1875, 10, darkness);
             waterPlayer = new WaterPlayer(20, 990, healthbar);
             waterPlayer.maze = true;
             submarine = new Submarine(10, 10, healthbar);

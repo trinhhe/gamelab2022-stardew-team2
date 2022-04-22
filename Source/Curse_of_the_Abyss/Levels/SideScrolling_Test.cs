@@ -58,7 +58,7 @@ namespace Curse_of_the_Abyss
             completed = false;
             // darkness = true;
             healthbar = new Healthbar(0, 0, darkness);
-            eggcounter = new Eggcounter(1875, 10);
+            eggcounter = new Eggcounter(1875, 10, darkness);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             submarine = new Submarine(10, 10, healthbar);
             sprites = new List<Sprite>();
