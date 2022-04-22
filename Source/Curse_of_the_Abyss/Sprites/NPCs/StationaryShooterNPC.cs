@@ -8,8 +8,8 @@ namespace Curse_of_the_Abyss
 
     public class StationaryShooterNPC : Sprite
     {
-        public static Texture2D texture;
-
+        public static Animation animation;
+        public AnimationManager animationManager;
         public StationaryShooterNPC(int x, int y)
         {
             name = "stationaryNPC";
@@ -19,30 +19,28 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("Octopus");
+            animation = new Animation(content.Load<Texture2D>("Octopus"),3, 0.3f, false);
             ShootingSprite.LoadContent(content);
-
+            
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
-            
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            animationManager.Update(gametime);
         }
 
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width;
-            int height = texture.Height;
-            Rectangle source = new Rectangle(0, 0, width, height);
-
-           
-
-            //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            animationManager.Draw(spritebatch, position, 0.5f, 0f);
         }
     }
 }
