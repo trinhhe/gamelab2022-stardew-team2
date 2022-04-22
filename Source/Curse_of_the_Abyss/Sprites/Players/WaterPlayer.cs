@@ -514,8 +514,8 @@ namespace Curse_of_the_Abyss
                     animationManager.Play(animations["RunLeft"]);
                 if(state != State.Running)
                 {
-                    int extra = movingRight ? 1 : 0;
-                    animationManager.Stop(3-extra);
+                    // int extra = movingRight ? 1 : 0;
+                    animationManager.Stop(2);
                 }
             }
             else
