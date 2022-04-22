@@ -15,9 +15,9 @@ namespace Curse_of_the_Abyss
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
-            num_parts = 1;
+            num_parts = 3;
 
-            tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
+            tileset = content.Load<Texture2D>(TileMap.Tilesets[1].Name.ToString());
             background = content.Load<Texture2D>("bg");
             SeaUrchin.LoadContent(content);
             MovingPlatform.LoadContent(content);
@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
         public Level1()
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/map_lvl1.tmx");
+            TileMap = new TmxMap("./Content/maps/map_lvl1_extension.tmx");
             Reset();
         }
 
@@ -48,8 +48,10 @@ namespace Curse_of_the_Abyss
             sprites.Add(rightborder);
             SeaUrchin seaUrchin = new SeaUrchin(80, 380);
             sprites.Add(seaUrchin);
-            MovingPlatform movableObstacle = new MovingPlatform(120, 1022, 120, 540, 2, changedir: true);
-            sprites.Add(movableObstacle);
+            MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2,128, changedir: true);
+            sprites.Add(movableObstacle1);
+            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 450, 1, 50, changedir: true);
+            sprites.Add(movableObstacle2);
             StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
             sprites.Add(stationaryNPC);
             shooters.Add(stationaryNPC);
@@ -65,7 +67,7 @@ namespace Curse_of_the_Abyss
         {
             base.Update(gameTime);
 
-            if (waterPlayer.position.X > 1920)
+            if (waterPlayer.position.X > num_parts *1920)
             {
                 completed = true;
             }
