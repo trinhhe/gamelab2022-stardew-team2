@@ -582,6 +582,18 @@
 /processorParam:TextureFormat=Color
 /build:Submarine_Player.png
 
+#begin tiles_new.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tiles_new.png
+
 #begin tiles_new.tsx
 /copy:tiles_new.tsx
 

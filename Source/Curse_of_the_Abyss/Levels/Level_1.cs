@@ -17,7 +17,7 @@ namespace Curse_of_the_Abyss
         public override void LoadContent(ContentManager content){
             num_parts = 3;
 
-            tileset = content.Load<Texture2D>(TileMap.Tilesets[1].Name.ToString());
+            tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             SeaUrchin.LoadContent(content);
             MovingPlatform.LoadContent(content);
@@ -46,17 +46,23 @@ namespace Curse_of_the_Abyss
 
             sprites.Add(leftborder);
             sprites.Add(rightborder);
-            SeaUrchin seaUrchin = new SeaUrchin(80, 380);
-            sprites.Add(seaUrchin);
+            SeaUrchin seaUrchin1 = new SeaUrchin(80, 380);
+            sprites.Add(seaUrchin1);
+            
             MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2,128, changedir: true);
             sprites.Add(movableObstacle1);
             MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 450, 1, 50, changedir: true);
             sprites.Add(movableObstacle2);
-            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
-            sprites.Add(stationaryNPC);
-            shooters.Add(stationaryNPC);
-            PathNPC pathNPC = new PathNPC(1300, 700, 1800, 700, 5);
-            sprites.Add(pathNPC);
+            StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410);
+            sprites.Add(stationaryNPC1);
+            shooters.Add(stationaryNPC1);
+            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3070, 320);
+            sprites.Add(stationaryNPC2);
+            shooters.Add(stationaryNPC2);
+            PathNPC pathNPC1 = new PathNPC(1300, 700, 1800, 700, 5);
+            sprites.Add(pathNPC1);
+            PathNPC pathNPC2 = new PathNPC(2560, 530, 2800, 530, 2);
+            sprites.Add(pathNPC2);
             Rock rock1 = new Rock(new Rectangle(1216, 839, 94, 193));
             Rock rock2 = new Rock(new Rectangle(1376, 839, 94, 193));
             Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
@@ -70,6 +76,10 @@ namespace Curse_of_the_Abyss
             if (waterPlayer.position.X > num_parts *1920)
             {
                 completed = true;
+            }
+            if (waterPlayer.position.Y > 1080)
+            {
+                game_over = true;
             }
 
             //shooting objects
@@ -111,10 +121,13 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(100, 298);
             eggs.addEgg(1335, 1000);
             eggs.addEgg(1620, 552);
+            eggs.addEgg(2590, 870);
+            eggs.addEgg(2593, 650);
 
-            
+
+
         }
-        
+
     }
     
 }

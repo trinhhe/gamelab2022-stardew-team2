@@ -20,8 +20,8 @@ namespace Curse_of_the_Abyss
         public static float submarineplayer_run_accelerate = 0.1f;
 
         //healthbar
-        public static int health_gain = 10000; //500
-        public static int health_loss = -100; //1
+        public static int health_gain = 50000; //500
+        public static int health_loss = -1000; //1
         public static int submarine_oxygen_cooldown = 4000;
 
         //submarine
