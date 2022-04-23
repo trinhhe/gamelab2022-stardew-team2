@@ -53,12 +53,15 @@ namespace Curse_of_the_Abyss
             sprites.Add(movableObstacle1);
             MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 450, 1, 50, changedir: true);
             sprites.Add(movableObstacle2);
-            StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410);
+            StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410,410);
             sprites.Add(stationaryNPC1);
             shooters.Add(stationaryNPC1);
-            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3070, 320);
+            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3070, 320,320);
             sprites.Add(stationaryNPC2);
             shooters.Add(stationaryNPC2);
+            StationaryShooterNPC stationaryNPC3 = new StationaryShooterNPC(4370, 200,2500);
+            sprites.Add(stationaryNPC3);
+            shooters.Add(stationaryNPC3);
             PathNPC pathNPC1 = new PathNPC(1300, 700, 1800, 700, 5);
             sprites.Add(pathNPC1);
             PathNPC pathNPC2 = new PathNPC(2560, 530, 2800, 530, 2);
@@ -89,10 +92,13 @@ namespace Curse_of_the_Abyss
                 foreach (StationaryShooterNPC shooter in shooters)
                 {
                     int targetx = 0;
-                    int targety = shooter.position.Y;
+                    int targety = shooter.targety_;
+                    
+                   
                     int speed = 10;
                     ShootingSprite shootS = new ShootingSprite(shooter.position.X, shooter.position.Y + shooter.position.Width / 2 + 15, targetx, targety, speed);
                     sprites.Add(shootS);
+
                 }
             }
             SpawnNPCs(10000,gameTime,false);
