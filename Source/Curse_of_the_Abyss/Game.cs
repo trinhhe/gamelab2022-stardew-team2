@@ -39,7 +39,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] {new Level1(), new Maze() };
+            levels = new Level[] { new SideScrollingTest(), new Bossfight("frogfish") };
             current_level = levels[0];
             levelcounter = 0;
         }
@@ -135,7 +135,7 @@ namespace Curse_of_the_Abyss
                 current_level.LoadContent(Content);
                 current_level.Reset();
                 current_level.InitMapManager(_spriteBatch);
-                if(current_level.darkness) DarknessRender.LoadContent(Content);
+                DarknessRender.LoadContent(Content);
 
                 // set new scrolling backgrounds based on level
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);

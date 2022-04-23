@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
     {
         public int ground;
         public float linearVelocity;
-        private string[] collidables = {"obstacle", "targetingNPC", "rock" };
+        private string[] collidables = {"obstacle", "targetingNPC", "rock","antenna" };
         public AnimationManager animationManager;
         public static Dictionary<string, Animation> animations;
         public Sprite other;
@@ -90,6 +90,11 @@ namespace Curse_of_the_Abyss
                 case ("rock"):
                     other = s;
                     collidable = false;
+                    startExplosion();
+                    break;
+                case ("antenna"):
+                    Antenna antenna = s as Antenna;
+                    antenna.hit = true;
                     startExplosion();
                     break;
             }
