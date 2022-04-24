@@ -51,7 +51,7 @@ namespace Curse_of_the_Abyss
             
             MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2,128, changedir: true);
             sprites.Add(movableObstacle1);
-            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 450, 1, 50, changedir: true);
+            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 350, 2, 50, changedir: true);
             sprites.Add(movableObstacle2);
             StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410,410);
             sprites.Add(stationaryNPC1);
@@ -69,7 +69,9 @@ namespace Curse_of_the_Abyss
             Rock rock1 = new Rock(new Rectangle(1216, 839, 94, 193));
             Rock rock2 = new Rock(new Rectangle(1376, 839, 94, 193));
             Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
+            Rock rock4 = new Rock(new Rectangle(3520, 470, 65, 110));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
+            sprites.Add(rock4);
         }
 
         public override void Update(GameTime gameTime)
@@ -129,6 +131,7 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(1620, 552);
             eggs.addEgg(2590, 870);
             eggs.addEgg(2593, 650);
+            eggs.addEgg(3780, 750);
 
 
 
