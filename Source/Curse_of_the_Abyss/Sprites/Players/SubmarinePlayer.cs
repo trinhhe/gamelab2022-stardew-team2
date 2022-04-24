@@ -53,7 +53,6 @@ namespace Curse_of_the_Abyss
                 {
                     animationManager = new AnimationManager(animations.First().Value);
                 }
-                setAnimation();
                 animationManager.Update(gametime);
 
                 //update position of Player 
@@ -63,6 +62,7 @@ namespace Curse_of_the_Abyss
 
                
             }
+            setAnimation();
             
         }
 
@@ -257,7 +257,7 @@ namespace Curse_of_the_Abyss
                     animationManager.Play(animations["RunRight"]);
             else
                 animationManager.Play(animations["RunLeft"]);
-            if(state != State.Running)
+            if(xVelocity == 0)
             {
                 // int extra = movingRight ? 1 : 0;
                 animationManager.Play(animations["Standing"]);
