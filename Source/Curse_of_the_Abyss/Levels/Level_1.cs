@@ -66,12 +66,17 @@ namespace Curse_of_the_Abyss
             sprites.Add(pathNPC1);
             PathNPC pathNPC2 = new PathNPC(2560, 530, 2800, 530, 2);
             sprites.Add(pathNPC2);
+            PathNPC pathNPC3 = new PathNPC(3150, 670, 3700, 670, 2);
+            sprites.Add(pathNPC3);
             Rock rock1 = new Rock(new Rectangle(1216, 839, 94, 193));
             Rock rock2 = new Rock(new Rectangle(1376, 839, 94, 193));
             Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
             Rock rock4 = new Rock(new Rectangle(3520, 470, 65, 110));
+            Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
+            Rock rock6 = new Rock(new Rectangle(5595, 418, 75, 130));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
-            sprites.Add(rock4);
+            //sprites.Add(rock4);
+            sprites.Add(rock5); sprites.Add(rock6);
         }
 
         public override void Update(GameTime gameTime)
@@ -132,8 +137,9 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(2590, 870);
             eggs.addEgg(2593, 650);
             eggs.addEgg(3780, 750);
-
-
+            eggs.addEgg(4750, 1040);
+            eggs.addEgg(4220, 650);
+            eggs.addEgg(5050, 330);
 
         }
 
