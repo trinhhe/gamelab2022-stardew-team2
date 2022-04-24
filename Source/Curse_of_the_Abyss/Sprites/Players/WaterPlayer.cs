@@ -21,7 +21,7 @@ namespace Curse_of_the_Abyss
         private int lastY;//needed to decide how heigh player can jump
         public Healthbar health;
         //list of objects the player can collide with
-        private string[] collidables = {"obstacle","targetingNPC","shootingSprite","pathNPC","stationaryNPC","rock","SeaUrchin"};
+        private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
 
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
@@ -105,7 +105,6 @@ namespace Curse_of_the_Abyss
         {
             switch (s.name)
             {
-                case ("shootingSprite"):
                 case ("targetingNPC"):
                         s.remove = true;
                         health.curr_health -= health.maxhealth / 10;
@@ -138,7 +137,6 @@ namespace Curse_of_the_Abyss
         public override void YCollision(Sprite s, GameTime gametime){
             switch (s.name)
             {
-                case ("shootingSprite"):
                 case ("targetingNPC"):
                     {                       
                         s.remove = true;

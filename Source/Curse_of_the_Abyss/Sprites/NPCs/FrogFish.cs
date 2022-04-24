@@ -10,16 +10,16 @@ namespace Curse_of_the_Abyss
     {
         static Texture2D bar, healthBar;
         public Antenna antenna;
-        private double moveTimer,hitTimer,attackTimer;
+        private double moveTimer,hitTimer,attackTimer,darknessTimer;
         Random rand;
         private string[] collidables = {"obstacle" };
         private int scale = 3;
         WaterPlayer player;
-        public enum Attack {Canonball,None }
+        public enum Attack {Canonball,Darkness,NPCs}
         public Attack attack;
-        List<Sprite> attacks;
+        Bossfight level;
 
-        public FrogFish(int x, int y,WaterPlayer player)
+        public FrogFish(int x, int y,WaterPlayer player,Bossfight level)
         {
             name = "frogfish";
             stage = 1;
@@ -30,8 +30,8 @@ namespace Curse_of_the_Abyss
             rand = new Random();
             collidable = true;
             this.player = player;
-            attacks = new List<Sprite>();
             moveTimer = 5000;
+            this.level = level;
         }
 
         public static void LoadContent(ContentManager content)
@@ -39,6 +39,7 @@ namespace Curse_of_the_Abyss
             texture = content.Load<Texture2D>("Boss/Frog_fish");
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
+            TargetingNPC.LoadContent(content);
 
             //load healtbar
             bar = content.Load<Texture2D>("bar_dark");
@@ -47,7 +48,16 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
+            //change stages and decide, when the boss is defeated
             if (stage == 3 && health == 0) defeated = true;
+            else if (health == 0) stage++;
+            
+            //change back to light if needed
+            if (darknessTimer > 10000)
+            {
+                level.darkness = false;
+            }
+            darknessTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (antenna.hit)
             {
@@ -82,23 +92,6 @@ namespace Curse_of_the_Abyss
             antenna.position.X = position.X;
             antenna.position.Y = position.Y+80*scale;
 
-            //update all current attacks
-            foreach(Sprite s in attacks)
-            {
-                s.Update(sprites,gameTime);
-            }
-
-            //remove unneccessary attacks
-            List<Sprite> toRemove = new List<Sprite>();
-            foreach(Sprite s in attacks)
-            {
-                if (s.remove) toRemove.Add(s);
-            }
-            foreach (Sprite s in toRemove)
-            {
-                attacks.Remove(s);
-            }
-
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -106,17 +99,10 @@ namespace Curse_of_the_Abyss
             //draw boss sprite
             spritebatch.Draw(texture,position,Color.White);
 
-            //draw attacks
-            foreach(Sprite s in attacks)
-            {
-                s.Draw(spritebatch);
-            }
-
             //draw health
-            spritebatch.Draw(bar, new Rectangle(1840,95,80,810), Color.White);
-            int curr_ypos = 900 - 800 * health / 100;
-            Rectangle healthbar = new Rectangle(1840, curr_ypos, 80, 800 * health / 100 - 2);
-            spritebatch.Draw(healthBar, healthbar, Color.White);
+            spritebatch.Draw(bar, new Rectangle(1840,95,80,810),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.2f);
+            int curr_ypos = 900 - 8 * health;
+            spritebatch.Draw(healthBar, new Rectangle(1840, curr_ypos, 80, 8 * health - 2),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
         }
 
         
@@ -136,20 +122,26 @@ namespace Curse_of_the_Abyss
         //randomly select a currently available(according to stage) attack
         public void chooseAttack(GameTime gameTime)
         {
-            int timer = 10000;
-            timer -= stage >= 2 ? 5000 : 0;
             attackTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (attackTimer > timer)
+            if (attackTimer > 5000)
             {
-                if(stage == 1)
+
+                switch (stage)
                 {
-                    attack = Attack.Canonball;
+                    case (1):
+                        attack = Attack.Canonball;
+                        break;
+                    case (2):
+                        double random2 = rand.NextDouble();
+                        attack = random2 > 0.2 ? Attack.Canonball : Attack.Darkness;
+                        break;
+                    case (3):
+                        double random3 = rand.NextDouble();
+                        if (random3 > 0.2) attack = Attack.Canonball;
+                        else attack = random3 > 0.1 ? Attack.Darkness : Attack.NPCs;
+                        break;
                 }
                 throwAttack();
-            }
-            else
-            {
-                attack = Attack.None;
             }
         }
 
@@ -159,8 +151,24 @@ namespace Curse_of_the_Abyss
             switch (attack)
             {
                 case (Attack.Canonball):
-                    attackTimer = 6000;
-                    attacks.Add(new ShootingSprite(antenna.position.X, antenna.position.Y, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 3));
+                    attackTimer = 0+ (stage-1)*1500;
+                    level.toAdd.Add(new ShootingSprite(antenna.position.X, antenna.position.Y, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 3));
+                    break;
+                case (Attack.Darkness):
+                    attackTimer = 0 + (stage - 1) * 500;
+                    level.darkness = true;
+                    darknessTimer = 0;
+                    break;
+                case (Attack.NPCs):
+                    attackTimer = 0;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int random = rand.Next(1000);
+                        int speed = rand.Next(3) + 1;
+                        TargetingNPC t = new TargetingNPC(1800, random, player, speed);
+                        level.toAdd.Add(t);
+                        level.lightTargets.Add(t);
+                    }
                     break;
             }
         }

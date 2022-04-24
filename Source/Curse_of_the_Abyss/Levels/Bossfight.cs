@@ -10,6 +10,7 @@ namespace Curse_of_the_Abyss
     class Bossfight:Level
     {
         Boss boss;
+        public List<Sprite> toAdd;
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
@@ -44,7 +45,7 @@ namespace Curse_of_the_Abyss
 
             switch (bosstype) {
                 case ("frogfish"):
-                    boss = new FrogFish(1100, 200,waterPlayer);
+                    boss = new FrogFish(1100, 200,waterPlayer,this);
                     Antenna antenna = (boss as FrogFish).antenna;
                     sprites.Add(antenna);
                     lightTargets.Add(antenna);
@@ -61,7 +62,12 @@ namespace Curse_of_the_Abyss
             {
                 completed = true;
             }
-
+            
+            foreach(Sprite s in toAdd)
+            {
+                sprites.Add(s);
+            }
+            toAdd.Clear();
             
         }
         public void Reset(string bosstype)
@@ -69,6 +75,7 @@ namespace Curse_of_the_Abyss
             game_over = false;
             completed = false;
             darkness = false;
+            toAdd = new List<Sprite>();
             lightTargets = new List<Sprite>();
             randomTimer = 0;
             healthbar = new Healthbar(1, 1, darkness);

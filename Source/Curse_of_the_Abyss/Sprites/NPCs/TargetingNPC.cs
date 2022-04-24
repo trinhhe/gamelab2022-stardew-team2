@@ -140,7 +140,6 @@ namespace Curse_of_the_Abyss
             xVelocity = xunit * speed;
             yVelocity = yunit * speed;
 
-
             collidable = true;
 
         }
