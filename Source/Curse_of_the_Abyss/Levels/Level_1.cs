@@ -75,7 +75,7 @@ namespace Curse_of_the_Abyss
             Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
             Rock rock6 = new Rock(new Rectangle(5595, 418, 75, 130));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
-            //sprites.Add(rock4);
+            sprites.Add(rock4);
             sprites.Add(rock5); sprites.Add(rock6);
         }
 
