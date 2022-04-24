@@ -10,6 +10,7 @@ namespace Curse_of_the_Abyss
     {
         static Texture2D bar, healthBar;
         public Antenna antenna;
+        static SpriteFont font;
         private double moveTimer,hitTimer,attackTimer,darknessTimer;
         Random rand;
         private string[] collidables = {"obstacle" };
@@ -44,13 +45,19 @@ namespace Curse_of_the_Abyss
             //load healtbar
             bar = content.Load<Texture2D>("bar_dark");
             healthBar = content.Load<Texture2D>("health");
+            font = content.Load<SpriteFont>("O2");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
             //change stages and decide, when the boss is defeated
-            if (stage == 3 && health == 0) defeated = true;
-            else if (health == 0) stage++;
+            if (stage == 3 && health <= 0) defeated = true;
+            else if (health <= 0)
+            {
+                stage++;
+                health = 100;
+                antenna.hit = false;
+            }
             
             //change back to light if needed
             if (darknessTimer > 10000)
@@ -82,7 +89,7 @@ namespace Curse_of_the_Abyss
                 if (position.X < 500) xVelocity = 1;
                 else if (position.Right > 1920) xVelocity = -1;
                 if (position.Y < 0) yVelocity = 1;
-                else if (position.Bottom > 1020) yVelocity = -1;
+                else if (position.Bottom > 1022) yVelocity = -1;
             }
             //update position
             position.X += (int)xVelocity;
@@ -103,6 +110,7 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(bar, new Rectangle(1840,95,80,810),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.2f);
             int curr_ypos = 900 - 8 * health;
             spritebatch.Draw(healthBar, new Rectangle(1840, curr_ypos, 80, 8 * health - 2),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
+            spritebatch.DrawString(font,health.ToString(),new Vector2(1840,950),Color.Black);
         }
 
         

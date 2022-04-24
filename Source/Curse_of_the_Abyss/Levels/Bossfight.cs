@@ -26,6 +26,7 @@ namespace Curse_of_the_Abyss
             Eggcounter.LoadContent(content);
             Submarine.LoadContent(content);
             Egg.LoadContent(content);
+            Dynamite.LoadContent(content);
         }
         public Bossfight(string bosstype)
         {
@@ -49,6 +50,8 @@ namespace Curse_of_the_Abyss
                     Antenna antenna = (boss as FrogFish).antenna;
                     sprites.Add(antenna);
                     lightTargets.Add(antenna);
+                    Dynamite dynamite = new Dynamite(10, 988,true,this,waterPlayer);
+                    sprites.Add(dynamite);
                     break;
             }
             sprites.Add(boss);

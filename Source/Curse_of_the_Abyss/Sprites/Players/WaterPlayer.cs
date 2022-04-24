@@ -13,7 +13,7 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         public static Dictionary<string, Animation> animations;
         protected AnimationManager animationManager;
-        private KeyboardState KB_curState;
+        public KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
         public enum State { Standing, Running, Jumping, Falling};
         public State state;
