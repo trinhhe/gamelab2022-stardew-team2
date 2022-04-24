@@ -104,13 +104,13 @@ namespace Curse_of_the_Abyss
         public override void Draw(SpriteBatch spritebatch)
         {
             //draw boss sprite
-            spritebatch.Draw(texture,position,Color.White);
+            spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
             //draw health
             spritebatch.Draw(bar, new Rectangle(1840,95,80,810),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.2f);
             int curr_ypos = 900 - 8 * health;
             spritebatch.Draw(healthBar, new Rectangle(1840, curr_ypos, 80, 8 * health - 2),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
-            spritebatch.DrawString(font,health.ToString(),new Vector2(1840,950),Color.Black);
+            spritebatch.DrawString(font,health.ToString()+"/100",new Vector2(1840,910),Color.Black);
         }
 
         

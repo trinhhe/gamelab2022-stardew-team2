@@ -15,6 +15,7 @@ namespace Curse_of_the_Abyss
             name = "explosion";
             this.position = position;
             collidable = true;
+            lightmask = true;
         }
         
         public static void LoadContent(ContentManager content)
