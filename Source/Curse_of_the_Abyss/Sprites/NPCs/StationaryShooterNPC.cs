@@ -10,11 +10,18 @@ namespace Curse_of_the_Abyss
     {
         public static Animation animation;
         public AnimationManager animationManager;
-        public StationaryShooterNPC(int x, int y)
+        
+        public static Texture2D texture;
+        
+        public int targety_;
+
+        public StationaryShooterNPC(int x, int y,int target)
         {
             name = "stationaryNPC";
             position = new Rectangle(x, y, 148, 162);
             collidable = true;
+            targety_=target;
+
         }
 
         public static void LoadContent(ContentManager content)

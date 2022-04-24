@@ -162,18 +162,36 @@ namespace Curse_of_the_Abyss
                 int speed = 2;
                 var rand = new Random();
                 int x_index;
-                if (waterPlayer.position.X < 300)
+                if (waterPlayer.position.X < 400)
                 {
                     x_index = 1;
                 }
-                else if (waterPlayer.position.X > 1700)
+                else if (waterPlayer.position.X > 1920-400 && waterPlayer.position.X <1920+400)
                 {
-                    x_index = 0;
+                    x_index = rand.Next(2);
+                    if (x_index == 1)
+                    {
+                        x_index = 3;
+                    }
+                }
+                else if (waterPlayer.position.X > 2 * 1920-400 && waterPlayer.position.X < 2 * 1920 + 400)
+                {
+                    x_index = rand.Next(2);
+                    if (x_index == 0)
+                    {
+                        x_index = 3;
+                    }
+                }
+                else if (waterPlayer.position.X > 3 * 1920 - 400)
+                {
+                    x_index = 3;
                 }
                 else
-                    x_index = rand.Next(2);
+                {
+                    x_index = rand.Next(4);
+                }
                 int y_index = rand.Next(2);
-                var x_pos = new List<int> { -100, 2100 };
+                var x_pos = new List<int> { -100, 2100, 2*2100,3*2100 };
                 var y_pos = new List<int> { 400, 900 };
                 TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
                 sprites.Add(targetingNPC);

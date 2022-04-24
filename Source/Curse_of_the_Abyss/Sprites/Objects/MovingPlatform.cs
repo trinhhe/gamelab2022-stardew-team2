@@ -21,12 +21,12 @@ namespace Curse_of_the_Abyss
         bool first_collision;
         private string[] collidables = { "waterplayer" };
 
-        public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed, bool changedir)
+        public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed, int sizex, bool changedir)
         {
             // place platform at first (x,y)
             // and move to second (x,y) and then alternate between first and second (x,y)
             name = "movingPlatform";
-            position = new Rectangle(firstx, firsty, 128, 25);
+            position = new Rectangle(firstx, firsty, sizex, 25);
             this.firstx = firstx;
             this.firsty = firsty;
             this.secondx = secondx;

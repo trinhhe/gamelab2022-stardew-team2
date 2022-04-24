@@ -16,9 +16,9 @@ namespace Curse_of_the_Abyss
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
         {
-            num_parts = 2;
+            num_parts = 3;
 
-            tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
+            tileset = content.Load<Texture2D>(TileMap.Tilesets[1].Name.ToString());
 
             WaterPlayer.LoadContent(content);
 
@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
         public SideScrollingTest()
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/large_testmap.tmx");
+            TileMap = new TmxMap("./Content/maps/map_lvl1_extension.tmx");
             Reset();
         }
 
