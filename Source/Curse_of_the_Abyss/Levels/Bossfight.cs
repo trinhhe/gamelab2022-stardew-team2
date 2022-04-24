@@ -44,7 +44,7 @@ namespace Curse_of_the_Abyss
 
             switch (bosstype) {
                 case ("frogfish"):
-                    boss = new FrogFish(1100, 200);
+                    boss = new FrogFish(1100, 200,waterPlayer);
                     Antenna antenna = (boss as FrogFish).antenna;
                     sprites.Add(antenna);
                     lightTargets.Add(antenna);

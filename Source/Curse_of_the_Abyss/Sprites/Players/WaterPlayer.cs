@@ -19,7 +19,7 @@ namespace Curse_of_the_Abyss
         public State state;
         public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
-        Healthbar health;
+        public Healthbar health;
         //list of objects the player can collide with
         private string[] collidables = {"obstacle","targetingNPC","shootingSprite","pathNPC","stationaryNPC","rock","SeaUrchin"};
 

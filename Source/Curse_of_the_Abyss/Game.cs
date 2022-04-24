@@ -39,7 +39,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new SideScrollingTest(), new Bossfight("frogfish") };
+            levels = new Level[] { new Bossfight("frogfish") };
             current_level = levels[0];
             levelcounter = 0;
         }

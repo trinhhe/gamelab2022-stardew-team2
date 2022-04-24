@@ -14,7 +14,7 @@ namespace Curse_of_the_Abyss
         int targetx;
         int targety;
         int speed;
-        private string[] collidables = { "obstacle" };
+        private string[] collidables = { "obstacle","waterplayer" };
 
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
@@ -65,11 +65,21 @@ namespace Curse_of_the_Abyss
         }
         public override void XCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "obstacle") remove = true;
+            if (s.name == "waterplayer")
+            {
+                WaterPlayer player = s as WaterPlayer;
+                player.health.curr_health -= player.health.maxhealth/10;
+            }
+            remove = true;
         }
         public override void YCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "obstacle") remove = true;
+            if (s.name == "waterplayer")
+            {
+                WaterPlayer player = s as WaterPlayer;
+                player.health.curr_health -= player.health.maxhealth / 10;
+            }
+            remove = true;
         }
         public void init()
         {

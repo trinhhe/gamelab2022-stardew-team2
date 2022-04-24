@@ -11,7 +11,7 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         public int ground;
         public float linearVelocity;
-        private string[] collidables = {"targetingNPC"};
+        private string[] collidables = {"targetingNPC","frogfish"};
         public Vector2 real_position;
         public Bullet(float x, float y)
         {
@@ -52,8 +52,16 @@ namespace Curse_of_the_Abyss
 
         public override void XCollision(Sprite s, GameTime gameTime)
         {
-            TargetingNPC t = s as TargetingNPC;
-            t.health -= 1;
+            if (s.name == "targetingNPC")
+            {
+                TargetingNPC t = s as TargetingNPC;
+                t.health -= 1;
+            }
+            else if (s.name == "frogfish")
+            {
+                FrogFish f = s as FrogFish;
+                if (f.antenna.hit) f.health -= 1;
+            }
             remove = true;
         }
 
@@ -63,8 +71,12 @@ namespace Curse_of_the_Abyss
             {
                 TargetingNPC t = s as TargetingNPC;
                 t.health -= 1;
-                remove = true;
+            }else if (s.name == "frogfish")
+            {
+                FrogFish f = s as FrogFish;
+                if (f.antenna.hit) f.health -= 1;
             }
+            remove = true;
         }
     }
 
