@@ -11,9 +11,9 @@ namespace Curse_of_the_Abyss
         public int ground;
         public float linearVelocity;
         private string[] collidables = {"obstacle", "targetingNPC", "rock" };
-        protected AnimationManager animationManager;
+        public AnimationManager animationManager;
         public static Dictionary<string, Animation> animations;
-        Sprite other;
+        public Sprite other;
         public static SoundEffect explosion;
         public Bomb(int x, int y)
         {
@@ -51,22 +51,24 @@ namespace Curse_of_the_Abyss
             if (animationManager.animation == animations["bomb"])
             {
                 Rectangle pos = new Rectangle(position.X - 5, position.Y, position.Width + 10, position.Height + 10);
-                animationManager.Draw(spritebatch, pos,0f);
+                animationManager.Draw(spritebatch, pos,0f, 0f);
             }
             else
             {
-                Rectangle pos = new Rectangle(position.X-20, position.Y-20, position.Width + 40, position.Height + 40);
-                animationManager.Draw(spritebatch, pos, 1f);
-                if(animationManager.animation.CurrentFrame == 5)
-                {
-                    animationManager.animation.FrameSpeed = 0.4f;
-                    if (other != null) other.remove = true;
-                }
-                if(animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)
-                {
-                    animationManager.animation.FrameSpeed = 0.1f;
-                    remove = true;
-                }
+                //moved to DarknessRender
+
+                // Rectangle pos = new Rectangle(position.X-20, position.Y-20, position.Width + 40, position.Height + 40);
+                // animationManager.Draw(spritebatch, pos, 1f);
+                // if (animationManager.animation.CurrentFrame == 5)
+                // {
+                //     animationManager.animation.FrameSpeed = 0.2f;
+                //     if (other != null) other.remove = true;
+                // }
+                // if(animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)
+                // {
+                //     animationManager.animation.FrameSpeed = 0.1f;
+                //     remove = true;
+                // }
             }
         }
 
@@ -96,7 +98,7 @@ namespace Curse_of_the_Abyss
         private void startExplosion()
         {
             animationManager.Play(animations["explosion"]);
-            explosion.Play();
+            explosion.Play(0.2f, 0, 0);
         }
     }
 }

@@ -9,13 +9,14 @@ using System;
 namespace Curse_of_the_Abyss 
 {
     public class Level1:Level{
-        int randomTimer = 0;
         int shooterupdate = 0;
         protected List<StationaryShooterNPC> shooters;
 
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
+            num_parts = 3;
+
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             SeaUrchin.LoadContent(content);
@@ -23,6 +24,7 @@ namespace Curse_of_the_Abyss
             WaterPlayer.LoadContent(content);
 
             Healthbar.LoadContent(content);
+            Eggcounter.LoadContent(content);
             StationaryShooterNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
             PathNPC.LoadContent(content);
@@ -33,7 +35,7 @@ namespace Curse_of_the_Abyss
         public Level1()
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/map_lvl1.tmx");
+            TileMap = new TmxMap("./Content/maps/map_lvl1_extension.tmx");
             Reset();
         }
 
@@ -44,28 +46,50 @@ namespace Curse_of_the_Abyss
 
             sprites.Add(leftborder);
             sprites.Add(rightborder);
-            SeaUrchin seaUrchin = new SeaUrchin(80, 380);
-            sprites.Add(seaUrchin);
-            MovingPlatform movableObstacle = new MovingPlatform(120, 1022, 120, 540, 2, changedir: true);
-            sprites.Add(movableObstacle);
-            StationaryShooterNPC stationaryNPC = new StationaryShooterNPC(1780, 410);
-            sprites.Add(stationaryNPC);
-            shooters.Add(stationaryNPC);
-            PathNPC pathNPC = new PathNPC(1300, 700, 1800, 700, 5);
-            sprites.Add(pathNPC);
+            SeaUrchin seaUrchin1 = new SeaUrchin(80, 380);
+            sprites.Add(seaUrchin1);
+            
+            MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2,128, changedir: true);
+            sprites.Add(movableObstacle1);
+            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 350, 2, 50, changedir: true);
+            sprites.Add(movableObstacle2);
+            StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410,410);
+            sprites.Add(stationaryNPC1);
+            shooters.Add(stationaryNPC1);
+            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3070, 320,320);
+            sprites.Add(stationaryNPC2);
+            shooters.Add(stationaryNPC2);
+            StationaryShooterNPC stationaryNPC3 = new StationaryShooterNPC(4370, 200,2500);
+            sprites.Add(stationaryNPC3);
+            shooters.Add(stationaryNPC3);
+            PathNPC pathNPC1 = new PathNPC(1300, 700, 1800, 700, 5);
+            sprites.Add(pathNPC1);
+            PathNPC pathNPC2 = new PathNPC(2560, 530, 2800, 530, 2);
+            sprites.Add(pathNPC2);
+            PathNPC pathNPC3 = new PathNPC(3150, 670, 3700, 670, 2);
+            sprites.Add(pathNPC3);
             Rock rock1 = new Rock(new Rectangle(1216, 839, 94, 193));
             Rock rock2 = new Rock(new Rectangle(1376, 839, 94, 193));
             Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
+            Rock rock4 = new Rock(new Rectangle(3520, 470, 65, 110));
+            Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
+            Rock rock6 = new Rock(new Rectangle(5595, 418, 75, 130));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
+            sprites.Add(rock4);
+            sprites.Add(rock5); sprites.Add(rock6);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (waterPlayer.position.X > 1920)
+            if (waterPlayer.position.X > num_parts *1920)
             {
                 completed = true;
+            }
+            if (waterPlayer.position.Y > 1080)
+            {
+                game_over = true;
             }
 
             //shooting objects
@@ -75,44 +99,26 @@ namespace Curse_of_the_Abyss
                 foreach (StationaryShooterNPC shooter in shooters)
                 {
                     int targetx = 0;
-                    int targety = shooter.position.Y;
+                    int targety = shooter.targety_;
+                    
+                   
                     int speed = 10;
                     ShootingSprite shootS = new ShootingSprite(shooter.position.X, shooter.position.Y + shooter.position.Width / 2 + 15, targetx, targety, speed);
                     sprites.Add(shootS);
+
                 }
             }
-            randomTimer += gameTime.ElapsedGameTime.Milliseconds;
-            //10 sec
-                //targeting npc
-            int milliseconds = 5000; // set for time btw spwaning of targeting npcs
-            if (randomTimer > milliseconds)
-            { 
-                int speed = 2;
-                var rand = new Random();
-                int x_index;
-                if (waterPlayer.position.X < 300)
-                {
-                    x_index = 1;
-                }
-                else if(waterPlayer.position.X >1700)
-                {
-                    x_index = 0;
-                }else
-                    x_index = rand.Next(2);
-                int y_index = rand.Next(2);
-                var x_pos = new List<int> { -100, 2100 };
-                var y_pos = new List<int> { 400, 900 };
-                TargetingNPC targetingNPC = new TargetingNPC(x_pos[x_index], y_pos[y_index], waterPlayer, speed);
-                sprites.Add(targetingNPC);
-                randomTimer = 0;
-            }
+            SpawnNPCs(10000,gameTime,false);
         }
         public override void Reset()
         {
             game_over = false;
             completed = false;
-            mapRectangle = new Rectangle(0, 0, 1920, 1080); //map always rendered at 1080p
-            healthbar = new Healthbar(0, 0);
+            darkness = false;
+            lightTargets = new List<Sprite>();
+            randomTimer = 0;
+            healthbar = new Healthbar(1, 1, darkness);
+            eggcounter = new Eggcounter(1875, 10, darkness);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar);
@@ -128,8 +134,15 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(100, 298);
             eggs.addEgg(1335, 1000);
             eggs.addEgg(1620, 552);
+            eggs.addEgg(2590, 870);
+            eggs.addEgg(2593, 650);
+            eggs.addEgg(3780, 750);
+            eggs.addEgg(4750, 1040);
+            eggs.addEgg(4220, 650);
+            eggs.addEgg(5050, 330);
+
         }
-        
+
     }
     
 }

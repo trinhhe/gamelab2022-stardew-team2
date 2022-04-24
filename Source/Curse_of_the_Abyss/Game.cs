@@ -1,6 +1,7 @@
 ﻿using Apos.Gui;
 using FontStashSharp;
 using System;
+using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,22 +14,32 @@ namespace Curse_of_the_Abyss
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
-        // public float scale;
+
+        // menu
         private IMGUI _ui;
         private Menu _menu;
         public static bool paused;
 
+        // screen and camera
+        public static int RenderHeight, RenderWidth;
+        private Camera _camera;
+
+        // levels
         Level current_level;
         Level[] levels;
         int levelcounter;
 
+        // scrolling backgrounds
+        private List<ScrollingBackground> _scrollingBackgrounds;
+
+        public DarknessRender darknessrender;
         public Game()
         {
             _graphics = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new Maze() };
+            levels = new Level[] {new Level1(), new Maze() };
             current_level = levels[0];
             levelcounter = 0;
         }
@@ -48,6 +59,9 @@ namespace Curse_of_the_Abyss
              * only 16:9 aspect ratio currently supported
             Window.AllowUserResizing = true; 
             */
+
+            RenderHeight = 1080;
+            RenderWidth = 1920;
 
             _graphics.ApplyChanges();
 
@@ -70,8 +84,17 @@ namespace Curse_of_the_Abyss
             current_level.LoadContent(Content);
             current_level.InitMapManager(_spriteBatch);
 
+            // scrolling backgrounds
+            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
+
+            // camera
+            _camera = new Camera(current_level.num_parts);
+
             // always render at 1080p but display at user-defined resolution after
-            renderTarget = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+            renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+            
+            darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+            DarknessRender.LoadContent(Content); 
         }
 
         protected override void Update(GameTime gameTime)
@@ -88,6 +111,9 @@ namespace Curse_of_the_Abyss
                 paused = true;
                 IsMouseVisible = true;
                 current_level.Reset();
+
+                // reset scrolling backgrounds
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
             }
 
             if (current_level.completed)
@@ -109,11 +135,24 @@ namespace Curse_of_the_Abyss
                 current_level.LoadContent(Content);
                 current_level.Reset();
                 current_level.InitMapManager(_spriteBatch);
+                if(current_level.darkness) DarknessRender.LoadContent(Content);
+
+                // set new scrolling backgrounds based on level
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
+
+                // set camera to match number of "screen widths" in the new level
+                _camera = new Camera(current_level.num_parts);
+
             }
 
             if (!paused)
             {
                 current_level.Update(gameTime);
+
+                foreach (var sb in _scrollingBackgrounds)
+                    sb.Update(gameTime);
+
+                _camera.Follow(current_level.waterPlayer);
                 IsMouseVisible = false;
                 // IsMouseVisible = true;
             }
@@ -135,17 +174,25 @@ namespace Curse_of_the_Abyss
         protected override void Draw(GameTime gameTime)
         {
             // Constants.scale = (float)(GraphicsDevice.Viewport.Height / 1080f);
-            var scaleX = GraphicsDevice.Viewport.Width/1920f;
-            var scaleY = GraphicsDevice.Viewport.Height/1080f;
+            var scaleX = GraphicsDevice.Viewport.Width/(float)RenderWidth;
+            var scaleY = GraphicsDevice.Viewport.Height/(float)RenderHeight;
             // global constant matrix to translate mouse position from virtual resolution (1920,1080) <---> actual resolution
             Constants.transform_matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
+            if(current_level.darkness)
+            {
+                //setup darkness map with light sources masking
+                darknessrender.LightMasking(current_level, _spriteBatch);
+            }
+            
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // draw background
-            _spriteBatch.Begin(SpriteSortMode.BackToFront);
-            _spriteBatch.Draw(current_level.background, current_level.mapRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            // draw backgrounds
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp);
+            foreach (var sb in _scrollingBackgrounds)
+                sb.Draw(gameTime, _spriteBatch);
+
             _spriteBatch.End();
 
             // draw map
@@ -154,14 +201,24 @@ namespace Curse_of_the_Abyss
             // draw sprites
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
             current_level.Draw(_spriteBatch); 
-            _spriteBatch.End();
-
+            _spriteBatch.End();               
+            
             // render at 1080p
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+            _spriteBatch.Begin(transformMatrix: _camera.Transform * Constants.transform_matrix); 
             _spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            
+            // draw darkness map with lightmasks and other sprites that have to render after darkness map
+            darknessrender.Draw(current_level, _spriteBatch);
+            
+            _spriteBatch.End();
+
+            // draw UI
+            _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+            current_level.healthbar.Draw(_spriteBatch);
+            current_level.eggcounter.Draw(_spriteBatch);
             _spriteBatch.End();
 
             // menu

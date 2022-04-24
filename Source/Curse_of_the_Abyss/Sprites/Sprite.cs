@@ -11,7 +11,7 @@ namespace Curse_of_the_Abyss
     public class Sprite
     {
         public Rectangle position;
-        public bool collidable,remove;
+        public bool collidable,remove,lightmask;
         public string name;
         public Sprite()
         {

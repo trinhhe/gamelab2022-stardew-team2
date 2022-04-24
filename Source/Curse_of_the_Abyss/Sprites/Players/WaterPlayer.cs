@@ -37,8 +37,8 @@ namespace Curse_of_the_Abyss
             //texture = content.Load<Texture2D>("MCRunSprite");
             animations = new Dictionary<string, Animation>()
             {
-                {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 9, 0.15f, true) },
-                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),9,0.15f,true) },
+                {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 7, 0.15f, true) },
+                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) },
                 {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) }
             };
         }
@@ -93,10 +93,10 @@ namespace Curse_of_the_Abyss
             {
                 //draw entire crouch rectangle but actual position height is 30 to dodge spriteshoots
                 Rectangle tmp = new Rectangle(position.X, position.Y - 30, position.Width, 60);
-                animationManager.Draw(spritebatch, tmp, 0.1f);
+                animationManager.Draw(spritebatch, tmp, 0.1f, 0f);
             }
             else
-                animationManager.Draw(spritebatch, position, 0.1f);
+                animationManager.Draw(spritebatch, position, 0.1f, 0f);
                 
         }
 
@@ -514,8 +514,8 @@ namespace Curse_of_the_Abyss
                     animationManager.Play(animations["RunLeft"]);
                 if(state != State.Running)
                 {
-                    int extra = movingRight ? 1 : 0;
-                    animationManager.Stop(3-extra);
+                    // int extra = movingRight ? 1 : 0;
+                    animationManager.Stop(2);
                 }
             }
             else

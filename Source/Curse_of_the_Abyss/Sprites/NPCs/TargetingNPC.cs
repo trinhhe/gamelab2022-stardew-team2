@@ -9,7 +9,7 @@ namespace Curse_of_the_Abyss
 
     public class TargetingNPC : MovableSprite
     {
-        public static Texture2D texture;
+        public static Texture2D texture, texture2;
         public int health = 3;
         int speed;
         WaterPlayer player;
@@ -31,6 +31,7 @@ namespace Curse_of_the_Abyss
         {
             //TO DO: replace SmileyWalk by actual Sprites
             texture = content.Load<Texture2D>("bfish");
+            texture2 = content.Load<Texture2D>("bfish_dead");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -86,11 +87,11 @@ namespace Curse_of_the_Abyss
             else if (health == 2)
             {
                 Color color = new Color(255, 153, 153);
-                spritebatch.Draw(texture, pos, source, color, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
+                spritebatch.Draw(texture2, pos, source, color, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (health == 1)
             {
-                spritebatch.Draw(texture, pos, source, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
+                spritebatch.Draw(texture2, pos, source, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
         }
 
