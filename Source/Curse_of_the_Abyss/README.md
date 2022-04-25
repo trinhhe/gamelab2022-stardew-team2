@@ -23,15 +23,11 @@ The submarine player can use the left and right arrow keys to move around in the
 Additionally, he can use the down arrow key to interact with a station and the up arrow key to leave an active station.
 From left to right, there are five stations, the player can interact with:
 
--The Oxygen Station: interacting with this station, the life of the underwater player is refilled by a small amount, after a short cooldown, the station can be reused
-			   This station is crucial if health is low. Do not forget, that the underwater player loses constantly health.
--The Bomb Station:   interacting with this station, a bomb is thrown from the submarine, that kills hostile NPCs and destroys rocks.
--The Light Station:  in a dark environment, this station thorws a light beam, so that the players can see in the deepsea.
-			   The rotation of the lightbeam can be controlled by using the mouse.
--The Steering Wheel: interacting with this station, makes it possible for the player to move the submarine itself, by using the left and right arrow keys.
--The Machine Gun:	   interacting with this station, the player can control a machine gun, that constantly shoots bullets.
-			   To aim, the player can move the crosshair freely around using the mouse. 
-			   The bullets only damage small NPCs like the puffer fish or the frog fish boss.
+* <ins> The Oxygen Station: </ins> interacting with this station, the life of the underwater player is refilled by a small amount, after a short cooldown, the station can be reused. This station is crucial if health is low. Do not forget, that the underwater player loses constantly health.
+* <ins> The Bomb Station: </ins>  interacting with this station, a bomb is thrown from the submarine, that kills hostile NPCs and destroys rocks. 
+* <ins> The Light Station: </ins> in a dark environment, this station thorws a light beam, so that the players can see in the deepsea. The rotation of the lightbeam can be controlled by using the mouse. 
+* <ins> The Steering Wheel: </ins> interacting with this station, makes it possible for the player to move the submarine itself, by using the left and right arrow keys. 
+* <ins> The Machine Gun: </ins>interacting with this station, the player can control a machine gun, that constantly shoots bullets. To aim, the player can move the crosshair freely around using the mouse. The bullets only damage small NPCs like the puffer fish or the frog fish boss. 
 
 ## Bossfight: Frog Fish
 
