@@ -3,13 +3,13 @@
 ## Stefan Jokic, Marino Mueller, Yan Walesch, Ellen Arlt, Henry Trinh
 
 
-##Objectives
+## Objectives
 
 The players needs to navigate through different environments and fight many hostile creatures while collecting as many eggs as possible.
 The playstyle is asynchornous, one player runs in the underwater and is targeted by multiple NPCs and has to overcome many obstacles, 
 while the other player has a supportive role and assists the main player from a submarine
 
-##Controls
+## Controls
 ### Underwater player
 
 For the most parts of the game, the player uses the keyboard keys WASD to move left and right, to jump and to dodge in a traditional fashion.
@@ -33,7 +33,7 @@ From left to right, there are five stations, the player can interact with:
 			   To aim, the player can move the crosshair freely around using the mouse. 
 			   The bullets only damage small NPCs like the puffer fish or the frog fish boss.
 
-##Bossfight: Frog Fish
+## Bossfight: Frog Fish
 
 The fight consists of multiple stages. In this fight, both players need to cooperate to defeat a giant frogfish.
 At the beginning, the fish is invincible and moves around the map, while attacking the player in water.
