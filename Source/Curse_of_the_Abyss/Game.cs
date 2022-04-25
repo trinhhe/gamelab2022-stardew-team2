@@ -39,7 +39,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Bossfight("frogfish") };
+            levels = new Level[] {new Level1(),new Maze(),new Bossfight("frogfish") };
             current_level = levels[0];
             levelcounter = 0;
         }
@@ -116,6 +116,7 @@ namespace Curse_of_the_Abyss
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
             }
 
+            //switch level
             if (current_level.completed)
             {
                 Content.Unload();

@@ -87,6 +87,7 @@ namespace Curse_of_the_Abyss
                             Dynamite dynamite = new Dynamite(player.position.X + player.position.Width - 1, player.position.Y + 20, false, level, player);
                             level.toAdd.Add(dynamite);
                             level.lightTargets.Add(dynamite);
+                            takenTimer = 0;
                         }
                     }
                     else
