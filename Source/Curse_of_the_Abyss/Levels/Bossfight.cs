@@ -11,6 +11,7 @@ namespace Curse_of_the_Abyss
     {
         Boss boss;
         public List<Sprite> toAdd;
+        string bosstype;
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
@@ -32,11 +33,12 @@ namespace Curse_of_the_Abyss
         {
             // load tile map 
             TileMap = new TmxMap("./Content/maps/Bossfight.tmx");
-            Reset(bosstype);
+            this.bosstype = bosstype;
+            Reset();
         }
 
         //inits every item/character that is not a player or submarine
-        public void InitSprites(string bosstype)
+        public void InitSprites()
         {
             Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
             Sprite rightborder = new Obstacle(new Rectangle(1925, 0, 50, 1080));
@@ -73,7 +75,7 @@ namespace Curse_of_the_Abyss
             toAdd.Clear();
             
         }
-        public void Reset(string bosstype)
+        public override void Reset()
         {
             game_over = false;
             completed = false;
@@ -88,9 +90,9 @@ namespace Curse_of_the_Abyss
             Initialize();
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
-            InitSprites(bosstype);
+            InitSprites();
 
-            eggcounter = new Eggcounter(1875,10);
+            eggcounter = new Eggcounter(1875,10,false);
             eggs = new EggCollection();
         }
     }
