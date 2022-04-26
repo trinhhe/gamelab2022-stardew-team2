@@ -32,7 +32,7 @@ namespace Curse_of_the_Abyss
         public Bossfight(string bosstype)
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/Bossfight.tmx");
+            TileMap = new TmxMap("./Content/maps/bossfight.tmx");
             this.bosstype = bosstype;
             Reset();
         }
