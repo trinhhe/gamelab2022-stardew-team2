@@ -46,7 +46,7 @@ namespace Curse_of_the_Abyss
 
             sprites.Add(leftborder);
             sprites.Add(rightborder);
-            SeaUrchin seaUrchin1 = new SeaUrchin(80, 380);
+            SeaUrchin seaUrchin1 = new SeaUrchin(80, 350);
             sprites.Add(seaUrchin1);
             
             MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2,128, changedir: true);
