@@ -73,7 +73,7 @@ namespace Curse_of_the_Abyss
             Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
             Rock rock4 = new Rock(new Rectangle(3520, 470, 65, 110));
             Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
-            Rock rock6 = new Rock(new Rectangle(5595, 418, 75, 130));
+            Rock rock6 = new Rock(new Rectangle(5058, 253, 64, 100));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
             sprites.Add(rock4);
             sprites.Add(rock5); sprites.Add(rock6);
@@ -139,7 +139,7 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(3780, 750);
             eggs.addEgg(4750, 1040);
             eggs.addEgg(4220, 650);
-            eggs.addEgg(5050, 330);
+            eggs.addEgg(5026, 330);
 
         }
 
