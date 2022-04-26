@@ -59,7 +59,7 @@ namespace Curse_of_the_Abyss
             StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3020, 320,320);
             sprites.Add(stationaryNPC2);
             shooters.Add(stationaryNPC2);
-            StationaryShooterNPC stationaryNPC3 = new StationaryShooterNPC(4370, 200,2500);
+            StationaryShooterNPC stationaryNPC3 = new StationaryShooterNPC(4360, 195,2500);
             sprites.Add(stationaryNPC3);
             shooters.Add(stationaryNPC3);
             PathNPC pathNPC1 = new PathNPC(1300, 700, 1800, 700, 5);
@@ -73,7 +73,7 @@ namespace Curse_of_the_Abyss
             Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
             Rock rock4 = new Rock(new Rectangle(3520, 470, 65, 110));
             Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
-            Rock rock6 = new Rock(new Rectangle(5058, 253, 64, 100));
+            Rock rock6 = new Rock(new Rectangle(5058, 255, 64, 100));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
             sprites.Add(rock4);
             sprites.Add(rock5); sprites.Add(rock6);
