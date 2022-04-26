@@ -47,7 +47,7 @@ namespace Curse_of_the_Abyss
         {
             
             KB_curState = Keyboard.GetState();
-            getState();// decides current frame and handles state mechanics
+            getState(sprites);// decides current frame and handles state mechanics
 
             if (animationManager == null)
             {
@@ -180,7 +180,7 @@ namespace Curse_of_the_Abyss
             collidable = true;
         }
 
-        private void Standing()
+        private void Standing(List<Sprite> sprites)
         {
             yVelocity = xVelocity = 0;
             if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
@@ -207,11 +207,11 @@ namespace Curse_of_the_Abyss
             }
             else if (!KB_curState.IsKeyDown(Keys.S) && dodging)
             {
-                dodging = false;
+                dodging = continueDodging(sprites);
             }
         }
 
-        private void Running()
+        private void Running(List<Sprite> sprites)
         {
             double max_v = Constants.max_run_velocity;
             if (dodging) { max_v *= 0.5; }
@@ -284,7 +284,7 @@ namespace Curse_of_the_Abyss
             }
             else if (!KB_curState.IsKeyDown(Keys.S) && dodging)
             {
-                dodging = false;
+                dodging = continueDodging(sprites);
             }
         }
 
@@ -467,16 +467,17 @@ namespace Curse_of_the_Abyss
             }
         }
         //calls function depending on state
-        private void getState(){
+        private void getState(List<Sprite> sprites)
+        {
             if (!maze)
             {
                 switch (state)
                 {
                     case State.Standing:
-                        Standing();
+                        Standing(sprites);
                         break;
                     case State.Running:
-                        Running();
+                        Running(sprites);
                         break;
                     case State.Jumping:
                         Jumping();
@@ -522,6 +523,16 @@ namespace Curse_of_the_Abyss
                 animationManager.Stop(0);
             }
 
+        }
+
+        public bool continueDodging(List<Sprite> sprites)
+        {
+            position.Height = 60; position.Y -= 30;
+            Sprite s = CheckCollision(sprites, collidables);
+            position.Height = 30;
+            position.Y += 30;
+            if (s == null) return false;
+            else return true;
         }
     }
 }
