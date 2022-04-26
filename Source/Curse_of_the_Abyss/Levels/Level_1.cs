@@ -42,10 +42,8 @@ namespace Curse_of_the_Abyss
         //inits every item/character that is not a player or submarine
         public void InitSprites(){
             Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
-            Sprite rightborder = new Obstacle(new Rectangle(1925, 0, 50, 700));
 
             sprites.Add(leftborder);
-            sprites.Add(rightborder);
             SeaUrchin seaUrchin1 = new SeaUrchin(80, 350);
             sprites.Add(seaUrchin1);
             
@@ -53,6 +51,8 @@ namespace Curse_of_the_Abyss
             sprites.Add(movableObstacle1);
             MovingPlatform movableObstacle2 = new MovingPlatform(2500, 892, 2500, 350, 2, 50, changedir: true);
             sprites.Add(movableObstacle2);
+            MovingPlatform movableObstacle3 = new MovingPlatform(2300, 577, 2050, 577, 2, 100, changedir: true);
+            sprites.Add(movableObstacle3);
             StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410,410);
             sprites.Add(stationaryNPC1);
             shooters.Add(stationaryNPC1);
@@ -134,13 +134,13 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(100, 298);
             eggs.addEgg(1335, 1000);
             eggs.addEgg(1620, 552);
+            eggs.addEgg(1950, 559);
             eggs.addEgg(2590, 870);
             eggs.addEgg(2593, 650);
             eggs.addEgg(3780, 750);
             eggs.addEgg(4750, 1040);
             eggs.addEgg(4220, 650);
             eggs.addEgg(5026, 330);
-
         }
 
     }

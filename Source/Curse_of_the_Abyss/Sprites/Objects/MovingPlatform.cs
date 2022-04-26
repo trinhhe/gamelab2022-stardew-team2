@@ -108,11 +108,11 @@ namespace Curse_of_the_Abyss
                 {
                     if (s.position.Bottom -10 < position.Top)
                     {
-                        if (!first_collision)
-                            first_collision = true;
-                        s.position.Y = position.Top - s.position.Height;
-                        ((MovableSprite)s).yVelocity = 0;
-                        ((WaterPlayer)s).state = WaterPlayer.State.Running;
+                        if (!first_collision) first_collision = true; //start moving platform
+                        s.position.Y = position.Top - s.position.Height; //place player on top of platform
+                        if(dir != 0) s.position.X += (int)xVelocity; //move player with platform in x direction
+                        ((MovableSprite)s).yVelocity = 1; //stops player from automatically jumping on platform, therefore needs to be 1 not 0
+                        ((WaterPlayer)s).state = WaterPlayer.State.Running; //allows moving and jumping on platform
                         dir = 1;
                     }
                     break;
