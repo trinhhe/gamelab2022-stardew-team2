@@ -121,7 +121,7 @@ namespace Curse_of_the_Abyss
             eggcounter = new Eggcounter(1875, 10, darkness);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             shooters = new List<StationaryShooterNPC>();
-            submarine = new Submarine(10, 10, healthbar);
+            submarine = new Submarine(10, 10, healthbar,this);
             sprites = new List<Sprite>();
             Initialize();
             sprites.Add(waterPlayer);

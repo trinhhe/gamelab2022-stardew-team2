@@ -85,7 +85,7 @@ namespace Curse_of_the_Abyss
             randomTimer = 0;
             healthbar = new Healthbar(1, 1, darkness);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
-            submarine = new Submarine(10, 10, healthbar);
+            submarine = new Submarine(10, 10, healthbar,this);
             sprites = new List<Sprite>();
             Initialize();
             sprites.Add(waterPlayer);
