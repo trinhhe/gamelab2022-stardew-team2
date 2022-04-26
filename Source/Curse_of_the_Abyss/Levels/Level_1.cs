@@ -56,7 +56,7 @@ namespace Curse_of_the_Abyss
             StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410,410);
             sprites.Add(stationaryNPC1);
             shooters.Add(stationaryNPC1);
-            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3070, 320,320);
+            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3020, 320,320);
             sprites.Add(stationaryNPC2);
             shooters.Add(stationaryNPC2);
             StationaryShooterNPC stationaryNPC3 = new StationaryShooterNPC(4370, 200,2500);
