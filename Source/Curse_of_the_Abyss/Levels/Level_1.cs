@@ -51,7 +51,7 @@ namespace Curse_of_the_Abyss
             
             MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2,128, changedir: true);
             sprites.Add(movableObstacle1);
-            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 880, 2500, 350, 2, 50, changedir: true);
+            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 892, 2500, 350, 2, 50, changedir: true);
             sprites.Add(movableObstacle2);
             StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 410,410);
             sprites.Add(stationaryNPC1);
