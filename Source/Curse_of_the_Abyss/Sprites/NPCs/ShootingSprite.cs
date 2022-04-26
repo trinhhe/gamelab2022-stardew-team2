@@ -14,7 +14,7 @@ namespace Curse_of_the_Abyss
         int targetx;
         int targety;
         int speed;
-        private string[] collidables = { "obstacle","waterplayer" };
+        private string[] collidables = { "obstacle","waterplayer","SeaUrchin" };
 
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
