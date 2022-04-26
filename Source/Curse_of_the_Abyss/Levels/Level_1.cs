@@ -64,7 +64,7 @@ namespace Curse_of_the_Abyss
             shooters.Add(stationaryNPC3);
             PathNPC pathNPC1 = new PathNPC(1300, 700, 1800, 700, 5);
             sprites.Add(pathNPC1);
-            PathNPC pathNPC2 = new PathNPC(2560, 530, 2800, 530, 2);
+            PathNPC pathNPC2 = new PathNPC(2590, 530, 2925, 530, 2);
             sprites.Add(pathNPC2);
             PathNPC pathNPC3 = new PathNPC(3150, 670, 3700, 670, 2);
             sprites.Add(pathNPC3);
