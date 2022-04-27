@@ -132,13 +132,13 @@ namespace Curse_of_the_Abyss
 
             //Add eggs here
             eggs.addEgg(100, 298);
-            eggs.addEgg(1335, 1000);
-            eggs.addEgg(1620, 552);
-            eggs.addEgg(1950, 559);
-            eggs.addEgg(2590, 870);
-            eggs.addEgg(2593, 650);
-            eggs.addEgg(3780, 750);
-            eggs.addEgg(4750, 1040);
+            eggs.addEgg(1335, 1002);
+            eggs.addEgg(1620, 554);
+            eggs.addEgg(1950, 554);
+            eggs.addEgg(2600, 874);
+            eggs.addEgg(2593, 649);
+            eggs.addEgg(3780, 745);
+            eggs.addEgg(4750, 1035);
             eggs.addEgg(4220, 650);
             eggs.addEgg(5026, 330);
         }
