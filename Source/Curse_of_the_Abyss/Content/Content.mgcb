@@ -85,18 +85,6 @@
 /processorParam:TextureFormat=Color
 /build:bar_dark.png
 
-#begin bfish_dead.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:bfish_dead.png
-
 #begin bfish.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -108,6 +96,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:bfish.png
+
+#begin bfish_dead.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:bfish_dead.png
 
 #begin bg.png
 /importer:TextureImporter
@@ -132,6 +132,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:bg_wide.png
+
+#begin blowfish.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:blowfish.png
 
 #begin bomb.png
 /importer:TextureImporter
@@ -446,11 +458,11 @@
 #begin maps/large_testmap.tmx
 /copy:maps/large_testmap.tmx
 
-#begin maps/map_lvl1_extension.tmx
-/copy:maps/map_lvl1_extension.tmx
-
 #begin maps/map_lvl1.tmx
 /copy:maps/map_lvl1.tmx
+
+#begin maps/map_lvl1_extension.tmx
+/copy:maps/map_lvl1_extension.tmx
 
 #begin maps/maze.tmx
 /copy:maps/maze.tmx
@@ -645,7 +657,7 @@
 /processorParam:TextureFormat=Color
 /build:SPWalk_right.png
 
-#begin submarine_animation.png
+#begin submarine.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -681,9 +693,6 @@
 /processorParam:TextureFormat=Color
 /build:Submarine_Player.png
 
-#begin tiles_new_.tsx
-/copy:tiles_new_.tsx
-
 #begin tiles_new.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -698,6 +707,9 @@
 
 #begin tiles_new.tsx
 /copy:tiles_new.tsx
+
+#begin tiles_new_.tsx
+/copy:tiles_new_.tsx
 
 #begin TilesV1.png
 /importer:TextureImporter

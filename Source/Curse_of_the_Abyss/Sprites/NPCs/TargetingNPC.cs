@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
         {   
             //spawns at x,y and targets player with speed speed
             name = "targetingNPC";
-            position = new Rectangle(x, y, 40, 60);
+            position = new Rectangle(x, y, 69, 55);
             this.player = player;
             
             this.speed = speed; //how fast the NPC should be
@@ -30,8 +30,8 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("bfish");
-            texture2 = content.Load<Texture2D>("bfish_dead");
+            texture = content.Load<Texture2D>("blowfish");
+            //texture2 = content.Load<Texture2D>("bfish_dead");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -70,28 +70,20 @@ namespace Curse_of_the_Abyss
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width;
-            int height = texture.Width;
-            Rectangle source = new Rectangle(0, 0, width, height);
-
-
-
             //draw current frame
-            Rectangle pos = new Rectangle(position.X - 13, position.Y - 14, 67, 84);
+            Rectangle pos = new Rectangle(position.X - 5, position.Y - 5, position.Width+10, position.Height+10);
             if (health > 2)
             {
-                spritebatch.Draw(texture, pos, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
+                spritebatch.Draw(texture, pos, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (health == 2)
             {
                 Color color = new Color(255, 153, 153);
-                spritebatch.Draw(texture2, pos, source, color, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
+                spritebatch.Draw(texture, pos, null, color, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (health == 1)
             {
-                spritebatch.Draw(texture2, pos, source, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
+                spritebatch.Draw(texture, pos, null, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
         }
 
