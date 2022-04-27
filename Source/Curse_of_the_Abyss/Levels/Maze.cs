@@ -32,6 +32,9 @@ namespace Curse_of_the_Abyss
         //inits every item/character that is not a player or submarine
         public void InitSprites()
         {
+            Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
+
+            sprites.Add(leftborder);
             PathNPC pathNPC = new PathNPC(1400,450,1520,450,1);
             sprites.Add(pathNPC);
         }
