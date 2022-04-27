@@ -187,7 +187,9 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(ControlDeskTexture, steerPosition, new Rectangle(0, 0, 22, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             if (machineGunOn)
             {
-                crossPosition = new Rectangle((int) (level.num_parts* scaledMousePosition.X - CrosshairTexture.Width), (int) scaledMousePosition.Y - CrosshairTexture.Height, 30,30);
+                var mousestate = Mouse.GetState();
+                Vector2 temp = Vector2.Transform(new Vector2(mousestate.X,mousestate.Y),Matrix.Invert(level.camera.Transform* Constants.transform_matrix)); 
+                crossPosition = new Rectangle((int) (temp.X - CrosshairTexture.Width), (int) temp.Y - CrosshairTexture.Height, 30,30);
                 // I moved it to DarknessRender.cs because the crosshair should render after the darkness rendertarget.
                 // spritebatch.Draw(CrosshairTexture, crosspos, new Rectangle(0, 0, CrosshairTexture.Width, CrosshairTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.0f);
             }
@@ -413,8 +415,9 @@ namespace Curse_of_the_Abyss
                 }
                 else
                 {
-                    MouseState mouse = Mouse.GetState();
-                    direction = new Vector2(level.num_parts*scaledMousePosition.X - (float) machineGun.position.X, scaledMousePosition.Y - (float) machineGun.position.Y);
+                    var mousestate = Mouse.GetState();
+                    Vector2 temp = Vector2.Transform(new Vector2(mousestate.X, mousestate.Y), Matrix.Invert(level.camera.Transform * Constants.transform_matrix));
+                    direction = new Vector2(temp.X - (float) machineGun.position.X, temp.Y - (float) machineGun.position.Y);
                     if (direction != Vector2.Zero)
                         direction.Normalize();
                     machineGun.rotation = (float)Math.Atan2(direction.Y, direction.X) +5.5f;

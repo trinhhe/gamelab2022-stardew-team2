@@ -27,6 +27,7 @@ namespace Curse_of_the_Abyss
         public bool darkness;
         public List<Sprite> lightTargets;
         public int randomTimer;
+        public Camera camera;
         public virtual void Initialize()
         {
             // required for map manager
@@ -40,6 +41,9 @@ namespace Curse_of_the_Abyss
             {
                 sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
             }
+
+            camera = new Camera(num_parts);
+            
         }
 
 
@@ -118,6 +122,8 @@ namespace Curse_of_the_Abyss
 
             eggs.collectIfPossible(waterPlayer.position);
             eggs.UpdateAll(null, gameTime);
+
+            camera.Follow(waterPlayer);
         }
 
         public virtual void Draw(SpriteBatch spritebatch)

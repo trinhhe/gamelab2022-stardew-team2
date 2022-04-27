@@ -16,7 +16,6 @@ namespace Curse_of_the_Abyss
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
         {
-            num_parts = 1;
 
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
@@ -77,6 +76,7 @@ namespace Curse_of_the_Abyss
         }
         public override void Reset()
         {
+            num_parts = 1;
             game_over = false;
             completed = false;
             darkness = false;
