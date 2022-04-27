@@ -159,11 +159,11 @@ namespace Curse_of_the_Abyss
             switch (attack)
             {
                 case (Attack.Canonball):
-                    attackTimer = 0+ (stage-1)*1500;
+                    attackTimer = (stage-1)*1500;
                     level.toAdd.Add(new ShootingSprite(antenna.position.X, antenna.position.Y, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 3));
                     break;
                 case (Attack.Darkness):
-                    attackTimer = 0 + (stage - 1) * 500;
+                    attackTimer = (stage - 1) * 500;
                     level.darkness = true;
                     darknessTimer = 0;
                     break;
@@ -172,7 +172,7 @@ namespace Curse_of_the_Abyss
                     for (int i = 0; i < 4; i++)
                     {
                         int random = rand.Next(1000);
-                        int speed = rand.Next(3) + 1;
+                        int speed = rand.Next(2) + 2;
                         TargetingNPC t = new TargetingNPC(1800, random, player, speed);
                         level.toAdd.Add(t);
                         level.lightTargets.Add(t);

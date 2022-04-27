@@ -47,8 +47,16 @@ namespace Curse_of_the_Abyss
             animationManager.Update(gametime);
             if (taken)
             {
+                //move with player
                 if (player.movingRight) position = new Rectangle(player.position.X + player.position.Width - 2, player.position.Y, 8, 36);
                 else position = new Rectangle(player.position.X - position.Width + 2, player.position.Y, 8, 36);
+            }
+            else
+            {
+                //gravity
+                position.Y += 1;
+                Sprite o = CheckCollision(sprites,new string[] {"obstacle" });
+                if (o != null) position.Y -= 1;
             }
             
             takenTimer += gametime.ElapsedGameTime.TotalMilliseconds;
@@ -90,17 +98,16 @@ namespace Curse_of_the_Abyss
                             takenTimer = 0;
                         }
                     }
-                    else
+                    else if(player.KB_curState.IsKeyDown(Keys.E) && takenTimer < 7000 && placingTimer > 1000)
                     {
-                        if (taken && player.KB_curState.IsKeyDown(Keys.E) && takenTimer < 7000&& placingTimer>1000
-                            && (player.state == WaterPlayer.State.Running || player.state == WaterPlayer.State.Standing))
+                        if (taken)
                         {
                             taken = false;
                             position.Y = player.position.Y + player.position.Height - position.Height;
                             this.player = null;
                             placingTimer = 0;
                         }
-                        else if (!taken && player.KB_curState.IsKeyDown(Keys.E) && takenTimer < 7000 && placingTimer >1000)
+                        else 
                         {
                             taken = true;
                             this.player = player;
