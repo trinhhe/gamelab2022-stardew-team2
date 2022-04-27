@@ -14,7 +14,7 @@ namespace Curse_of_the_Abyss
         int targetx;
         int targety;
         int speed;
-        private string[] collidables = { "obstacle","waterplayer","SeaUrchin" };
+        private string[] collidables = { "obstacle","waterplayer","SeaUrchin","stationaryNPC" };
 
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
@@ -70,7 +70,10 @@ namespace Curse_of_the_Abyss
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth/10;
             }
-            remove = true;
+            if(s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            {
+                remove = position.Right > s.position.Right;
+            }else remove = true;
         }
         public override void YCollision(Sprite s, GameTime gameTime)
         {
@@ -79,7 +82,11 @@ namespace Curse_of_the_Abyss
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth / 10;
             }
-            remove = true;
+            if (s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            {
+                remove = position.Right > s.position.Right;
+            }
+            else remove = true;
         }
         public void init()
         {
