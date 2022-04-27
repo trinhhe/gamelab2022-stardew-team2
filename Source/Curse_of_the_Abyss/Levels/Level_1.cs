@@ -74,8 +74,7 @@ namespace Curse_of_the_Abyss
             Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
             Rock rock6 = new Rock(new Rectangle(5058, 255, 64, 100));
             sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
-            sprites.Add(rock4);
-            sprites.Add(rock5); sprites.Add(rock6);
+            sprites.Add(rock4); sprites.Add(rock5); sprites.Add(rock6);
         }
 
         public override void Update(GameTime gameTime)
@@ -107,7 +106,7 @@ namespace Curse_of_the_Abyss
 
                 }
             }
-            SpawnNPCs(10000,gameTime,false);
+            SpawnNPCs(10000,gameTime);
         }
         public override void Reset()
         {

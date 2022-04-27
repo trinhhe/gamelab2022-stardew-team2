@@ -160,19 +160,20 @@ namespace Curse_of_the_Abyss
         }
 
         //spawns Targeting NPCs in given time interval (time in milliseconds)
-        public void SpawnNPCs(int time,GameTime gameTime,bool lightTarget)
+        public void SpawnNPCs(int time,GameTime gameTime)
         {
             randomTimer += gameTime.ElapsedGameTime.Milliseconds;
             if (randomTimer > time)
             {
-                int speed = 2;
                 var rand = new Random();
+                int speed = rand.Next(4)+2;
                 int x_index;
+                
                 if (waterPlayer.position.X < 400)
                 {
                     x_index = 1;
                 }
-                else if (waterPlayer.position.X > 1920-400)
+                else if (waterPlayer.position.X > 1520*num_parts)
                 {
                     x_index = 0;
                 }
@@ -187,7 +188,7 @@ namespace Curse_of_the_Abyss
                 TargetingNPC targetingNPC = new TargetingNPC((int)temp.X, (int)temp.Y, waterPlayer, speed);
                 sprites.Add(targetingNPC);
                 randomTimer = 0;
-                if (lightTarget) lightTargets.Add(targetingNPC);
+                if (darkness) lightTargets.Add(targetingNPC);
             }
         }
     }

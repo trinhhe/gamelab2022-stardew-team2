@@ -525,6 +525,7 @@ namespace Curse_of_the_Abyss
 
         }
 
+        //stop player from standing up if he crouches under an area
         public bool continueDodging(List<Sprite> sprites)
         {
             position.Height = 60; position.Y -= 30;

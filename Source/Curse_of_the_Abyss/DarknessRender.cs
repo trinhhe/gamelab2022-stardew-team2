@@ -183,17 +183,26 @@ namespace Curse_of_the_Abyss
         private void markTargets(Level current)
         {
             Rectangle lightcone = new Rectangle(current.submarine.lamp.position.X, current.submarine.lamp.position.Y, (int)((float)lightmask.Width * Constants.light_width_scale), (int)((float)lightmask.Height * Constants.light_height_scale));
+            
+            //corners of lightbeam triangle
             Vector2 lightconePos = new Vector2(lightcone.X, lightcone.Y);
             Vector2 bottomLeft = Vector2.Transform(new Vector2(lightcone.X-lightcone.Width/2, lightcone.Y+ lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) +lightconePos ;
             Vector2 bottomRight = Vector2.Transform(new Vector2(lightcone.X+ lightcone.Width/2, lightcone.Y + lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) + lightconePos;
+            
+            //position of border according to camera
+            Vector2 bottomRightborder = Vector2.Transform(new Vector2(1920,1080),Matrix.Invert(current.camera.Transform));
+            Vector2 upperLeftborder = Vector2.Transform(Vector2.Zero, Matrix.Invert(current.camera.Transform));
+
             if (current.submarine.lightOn)
             {
                 foreach (Sprite s in current.lightTargets)
-                {  
-                    if (inTriangle(new Vector2(s.position.X,s.position.Y),lightconePos,bottomLeft,bottomRight)||
-                        inTriangle(new Vector2(s.position.X+s.position.Width, s.position.Y), lightconePos, bottomLeft, bottomRight)||
-                        inTriangle(new Vector2(s.position.X, s.position.Y+s.position.Height), lightconePos, bottomLeft, bottomRight)||
-                        inTriangle(new Vector2(s.position.X+s.position.Width, s.position.Y+s.position.Height), lightconePos, bottomLeft, bottomRight))
+                {
+                    //check if NPC's center point in lightbeam and screen
+                    Vector2 temp = new Vector2(s.position.X + s.position.Width / 2, s.position.Y + s.position.Height / 2);
+                    if (inTriangle(temp, lightconePos, bottomLeft, bottomRight)
+                        && temp.X>upperLeftborder.X && temp.Y>upperLeftborder.Y 
+                        && temp.X<bottomRightborder.X && temp.Y<bottomRightborder.Y
+                        )
                         s.lightmask = true;
                 }
             }
