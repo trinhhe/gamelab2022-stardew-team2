@@ -28,6 +28,7 @@ namespace Curse_of_the_Abyss
         public List<Sprite> lightTargets;
         public int randomTimer;
         public Camera camera;
+        int eggs_collected;
         public virtual void Initialize()
         {
             // required for map manager
@@ -93,7 +94,11 @@ namespace Curse_of_the_Abyss
             }
 
             // update egg counter
-            eggcounter.set(eggs.eggsCollected);
+            if (eggs.eggsCollected > eggs_collected)
+            {
+                eggcounter.set(eggcounter.get() + eggs.eggsCollected - eggs_collected);
+                eggs_collected = eggs.eggsCollected;
+            }
 
             // game over if oxygen runs out
             if (healthbar.curr_health <= 0)

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
 
 namespace Curse_of_the_Abyss
 {
@@ -12,7 +9,6 @@ namespace Curse_of_the_Abyss
         public static Texture2D egg;
         public static SpriteFont font;
         private int eggcount;
-        private bool darkness;
 
         public Eggcounter(int x, int y)
         {
@@ -24,6 +20,11 @@ namespace Curse_of_the_Abyss
         public void set(int val)
         {
             eggcount = val;
+        }
+
+        public int get()
+        {
+            return eggcount;
         }
 
         public static void LoadContent(ContentManager content)

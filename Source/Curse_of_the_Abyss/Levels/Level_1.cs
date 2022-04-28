@@ -116,7 +116,7 @@ namespace Curse_of_the_Abyss
             darkness = false;
             lightTargets = new List<Sprite>();
             randomTimer = 0;
-            healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),Constants.max_player_health, darkness,true);
+            healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),5000, darkness,true);
             eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             shooters = new List<StationaryShooterNPC>();

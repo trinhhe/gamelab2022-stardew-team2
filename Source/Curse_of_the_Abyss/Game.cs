@@ -28,6 +28,7 @@ namespace Curse_of_the_Abyss
         Level current_level;
         Level[] levels;
         int levelcounter;
+        int last_level_eggcount;
 
         // scrolling backgrounds
         private List<ScrollingBackground> _scrollingBackgrounds;
@@ -39,9 +40,10 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] {new Level1(), new Maze(), new Bossfight("frogfish")};
+            levels = new Level[] {new Level1(),new Maze(), new Bossfight("frogfish")};
             current_level = levels[0];
             levelcounter = 0;
+            last_level_eggcount = 0;
         }
 
         protected override void Initialize()
@@ -111,7 +113,7 @@ namespace Curse_of_the_Abyss
                 paused = true;
                 IsMouseVisible = true;
                 current_level.Reset();
-
+                current_level.eggcounter.set(last_level_eggcount);
                 // reset scrolling backgrounds
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
             }
@@ -127,15 +129,19 @@ namespace Curse_of_the_Abyss
                     IsMouseVisible = true;
                     current_level = levels[0];
                     levelcounter = 0;
+                    last_level_eggcount = 0;
                 }
                 else
                 {
                     levelcounter++;
+                    last_level_eggcount = current_level.eggcounter.get();
                     current_level = levels[levelcounter];
                 }
                 current_level.LoadContent(Content);
                 current_level.Reset();
                 current_level.InitMapManager(_spriteBatch);
+                current_level.eggcounter.set(last_level_eggcount);
+                
                 DarknessRender.LoadContent(Content);
 
                 // set new scrolling backgrounds based on level
