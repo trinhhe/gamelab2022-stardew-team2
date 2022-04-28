@@ -69,6 +69,7 @@ namespace Curse_of_the_Abyss
             {
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth/10;
+                remove = true;
             }
             else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately
             {
@@ -82,6 +83,7 @@ namespace Curse_of_the_Abyss
             {
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth / 10;
+                remove = true;
             }
             else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately
             {

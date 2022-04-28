@@ -9,7 +9,7 @@ namespace Curse_of_the_Abyss
 {
     class Bossfight:Level
     {
-        Boss boss;
+        public Boss boss;
         public List<Sprite> toAdd;
         string bosstype;
 
@@ -83,7 +83,7 @@ namespace Curse_of_the_Abyss
             toAdd = new List<Sprite>();
             lightTargets = new List<Sprite>();
             randomTimer = 0;
-            healthbar = new Healthbar(1, 1, darkness);
+            healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),Constants.max_player_health, darkness,true);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
             submarine = new Submarine(10, 10, healthbar,this);
             sprites = new List<Sprite>();
@@ -92,7 +92,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(submarine);
             InitSprites();
 
-            eggcounter = new Eggcounter(1875,10,false);
+            eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
         }
     }

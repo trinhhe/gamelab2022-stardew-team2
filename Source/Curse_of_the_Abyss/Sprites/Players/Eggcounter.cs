@@ -14,12 +14,11 @@ namespace Curse_of_the_Abyss
         private int eggcount;
         private bool darkness;
 
-        public Eggcounter(int x, int y, bool darkness)
+        public Eggcounter(int x, int y)
         {
             name = "eggcounter";
             position = new Rectangle(x, y, 36, 36);
             collidable = false;
-            this.darkness = darkness;
         }
 
         public void set(int val)
@@ -33,7 +32,7 @@ namespace Curse_of_the_Abyss
             font = content.Load<SpriteFont>("Eggcounter");
         }
 
-        public override void Draw(SpriteBatch spritebatch)
+        public void Draw(SpriteBatch spritebatch,bool darkness)
         {
             // draw egg icon
             spritebatch.Draw(egg, position, Color.White);

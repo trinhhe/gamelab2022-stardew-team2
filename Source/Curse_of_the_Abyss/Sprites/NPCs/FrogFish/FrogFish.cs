@@ -25,7 +25,9 @@ namespace Curse_of_the_Abyss
         {
             name = "frogfish";
             stage = 1;
-            health = 100;
+            health = new Healthbar(new Rectangle(1840,95,80,810),100,true,false);
+            level.toAdd.Add(health);
+            level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 256, scale * 232);
             mainBodyPosition = new Rectangle[] {
             new Rectangle(x+4*scale,y+scale*142,28*scale,74*scale),
@@ -58,11 +60,11 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
             //change stages and decide, when the boss is defeated
-            if (stage == 3 && health <= 0) defeated = true;
-            else if (health <= 0)
+            if (stage == 3 && health.curr_health <= 0) defeated = true;
+            else if (health.curr_health <= 0)
             {
                 stage++;
-                health = 100;
+                health.maxhealth = 100;
                 antenna.hit = false;
             }
             
@@ -120,10 +122,8 @@ namespace Curse_of_the_Abyss
             spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
             //draw health
-            spritebatch.Draw(bar, new Rectangle(1840,95,80,810),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.2f);
-            int curr_ypos = 900 - 8 * health;
-            spritebatch.Draw(healthBar, new Rectangle(1840, curr_ypos, 80, 8 * health - 2),null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
-            spritebatch.DrawString(font,health.ToString()+"/100",new Vector2(1840,910),Color.Black);
+            health.Draw(spritebatch);
+            spritebatch.DrawString(font,health.curr_health.ToString()+"/100",new Vector2(1840,910),Color.Black);
         }
 
         

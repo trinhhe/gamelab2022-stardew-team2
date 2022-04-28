@@ -219,7 +219,8 @@ namespace Curse_of_the_Abyss
             // draw UI
             _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
             current_level.healthbar.Draw(_spriteBatch);
-            current_level.eggcounter.Draw(_spriteBatch);
+            current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
+            if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
             _spriteBatch.End();
 
             // menu

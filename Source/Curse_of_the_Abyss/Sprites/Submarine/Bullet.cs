@@ -63,14 +63,14 @@ namespace Curse_of_the_Abyss
                 {
                     if (position.Intersects(r))
                     {
-                        f.health -= f.antenna.hit? 1:0;
+                        f.health.curr_health -= f.antenna.hit? 1:0;
                         remove = true;
                         break;
                     }
                 }
                 if (position.Intersects(f.antenna.position))
                 {
-                    f.health -= f.antenna.hit ? 1 : 0;
+                    f.health.curr_health -= f.antenna.hit ? 1 : 0;
                     remove = true;
                 }
             }
@@ -90,14 +90,14 @@ namespace Curse_of_the_Abyss
                 {
                     if (position.Intersects(r))
                     {
-                        f.health -= f.antenna.hit ? 1 : 0;
+                        f.health.curr_health -= f.antenna.hit ? 1 : 0;
                         remove = true;
                         break;
                     }
                 }
                 if (position.Intersects(f.antenna.position))
                 {
-                    f.health -= f.antenna.hit ? 1 : 0;
+                    f.health.curr_health -= f.antenna.hit ? 1 : 0;
                     remove = true;
                 }
             }

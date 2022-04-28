@@ -50,7 +50,7 @@ namespace Curse_of_the_Abyss
             {
                 case ("frogfish"):
                     if (((FrogFish)s).antenna.hit) { 
-                        ((FrogFish)s).health -= 30;
+                        ((FrogFish)s).health.curr_health -= 30;
                         ((FrogFish)s).antenna.hit = false;
                     }
                     break;
