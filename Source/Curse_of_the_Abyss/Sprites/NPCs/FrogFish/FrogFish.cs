@@ -131,8 +131,8 @@ namespace Curse_of_the_Abyss
         public void randomMoves(GameTime gameTime)
         {
             moveTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (moveTimer > 3000 && moveTimer < 100000) xVelocity = yVelocity = 0;
-            else if (moveTimer > 100000)
+            if (moveTimer > 3000 && moveTimer < 8000) xVelocity = yVelocity = 0;
+            else if (moveTimer > 8000)
             {
                 xVelocity = rand.Next(5)-2;
                 yVelocity = rand.Next(5)-2;

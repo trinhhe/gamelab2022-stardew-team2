@@ -19,7 +19,7 @@ namespace Curse_of_the_Abyss
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
             name = "shootingSprite";
-            position = new Rectangle(x, y, 32, 40);
+            position = new Rectangle(x, y, 32, 32);
             targetx = coordx;
             targety = coordy;
             this.speed = speed; //how fast the shooting sprite should be
@@ -70,10 +70,11 @@ namespace Curse_of_the_Abyss
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth/10;
             }
-            if(s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately
             {
                 remove = position.Right > s.position.Right;
-            }else remove = true;
+            }
+            else remove = true;
         }
         public override void YCollision(Sprite s, GameTime gameTime)
         {
@@ -82,7 +83,7 @@ namespace Curse_of_the_Abyss
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth / 10;
             }
-            if (s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately
             {
                 remove = position.Right > s.position.Right;
             }
