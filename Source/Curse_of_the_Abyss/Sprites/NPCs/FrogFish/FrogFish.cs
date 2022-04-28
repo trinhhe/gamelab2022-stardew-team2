@@ -19,13 +19,20 @@ namespace Curse_of_the_Abyss
         public enum Attack {Canonball,Darkness,NPCs}
         public Attack attack;
         Bossfight level;
+        public Rectangle[] mainBodyPosition;
 
-        public FrogFish(int x, int y,WaterPlayer player,Bossfight level)
+        public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
             stage = 1;
             health = 100;
-            position = new Rectangle(x,y,scale*256,scale*232);
+            position = new Rectangle(x, y, scale * 256, scale * 232);
+            mainBodyPosition = new Rectangle[] {
+            new Rectangle(x+4*scale,y+scale*142,28*scale,74*scale),
+            new Rectangle(x + 32 * scale, y + scale * 114, 19 * scale, 108 * scale),
+            new Rectangle(x + 51 * scale, y + scale * 85, 49 * scale, 147 * scale),
+            new Rectangle(x + 100 * scale, y + scale * 66, 80 * scale, 166 * scale),
+            new Rectangle(x + 56 * scale, y + scale * 74, 49 * scale, 14 * scale) };
             defeated = false;
             antenna = new Antenna(x,y+scale*80,scale);
             rand = new Random();
@@ -94,7 +101,13 @@ namespace Curse_of_the_Abyss
             //update position
             position.X += (int)xVelocity;
             position.Y += (int)yVelocity;
-            
+
+            for(int i =0; i<mainBodyPosition.Length;i++)
+            {
+                (mainBodyPosition[i]).X += (int)xVelocity;
+                mainBodyPosition[i].Y += (int)yVelocity;
+            }
+
             //move antenna
             antenna.position.X = position.X;
             antenna.position.Y = position.Y+80*scale;
@@ -118,8 +131,8 @@ namespace Curse_of_the_Abyss
         public void randomMoves(GameTime gameTime)
         {
             moveTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (moveTimer > 3000 && moveTimer < 8000) xVelocity = yVelocity = 0;
-            else if (moveTimer > 8000)
+            if (moveTimer > 3000 && moveTimer < 100000) xVelocity = yVelocity = 0;
+            else if (moveTimer > 100000)
             {
                 xVelocity = rand.Next(5)-2;
                 yVelocity = rand.Next(5)-2;

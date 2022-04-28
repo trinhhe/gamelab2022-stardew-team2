@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
     {
         public int ground;
         public float linearVelocity;
-        private string[] collidables = {"obstacle", "targetingNPC", "rock","antenna" };
+        private string[] collidables = {"obstacle", "targetingNPC", "rock","antenna","frogfish" };
         public AnimationManager animationManager;
         public static Dictionary<string, Animation> animations;
         public Sprite other;
@@ -38,7 +38,7 @@ namespace Curse_of_the_Abyss
             {
                 position.Y += (int)linearVelocity;
                 Sprite s = CheckCollision(sprites, collidables);
-                if (s != null) YCollision(s, gametime);
+                if (s != null) YCollision(s, gametime,sprites);
             }
             else
             {
@@ -72,7 +72,7 @@ namespace Curse_of_the_Abyss
             }
         }
 
-        public override void YCollision(Sprite s, GameTime gametime)
+        public void YCollision(Sprite s, GameTime gametime,List<Sprite> sprites)
         {
             switch (s.name)
             {
@@ -95,7 +95,20 @@ namespace Curse_of_the_Abyss
                 case ("antenna"):
                     Antenna antenna = s as Antenna;
                     antenna.hit = true;
+                    collidable = false;
                     startExplosion();
+                    break;
+                case ("frogfish"):
+                    foreach(Rectangle r in ((FrogFish)s).mainBodyPosition){
+                        if (position.Intersects(r))
+                        {
+                            collidable = false;
+                            startExplosion();
+                            break;
+                        }
+                    }
+                    Sprite a = CheckCollision(sprites,new string[] {"antenna" });
+                    if (a != null) YCollision(a,gametime, sprites);
                     break;
             }
         }

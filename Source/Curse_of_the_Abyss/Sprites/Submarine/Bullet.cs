@@ -32,17 +32,15 @@ namespace Curse_of_the_Abyss
             this.position.X = (int)Math.Round((double)real_position.X);
             Sprite s = CheckCollision(sprites, collidables);
             if (s!= null) XCollision(s, gametime);
-            else
-            {
-                real_position.X -= inc.X;
-                this.position.X = (int)Math.Round((double)real_position.X);
-                real_position.Y += inc.Y;
-                this.position.Y = (int)Math.Round((double)real_position.Y);
-                s = CheckCollision(sprites, collidables);
-                if (s!=null) YCollision(s, gametime);
-                real_position.X += inc.X;
-                this.position.X = (int)Math.Round((double)real_position.X);
-            }
+            
+            real_position.X -= inc.X;
+            this.position.X = (int)Math.Round((double)real_position.X);
+            real_position.Y += inc.Y;
+            this.position.Y = (int)Math.Round((double)real_position.Y);
+            s = CheckCollision(sprites, collidables);
+            if (s!=null) YCollision(s, gametime);
+            real_position.X += inc.X;
+            this.position.X = (int)Math.Round((double)real_position.X);
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -56,13 +54,26 @@ namespace Curse_of_the_Abyss
             {
                 TargetingNPC t = s as TargetingNPC;
                 t.health -= 1;
+                remove = true;
             }
             else if (s.name == "frogfish")
             {
                 FrogFish f = s as FrogFish;
-                if (f.antenna.hit) f.health -= 1;
+                foreach (Rectangle r in f.mainBodyPosition)
+                {
+                    if (position.Intersects(r))
+                    {
+                        f.health -= f.antenna.hit? 1:0;
+                        remove = true;
+                        break;
+                    }
+                }
+                if (position.Intersects(f.antenna.position))
+                {
+                    f.health -= f.antenna.hit ? 1 : 0;
+                    remove = true;
+                }
             }
-            remove = true;
         }
 
         public override void YCollision(Sprite s, GameTime gameTime)
@@ -71,12 +82,25 @@ namespace Curse_of_the_Abyss
             {
                 TargetingNPC t = s as TargetingNPC;
                 t.health -= 1;
+                remove = true;
             }else if (s.name == "frogfish")
             {
                 FrogFish f = s as FrogFish;
-                if (f.antenna.hit) f.health -= 1;
+                foreach (Rectangle r in f.mainBodyPosition)
+                {
+                    if (position.Intersects(r))
+                    {
+                        f.health -= f.antenna.hit ? 1 : 0;
+                        remove = true;
+                        break;
+                    }
+                }
+                if (position.Intersects(f.antenna.position))
+                {
+                    f.health -= f.antenna.hit ? 1 : 0;
+                    remove = true;
+                }
             }
-            remove = true;
         }
     }
 
