@@ -56,9 +56,9 @@ namespace Curse_of_the_Abyss
                 animationManager.Update(gametime);
 
                 //update position of Player 
-                if (position.X + (int)xVelocity < leftBound || position.X + (int)xVelocity > rightBound)
-                    return;
-                position.X += (int)xVelocity;
+                if (position.X + (int)xVelocity < leftBound) position.X = leftBound;
+                else if(position.X + (int)xVelocity > rightBound) position.X = rightBound - position.Width;
+                else position.X += (int)xVelocity;
 
                
             }
@@ -253,11 +253,11 @@ namespace Curse_of_the_Abyss
 
         public void setAnimation()
         {
-            if (movingRight) 
+            if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left)) 
                     animationManager.Play(animations["RunRight"]);
-            else
+            else if(!KB_curState.IsKeyDown(Keys.Right) && KB_curState.IsKeyDown(Keys.Left))
                 animationManager.Play(animations["RunLeft"]);
-            if(xVelocity == 0)
+            else
             {
                 // int extra = movingRight ? 1 : 0;
                 animationManager.Play(animations["Standing"]);
