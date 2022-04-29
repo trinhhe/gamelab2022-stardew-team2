@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Curse_of_the_Abyss 
 { 
@@ -43,7 +44,10 @@ namespace Curse_of_the_Abyss
         public static float waterplayer_light_height_scale = 1.1f;
 
         //dialogs
-        public static string[] dialog_test = {"test, test", "1,2,3,4", "nice it works" };
+        //one dialog consists of tuple of string, where one tuple corresponds to one page in the dialog
+        //the first item in the tuple is the talking person(i.e. wp for waterplayer, sp for submarine player)
+        //the second item is the corresponding text that appears in the current page
+        public static Tuple<string, string>[] dialog_test = { new Tuple<string, string>("wp", "test, test" ), new Tuple<string, string>("sp","1,2,3,4"), new Tuple<string,string>("wp" ,"nice it works" )};
     }
 
 }
