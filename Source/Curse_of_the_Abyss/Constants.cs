@@ -41,6 +41,9 @@ namespace Curse_of_the_Abyss
         public static float light_height_scale = 1.5f;
         public static float waterplayer_light_width_scale = 1.5f;
         public static float waterplayer_light_height_scale = 1.1f;
+
+        //dialogs
+        public static string[] dialog_test = {"test, test", "1,2,3,4", "nice it works" };
     }
 
 }

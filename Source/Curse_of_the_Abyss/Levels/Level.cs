@@ -29,6 +29,7 @@ namespace Curse_of_the_Abyss
         public int randomTimer;
         public Camera camera;
         int eggs_collected;
+        public DialogBox dialog;
         public virtual void Initialize()
         {
             // required for map manager
@@ -55,6 +56,12 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update(GameTime gameTime)
         {
+            if (dialog.active)
+            {
+                dialog.Update(gameTime);
+                return;
+            }
+            
             // move submarine so that it's never out of bounds of the screen
             int posdiff = submarine.position.X - waterPlayer.position.X;
             int rightbound = ((num_parts - 1) * 1920 + 880);
@@ -139,6 +146,7 @@ namespace Curse_of_the_Abyss
             }
 
             eggs.Draw(spritebatch);
+            dialog.Draw(spritebatch);
         }
 
         public void InitMapManager(SpriteBatch _spriteBatch)

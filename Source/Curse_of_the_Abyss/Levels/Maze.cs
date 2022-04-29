@@ -21,6 +21,7 @@ namespace Curse_of_the_Abyss
             Egg.LoadContent(content);
             PathNPC.LoadContent(content);
             TargetingNPC.LoadContent(content);
+            DialogBox.LoadContent(content);
         }
 
         public Maze()
@@ -68,6 +69,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
+            dialog = new DialogBox(new Rectangle(0, 0, 1920, 200), Constants.dialog_test);
 
             eggs = new EggCollection();
 

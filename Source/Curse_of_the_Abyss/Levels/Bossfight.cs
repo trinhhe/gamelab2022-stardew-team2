@@ -27,6 +27,7 @@ namespace Curse_of_the_Abyss
             Submarine.LoadContent(content);
             Egg.LoadContent(content);
             Dynamite.LoadContent(content);
+            DialogBox.LoadContent(content);
         }
         public Bossfight(string bosstype)
         {
@@ -91,6 +92,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
+            dialog = new DialogBox(new Rectangle(0, 0, 1920, 200), Constants.dialog_test);
 
             eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
