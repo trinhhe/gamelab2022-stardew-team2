@@ -12,7 +12,7 @@ namespace Curse_of_the_Abyss
     {
         Rectangle position;
         Tuple<string, string>[] dialog;
-        int dialogpos,nextpageTimer;
+        int dialogpos,nextpageTimer,text_index,textTimer;
         public bool active;
         static Texture2D box, profil_wp, profil_sp;
         static SpriteFont text;
@@ -21,7 +21,7 @@ namespace Curse_of_the_Abyss
         {
             this.position = position;
             this.dialog = dialog;
-            dialogpos = nextpageTimer= 0;
+            dialogpos = nextpageTimer= text_index= textTimer = 0;
             active = false;
         }
 
@@ -38,14 +38,21 @@ namespace Curse_of_the_Abyss
             KeyboardState KBstate = Keyboard.GetState();
 
             nextpageTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            textTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
             if ((KBstate.IsKeyDown(Keys.Enter)||KBstate.IsKeyDown(Keys.Space)) && nextpageTimer>200)
             {
                 if (dialogpos < dialog.Length - 1) dialogpos++;
                 else active = false;
                 nextpageTimer = 0;
+                text_index = 0;
             }else if (KBstate.IsKeyDown(Keys.Q))
             {
                 active = false;
+            }
+            if (text_index < dialog[dialogpos].Item2.Length && textTimer > 50)
+            {
+                text_index++;
+                textTimer = 0;
             }
         }
 
@@ -58,7 +65,7 @@ namespace Curse_of_the_Abyss
 
                 //draw text
                 Vector2 temp = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 35 * position.Height / 162f);
-                spriteBatch.DrawString(text, dialog[dialogpos].Item2, temp, Color.White, 0, Vector2.Zero,1.5f, SpriteEffects.None, 0.05f);
+                spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,1.5f, SpriteEffects.None, 0.05f);
 
                 //draw profil picture
                 Rectangle temp2 = new Rectangle(position.X + (int)(4 * position.Width / 677f), position.Y+(int)(14 * position.Height / 162f), (int)(139 * position.Width / 677f)+1, (int) (144*position.Height/162f)+1);
