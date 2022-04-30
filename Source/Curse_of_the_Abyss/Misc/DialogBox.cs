@@ -15,7 +15,7 @@ namespace Curse_of_the_Abyss
         int dialogpos,nextpageTimer,text_index,textTimer;
         public bool active;
         static Texture2D box, profil_wp, profil_sp;
-        static SpriteFont text;
+        static SpriteFont text,name;
         
         public DialogBox(Rectangle position, Tuple<string, string>[] dialog)
         {
@@ -31,6 +31,7 @@ namespace Curse_of_the_Abyss
             text = content.Load<SpriteFont>("Dialogbox/Text");
             profil_wp = content.Load<Texture2D>("DialogBox/wp_profil");
             profil_sp = content.Load<Texture2D>("DialogBox/sp_profil");
+            name = content.Load<SpriteFont>("DialogBox/Name");
         }
 
         public void Update(GameTime gameTime)
@@ -65,12 +66,28 @@ namespace Curse_of_the_Abyss
 
                 //draw text
                 Vector2 temp = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 35 * position.Height / 162f);
-                spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,1.5f, SpriteEffects.None, 0.05f);
+                Vector2 temp4 = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 80 * position.Height / 162f);
+                if (text_index<=50) 
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,1.5f, SpriteEffects.None, 0.05f);
+                else
+                {
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0, 50), temp, Color.White, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(50, text_index-50), temp4, Color.White, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0.05f);
+                }
 
                 //draw profil picture
                 Rectangle temp2 = new Rectangle(position.X + (int)(4 * position.Width / 677f), position.Y+(int)(14 * position.Height / 162f), (int)(139 * position.Width / 677f)+1, (int) (144*position.Height/162f)+1);
-                if(dialog[dialogpos].Item1 == "wp") spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
-                else if(dialog[dialogpos].Item1 == "sp") spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
+                Vector2 temp3 = new Vector2(position.X + 163 * position.Width / 677f, position.Y + 6 * position.Height / 162f);
+                if (dialog[dialogpos].Item1 == "wp")
+                {
+                    spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
+                    spriteBatch.DrawString(text, "Kenny", temp3, Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0.05f);
+                }
+                else if (dialog[dialogpos].Item1 == "sp")
+                {
+                    spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
+                    spriteBatch.DrawString(text, "Maya", temp3, Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0.05f);
+                }
             }
         }
     }

@@ -313,6 +313,13 @@
 /processorParam:TextureFormat=Color
 /build:Dialogbox/Dialogbox.png
 
+#begin Dialogbox/Name.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Dialogbox/Name.spritefont
+
 #begin Dialogbox/sp_profil.png
 /importer:TextureImporter
 /processor:TextureProcessor
