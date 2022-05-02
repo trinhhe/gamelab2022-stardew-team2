@@ -44,11 +44,22 @@ namespace Curse_of_the_Abyss
         public static float waterplayer_light_height_scale = 1.1f;
 
         //dialogs
-        //one dialog consists of tuple of string, where one tuple corresponds to one page in the dialog
+        public static float textspeed = 1;
+        public static float text_scale = 1.3f;
+        //one dialog consists of multiple tuples of strings, where one tuple corresponds to one page in the dialog
         //the first item in the tuple is the talking person(i.e. wp for waterplayer, sp for submarine player)
-        //the second item is the corresponding text that appears in the current page
+        //the second item is the corresponding text that appears in the current page (not more than 100 characters long)
         public static Tuple<string, string>[] dialog_test = { new Tuple<string, string>("wp", "test, test, test, test, test, test, test, test, test, test, test" ), new Tuple<string, string>("sp","1,2,3,4"), new Tuple<string,string>("wp" ,"nice it works" )};
-        public static Tuple<string, string>[] dialog_first = { new Tuple<string, string>("wp", "test, test"), new Tuple<string, string>("sp", "1,2,3,4"), new Tuple<string, string>("wp", "nice it works") };
+        public static Tuple<string, string>[] dialog_first = { new Tuple<string, string>("sp", "Kenny! Kenny! Can you hear me?!!"),
+                                                               new Tuple<string, string>("wp", "Yes, Yes, you don't have to scream."),
+                                                               new Tuple<string, string>("sp", "Thank god, I thought you died after being sucked through the hole in the submarine."),
+                                                               new Tuple<string, string>("sp", "But since you are out there you have to be fast, we need to collect the eggs we lost."),
+                                                               new Tuple<string, string>("wp", "I will, but how did we hit that rock? I thought our navigation system is unfallible."),
+                                                               new Tuple<string, string>("sp", "Well maybe someone didn't take the 'No drinks near the mainboard' rule serious enough"),
+                                                               new Tuple<string, string>("wp", "..."),
+                                                               new Tuple<string, string>("sp", "Nethertheless, let's focus on our task!"),
+                                                               new Tuple<string, string>("sp", "First try to get on top of that rock to get a better view of the area."),
+                                                               new Tuple<string, string>("sp", "Use the WASD keys to move around. And pay attention to the sea Urchin!")};
     }
 
 }

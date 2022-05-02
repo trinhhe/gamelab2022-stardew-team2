@@ -12,7 +12,7 @@ namespace Curse_of_the_Abyss
     {
         Rectangle position;
         Tuple<string, string>[] dialog;
-        int dialogpos,nextpageTimer,text_index,textTimer;
+        int dialogpos,nextpageTimer,text_index,textTimer,spacetimer,delimiter;
         public bool active;
         static Texture2D box, profil_wp, profil_sp;
         static SpriteFont text,name;
@@ -21,7 +21,9 @@ namespace Curse_of_the_Abyss
         {
             this.position = position;
             this.dialog = dialog;
-            dialogpos = nextpageTimer= text_index= textTimer = 0;
+            dialogpos = nextpageTimer= textTimer = spacetimer= 0;
+            text_index = 1;
+            delimiter = 40;
             active = false;
         }
 
@@ -40,17 +42,39 @@ namespace Curse_of_the_Abyss
 
             nextpageTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
             textTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if ((KBstate.IsKeyDown(Keys.Enter)||KBstate.IsKeyDown(Keys.Space)) && nextpageTimer>200)
+            spacetimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (dialogpos == 0) setDelimiter();
+            
+            //get next page
+            if (KBstate.IsKeyDown(Keys.Enter) && nextpageTimer > 200)
             {
                 if (dialogpos < dialog.Length - 1) dialogpos++;
                 else active = false;
                 nextpageTimer = 0;
                 text_index = 0;
-            }else if (KBstate.IsKeyDown(Keys.Q))
+                delimiter = setDelimiter();
+            }else if (KBstate.IsKeyDown(Keys.Space)&& spacetimer >200) { //fill out page
+                if(text_index < dialog[dialogpos].Item2.Length)
+                {
+                    text_index = dialog[dialogpos].Item2.Length;
+                    spacetimer = 0;
+                }else
+                {
+                    if (dialogpos < dialog.Length - 1) dialogpos++;
+                    else active = false;
+                    nextpageTimer = 0;
+                    text_index = 0;
+                    spacetimer = 0;
+                    delimiter = setDelimiter();
+                }
+            }else if (KBstate.IsKeyDown(Keys.Q)) //skip dialog
             {
                 active = false;
             }
-            if (text_index < dialog[dialogpos].Item2.Length && textTimer > 50)
+
+            //set timer for next appearing character
+            if (text_index < dialog[dialogpos].Item2.Length && textTimer > 50/Constants.textspeed)
             {
                 text_index++;
                 textTimer = 0;
@@ -66,13 +90,13 @@ namespace Curse_of_the_Abyss
 
                 //draw text
                 Vector2 temp = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 35 * position.Height / 162f);
-                Vector2 temp4 = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 80 * position.Height / 162f);
-                if (text_index<=50) 
-                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,1.5f, SpriteEffects.None, 0.05f);
+                Vector2 temp4 = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 95 * position.Height / 162f);
+                if (text_index<=delimiter) 
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,Constants.text_scale, SpriteEffects.None, 0.05f);
                 else
                 {
-                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0, 50), temp, Color.White, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0.05f);
-                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(50, text_index-50), temp4, Color.White, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0, delimiter+1), temp, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(delimiter+1, text_index-delimiter-1), temp4, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.05f);
                 }
 
                 //draw profil picture
@@ -89,6 +113,26 @@ namespace Curse_of_the_Abyss
                     spriteBatch.DrawString(text, "Maya", temp3, Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0.05f);
                 }
             }
+        }
+        
+        //calculates the delimiter(position of the line break)
+        private int setDelimiter()
+        { 
+            if (dialog[dialogpos].Item2.Length < 40) return dialog[dialogpos].Item2.Length;
+
+            string current_text = dialog[dialogpos].Item2;
+            int length = 40;
+            for (int i = 40; i < current_text.Length; i++){
+                if (current_text[i] == ' ')
+                {
+                    if (text.MeasureString(current_text[0..i]).X*Constants.text_scale >500*position.Width / 677f)
+                    {
+                        break;
+                    }
+                    length = i;
+                }
+            }
+            return length;
         }
     }
 }
