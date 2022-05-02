@@ -17,7 +17,9 @@ namespace Curse_of_the_Abyss
         public bool active;
         static Texture2D box, profil_wp, profil_sp;
         static SpriteFont text,name;
-        
+        public static Animation animation;
+        protected AnimationManager animationManager;
+
         public DialogBox(Rectangle position, Tuple<string, string>[] dialog)
         {
             this.position = position;
@@ -35,7 +37,7 @@ namespace Curse_of_the_Abyss
             profil_wp = content.Load<Texture2D>("DialogBox/wp_profil");
             profil_sp = content.Load<Texture2D>("DialogBox/sp_profil");
             name = content.Load<SpriteFont>("DialogBox/Name");
-
+            animation = new Animation(content.Load<Texture2D>("Dialogbox/Arrow"), 5, 0.1f, true);
             
         }
 
@@ -81,6 +83,13 @@ namespace Curse_of_the_Abyss
                 text_index++;
                 textTimer = 0;
             }
+
+            //update arrow animation
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            animationManager.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -107,13 +116,26 @@ namespace Curse_of_the_Abyss
                 if (dialog[dialogpos].Item1 == "wp")
                 {
                     spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
-                    spriteBatch.DrawString(text, "Kenny", temp3, Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(name, "Kenny", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
                 }
                 else if (dialog[dialogpos].Item1 == "sp")
                 {
                     spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
-                    spriteBatch.DrawString(text, "Maya", temp3, Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(name, "Maya", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
                 }
+
+                //draw arrow animation
+                if (animationManager == null)
+                {
+                    animationManager = new AnimationManager(animation);
+                }
+                if (animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1) animationManager.animation.FrameSpeed = 2f;
+                else animationManager.animation.FrameSpeed = 0.1f;
+                Rectangle temp5 = new Rectangle(position.X + (int)(650 * position.Width / 677f), position.Y + (int)(144 * position.Height / 162f), (int)(14 * position.Width / 677f) + 1, (int)(10 * position.Height / 162f) + 1);
+                Vector2 temp6 = new Vector2(position.X + 623 * position.Width / 677f, position.Y + 140 * position.Height / 162f);
+                animationManager.Draw(spriteBatch,temp5,0.09f,0);
+                spriteBatch.DrawString(name, "Enter", temp6, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
+
             }
         }
         
