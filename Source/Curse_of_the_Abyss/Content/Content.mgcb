@@ -707,6 +707,12 @@
 /processorParam:TextureFormat=Color
 /build:Shut.png
 
+#begin Soundeffects/Appearing_text.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/Appearing_text.wav
+
 #begin SPWalk_left.png
 /importer:TextureImporter
 /processor:TextureProcessor

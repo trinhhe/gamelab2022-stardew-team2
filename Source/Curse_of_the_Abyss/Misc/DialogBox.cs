@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Curse_of_the_Abyss
 {
@@ -19,6 +20,8 @@ namespace Curse_of_the_Abyss
         static SpriteFont text,name;
         public static Animation animation;
         protected AnimationManager animationManager;
+        public static SoundEffect typing;
+        SoundEffectInstance sound;
 
         public DialogBox(Rectangle position, Tuple<string, string>[] dialog)
         {
@@ -28,6 +31,7 @@ namespace Curse_of_the_Abyss
             text_index = 1;
             delimiter = 40;
             active = false;
+            sound = null;
         }
 
         public static void LoadContent(ContentManager content)
@@ -38,11 +42,17 @@ namespace Curse_of_the_Abyss
             profil_sp = content.Load<Texture2D>("DialogBox/sp_profil");
             name = content.Load<SpriteFont>("DialogBox/Name");
             animation = new Animation(content.Load<Texture2D>("Dialogbox/Arrow"), 5, 0.1f, true);
-            
+            typing = content.Load<SoundEffect>("Soundeffects/Appearing_text");
         }
 
         public void Update(GameTime gameTime)
         {
+            if (sound == null && text_index>1)
+            {
+                sound = typing.CreateInstance();
+                sound.IsLooped = true;
+                sound.Play();
+            }
             KeyboardState KBstate = Keyboard.GetState();
 
             nextpageTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -53,8 +63,16 @@ namespace Curse_of_the_Abyss
             //get next page
             if (KBstate.IsKeyDown(Keys.Enter) && nextpageTimer > 200)
             {
-                if (dialogpos < dialog.Length - 1) dialogpos++;
-                else active = false;
+                if (dialogpos < dialog.Length - 1)
+                {
+                    dialogpos++;
+                    sound.Play();
+                }
+                else
+                {
+                    active = false;
+                    sound.Dispose();
+                }
                 nextpageTimer = 0;
                 text_index = 0;
                 delimiter = setDelimiter();
@@ -65,8 +83,16 @@ namespace Curse_of_the_Abyss
                     spacetimer = 0;
                 }else
                 {
-                    if (dialogpos < dialog.Length - 1) dialogpos++;
-                    else active = false;
+                    if (dialogpos < dialog.Length - 1)
+                    {
+                        dialogpos++;
+                        sound.Play();
+                    }
+                    else
+                    {
+                        active = false;
+                        sound.Dispose();
+                    }
                     nextpageTimer = 0;
                     text_index = 0;
                     spacetimer = 0;
@@ -75,6 +101,7 @@ namespace Curse_of_the_Abyss
             }else if (KBstate.IsKeyDown(Keys.Q)) //skip dialog
             {
                 active = false;
+                sound.Dispose();
             }
 
             //set timer for next appearing character
@@ -96,6 +123,15 @@ namespace Curse_of_the_Abyss
         {
             if (active)
             {
+                //Create sound instance
+                if (sound == null && text_index > 1)
+                {
+                    sound = typing.CreateInstance();
+                    sound.IsLooped = true;
+                    sound.Play();
+                }
+                else if (text_index == dialog[dialogpos].Item2.Length) sound.Pause();
+
                 //draw box
                 spriteBatch.Draw(box, position,null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
