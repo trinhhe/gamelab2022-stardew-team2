@@ -37,9 +37,9 @@ namespace Curse_of_the_Abyss
             //texture = content.Load<Texture2D>("MCRunSprite");
             animations = new Dictionary<string, Animation>()
             {
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) },
                 {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 7, 0.15f, true) },
-                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) },
-                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) }
+                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) }
             };
         }
 

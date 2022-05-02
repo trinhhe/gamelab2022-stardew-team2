@@ -17,7 +17,7 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the submarine is actually
         public enum State {Standing, Driving, OxygenMode, MachineGunMode, LightMode};
         public State state, prev_state;
-        private SubmarinePlayer submarinePlayer;
+        public SubmarinePlayer submarinePlayer;
         public Healthbar healthbar;
         public MachineGun machineGun;
         public List<Bullet> bullets;

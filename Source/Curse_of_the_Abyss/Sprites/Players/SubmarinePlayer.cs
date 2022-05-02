@@ -35,9 +35,9 @@ namespace Curse_of_the_Abyss
         {
             animations = new Dictionary<string, Animation>()
             {
+                {"Standing",new Animation(content.Load<Texture2D>("Submarine_Player"),1,0.15f,true) },
                 {"RunRight", new Animation(content.Load<Texture2D>("SPWalk_right"), 8, 0.15f, true) },
-                {"RunLeft",new Animation(content.Load<Texture2D>("SPWalk_left"),8,0.15f,true) },
-                {"Standing",new Animation(content.Load<Texture2D>("Submarine_Player"),1,0.15f,true) }
+                {"RunLeft",new Animation(content.Load<Texture2D>("SPWalk_left"),8,0.15f,true) }
             };
         }
 

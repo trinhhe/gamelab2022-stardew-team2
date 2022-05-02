@@ -145,6 +145,22 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(5026, 330);
         }
 
+        public override void check_dialog()
+        {
+            switch (dialogID)
+            {
+                case (0):
+                    if (waterPlayer.position.X > 300)
+                    {
+                        dialog = new DialogBox(new Rectangle(0, 880, 1190, 200),Constants.dialog_submarine);
+                        dialog.active = true;
+                        dialogID++;
+                        waterPlayer.state = WaterPlayer.State.Standing;
+                        submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
+                    }
+                    break;
+            }
+        }
     }
     
 }

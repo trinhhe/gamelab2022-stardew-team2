@@ -10,9 +10,10 @@ namespace Curse_of_the_Abyss
 {
     public class DialogBox
     {
-        Rectangle position;
+        public Rectangle position;
         Tuple<string, string>[] dialog;
-        int dialogpos,nextpageTimer,text_index,textTimer,spacetimer,delimiter;
+        int dialogpos, nextpageTimer, text_index, textTimer, spacetimer;
+        public int delimiter;
         public bool active;
         static Texture2D box, profil_wp, profil_sp;
         static SpriteFont text,name;
@@ -34,6 +35,8 @@ namespace Curse_of_the_Abyss
             profil_wp = content.Load<Texture2D>("DialogBox/wp_profil");
             profil_sp = content.Load<Texture2D>("DialogBox/sp_profil");
             name = content.Load<SpriteFont>("DialogBox/Name");
+
+            
         }
 
         public void Update(GameTime gameTime)
@@ -44,8 +47,7 @@ namespace Curse_of_the_Abyss
             textTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
             spacetimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (dialogpos == 0) setDelimiter();
-            
+
             //get next page
             if (KBstate.IsKeyDown(Keys.Enter) && nextpageTimer > 200)
             {
@@ -99,7 +101,7 @@ namespace Curse_of_the_Abyss
                     spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(delimiter+1, text_index-delimiter-1), temp4, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.05f);
                 }
 
-                //draw profil picture
+                //draw profil picture and names
                 Rectangle temp2 = new Rectangle(position.X + (int)(4 * position.Width / 677f), position.Y+(int)(14 * position.Height / 162f), (int)(139 * position.Width / 677f)+1, (int) (144*position.Height/162f)+1);
                 Vector2 temp3 = new Vector2(position.X + 163 * position.Width / 677f, position.Y + 6 * position.Height / 162f);
                 if (dialog[dialogpos].Item1 == "wp")
@@ -116,13 +118,13 @@ namespace Curse_of_the_Abyss
         }
         
         //calculates the delimiter(position of the line break)
-        private int setDelimiter()
+        public int setDelimiter()
         { 
-            if (dialog[dialogpos].Item2.Length < 40) return dialog[dialogpos].Item2.Length;
+            if (dialog[dialogpos].Item2.Length <= 40) return dialog[dialogpos].Item2.Length;
 
             string current_text = dialog[dialogpos].Item2;
-            int length = 40;
-            for (int i = 40; i < current_text.Length; i++){
+            int length = current_text.Length;
+            for (int i = 30; i < current_text.Length; i++){
                 if (current_text[i] == ' ')
                 {
                     if (text.MeasureString(current_text[0..i]).X*Constants.text_scale >500*position.Width / 677f)

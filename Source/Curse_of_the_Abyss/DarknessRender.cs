@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
 {   
     public class DarknessRender
     {
-        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, health_lightmask;
+        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, dialogbox_lightmask;
         BlendState blend;
         RenderTarget2D darkness;
         GraphicsDevice graphicsDevice;
@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
             waterplayer_lightmask = content.Load<Texture2D>("Lightmask/waterplayer_lightmask");
             lamp_lightmask = content.Load<Texture2D>("Lightmask/lamp_lightmask");
             machinegun_lightmask = content.Load<Texture2D>("Lightmask/machinegun_lightmask");
-            health_lightmask = content.Load<Texture2D>("Lightmask/health_lightmask");
+            dialogbox_lightmask = content.Load<Texture2D>("Lightmask/dialogbox_lightmask");
         }
 
         public void LightMasking(Level current_level, SpriteBatch _spriteBatch){
@@ -106,8 +106,22 @@ namespace Curse_of_the_Abyss
                 SpriteEffects.None, 
                 0f
             );
-
-            foreach(Sprite s in current_level.lightTargets)
+            // lightmask dialogbox 
+            if (current_level.dialog.active)
+            {
+                _spriteBatch.Draw(
+                    dialogbox_lightmask,
+                    new Rectangle(current_level.dialog.position.X, current_level.dialog.position.Y, current_level.dialog.position.Width, current_level.dialog.position.Height),
+                    null,
+                    color * 1f,
+                    0,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+            //NPC and obstacle lightmasks
+            foreach (Sprite s in current_level.lightTargets)
             {
                 if (s.lightmask)
                     _spriteBatch.Draw(
