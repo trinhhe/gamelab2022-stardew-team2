@@ -12,7 +12,7 @@ namespace Curse_of_the_Abyss
         public SeaUrchin(int x, int y)
         {
             name = "SeaUrchin";
-            position = new Rectangle(x, y, 210, 160);
+            position = new Rectangle(x, y, 200, 160);
             collidable = true;
         }
 
@@ -29,8 +29,8 @@ namespace Curse_of_the_Abyss
             Rectangle source = new Rectangle(0, 0, width, height);
 
             Rectangle texturebox = position;
-            texturebox.Height = 240;
-            texturebox.Width = 232;
+            texturebox.Height = 250;
+            texturebox.Width = 264;
 
             //draw current frame
             spritebatch.Draw(texture, texturebox, source, Color.White, 0,new Vector2(0,0),SpriteEffects.None, 1);

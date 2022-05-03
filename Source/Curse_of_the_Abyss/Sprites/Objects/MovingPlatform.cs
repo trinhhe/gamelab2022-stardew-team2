@@ -21,12 +21,12 @@ namespace Curse_of_the_Abyss
         bool first_collision;
         private string[] collidables = { "waterplayer" };
 
-        public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed, bool changedir)
+        public MovingPlatform(int firstx, int firsty, int secondx, int secondy, int speed, int sizex, bool changedir)
         {
             // place platform at first (x,y)
             // and move to second (x,y) and then alternate between first and second (x,y)
             name = "movingPlatform";
-            position = new Rectangle(firstx, firsty, 128, 25);
+            position = new Rectangle(firstx, firsty, sizex, 25);
             this.firstx = firstx;
             this.firsty = firsty;
             this.secondx = secondx;
@@ -55,12 +55,7 @@ namespace Curse_of_the_Abyss
                     double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
                     if (dist < 3)
                     {
-                        if(changedir)
-                            dir = 0;
-                        else
-                        {
-                            first_collision = false;
-                        }
+                        dir = 0;
                     }
                     else
                     {
@@ -83,12 +78,7 @@ namespace Curse_of_the_Abyss
                     double dist = System.Math.Sqrt(System.Math.Pow(xtemp, 2) + System.Math.Pow(ytemp, 2));
                     if (dist < 3 && changedir)
                     {
-                        if (changedir)
-                            dir = 1;
-                        else
-                        {
-                            first_collision = false;
-                        }
+                        dir = 1;
                     }
                     else
                     {
@@ -105,10 +95,8 @@ namespace Curse_of_the_Abyss
             }
 
             Sprite s = CheckCollision(sprites,collidables);
-            if (s != null && s.name == "waterplayer")
-            {
-                YCollision(s, gametime);
-            }
+            if (s != null) YCollision(s, gametime);
+            else dir = 0;
 
         }
 
@@ -118,19 +106,14 @@ namespace Curse_of_the_Abyss
             {
                 case ("waterplayer"):
                 {
-                    if (s.position.Top < position.Top)
+                    if (s.position.Bottom -10 < position.Top)
                     {
-                        if (!first_collision)
-                            first_collision = true;
-                        s.position.Y = position.Top - s.position.Height - (int)yVelocity;
-                        ((MovableSprite)s).yVelocity = 0;
-                        ((WaterPlayer)s).state = WaterPlayer.State.Running;
-                    }
-                    else
-                    {
-                        s.position.Y = position.Bottom + 1;
-                        ((MovableSprite)s).yVelocity = 1;
-                        ((WaterPlayer)s).state = WaterPlayer.State.Falling;
+                        if (!first_collision) first_collision = true; //start moving platform
+                        s.position.Y = position.Top - s.position.Height; //place player on top of platform
+                        if(dir != 0) s.position.X += (int)xVelocity; //move player with platform in x direction
+                        ((MovableSprite)s).yVelocity = 1; //stops player from automatically jumping on platform, therefore needs to be 1 not 0
+                        ((WaterPlayer)s).state = WaterPlayer.State.Running; //allows moving and jumping on platform
+                        dir = 1;
                     }
                     break;
                 }

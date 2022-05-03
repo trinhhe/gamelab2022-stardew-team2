@@ -21,15 +21,12 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            //TO DO: replace SmileyWalk by actual Sprites
             texture = content.Load<Texture2D>("Egg");
         }
 
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
             int width = texture.Width;
             int height = texture.Width;
             Rectangle source = new Rectangle(0, 0, width, height);
@@ -44,8 +41,8 @@ namespace Curse_of_the_Abyss
     {
         //TODO check if we can somehow sort eggs to enable binary search for collection
         HashSet<Egg> eggs;
-        int eggsCollected;
-        int eggsTotal;
+        public int eggsCollected;
+        public int eggsTotal;
 
 
 

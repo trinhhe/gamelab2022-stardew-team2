@@ -3,13 +3,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Curse_of_the_Abyss
 {
 
     public class SubmarinePlayer : MovableSprite
     {
-        public static Texture2D texture;
+        public static Dictionary<string, Animation> animations;
+        protected AnimationManager animationManager;
         private KeyboardState KB_curState, KB_preState;
         //states are needed to decide in which phase the player is actually
         public enum State {Standing, Running};
@@ -23,7 +25,7 @@ namespace Curse_of_the_Abyss
         public SubmarinePlayer(int x, int y, int leftBound, int rightBound)
         {
             name = "submarineplayer";
-            position = new Rectangle(x, y, 41, 60);
+            position = new Rectangle(x, y, 32, 58);
             this.leftBound = leftBound;
             this.rightBound = rightBound;
             init(); //do rest there to keep this part of code clean
@@ -31,8 +33,12 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            //TO DO: replace SmileyWalk by actual Sprites
-            texture = content.Load<Texture2D>("MCRunSprite");
+            animations = new Dictionary<string, Animation>()
+            {
+                {"Standing",new Animation(content.Load<Texture2D>("Submarine_Player"),1,0.15f,true) },
+                {"RunRight", new Animation(content.Load<Texture2D>("SPWalk_right"), 8, 0.15f, true) },
+                {"RunLeft",new Animation(content.Load<Texture2D>("SPWalk_left"),8,0.15f,true) }
+            };
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -43,27 +49,33 @@ namespace Curse_of_the_Abyss
                 getState();// decides current frame and handles state mechanics
                 KB_preState = KB_curState;
 
+                if (animationManager == null)
+                {
+                    animationManager = new AnimationManager(animations.First().Value);
+                }
+                animationManager.Update(gametime);
+
                 //update position of Player 
-                if (position.X + (int)xVelocity < leftBound || position.X + (int)xVelocity > rightBound)
-                    return;
-                position.X += (int)xVelocity;
+                if (position.X + (int)xVelocity < leftBound) position.X = leftBound;
+                else if(position.X + (int)xVelocity > rightBound) position.X = rightBound - position.Width;
+                else position.X += (int)xVelocity;
 
                
             }
+            setAnimation();
             
         }
 
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width/5;
-            int height = texture.Height;
-            Rectangle source = new Rectangle(0, 0, width, height);
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animations.First().Value);
+            }
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0f);
+            animationManager.Draw(spritebatch,position,0f,0);
         }
 
         public void init()
@@ -237,6 +249,19 @@ namespace Curse_of_the_Abyss
         public void setVelocityZero()
         {
             xVelocity = 0;
+        }
+
+        public void setAnimation()
+        {
+            if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left)) 
+                    animationManager.Play(animations["RunRight"]);
+            else if(!KB_curState.IsKeyDown(Keys.Right) && KB_curState.IsKeyDown(Keys.Left))
+                animationManager.Play(animations["RunLeft"]);
+            else
+            {
+                // int extra = movingRight ? 1 : 0;
+                animationManager.Play(animations["Standing"]);
+            }
         }
     }
 }

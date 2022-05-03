@@ -14,12 +14,12 @@ namespace Curse_of_the_Abyss
         int targetx;
         int targety;
         int speed;
-        private string[] collidables = { "obstacle" };
+        private string[] collidables = { "obstacle","waterplayer","SeaUrchin","stationaryNPC" };
 
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
             name = "shootingSprite";
-            position = new Rectangle(x, y, 32, 40);
+            position = new Rectangle(x, y, 32, 32);
             targetx = coordx;
             targety = coordy;
             this.speed = speed; //how fast the shooting sprite should be
@@ -61,15 +61,35 @@ namespace Curse_of_the_Abyss
 
 
             //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White);
+            spritebatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
         }
         public override void XCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "obstacle") remove = true;
+            if (s.name == "waterplayer")
+            {
+                WaterPlayer player = s as WaterPlayer;
+                player.health.curr_health -= player.health.maxhealth/10;
+                remove = true;
+            }
+            else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            {
+                remove = position.Right > s.position.Right;
+            }
+            else remove = true;
         }
         public override void YCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "obstacle") remove = true;
+            if (s.name == "waterplayer")
+            {
+                WaterPlayer player = s as WaterPlayer;
+                player.health.curr_health -= player.health.maxhealth / 10;
+                remove = true;
+            }
+            else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            {
+                remove = position.Right > s.position.Right;
+            }
+            else remove = true;
         }
         public void init()
         {

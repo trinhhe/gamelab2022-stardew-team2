@@ -13,14 +13,15 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         public static Dictionary<string, Animation> animations;
         protected AnimationManager animationManager;
-        private KeyboardState KB_curState;
+        public KeyboardState KB_curState;
         //states are needed to decide in which phase the player is actually
-        public enum State { Standing, Running, Jumping, Falling };
+        public enum State { Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight, dodging, wasdodging, hit, checkfall;//needed for different situations in states
+        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp;//needed for different situations in states
         private int lastY;//needed to decide how heigh player can jump
-        Healthbar health;
-        private string[] collidables = {"obstacle","targetingNPC","shootingSprite","pathNPC","stationaryNPC","rock","SeaUrchin" };
+        public Healthbar health;
+        //list of objects the player can collide with
+        private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
 
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
@@ -36,8 +37,9 @@ namespace Curse_of_the_Abyss
             //texture = content.Load<Texture2D>("MCRunSprite");
             animations = new Dictionary<string, Animation>()
             {
-                {"Run", new Animation(content.Load<Texture2D>("MCRunSprite"), 5, 0.5f, true) },
-                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) }
+                {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) },
+                {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 7, 0.15f, true) },
+                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) }
             };
         }
 
@@ -45,7 +47,7 @@ namespace Curse_of_the_Abyss
         {
             
             KB_curState = Keyboard.GetState();
-            getState();// decides current frame and handles state mechanics
+            getState(sprites);// decides current frame and handles state mechanics
 
             if (animationManager == null)
             {
@@ -54,25 +56,22 @@ namespace Curse_of_the_Abyss
             setAnimation();
             animationManager.Update(gametime);
 
-            //update position of Player and check for collisions
+            //update position of Player and check for collisions(in both directions)
             position.X += (int)xVelocity;
             Sprite s = CheckCollision(sprites,collidables);
             if (s != null) XCollision(s, gametime);
-            else
+            position.X -= (int)xVelocity;
+            position.Y += (int)yVelocity;
+            s = CheckCollision(sprites,collidables);
+            if (s != null) YCollision(s, gametime);
+            else if(!maze)//gravity
             {
-                position.X -= (int)xVelocity;
-                position.Y += (int)yVelocity;
+                position.Y += 1;
                 s = CheckCollision(sprites,collidables);
-                if (s != null) YCollision(s, gametime);
-                else
-                {
-                    position.Y += 1;
-                    s = CheckCollision(sprites,collidables);
-                    if (s == null && state != State.Jumping) state = State.Falling;
-                    position.Y -= 1;
-                }
-                position.X += (int)xVelocity;
+                if (s == null && state != State.Jumping) state = State.Falling;
+                position.Y -= 1;
             }
+            position.X += (int)xVelocity;
 
         }
 
@@ -94,10 +93,10 @@ namespace Curse_of_the_Abyss
             {
                 //draw entire crouch rectangle but actual position height is 30 to dodge spriteshoots
                 Rectangle tmp = new Rectangle(position.X, position.Y - 30, position.Width, 60);
-                animationManager.Draw(spritebatch, tmp, 0f);
+                animationManager.Draw(spritebatch, tmp, 0.1f, 0f);
             }
             else
-                animationManager.Draw(spritebatch, position, 0f);
+                animationManager.Draw(spritebatch, position, 0.1f, 0f);
                 
         }
 
@@ -106,17 +105,13 @@ namespace Curse_of_the_Abyss
         {
             switch (s.name)
             {
-                case ("shootingSprite"):
                 case ("targetingNPC"):
                         s.remove = true;
                         health.curr_health -= health.maxhealth / 10;
-                        
-                        position.Y += (int)yVelocity;
                         break;
                 case ("pathNPC"):
                         s.remove = true;
                         health.curr_health -= health.maxhealth / 2;
-                        position.Y += (int)yVelocity;
                         break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
@@ -137,15 +132,11 @@ namespace Curse_of_the_Abyss
                 case ("SeaUrchin"):
                     health.curr_health = 0;
                     break;
-                default:
-                    position.Y += (int)yVelocity;
-                    break;
             }
         }
         public override void YCollision(Sprite s, GameTime gametime){
             switch (s.name)
             {
-                case ("shootingSprite"):
                 case ("targetingNPC"):
                     {                       
                         s.remove = true;
@@ -184,20 +175,23 @@ namespace Curse_of_the_Abyss
         }
         public void init(){
             state = State.Standing;
-            movingRight = false;
+            movingRight = true;
             dodging = false;
             collidable = true;
         }
 
-        private void Standing(){
+        private void Standing(List<Sprite> sprites)
+        {
             yVelocity = xVelocity = 0;
-            if(KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A)){ //move right
-                movingRight=true;
+            if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
+            { //move right
+                movingRight = true;
                 state = State.Running;
-            }else if(KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
+            }
+            else if (KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
             { //move left
-                movingRight=false;
-                state=State.Running;
+                movingRight = false;
+                state = State.Running;
             }
             //jumping
             if (KB_curState.IsKeyDown(Keys.W) && !dodging)
@@ -213,26 +207,25 @@ namespace Curse_of_the_Abyss
             }
             else if (!KB_curState.IsKeyDown(Keys.S) && dodging)
             {
-                dodging = false;
+                dodging = continueDodging(sprites);
             }
         }
 
-        private void Running()
+        private void Running(List<Sprite> sprites)
         {
             double max_v = Constants.max_run_velocity;
-            if (dodging) { max_v = 0.5 * Constants.max_run_velocity; }
-            xAcceleration = Constants.run_accelerate;
+            if (dodging) { max_v *= 0.5; }
             //move right
             if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
             {
-                movingRight = true;
-                if (xVelocity < 0)
+                if (!movingRight)
                 {
-                    xAcceleration += 2.0f;
+                    movingRight = true;
+                    xVelocity = 2;
                 }
                 if (xVelocity < max_v)
                 {
-                    xVelocity += xAcceleration;
+                    xVelocity += Constants.run_accelerate;
                 }
                 else
                 {
@@ -241,14 +234,14 @@ namespace Curse_of_the_Abyss
             }
             else if (KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
             { //move left
-                movingRight = false;
-                if (xVelocity > 0)
+                if (movingRight)
                 {
-                    xAcceleration += 2.0f;
+                    movingRight = false;
+                    xVelocity = -2;
                 }
                 if (xVelocity > -max_v)
                 {
-                    xVelocity -= xAcceleration;
+                    xVelocity -= Constants.run_accelerate;
                 }
                 else
                 {
@@ -256,11 +249,11 @@ namespace Curse_of_the_Abyss
                 }
             }
             else//slow down until Standing
-            {     
+            {
                 if (movingRight)
                 {
                     if (xVelocity > 0)
-                        xVelocity -= xAcceleration * 5;
+                        xVelocity -= Constants.run_accelerate * 5;
                     else
                     {
                         xVelocity = 0;
@@ -270,7 +263,7 @@ namespace Curse_of_the_Abyss
                 else
                 {
                     if (xVelocity < 0)
-                        xVelocity += xAcceleration * 5;
+                        xVelocity += Constants.run_accelerate * 5;
                     else
                     {
                         xVelocity = 0;
@@ -284,71 +277,219 @@ namespace Curse_of_the_Abyss
                 lastY = position.Y;
                 yVelocity = Constants.jump_velocity;
                 state = State.Jumping;
-            }
+            }//dodging
             else if (KB_curState.IsKeyDown(Keys.S))
             {
                 dodging = true;
             }
             else if (!KB_curState.IsKeyDown(Keys.S) && dodging)
             {
-                dodging = false;
+                dodging = continueDodging(sprites);
             }
         }
 
-        private void Jumping(){
+        private void Jumping()
+        {
             yVelocity += Constants.jump_velocity;
 
             //switch to falling if jumped heigh enough
-            if ((lastY-position.Y)>Constants.max_jumping_height){
+            if ((lastY - position.Y) > Constants.max_jumping_height)
+            {
                 yVelocity += Constants.fall_velocity;
                 state = State.Falling;
             }
 
             //allows moving right and left during fall
-            if(KB_curState.IsKeyDown(Keys.D)){
-                if(xVelocity<0.6*Constants.max_run_velocity)
-                    xVelocity += xAcceleration;
-            }else if (KB_curState.IsKeyDown(Keys.A)){
-                if(xVelocity>-0.6*Constants.max_run_velocity)
-                    xVelocity-= xAcceleration;
+            if (KB_curState.IsKeyDown(Keys.D))
+            {
+                if (xVelocity < 0.6 * Constants.max_run_velocity)
+                    xVelocity += Constants.run_accelerate;
+                else
+                    xVelocity = 0.6 * Constants.max_run_velocity;
+            }
+            else if (KB_curState.IsKeyDown(Keys.A))
+            {
+                if (xVelocity > -0.6 * Constants.max_run_velocity)
+                    xVelocity -= Constants.run_accelerate;
+                else
+                    xVelocity = -0.6 * Constants.max_run_velocity;
             }
             //switch to falling if wanted
-            if (!KB_curState.IsKeyDown(Keys.W)){
+            if (!KB_curState.IsKeyDown(Keys.W))
+            {
                 state = State.Falling;
-            }else
+            }
+            else
                 yVelocity += Constants.fall_velocity;
+
+            movingRight = xVelocity > 0 ? true : false; //reset movingright while falling
         }
 
-        private void Falling(){
+        private void Falling()
+        {
             //increase falling velocity
-            if (yVelocity < Constants.max_y_velocity){
+            if (yVelocity < Constants.max_y_velocity)
+            {
                 yVelocity += Constants.fall_velocity * 1.25f;
             }
             //allows to move right and left during fall
-            if (KB_curState.IsKeyDown(Keys.D)){
-                if (xVelocity < 0.6*Constants.max_run_velocity)  
-                    xVelocity += xAcceleration;
-            }else if (KB_curState.IsKeyDown(Keys.A)){
-                if (xVelocity > -0.6*Constants.max_run_velocity) 
-                    xVelocity -= xAcceleration;
+            if (KB_curState.IsKeyDown(Keys.D))
+            {
+                if (xVelocity < 0.6 * Constants.max_run_velocity)
+                    xVelocity += Constants.run_accelerate;
+                else
+                    xVelocity = 0.6 * Constants.max_run_velocity;
             }
+            else if (KB_curState.IsKeyDown(Keys.A))
+            {
+                if (xVelocity > -0.6 * Constants.max_run_velocity)
+                    xVelocity -= Constants.run_accelerate;
+                else
+                    xVelocity = -0.6 * Constants.max_run_velocity;
+            }
+            //stop dodging in air
+            if (!KB_curState.IsKeyDown(Keys.S) && dodging)
+            {
+                dodging = false;
+            }
+
+            movingRight = xVelocity > 0 ? true : false;
         }
 
+        //movement in maze
+        private void Swimming()
+        {
+            if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
+            {//swim right
+                if (!swimmingRight)
+                {
+                    swimmingRight = true;
+                    xVelocity = 2;
+                }
+                if (xVelocity < Constants.max_run_velocity)
+                {
+                    xVelocity += Constants.run_accelerate;
+                }
+                else
+                {
+                    xVelocity = Constants.max_run_velocity;
+                }
+            }
+            else if (KB_curState.IsKeyDown(Keys.A) && !KB_curState.IsKeyDown(Keys.D))
+            { //swim left
+                if (swimmingRight)
+                {
+                    swimmingRight = false;
+                    xVelocity = -2;
+                }
+                if (xVelocity > -Constants.max_run_velocity)
+                {
+                    xVelocity -= Constants.run_accelerate;
+                }
+                else
+                {
+                    xVelocity = -Constants.max_run_velocity;
+                }
+            }
+            else//slow down until Standing
+            {
+                if (swimmingRight)
+                {
+                    if (xVelocity > 0)
+                        xVelocity -= Constants.run_accelerate * 5;
+                    else
+                    {
+                        xVelocity = 0;
+                    }
+                }
+                else
+                {
+                    if (xVelocity < 0)
+                        xVelocity += Constants.run_accelerate * 5;
+                    else
+                    {
+                        xVelocity = 0;
+                    }
+                }
+            }
+            if (KB_curState.IsKeyDown(Keys.W) && !KB_curState.IsKeyDown(Keys.S))
+            {//swim up
+                if (!swimmingUp)
+                {
+                    swimmingUp = true;
+                    yVelocity = -2;
+                }
+                if (yVelocity > Constants.max_run_velocity)
+                {
+                    yVelocity -= Constants.run_accelerate;
+                }
+                else
+                {
+                    yVelocity = -Constants.max_run_velocity;
+                }
+            }
+            else if (KB_curState.IsKeyDown(Keys.S) && !KB_curState.IsKeyDown(Keys.W))
+            { //swim down
+                if (swimmingUp)
+                {
+                    swimmingUp = false;
+                    yVelocity = 2;
+                }
+                if (yVelocity < Constants.max_run_velocity)
+                {
+                    yVelocity += Constants.run_accelerate;
+                }
+                else
+                {
+                    yVelocity = Constants.max_run_velocity;
+                }
+            }
+            else//slow down until Standing
+            {
+                if (swimmingUp)
+                {
+                    if (yVelocity < 0)
+                        yVelocity += Constants.run_accelerate * 5;
+                    else
+                    {
+                        yVelocity = 0;
+                    }
+                }
+                else
+                {
+                    if (yVelocity > 0)
+                        yVelocity -= Constants.run_accelerate * 5;
+                    else
+                    {
+                        yVelocity = 0;
+                    }
+                }
+            }
+        }
         //calls function depending on state
-        private void getState(){
-            switch(state){
-                case State.Standing:
-                    Standing();
-                    break;
-                case State.Running:
-                    Running();
-                    break;
-                case State.Jumping:
-                    Jumping();
-                    break;
-                case State.Falling:
-                    Falling();
-                    break;
+        private void getState(List<Sprite> sprites)
+        {
+            if (!maze)
+            {
+                switch (state)
+                {
+                    case State.Standing:
+                        Standing(sprites);
+                        break;
+                    case State.Running:
+                        Running(sprites);
+                        break;
+                    case State.Jumping:
+                        Jumping();
+                        break;
+                    case State.Falling:
+                        Falling();
+                        break;
+                }
+            }
+            else
+            {
+                Swimming();
             }
         }
 
@@ -364,13 +505,35 @@ namespace Curse_of_the_Abyss
                         animationManager.Stop(4);                   
                 }           
             }
+            else if (state != State.Standing && !maze && xVelocity !=0)
+            {
+                if (movingRight) 
+                    animationManager.Play(animations["RunRight"]);
+                else
+                    animationManager.Play(animations["RunLeft"]);
+                if(state != State.Running)
+                {
+                    // int extra = movingRight ? 1 : 0;
+                    animationManager.Stop(2);
+                }
+            }
             else
             {
-                animationManager.Play(animations["Run"]);
-                if (state == State.Standing || state == State.Jumping || state == State.Falling)
-                    animationManager.Stop(0);
+                animationManager.Play(animations["Crouch"]);
+                animationManager.Stop(0);
             }
 
+        }
+
+        //stop player from standing up if he crouches under an area
+        public bool continueDodging(List<Sprite> sprites)
+        {
+            position.Height = 60; position.Y -= 30;
+            Sprite s = CheckCollision(sprites, collidables);
+            position.Height = 30;
+            position.Y += 30;
+            if (s == null) return false;
+            else return true;
         }
     }
 }
