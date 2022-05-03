@@ -38,9 +38,9 @@ namespace Curse_of_the_Abyss
         {
             box = content.Load<Texture2D>("Dialogbox/Dialogbox");
             text = content.Load<SpriteFont>("Dialogbox/Text");
-            profil_wp = content.Load<Texture2D>("DialogBox/wp_profil");
-            profil_sp = content.Load<Texture2D>("DialogBox/sp_profil");
-            name = content.Load<SpriteFont>("DialogBox/Name");
+            profil_wp = content.Load<Texture2D>("Dialogbox/wp_profil");
+            profil_sp = content.Load<Texture2D>("Dialogbox/sp_profil");
+            name = content.Load<SpriteFont>("Dialogbox/Name");
             animation = new Animation(content.Load<Texture2D>("Dialogbox/Arrow"), 5, 0.1f, true);
             typing = content.Load<SoundEffect>("Soundeffects/Appearing_text");
         }
