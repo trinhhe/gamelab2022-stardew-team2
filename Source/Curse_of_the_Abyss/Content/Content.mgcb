@@ -217,6 +217,18 @@
 /processorParam:TextureFormat=Color
 /build:Boss/Frog_fish.png
 
+#begin Boss/FrogFish.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Boss/FrogFish.png
+
 #begin Boss/TNTBarrel.png
 /importer:TextureImporter
 /processor:TextureProcessor

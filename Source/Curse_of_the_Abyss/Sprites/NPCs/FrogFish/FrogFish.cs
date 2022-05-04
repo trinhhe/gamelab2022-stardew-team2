@@ -28,15 +28,19 @@ namespace Curse_of_the_Abyss
             health = new Healthbar(new Rectangle(1840,95,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
-            position = new Rectangle(x, y, scale * 256, scale * 232);
+            position = new Rectangle(x, y, scale * 274, scale * 177);
+
+            //create Body parts too build more precise hitbox
             mainBodyPosition = new Rectangle[] {
-            new Rectangle(x+4*scale,y+scale*142,28*scale,74*scale),
-            new Rectangle(x + 32 * scale, y + scale * 114, 19 * scale, 108 * scale),
-            new Rectangle(x + 51 * scale, y + scale * 85, 49 * scale, 147 * scale),
-            new Rectangle(x + 100 * scale, y + scale * 66, 80 * scale, 166 * scale),
-            new Rectangle(x + 56 * scale, y + scale * 74, 49 * scale, 14 * scale) };
+            new Rectangle(x+23*scale,y+scale*129,16*scale,38*scale),
+            new Rectangle(x + 39 * scale, y + scale * 55, 103 * scale, 115 * scale),
+            new Rectangle(x + 52 * scale, y + scale * 42, 121 * scale, 12 * scale),
+            new Rectangle(x + 58 * scale, y + scale * 32, 100 * scale, 10 * scale),
+            new Rectangle(x + 63 * scale, y + scale * 24, 67 * scale, 8 * scale),
+            new Rectangle(x + 142 * scale, y + scale * 57, 31 * scale, 109 * scale),
+            new Rectangle(x + 173 * scale, y + scale * 73, 29 * scale, 47 * scale)};
             defeated = false;
-            antenna = new Antenna(x,y+scale*80,scale);
+            antenna = new Antenna(x,y+scale*23,scale);
             rand = new Random();
             collidable = true;
             this.player = player;
@@ -46,7 +50,7 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("Boss/Frog_fish");
+            texture = content.Load<Texture2D>("Boss/FrogFish");
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
             TargetingNPC.LoadContent(content);
@@ -111,8 +115,8 @@ namespace Curse_of_the_Abyss
             }
 
             //move antenna
-            antenna.position.X = position.X;
-            antenna.position.Y = position.Y+80*scale;
+            antenna.position.X += (int)xVelocity;
+            antenna.position.Y += (int)yVelocity;
 
         }
 

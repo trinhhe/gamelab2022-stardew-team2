@@ -13,7 +13,7 @@ namespace Curse_of_the_Abyss
         public Antenna(int x, int y,int scale)
         {
             name = "antenna";
-            position = new Rectangle(x,y,scale*12,scale*24);
+            position = new Rectangle(x,y,scale*17,scale*20);
             lightmask = true;
             collidable = true;
         }
