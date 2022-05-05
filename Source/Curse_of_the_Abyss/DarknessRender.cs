@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
 {   
     public class DarknessRender
     {
-        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, dialogbox_lightmask;
+        static Texture2D lightmask, submarine_lightmask, waterplayer_lightmask, machinegun_lightmask, lamp_lightmask, torch_lightmask, dialogbox_lightmask;        
         BlendState blend;
         RenderTarget2D darkness;
         GraphicsDevice graphicsDevice;
@@ -33,6 +33,7 @@ namespace Curse_of_the_Abyss
             lightmask = content.Load<Texture2D>("Lightmask/light");
             submarine_lightmask = content.Load<Texture2D>("Lightmask/submarine_lightmask");
             waterplayer_lightmask = content.Load<Texture2D>("Lightmask/waterplayer_lightmask");
+            torch_lightmask = content.Load<Texture2D>("Lightmask/torch_lightmask");
             lamp_lightmask = content.Load<Texture2D>("Lightmask/lamp_lightmask");
             machinegun_lightmask = content.Load<Texture2D>("Lightmask/machinegun_lightmask");
             dialogbox_lightmask = content.Load<Texture2D>("Lightmask/dialogbox_lightmask");
@@ -123,10 +124,21 @@ namespace Curse_of_the_Abyss
             //NPC and obstacle lightmasks
             foreach (Sprite s in current_level.lightTargets)
             {
-                if (s.lightmask)
+                if (s.lightmask && s.name != "torch")
                     _spriteBatch.Draw(
                         waterplayer_lightmask,
-                        new Rectangle(s.position.X-20, s.position.Y-20, s.position.Width+40, s.position.Height+20),
+                        new Rectangle(s.position.X - 20, s.position.Y - 20, s.position.Width + 40, s.position.Height + 20),
+                        null,
+                        color * 1f,
+                        0,
+                        Vector2.Zero,
+                        SpriteEffects.None,
+                        0f
+                    );
+                else if (s.lightmask && s.name == "torch")
+                    _spriteBatch.Draw(
+                        torch_lightmask,
+                        new Rectangle(s.position.X+s.position.Width/2-70*7, s.position.Y - 50*7,  140*7,  100*7),
                         null,
                         color * 1f,
                         0,
@@ -216,6 +228,7 @@ namespace Curse_of_the_Abyss
                     if (inTriangle(temp, lightconePos, bottomLeft, bottomRight)
                         && temp.X>upperLeftborder.X && temp.Y>upperLeftborder.Y 
                         && temp.X<bottomRightborder.X && temp.Y<bottomRightborder.Y
+                        && s.name!="torch"
                         )
                         s.lightmask = true;
                 }

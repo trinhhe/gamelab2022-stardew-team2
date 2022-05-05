@@ -97,18 +97,6 @@
 /processorParam:TextureFormat=Color
 /build:bfish.png
 
-#begin bfish_dead.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:bfish_dead.png
-
 #begin bg.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -526,6 +514,18 @@
 /processorParam:TextureFormat=Color
 /build:Lightmask/submarine_lightmask.png
 
+#begin Lightmask/torch_lightmask.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Lightmask/torch_lightmask.png
+
 #begin Lightmask/waterplayer_lightmask.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -547,8 +547,12 @@
 #begin maps/map_lvl1.tmx
 /copy:maps/map_lvl1.tmx
 
+
 #begin maps/map_lvl1_extension.tmx
 /copy:maps/map_lvl1_extension.tmx
+
+#begin maps/map_lvl2.tmx
+/copy:maps/map_lvl2.tmx
 
 #begin maps/maze.tmx
 /copy:maps/maze.tmx
@@ -815,6 +819,30 @@
 /processorParam:TextureFormat=Color
 /build:TilesV1.png
 
+#begin torch.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:torch.png
+
+#begin torch0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:torch0.png
+
 #begin underwater_env.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -838,4 +866,3 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:wood_tile.png
-
