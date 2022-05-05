@@ -31,6 +31,7 @@ namespace Curse_of_the_Abyss
             Egg.LoadContent(content);
             Rock.LoadContent(content);
             Torch.LoadContent(content);
+            DialogBox.LoadContent(content);
         }
         public Level2()
         {
@@ -143,6 +144,8 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
+            dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_first);
+            dialog.active = true;
 
             eggs = new EggCollection();
 
