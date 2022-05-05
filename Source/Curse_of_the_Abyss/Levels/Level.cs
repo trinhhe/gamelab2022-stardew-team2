@@ -31,6 +31,8 @@ namespace Curse_of_the_Abyss
         int eggs_collected;
         public DialogBox dialog;
         public int dialogID;
+        public MazeGenerator MazeGenerator;
+        public bool is_maze_gen;
         public virtual void Initialize()
         {
             // required for map manager
@@ -38,13 +40,14 @@ namespace Curse_of_the_Abyss
             // var MapSize = new Vector2(2*1920, 1088);
             // matrix = Matrix.CreateScale(new Vector3(GameSize / MapSize, 1));
             matrix = Matrix.CreateScale(new Vector3(new Vector2(1, 1), 1));
-
-            // add all tiles in map to collisionObjects list
-            foreach (var o in TileMap.ObjectGroups["Collisions"].Objects)
+            if (!is_maze_gen)
             {
-                sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
+                // add all tiles in map to collisionObjects list
+                foreach (var o in TileMap.ObjectGroups["Collisions"].Objects)
+                {
+                    sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
+                }
             }
-
             camera = new Camera(num_parts);
             
         }
@@ -160,6 +163,25 @@ namespace Curse_of_the_Abyss
             MapManager = new MapManager(_spriteBatch, TileMap, tileset, TileSetTilesWide, tileWidth, tileHeight);
         }
 
+        public  void InitMazeGenerator(SpriteBatch _spriteBatch, int mazeDrawWidth, int mazeDrawHeight)
+        {
+            Vector2 coordinateSize = new Vector2((float)waterPlayer.position.Width * 2f, (float)waterPlayer.position.Height * 2f);
+            int mazeWallThickness = 25;
+            int mazeWidth = (mazeDrawWidth - mazeWallThickness) / (int)coordinateSize.X;
+            int mazeHeight = (mazeDrawHeight - mazeWallThickness - 300) / (int)coordinateSize.Y;
+            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", mazeDrawWidth, mazeDrawHeight, coordinateSize, mazeWidth, mazeHeight);
+            //int mazeCoordinateSize = 60;
+
+            // The width in pixels of th0e maze that will be generated with the current maze values.
+            //uint mazeDrawWidth = mazeWidth * (mazeCoordinateSize - mazeWallThickness) + mazeWallThickness * (mazeWidth + 1);
+            // The height in pixels of the maze that will be generated with the current maze values.
+            //uint mazeDrawHeight = mazeHeight * (mazeCoordinateSize - mazeWallThickness) + mazeWallThickness * (mazeHeight + 1);
+            // The position of the upper-left point of the maze on the window, set so that it is centered.
+            Vector2 mazePositionOnWindow = new Vector2(0, 300);
+            MazeGenerator = new MazeGenerator(_spriteBatch, tileset, mazePositionOnWindow, coordinateSize, coordinateSize+new Vector2(mazeWallThickness, mazeWallThickness), mazeWallThickness,mazeWidth, mazeHeight);
+            MazeGenerator.Generate(new Vector2(0, 0), 99);
+            MazeGenerator.AddObstacles(sprites);
+        }
         public virtual void Reset()
         {
             List<Sprite> toRemove = new List<Sprite>();

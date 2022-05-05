@@ -56,7 +56,7 @@ namespace Curse_of_the_Abyss
             num_parts = 1;
             game_over = false;
             completed = false;
-            darkness = true;
+            //darkness = true;
             lightTargets = new List<Sprite>();
             
             healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),Constants.max_player_health, darkness,true);
@@ -70,7 +70,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(submarine);
             InitSprites();
             dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_maze);
-            dialog.active = true;
+            //dialog.active = true; //CHANGE BACK
 
             eggs = new EggCollection();
 

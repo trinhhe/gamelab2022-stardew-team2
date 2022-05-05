@@ -40,7 +40,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] {new Level1(),new Maze(), new Bossfight("frogfish")};
+            levels = new Level[] {new MazeRandom(), new Bossfight("frogfish")};
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -84,7 +84,10 @@ namespace Curse_of_the_Abyss
             // game contents
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             current_level.LoadContent(Content);
-            current_level.InitMapManager(_spriteBatch);
+            if (!current_level.is_maze_gen)
+                current_level.InitMapManager(_spriteBatch);
+            else 
+                current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
 
             // scrolling backgrounds
             _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
@@ -101,6 +104,13 @@ namespace Curse_of_the_Abyss
 
         protected override void Update(GameTime gameTime)
         {
+            //DELETE AFTER
+            //var mousestate = Mouse.GetState();
+            //var mouseposition = new Vector2(mousestate.X, mousestate.Y);
+            //var scaledMousePosition = Vector2.Transform(new Vector2(mousestate.X, mousestate.Y), Matrix.Invert(levels[0].camera.Transform * Constants.transform_matrix));
+            //Console.WriteLine("X: {0}, Y: {1}", scaledMousePosition.X, scaledMousePosition.Y);
+            //DELETE AFTER
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) 
             {
                 paused = true;
@@ -139,7 +149,10 @@ namespace Curse_of_the_Abyss
                 }
                 current_level.LoadContent(Content);
                 current_level.Reset();
-                current_level.InitMapManager(_spriteBatch);
+                if (!current_level.is_maze_gen)
+                    current_level.InitMapManager(_spriteBatch);
+                else
+                    current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderHeight, RenderWidth);
                 current_level.eggcounter.set(last_level_eggcount);
                 
                 DarknessRender.LoadContent(Content);
@@ -161,7 +174,7 @@ namespace Curse_of_the_Abyss
 
                 _camera.Follow(current_level.waterPlayer);
                 IsMouseVisible = false;
-                // IsMouseVisible = true;
+                IsMouseVisible = true; //CHANGE BACK
             }
 
             else
@@ -202,8 +215,11 @@ namespace Curse_of_the_Abyss
 
             _spriteBatch.End();
 
-            // draw map
-            current_level.MapManager.Draw(current_level.matrix);
+            // draw map 
+            if (!current_level.is_maze_gen)
+                current_level.MapManager.Draw(current_level.matrix);
+            else
+                current_level.MazeGenerator.Draw(current_level.matrix);
 
             // draw sprites
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
