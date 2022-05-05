@@ -8,7 +8,7 @@ namespace Curse_of_the_Abyss
     class Torch:Sprite
     {
         public static Dictionary<string, Animation> animations;
-        public static AnimationManager animationManager;
+        public AnimationManager animationManager;
 
         public bool lit = false;
 
@@ -30,15 +30,18 @@ namespace Curse_of_the_Abyss
                 {"dark",new Animation(content.Load<Texture2D>("torch0"),1,0.5f,false) },
                 {"light", new Animation(content.Load<Texture2D>("torch"), 6, 0.15f, false) }  
             };
-            animationManager = new AnimationManager(animations["dark"]);
+            //animationManager = new AnimationManager(animations["dark"]);
 
         }
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {   
+            if(animationManager == null)
+            {
+                animationManager = new AnimationManager(animations["dark"]);
+            }
             if (animationManager.animation != animations["dark"])
             {
                 animationManager.Update(gametime);
-                
             }
             else
             {
@@ -48,7 +51,10 @@ namespace Curse_of_the_Abyss
 
         public override void Draw(SpriteBatch spritebatch)
         {
-
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animations["dark"]);
+            }
             //draw current frame
             animationManager.Draw(spritebatch, position, 0f, 0);
             if (animationManager.animation != animations["dark"] && animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)

@@ -124,6 +124,7 @@ namespace Curse_of_the_Abyss
         {
             animationManager.Play(animations["explosion"]);
             explosion.Play(0.2f, 0, 0);
+            lightmask = true;
         }
     }
 }
