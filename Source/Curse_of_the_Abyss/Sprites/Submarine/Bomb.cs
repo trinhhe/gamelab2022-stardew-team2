@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
     {
         public int ground;
         public float linearVelocity;
-        private string[] collidables = {"obstacle", "targetingNPC", "rock","antenna","frogfish" };
+        private string[] collidables = {"obstacle", "targetingNPC", "rock","antenna","frogfish","torch" };
         public AnimationManager animationManager;
         public static Dictionary<string, Animation> animations;
         public Sprite other;
@@ -110,6 +110,13 @@ namespace Curse_of_the_Abyss
                     Sprite a = CheckCollision(sprites,new string[] {"antenna" });
                     if (a != null) YCollision(a,gametime, sprites);
                     break;
+                case ("torch"):
+                    Torch torch = s as Torch;
+                    torch.lightmask = true;
+                    torch.setLight();
+                    startExplosion();
+                    break;
+
             }
         }
 
