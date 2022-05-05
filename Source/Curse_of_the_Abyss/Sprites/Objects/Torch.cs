@@ -17,7 +17,7 @@ namespace Curse_of_the_Abyss
             name = "torch";
             collidable = true;
             position = new Rectangle(x, y, (int)192/7, (int)661/7);
-            //lightmask = true; // for debubgging
+            lightmask = true; // for debubgging
             
         }
 

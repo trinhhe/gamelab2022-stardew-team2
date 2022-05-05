@@ -171,7 +171,15 @@ namespace Curse_of_the_Abyss
             if (randomTimer > time)
             {
                 var rand = new Random();
-                int speed = rand.Next(4)+2;
+                int speed;
+                if (darkness)
+                {
+                    speed = 2;
+                }
+                else
+                {
+                    speed = rand.Next(3) + 2;
+                }
                 int x_index;
                 
                 if (waterPlayer.position.X < 400)

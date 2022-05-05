@@ -44,43 +44,54 @@ namespace Curse_of_the_Abyss
             Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
 
             sprites.Add(leftborder);
-            //SeaUrchin seaUrchin1 = new SeaUrchin(80, 350);
-            //sprites.Add(seaUrchin1);
+            SeaUrchin seaUrchin1 = new SeaUrchin(1473, 470);
+            sprites.Add(seaUrchin1);
             
-            MovingPlatform movableObstacle1 = new MovingPlatform(67*32, 32*32, 67*32, 20*32, 2,32*2, changedir: true);
+            MovingPlatform movableObstacle1 = new MovingPlatform(67*32, 1022, 67*32, 20*32, 2,32*2, changedir: true);
             sprites.Add(movableObstacle1);
-            /*
-            MovingPlatform movableObstacle2 = new MovingPlatform(2500, 892, 2500, 350, 2, 50, changedir: true);
+            
+            MovingPlatform movableObstacle2 = new MovingPlatform(2336, 736, 2768-150, 736, 2, 100, changedir: true);
             sprites.Add(movableObstacle2);
-            MovingPlatform movableObstacle3 = new MovingPlatform(2300, 577, 2050, 577, 2, 100, changedir: true);
+            MovingPlatform movableObstacle3 = new MovingPlatform(2768+50, 736, 3200-105, 736, 2, 100, changedir: true);
             sprites.Add(movableObstacle3);
-            StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(1780, 415,415);
+            
+            StationaryShooterNPC stationaryNPC1 = new StationaryShooterNPC(3600, 570,570);
             sprites.Add(stationaryNPC1);
             shooters.Add(stationaryNPC1);
-            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(3020, 320,320);
+           
+            StationaryShooterNPC stationaryNPC2 = new StationaryShooterNPC(5590, 475,475);
             sprites.Add(stationaryNPC2);
             shooters.Add(stationaryNPC2);
-            StationaryShooterNPC stationaryNPC3 = new StationaryShooterNPC(4360, 195,2500);
-            sprites.Add(stationaryNPC3);
-            shooters.Add(stationaryNPC3);
-            PathNPC pathNPC1 = new PathNPC(1300, 700, 1800, 700, 5);
+            
+            PathNPC pathNPC1 = new PathNPC(3200, 816, 3860, 816, 2);
             sprites.Add(pathNPC1);
-            PathNPC pathNPC2 = new PathNPC(2590, 530, 2925, 530, 2);
+            
+            PathNPC pathNPC2 = new PathNPC(4411, 847, 5143, 847, 2);
             sprites.Add(pathNPC2);
-            PathNPC pathNPC3 = new PathNPC(3150, 670, 3700, 670, 2);
+            
+            PathNPC pathNPC3 = new PathNPC(772, 568, 1415, 568, 4);
             sprites.Add(pathNPC3);
-            Rock rock1 = new Rock(new Rectangle(1216, 839, 94, 193));
-            Rock rock2 = new Rock(new Rectangle(1376, 839, 94, 193));
-            Rock rock3 = new Rock(new Rectangle(1480, 839, 94, 193));
-            Rock rock4 = new Rock(new Rectangle(3520, 470, 65, 110));
-            Rock rock5 = new Rock(new Rectangle(4940, 335, 94, 280));
-            Rock rock6 = new Rock(new Rectangle(5058, 255, 64, 100));
-            //sprites.Add(rock1); sprites.Add(rock2); sprites.Add(rock3);
-            //sprites.Add(rock4); sprites.Add(rock5); sprites.Add(rock6);
-            */
+
+            PathNPC pathNPC4 = new PathNPC(772, 568-3*32, 1415, 568-3*32, 2);
+            sprites.Add(pathNPC4);
+
+            Rock rock1 = new Rock(new Rectangle(3909, 839, 94, 193));
+            
+            sprites.Add(rock1);
+       
+            
             Torch torch1 = new Torch(620, 932);
             sprites.Add(torch1);
             lightTargets.Add(torch1);
+            Torch torch2 = new Torch(2752, 545-32);
+            sprites.Add(torch2);
+            lightTargets.Add(torch2);
+            Torch torch3 = new Torch(4801, 577-32);
+            sprites.Add(torch3);
+            lightTargets.Add(torch3);
+            Torch torch4 = new Torch(1122, 418-64);
+            sprites.Add(torch4);
+            lightTargets.Add(torch4);
         }
 
         public override void Update(GameTime gameTime)
@@ -112,14 +123,14 @@ namespace Curse_of_the_Abyss
 
                 }
             }
-            SpawnNPCs(10000,gameTime);
+            SpawnNPCs(15000,gameTime);
         }
         public override void Reset()
         {
             num_parts = 3;
             game_over = false;
             completed = false;
-            darkness = false; //set true
+            darkness = true; //set true
             lightTargets = new List<Sprite>();
             randomTimer = 0;
             healthbar = new Healthbar(new Rectangle(1, 1, 40, 310), Constants.max_player_health, darkness,true);
@@ -136,18 +147,19 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            /*
-            eggs.addEgg(100, 298);
-            eggs.addEgg(1335, 1002);
-            eggs.addEgg(1620, 554);
-            eggs.addEgg(1950, 554);
-            eggs.addEgg(2600, 874);
-            eggs.addEgg(2593, 649);
-            eggs.addEgg(3780, 745);
-            eggs.addEgg(4750, 1035);
-            eggs.addEgg(4220, 650);
-            eggs.addEgg(5026, 330);
-            */
+            
+            eggs.addEgg(11*32+7, 12*32+10);
+            eggs.addEgg(48*32+7, 23*32+10);
+            eggs.addEgg(79 * 32 + 7 -64, 31 * 32 + 10);
+            eggs.addEgg(2790, 591);
+            eggs.addEgg(4295, 489);
+            eggs.addEgg(4965, 1036);
+            eggs.addEgg(5037, 1036);
+            eggs.addEgg(5287, 747);
+            eggs.addEgg(5223, 491);
+            eggs.addEgg(1441, 613);
+            eggs.addEgg(798, 613);
+            
         }
 
     }
