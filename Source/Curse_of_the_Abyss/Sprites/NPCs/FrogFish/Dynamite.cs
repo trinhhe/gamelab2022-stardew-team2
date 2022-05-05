@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace Curse_of_the_Abyss
 {
-    class Dynamite : Sprite
+    class Dynamite : MovableSprite
     {
         static Animation animation;
         static Texture2D barrel_text;
@@ -53,10 +54,18 @@ namespace Curse_of_the_Abyss
             }
             else
             {
-                //gravity
-                position.Y += 1;
+                //gravity and throwing
+                position.X += (int) xVelocity;
+                xVelocity -= xVelocity / 100;
+                position.Y += (int) yVelocity;
+                yVelocity = yVelocity < 10 ? yVelocity + 1 : 10;
                 Sprite o = CheckCollision(sprites,new string[] {"obstacle" });
-                if (o != null) position.Y -= 1;
+                if (o != null)
+                {
+                    position.Y = position.Y-(int)yVelocity;
+                    yVelocity = 0;
+                    xVelocity = 0;
+                }
             }
             
             takenTimer += gametime.ElapsedGameTime.TotalMilliseconds;
@@ -100,10 +109,18 @@ namespace Curse_of_the_Abyss
                     }
                     else if(player.KB_curState.IsKeyDown(Keys.E) && takenTimer < 7000 && placingTimer > 1000)
                     {
-                        if (taken)
+                        if (taken && player.dodging == true)
                         {
                             taken = false;
                             position.Y = player.position.Y + player.position.Height - position.Height;
+                            this.player = null;
+                            placingTimer = 0;
+                        }
+                        else if (taken && player.dodging == false)
+                        {
+                            taken = false;
+                            xVelocity = player.xVelocity == 0? 10:player.xVelocity + Math.Sign(player.xVelocity)*10;
+                            yVelocity = -20;
                             this.player = null;
                             placingTimer = 0;
                         }
