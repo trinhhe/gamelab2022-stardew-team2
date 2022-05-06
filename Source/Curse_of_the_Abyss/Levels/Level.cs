@@ -29,6 +29,7 @@ namespace Curse_of_the_Abyss
         public int randomTimer;
         public Matrix camera_transform;
         public Sprite cam_target, updated_target;
+        public bool at_boundary;
         int eggs_collected;
         public DialogBox dialog;
         public int dialogID;
@@ -61,15 +62,15 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update(GameTime gameTime)
         {
-            //check_dialog();
+            check_dialog();
 
-            //if (dialog.active)
-            //{
-            //    dialog.Update(gameTime);
-            //    return;
-            //}
+            if (dialog.active)
+            {
+                dialog.Update(gameTime);
+                return;
+            }
 
-            // restrict the distance between submarine and waterplayer to never exceed screen size
+            // ensure that waterplayer and submarine can never leave the bounds of the camera
             Rectangle wp_pos_curr = waterPlayer.position;
             Rectangle sb_pos_curr = submarine.position;
             int sb_mid = sb_pos_curr.X + sb_pos_curr.Width / 2;
@@ -83,26 +84,18 @@ namespace Curse_of_the_Abyss
                 sb_dist_to_cam = Math.Abs(sb_mid - cam_target.position.X);
                 if (wp_dist_to_cam > 960 - wp_pos_curr.Width / 2 & sb_dist_to_cam > 960 - sb_pos_curr.Width / 2)
                 {
+                    at_boundary = true;
                     waterPlayer.position.X = wp_pos_prev.X;
                     submarine.SetPos(sb_pos_prev.X);
-                }
-                else if (wp_dist_to_cam > 960 - wp_pos_curr.Width/2)
-                {
-                    waterPlayer.position.X = wp_pos_prev.X;
-                    sb_pos_prev = sb_pos_curr;
-                }
-                else if (sb_dist_to_cam > 960 - sb_pos_curr.Width/2)
-                {
-                    submarine.SetPos(sb_pos_prev.X);
-                    wp_pos_prev = wp_pos_curr;
                 }
                 else
                 {
+                    at_boundary = false;
                     wp_pos_prev = wp_pos_curr;
                     sb_pos_prev = sb_pos_curr;
                 }
             }
-            
+
 
             // update egg counter
             if (eggs.eggsCollected > eggs_collected)

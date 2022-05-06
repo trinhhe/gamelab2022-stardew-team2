@@ -70,16 +70,17 @@ namespace Curse_of_the_Abyss
             _constantSpeed = constantSpeed;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, bool at_boundary)
         {
-            ApplySpeed(gameTime);
+            ApplySpeed(gameTime, at_boundary);
 
             CheckPosition();
         }
 
-        private void ApplySpeed(GameTime gameTime)
+        private void ApplySpeed(GameTime gameTime, bool at_boundary)
         {
-            if(_player.position.X > (Game.RenderWidth/2) - 80 && _player.position.X < ((_num_parts-1)*Game.RenderWidth) + Game.RenderWidth/2 - 80) { 
+            if ((_player.position.X > (Game.RenderWidth / 2) - 940 && _player.position.X < ((_num_parts - 1) * Game.RenderWidth) + Game.RenderWidth / 2 + 940) & !at_boundary)
+            {
                 _speed = (float)(_scrollingSpeed * gameTime.ElapsedGameTime.TotalSeconds);
             
                 if (!_constantSpeed || _player.xVelocity > 0)

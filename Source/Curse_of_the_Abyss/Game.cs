@@ -166,24 +166,29 @@ namespace Curse_of_the_Abyss
                 current_level.camera_transform = _camera.Transform;
 
                 foreach (var sb in _scrollingBackgrounds)
-                    sb.Update(gameTime);
+                    sb.Update(gameTime, current_level.at_boundary);
 
                 Rectangle wp_pos = current_level.waterPlayer.position;
                 Rectangle sb_pos = current_level.submarine.position;
-                int sb_mid = sb_pos.X + sb_pos.Width / 2;
-                int wp_mid = wp_pos.X + wp_pos.Width / 2;
 
                 int sb_left = sb_pos.X;
                 int sb_right = sb_left + sb_pos.Width;
 
-                //if (wp_mid - sb_mid < 1300)
-                //{
-                    if (wp_mid > sb_mid)
-                        cam_target = new Sprite(new Rectangle(sb_mid + (wp_mid - sb_mid) / 2, 0, 0, 0));
-                    else
-                        cam_target = new Sprite(new Rectangle(wp_mid + (sb_mid - wp_mid) / 2, 0, 0, 0));
-                //}
+                int wp_left = wp_pos.X;
+                int wp_right = wp_left + wp_pos.Width;
 
+                if (wp_left < sb_left)
+                {
+                    cam_target = new Sprite(new Rectangle(wp_left + (sb_right - wp_left) / 2, 0, 0, 0));
+                }
+                else if (sb_right < wp_right) 
+                {
+                    cam_target = new Sprite(new Rectangle(sb_left + (wp_right - sb_left) / 2, 0, 0, 0));
+                }
+                else if ((sb_left <= wp_left) & (wp_right <= sb_right))
+                {
+                    cam_target = new Sprite(new Rectangle(sb_left + (sb_right - sb_left) / 2, 0, 0, 0));
+                }
 
                 _camera.Follow(cam_target);
                 current_level.cam_target = cam_target;
