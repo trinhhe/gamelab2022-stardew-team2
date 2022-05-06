@@ -80,7 +80,7 @@ namespace Curse_of_the_Abyss
             
             var mousestate = Mouse.GetState();
             var mouseposition = new Vector2(mousestate.X, mousestate.Y);
-            scaledMousePosition = Vector2.Transform(new Vector2(mousestate.X, mousestate.Y), Matrix.Invert(level.camera.Transform * Constants.transform_matrix)); ;
+            scaledMousePosition = Vector2.Transform(new Vector2(mousestate.X, mousestate.Y), Matrix.Invert(level.camera_transform * Constants.transform_matrix)); ;
             // Console.WriteLine("X: {0}, Y: {1}", scaledMousePosition.X, scaledMousePosition.Y);
             KB_curState = Keyboard.GetState();
             getState(gametime);// decides current frame and handles state mechanics
@@ -188,7 +188,7 @@ namespace Curse_of_the_Abyss
             if (machineGunOn)
             {
                 var mousestate = Mouse.GetState();
-                Vector2 temp = Vector2.Transform(new Vector2(mousestate.X,mousestate.Y),Matrix.Invert(level.camera.Transform* Constants.transform_matrix)); 
+                Vector2 temp = Vector2.Transform(new Vector2(mousestate.X,mousestate.Y),Matrix.Invert(level.camera_transform* Constants.transform_matrix)); 
                 crossPosition = new Rectangle((int) (temp.X - CrosshairTexture.Width), (int) temp.Y - CrosshairTexture.Height, 30,30);
                 // I moved it to DarknessRender.cs because the crosshair should render after the darkness rendertarget.
                 // spritebatch.Draw(CrosshairTexture, crosspos, new Rectangle(0, 0, CrosshairTexture.Width, CrosshairTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.0f);
@@ -416,7 +416,7 @@ namespace Curse_of_the_Abyss
                 else
                 {
                     var mousestate = Mouse.GetState();
-                    Vector2 temp = Vector2.Transform(new Vector2(mousestate.X, mousestate.Y), Matrix.Invert(level.camera.Transform * Constants.transform_matrix));
+                    Vector2 temp = Vector2.Transform(new Vector2(mousestate.X, mousestate.Y), Matrix.Invert(level.camera_transform * Constants.transform_matrix));
                     direction = new Vector2(temp.X - (float) machineGun.position.X, temp.Y - (float) machineGun.position.Y);
                     if (direction != Vector2.Zero)
                         direction.Normalize();

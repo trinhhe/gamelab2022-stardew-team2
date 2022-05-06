@@ -27,10 +27,16 @@ namespace Curse_of_the_Abyss
         public bool darkness;
         public List<Sprite> lightTargets;
         public int randomTimer;
-        public Camera camera;
+        public Matrix camera_transform;
+        public Sprite cam_target, updated_target;
         int eggs_collected;
         public DialogBox dialog;
         public int dialogID;
+
+        Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
+        Rectangle sb_pos_prev = new Rectangle(0, 0, 0, 0);
+
+
         public virtual void Initialize()
         {
             // required for map manager
@@ -45,8 +51,6 @@ namespace Curse_of_the_Abyss
                 sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
             }
 
-            camera = new Camera(num_parts);
-            
         }
 
 
@@ -57,50 +61,48 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update(GameTime gameTime)
         {
-            if (dialog.active)
-            {
-                dialog.Update(gameTime);
-                return;
-            }
+            //check_dialog();
 
-            check_dialog();
-            // move submarine so that it's never out of bounds of the screen
-            int posdiff = submarine.position.X - waterPlayer.position.X;
-            int rightbound = ((num_parts - 1) * 1920 + 880);
-            int leftbound = 880;
+            //if (dialog.active)
+            //{
+            //    dialog.Update(gameTime);
+            //    return;
+            //}
 
-            if(waterPlayer.position.X <= leftbound)
+            // restrict the distance between submarine and waterplayer to never exceed screen size
+            Rectangle wp_pos_curr = waterPlayer.position;
+            Rectangle sb_pos_curr = submarine.position;
+            int sb_mid = sb_pos_curr.X + sb_pos_curr.Width / 2;
+            int wp_mid = wp_pos_curr.X + wp_pos_curr.Width / 2;
+            int sb_dist_to_cam;
+            int wp_dist_to_cam;
+
+            if (!(cam_target == null))
             {
-                if(submarine.position.X < -30)
+                wp_dist_to_cam = Math.Abs(wp_mid - cam_target.position.X);
+                sb_dist_to_cam = Math.Abs(sb_mid - cam_target.position.X);
+                if (wp_dist_to_cam > 960 - wp_pos_curr.Width / 2 & sb_dist_to_cam > 960 - sb_pos_curr.Width / 2)
                 {
-                    submarine.SetPos(-30);
+                    waterPlayer.position.X = wp_pos_prev.X;
+                    submarine.SetPos(sb_pos_prev.X);
                 }
-                else if (submarine.position.X > 1325)
+                else if (wp_dist_to_cam > 960 - wp_pos_curr.Width/2)
                 {
-                    submarine.SetPos(1325);
+                    waterPlayer.position.X = wp_pos_prev.X;
+                    sb_pos_prev = sb_pos_curr;
+                }
+                else if (sb_dist_to_cam > 960 - sb_pos_curr.Width/2)
+                {
+                    submarine.SetPos(sb_pos_prev.X);
+                    wp_pos_prev = wp_pos_curr;
+                }
+                else
+                {
+                    wp_pos_prev = wp_pos_curr;
+                    sb_pos_prev = sb_pos_curr;
                 }
             }
-            else if (waterPlayer.position.X >= rightbound)
-            {
-                int posleft = (num_parts - 1) * 1920 - 30;
-                int posright = (num_parts - 1) * 1920 + 1325;
-                if (submarine.position.X < posleft)
-                {
-                    submarine.SetPos(posleft);
-                }
-                else if (submarine.position.X > posright)
-                {
-                    submarine.SetPos(posright);
-                }
-            }
-            else if (posdiff < - 920)
-            {
-                submarine.SetPos(waterPlayer.position.X - 920);
-            }
-            else if (posdiff > 444)
-            {
-                submarine.SetPos(waterPlayer.position.X + 444);
-            }
+            
 
             // update egg counter
             if (eggs.eggsCollected > eggs_collected)
@@ -128,6 +130,7 @@ namespace Curse_of_the_Abyss
                     toRemove.Add(s);
                 }
             }
+
             foreach(Sprite s in toRemove)
             {
                 sprites.Remove(s);
@@ -137,7 +140,6 @@ namespace Curse_of_the_Abyss
             eggs.collectIfPossible(waterPlayer.position);
             eggs.UpdateAll(null, gameTime);
 
-            camera.Follow(waterPlayer);
         }
 
         public virtual void Draw(SpriteBatch spritebatch)
@@ -162,16 +164,8 @@ namespace Curse_of_the_Abyss
 
         public virtual void Reset()
         {
-            List<Sprite> toRemove = new List<Sprite>();
-            foreach (Sprite s in sprites)
-            {
-                toRemove.Add(s);   
-            }
-            foreach (Sprite s in toRemove)
-            {
-                sprites.Remove(s);
-                if (lightTargets.Contains(s)) lightTargets.Remove(s);
-            }
+            wp_pos_prev = new Rectangle(0, 0, 0, 0);
+            sb_pos_prev = new Rectangle(0, 0, 0, 0);
         }
 
         //spawns Targeting NPCs in given time interval (time in milliseconds)
@@ -199,7 +193,7 @@ namespace Curse_of_the_Abyss
                 int y_index = rand.Next(2);
                 var x_pos = new List<int> { -100, 2100};
                 var y_pos = new List<int> { 400, 900 };
-                Vector2 temp = Vector2.Transform(new Vector2(x_pos[x_index],y_pos[y_index]),Matrix.Invert(camera.Transform));
+                Vector2 temp = Vector2.Transform(new Vector2(x_pos[x_index],y_pos[y_index]),Matrix.Invert(camera_transform));
                 TargetingNPC targetingNPC = new TargetingNPC((int)temp.X, (int)temp.Y, waterPlayer, speed);
                 sprites.Add(targetingNPC);
                 randomTimer = 0;

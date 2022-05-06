@@ -23,6 +23,7 @@ namespace Curse_of_the_Abyss
         // screen and camera
         public static int RenderHeight, RenderWidth;
         private Camera _camera;
+        private Sprite cam_target;
 
         // levels
         Level current_level;
@@ -40,7 +41,8 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] {new Level1(),new Maze(), new Bossfight("frogfish")};
+            //levels = new Level[] {new Level1(),new Maze(), new Bossfight("frogfish")};
+            levels = new Level[] { new SideScrollingTest() };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -150,18 +152,43 @@ namespace Curse_of_the_Abyss
                 // set camera to match number of "screen widths" in the new level
                 _camera = new Camera(current_level.num_parts);
 
+                // set render target and darkness render to match number of "screen widths" in the new level
+                renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+
+                darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+
             }
 
             if (!paused)
             {
                 current_level.Update(gameTime);
 
+                current_level.camera_transform = _camera.Transform;
+
                 foreach (var sb in _scrollingBackgrounds)
                     sb.Update(gameTime);
 
-                _camera.Follow(current_level.waterPlayer);
+                Rectangle wp_pos = current_level.waterPlayer.position;
+                Rectangle sb_pos = current_level.submarine.position;
+                int sb_mid = sb_pos.X + sb_pos.Width / 2;
+                int wp_mid = wp_pos.X + wp_pos.Width / 2;
+
+                int sb_left = sb_pos.X;
+                int sb_right = sb_left + sb_pos.Width;
+
+                //if (wp_mid - sb_mid < 1300)
+                //{
+                    if (wp_mid > sb_mid)
+                        cam_target = new Sprite(new Rectangle(sb_mid + (wp_mid - sb_mid) / 2, 0, 0, 0));
+                    else
+                        cam_target = new Sprite(new Rectangle(wp_mid + (sb_mid - wp_mid) / 2, 0, 0, 0));
+                //}
+
+
+                _camera.Follow(cam_target);
+                current_level.cam_target = cam_target;
+
                 IsMouseVisible = false;
-                // IsMouseVisible = true;
             }
 
             else

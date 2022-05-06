@@ -204,8 +204,8 @@ namespace Curse_of_the_Abyss
             Vector2 bottomRight = Vector2.Transform(new Vector2(lightcone.X+ lightcone.Width/2, lightcone.Y + lightcone.Height) - lightconePos, Matrix.CreateRotationZ(current.submarine.lamp.rotation + 5.5f)) + lightconePos;
             
             //position of border according to camera
-            Vector2 bottomRightborder = Vector2.Transform(new Vector2(1920,1080),Matrix.Invert(current.camera.Transform));
-            Vector2 upperLeftborder = Vector2.Transform(Vector2.Zero, Matrix.Invert(current.camera.Transform));
+            Vector2 bottomRightborder = Vector2.Transform(new Vector2(1920,1080),Matrix.Invert(current.camera_transform));
+            Vector2 upperLeftborder = Vector2.Transform(Vector2.Zero, Matrix.Invert(current.camera_transform));
 
             if (current.submarine.lightOn)
             {

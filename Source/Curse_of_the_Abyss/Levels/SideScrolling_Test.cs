@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
         {
             num_parts = 3;
 
-            tileset = content.Load<Texture2D>(TileMap.Tilesets[1].Name.ToString());
+            tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
 
             WaterPlayer.LoadContent(content);
 
@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
         public SideScrollingTest()
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/map_lvl1_extension.tmx");
+            TileMap = new TmxMap("./Content/maps/large_testmap.tmx");
             Reset();
         }
 
@@ -54,9 +54,12 @@ namespace Curse_of_the_Abyss
         }
         public override void Reset()
         {
+            base.Reset();
+            dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_first);
+            dialog.active = false;
             game_over = false;
             completed = false;
-            // darkness = true;
+            darkness = false;
             healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),5000, darkness,true);
             eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
