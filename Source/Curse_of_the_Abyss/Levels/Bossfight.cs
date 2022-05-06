@@ -77,6 +77,7 @@ namespace Curse_of_the_Abyss
         }
         public override void Reset()
         {
+            base.Reset();
             num_parts = 1;
             game_over = false;
             completed = false;

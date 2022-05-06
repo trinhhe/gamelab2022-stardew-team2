@@ -82,6 +82,12 @@ namespace Curse_of_the_Abyss
         {
             base.Update(gameTime);
 
+            // need to return here if dialogue still active otherwise NPCs will keep spawning
+            if (dialog.active)
+            {
+                return;
+            }
+
             if (waterPlayer.position.X > num_parts *1920)
             {
                 completed = true;
@@ -111,6 +117,7 @@ namespace Curse_of_the_Abyss
         }
         public override void Reset()
         {
+            base.Reset();
             num_parts = 3;
             game_over = false;
             completed = false;

@@ -17,14 +17,15 @@ namespace Curse_of_the_Abyss
             {
                 // switch background based on level
                 case 0:
+                case 1:
                     {
                         return new List<ScrollingBackground>()
                         {
-                            new ScrollingBackground(content.Load<Texture2D>("backgrounds/bg_1"), player, 40f, num_parts)
+                            new ScrollingBackground(content.Load<Texture2D>("backgrounds/bg_1"), player, 24f, num_parts)
                             {
                                 Layer = 0.99f,
                             },
-                            new ScrollingBackground(content.Load<Texture2D>("backgrounds/bg_2"), player, 20f, num_parts)
+                            new ScrollingBackground(content.Load<Texture2D>("backgrounds/bg_2"), player, 10f, num_parts)
                             {
                                 Layer = 0.9f,
                             },
