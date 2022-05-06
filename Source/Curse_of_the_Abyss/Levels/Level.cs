@@ -41,9 +41,6 @@ namespace Curse_of_the_Abyss
         public virtual void Initialize()
         {
             // required for map manager
-            // var GameSize = new Vector2(1920, 1080);
-            // var MapSize = new Vector2(2*1920, 1088);
-            // matrix = Matrix.CreateScale(new Vector3(GameSize / MapSize, 1));
             matrix = Matrix.CreateScale(new Vector3(new Vector2(1, 1), 1));
 
             // add all tiles in map to collisionObjects list
