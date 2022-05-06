@@ -67,9 +67,20 @@ namespace Curse_of_the_Abyss
                 return;
             }
 
-            // ensure that waterplayer and submarine can never leave the bounds of the camera
             Rectangle wp_pos_curr = waterPlayer.position;
             Rectangle sb_pos_curr = submarine.position;
+
+            // ensure that submarine can never leave the bounds of the map
+            if(sb_pos_curr.X < 0)
+            {
+                submarine.SetPos(0);
+            }
+            else if (sb_pos_curr.X + sb_pos_curr.Width > num_parts * 1920)
+            {
+                submarine.SetPos(num_parts * 1920 - sb_pos_curr.Width);
+            }
+
+            // ensure that waterplayer and submarine can never leave the bounds of the camera
             int sb_mid = sb_pos_curr.X + sb_pos_curr.Width / 2;
             int wp_mid = wp_pos_curr.X + wp_pos_curr.Width / 2;
             int sb_dist_to_cam;
