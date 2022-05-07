@@ -37,18 +37,24 @@ namespace Curse_of_the_Abyss
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
         Rectangle sb_pos_prev = new Rectangle(0, 0, 0, 0);
 
-
+        public MazeGenerator MazeGenerator;
+        public bool is_maze_gen;
         public virtual void Initialize()
         {
             // required for map manager
+            // var GameSize = new Vector2(1920, 1080);
+            // var MapSize = new Vector2(2*1920, 1088);
+            // matrix = Matrix.CreateScale(new Vector3(GameSize / MapSize, 1));
             matrix = Matrix.CreateScale(new Vector3(new Vector2(1, 1), 1));
-
-            // add all tiles in map to collisionObjects list
-            foreach (var o in TileMap.ObjectGroups["Collisions"].Objects)
+            if (!is_maze_gen)
             {
-                sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
+                // add all tiles in map to collisionObjects list
+                foreach (var o in TileMap.ObjectGroups["Collisions"].Objects)
+                {
+                    sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
+                }
             }
-
+            
         }
 
 
@@ -163,6 +169,10 @@ namespace Curse_of_the_Abyss
             MapManager = new MapManager(_spriteBatch, TileMap, tileset, TileSetTilesWide, tileWidth, tileHeight);
         }
 
+        public virtual void InitMazeGenerator(SpriteBatch _spriteBatch, int mazeDrawWidth, int mazeDrawHeight)
+        {
+
+        }
         public virtual void Reset()
         {
             wp_pos_prev = new Rectangle(0, 0, 0, 0);
