@@ -101,7 +101,7 @@ namespace Curse_of_the_Abyss
             num_parts = 1;
             game_over = false;
             completed = false;
-            //darkness = true;
+            darkness = true;
             is_maze_gen = true;
             lightTargets = new List<Sprite>();
 
