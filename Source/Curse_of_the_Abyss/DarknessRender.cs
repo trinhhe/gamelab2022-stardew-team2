@@ -67,7 +67,7 @@ namespace Curse_of_the_Abyss
                 waterplayer_lightmask,
                 new Rectangle(current_level.waterPlayer.position.X - (width-current_level.waterPlayer.position.Width)/2, current_level.waterPlayer.position.Y - (height-current_level.waterPlayer.position.Height)/2, width, height),
                 null, 
-                color * 1f,
+                color * 0.7f,
                 0, 
                 Vector2.Zero, 
                 SpriteEffects.None,
@@ -163,7 +163,7 @@ namespace Curse_of_the_Abyss
 
         public void Draw(Level current_level, SpriteBatch _spriteBatch){
             if (current_level.darkness)
-                _spriteBatch.Draw(darkness, Vector2.Zero, Color.White * 0.99f); //adjust Color.White * 0.99 lower will make background behind darkness more visible
+                _spriteBatch.Draw(darkness, Vector2.Zero, Color.White * 1f); //adjust Color.White * 0.99 lower will make background behind darkness more visible
 
             //current_level.submarine.healthbar.Draw(_spriteBatch);
             if (current_level.submarine.machineGunOn)

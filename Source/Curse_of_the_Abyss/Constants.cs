@@ -39,8 +39,8 @@ namespace Curse_of_the_Abyss
 
         //darkness
         public static float light_width_scale = 1.2f;
-        public static float light_height_scale = 1.5f;
-        public static float waterplayer_light_width_scale = 1.5f;
+        public static float light_height_scale = 1f;
+        public static float waterplayer_light_width_scale = 1.2f;
         public static float waterplayer_light_height_scale = 1.1f;
 
         //dialogs
