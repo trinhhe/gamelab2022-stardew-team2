@@ -75,7 +75,7 @@ namespace Curse_of_the_Abyss
             }
 
             //draw current frame
-            animationManager.Draw(spritebatch,position,0f,0);
+            animationManager.Draw(spritebatch,position,0f,0, SpriteEffects.None);
         }
 
         public void init()

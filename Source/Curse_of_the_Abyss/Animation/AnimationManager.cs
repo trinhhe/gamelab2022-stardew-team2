@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
             this.animation = animation;
         }
 
-        public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth, float rotation)
+        public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth, float rotation, SpriteEffects effect)
         {
             spritebatch.Draw(animation.Texture,
                 position,
@@ -26,7 +26,19 @@ namespace Curse_of_the_Abyss
                 Color.White,
                 rotation,
                 Vector2.Zero,
-                SpriteEffects.None,
+                effect,
+                layerDepth);
+        }
+
+        public void Draw(SpriteBatch spritebatch, Rectangle position, float layerDepth, float rotation, SpriteEffects effect,Vector2 origin)
+        {
+            spritebatch.Draw(animation.Texture,
+                position,
+                new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.FrameHeight),
+                Color.White,
+                rotation,
+                origin,
+                effect,
                 layerDepth);
         }
         //use Play if one asset has multiple different animation sprite sheets (e.g. moving up,left,right,down animation)

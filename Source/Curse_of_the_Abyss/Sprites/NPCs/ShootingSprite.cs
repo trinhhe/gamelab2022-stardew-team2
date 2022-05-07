@@ -28,7 +28,6 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            //TO DO: replace SmileyWalk by actual Sprites
             texture = content.Load<Texture2D>("cannonball");
         }
 
@@ -71,7 +70,7 @@ namespace Curse_of_the_Abyss
                 player.health.curr_health -= player.health.maxhealth/10;
                 remove = true;
             }
-            else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately after spawning
             {
                 remove = position.Right > s.position.Right;
             }
@@ -85,7 +84,7 @@ namespace Curse_of_the_Abyss
                 player.health.curr_health -= player.health.maxhealth / 10;
                 remove = true;
             }
-            else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately
+            else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately after spawning
             {
                 remove = position.Right > s.position.Right;
             }

@@ -56,7 +56,7 @@ namespace Curse_of_the_Abyss
                 animationManager = new AnimationManager(animations["dark"]);
             }
             //draw current frame
-            animationManager.Draw(spritebatch, position, 0f, 0);
+            animationManager.Draw(spritebatch, position, 0f, 0, SpriteEffects.None);
             if (animationManager.animation != animations["dark"] && animationManager.animation.CurrentFrame == animationManager.animation.FrameCount-1)
             {
                 animationManager.Stop(animationManager.animation.CurrentFrame);

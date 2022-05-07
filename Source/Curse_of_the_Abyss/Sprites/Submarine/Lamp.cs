@@ -48,7 +48,7 @@ namespace Curse_of_the_Abyss
             {
                 animationManager = new AnimationManager(animation);
             } 
-            animationManager.Draw(spritebatch,position, 0.4f,rotation);
+            animationManager.Draw(spritebatch,position, 0.4f,rotation, SpriteEffects.None);
         }
 
     }

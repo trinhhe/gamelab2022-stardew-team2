@@ -88,7 +88,7 @@ namespace Curse_of_the_Abyss
                 animationManager = new AnimationManager(animation);
             }
             if (barrel) spritebatch.Draw(barrel_text,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.5f);
-            else animationManager.Draw(spritebatch, position, 0.1f, 0);
+            else animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
         }
 
         public void collision(Sprite s)

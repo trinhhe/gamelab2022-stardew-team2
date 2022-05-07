@@ -189,7 +189,7 @@ namespace Curse_of_the_Abyss
                 // b.Draw(_spriteBatch);
                 if(b.animationManager.animation == Bomb.animations["explosion"]){
                     Rectangle pos = new Rectangle(b.position.X-20, b.position.Y-20, b.position.Width + 40, b.position.Height + 40);
-                    b.animationManager.Draw(_spriteBatch, pos, 1f,0f);
+                    b.animationManager.Draw(_spriteBatch, pos, 1f,0f,SpriteEffects.None);
                     if(b.animationManager.animation.CurrentFrame == 5)
                     {
                         b.animationManager.animation.FrameSpeed = 0.2f;
