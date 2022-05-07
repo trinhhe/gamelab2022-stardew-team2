@@ -11,15 +11,14 @@ namespace Curse_of_the_Abyss
     {
         public static Animation animation;
         protected AnimationManager animationManager;
-        public static Texture2D debug;
         int targetx;
         int targety;
         int speed;
         float rotation;
         private string[] collidables = { "obstacle", "waterplayer" };
-        Vector2[] main_body;
+        Vector2[] main_body; //corners of the energyball, used for collision detection
         SpriteEffects flip;
-        Vector2 rot_center;
+        Vector2 rot_center; //center of energyball, used for rotation
 
         public Electro_Attack(int x, int y, int coordx, int coordy, int speed)
         {
@@ -35,7 +34,6 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             animation = new Animation(content.Load<Texture2D>("Boss/Electro_Attack"),3,0.3f,true);
-            debug = content.Load<Texture2D>("bullet");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)

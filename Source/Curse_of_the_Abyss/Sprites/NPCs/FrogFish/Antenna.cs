@@ -40,7 +40,7 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites, GameTime gametime)
         {
             if (animationManager.animation == animations["attack"] && !attack) animationManager.Stop(0);
-            else if (animationManager.animation.CurrentFrame == animationManager.animation.FrameCount - 1)
+            else if (animationManager.animation.CurrentFrame == animationManager.animation.FrameCount - 1 && attack)
             {
                 attack = false;
                 level.toAdd.Add(new Electro_Attack(position.X, position.Y, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 4));

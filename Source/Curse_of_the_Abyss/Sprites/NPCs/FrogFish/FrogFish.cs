@@ -64,11 +64,11 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
             //change stages and decide, when the boss is defeated
-            if (stage == 3 && health.curr_health <= 0) defeated = true;
+            if (stage == 4) defeated = true;
             else if (health.curr_health <= 0)
             {
-                stage++;
-                health.maxhealth = 100;
+                stage+=1;
+                health.curr_health = 100;
                 antenna.hit = false;
             }
             
