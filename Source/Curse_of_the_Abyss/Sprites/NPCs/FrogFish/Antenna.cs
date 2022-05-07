@@ -43,7 +43,12 @@ namespace Curse_of_the_Abyss
             else if (animationManager.animation.CurrentFrame == animationManager.animation.FrameCount - 1 && attack)
             {
                 attack = false;
-                level.toAdd.Add(new Electro_Attack(position.X, position.Y, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 4));
+                bool spatial = false;
+                if (level.boss.stage == 3)
+                {
+                    spatial = true;
+                }
+                level.toAdd.Add(new Electro_Attack(position.X, position.Y+position.Height/2, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 4,spatial,level));
             }
             
             animationManager.Update(gametime);

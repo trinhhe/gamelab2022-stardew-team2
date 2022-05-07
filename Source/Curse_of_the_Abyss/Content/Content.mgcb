@@ -217,6 +217,18 @@
 /processorParam:TextureFormat=Color
 /build:Boss/Electro_Attack.png
 
+#begin Boss/Electro_spatial.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Boss/Electro_spatial.png
+
 #begin Boss/Frog_fish.png
 /importer:TextureImporter
 /processor:TextureProcessor

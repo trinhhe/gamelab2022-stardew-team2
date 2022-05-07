@@ -19,21 +19,26 @@ namespace Curse_of_the_Abyss
         Vector2[] main_body; //corners of the energyball, used for collision detection
         SpriteEffects flip;
         Vector2 rot_center; //center of energyball, used for rotation
+        bool spatial;
+        Bossfight level;
 
-        public Electro_Attack(int x, int y, int coordx, int coordy, int speed)
+        public Electro_Attack(int x, int y, int coordx, int coordy, int speed,bool spatial,Bossfight level)
         {
-            name = "shootingSprite";
+            name = "electroSprite";
             position = new Rectangle(x, y, 76, 36); // width and height must be the same than width and height of one frame in animation
             targetx = coordx;
             targety = coordy;
             this.speed = speed; //how fast the shooting sprite should be
             lightmask = true;
+            this.spatial = spatial;
+            this.level = level;
             init(); //do rest there to keep this part of code clean
         }
 
         public static void LoadContent(ContentManager content)
         {
             animation = new Animation(content.Load<Texture2D>("Boss/Electro_Attack"),3,0.3f,true);
+            Electro_Spatial.LoadContent(content);
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -95,6 +100,10 @@ namespace Curse_of_the_Abyss
                     {
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
                     }
+                    else if(s.name == "obstacle"&& spatial)
+                    {
+                        level.toAdd.Add(new Electro_Spatial(position.X,s.position.Y));
+                    }
                     remove = true;
                     break;
                 }
@@ -109,6 +118,10 @@ namespace Curse_of_the_Abyss
                     if (s.name == "waterplayer")
                     {
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
+                    }
+                    else if (s.name == "obstacle" && spatial)
+                    {
+                        level.toAdd.Add(new Electro_Spatial(position.X-32, s.position.Y-22));
                     }
                     remove = true;
                     break;

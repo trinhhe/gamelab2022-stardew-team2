@@ -24,7 +24,7 @@ namespace Curse_of_the_Abyss
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
-            stage = 1;
+            stage = 3;
             health = new Healthbar(new Rectangle(1840,95,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
@@ -101,7 +101,7 @@ namespace Curse_of_the_Abyss
                 //movement inside of border
                 if (position.X < 500) xVelocity = 1;
                 else if (position.Right > 1920) xVelocity = -1;
-                if (position.Y < 0) yVelocity = 1;
+                if (position.Y < level.submarine.position.Bottom) yVelocity = 1;
                 else if (position.Bottom > 1022) yVelocity = -1;
             }
             //update position
