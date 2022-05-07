@@ -163,24 +163,9 @@ namespace Curse_of_the_Abyss
             MapManager = new MapManager(_spriteBatch, TileMap, tileset, TileSetTilesWide, tileWidth, tileHeight);
         }
 
-        public  void InitMazeGenerator(SpriteBatch _spriteBatch, int mazeDrawWidth, int mazeDrawHeight)
+        public virtual void InitMazeGenerator(SpriteBatch _spriteBatch, int mazeDrawWidth, int mazeDrawHeight)
         {
-            Vector2 coordinateSize = new Vector2((float)waterPlayer.position.Width * 2f, (float)waterPlayer.position.Height * 2f);
-            int mazeWallThickness = 25;
-            int mazeWidth = (mazeDrawWidth - mazeWallThickness) / (int)coordinateSize.X;
-            int mazeHeight = (mazeDrawHeight - mazeWallThickness - 300) / (int)coordinateSize.Y;
-            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", mazeDrawWidth, mazeDrawHeight, coordinateSize, mazeWidth, mazeHeight);
-            //int mazeCoordinateSize = 60;
 
-            // The width in pixels of th0e maze that will be generated with the current maze values.
-            //uint mazeDrawWidth = mazeWidth * (mazeCoordinateSize - mazeWallThickness) + mazeWallThickness * (mazeWidth + 1);
-            // The height in pixels of the maze that will be generated with the current maze values.
-            //uint mazeDrawHeight = mazeHeight * (mazeCoordinateSize - mazeWallThickness) + mazeWallThickness * (mazeHeight + 1);
-            // The position of the upper-left point of the maze on the window, set so that it is centered.
-            Vector2 mazePositionOnWindow = new Vector2(0, 300);
-            MazeGenerator = new MazeGenerator(_spriteBatch, tileset, mazePositionOnWindow, coordinateSize, coordinateSize+new Vector2(mazeWallThickness, mazeWallThickness), mazeWallThickness,mazeWidth, mazeHeight);
-            MazeGenerator.Generate(new Vector2(0, 0), 99);
-            MazeGenerator.AddObstacles(sprites);
         }
         public virtual void Reset()
         {

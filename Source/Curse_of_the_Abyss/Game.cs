@@ -40,7 +40,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] {new MazeRandom(), new Bossfight("frogfish")};
+            levels = new Level[] { new MazeRandom(), new Bossfight("frogfish")};
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -86,7 +86,7 @@ namespace Curse_of_the_Abyss
             current_level.LoadContent(Content);
             if (!current_level.is_maze_gen)
                 current_level.InitMapManager(_spriteBatch);
-            else 
+            else
                 current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
 
             // scrolling backgrounds
@@ -152,7 +152,8 @@ namespace Curse_of_the_Abyss
                 if (!current_level.is_maze_gen)
                     current_level.InitMapManager(_spriteBatch);
                 else
-                    current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderHeight, RenderWidth);
+                    current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
+                
                 current_level.eggcounter.set(last_level_eggcount);
                 
                 DarknessRender.LoadContent(Content);

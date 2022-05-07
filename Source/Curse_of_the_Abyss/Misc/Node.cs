@@ -15,12 +15,15 @@ namespace Curse_of_the_Abyss
         public bool visited;
         // distance from entry to this node
         public int walkDistance;
+        // deadend if around 3 wall
+        public int walls;
 
         public Node(Vector2 coordinateInMaze)
         {
             this.coordinateInMaze = coordinateInMaze;
             visited = false;
             walkDistance = 0;
+            walls = 4;
         }
 
         // Returns a list containing the unvisited nodes adjacent to this Node within the Maze.
@@ -53,7 +56,13 @@ namespace Curse_of_the_Abyss
 
         public void Draw(Color color, MazeGenerator maze, SpriteBatch spriteBatch, Texture2D texture)
         {
+            // The horizontal position of the upper-leftmost point of the MazeNode on the game window.
+            float nodeHorizontalWindowPosition = maze.positionOnWindow.X + (coordinateInMaze.X * maze.coordinateSize.X) + maze.coordinateSize.Y / 2 + maze.wallDrawThickness / 2 - maze.nodeDrawSize.X / 2;
+            // The vertical position of the upper-leftmost point of the MazeNode on the game window.
+            float nodeVerticalWindowPosition = maze.positionOnWindow.Y + coordinateInMaze.Y * maze.coordinateSize.Y + maze.coordinateSize.Y / 2 + maze.wallDrawThickness / 2 - maze.nodeDrawSize.Y / 2;
 
+            // Draws the MazeNode on the game window.
+            spriteBatch.Draw(texture, new Rectangle((int)nodeHorizontalWindowPosition, (int)nodeVerticalWindowPosition, (int)maze.nodeDrawSize.X, (int)maze.nodeDrawSize.Y), color);
         }
     }
 }

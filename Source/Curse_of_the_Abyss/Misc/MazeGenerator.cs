@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Curse_of_the_Abyss
 {
@@ -21,12 +22,12 @@ namespace Curse_of_the_Abyss
         public Random rand;
         // seed used by rng to generate the Maze
         public int seed;
-        // wall texture
-        public Texture2D texture;
+        // wall textures
+        public Texture2D wall_horizontal, wall_vertical;
         // position of upperleft corner of maze in game window
         public Vector2 positionOnWindow;
         // coordinate where maze entry is
-        public Vector2 mazeEntry;
+        public Vector2 mazeEntry, mazeExit;
         // The width of the Maze in coordinate spaces.
         public int widthInCoordinates;
         // The height of the Maze in coordinate spaces.
@@ -35,15 +36,18 @@ namespace Curse_of_the_Abyss
         public Vector2 coordinateSize;
         // The length in coordinates of the longest walk distance of any path originating at the generation origin node within the Maze.
         public int longestWalkDistance;
-        // Draw size of node / single unit of path
+        // Draw size of node / single unit of path if needed
         public Vector2 nodeDrawSize;
         // Wall thickness
         public int wallDrawThickness;
         private SpriteBatch spriteBatch;
-        public MazeGenerator(SpriteBatch _spritebatch, Texture2D texture, Vector2 positionOnWindow, Vector2 coordinateSize, Vector2 nodeDrawSize, int wallDrawThickness, int widthInCoordinates, int heightInCoordinates)
+        //deadend nodes
+        public List<Node> deadend_nodes;
+        public MazeGenerator(SpriteBatch _spritebatch, Texture2D wallhorizontal, Texture2D wallvertical, Vector2 positionOnWindow, Vector2 coordinateSize, Vector2 nodeDrawSize, int wallDrawThickness, int widthInCoordinates, int heightInCoordinates, int seed = 0)
         {
             this.spriteBatch = _spritebatch;
-            this.texture = texture;
+            this.wall_horizontal = wallhorizontal;
+            this.wall_vertical = wallvertical;
             this.positionOnWindow = positionOnWindow;
             this.coordinateSize = coordinateSize;
             this.nodeDrawSize = nodeDrawSize;
@@ -53,32 +57,37 @@ namespace Curse_of_the_Abyss
             this.nodes = new List<Node>();
             this.walls = new List<Wall>();
             this.longestWalkDistance = 0;
+            this.deadend_nodes = new List<Node>();
+
+            if (seed == 0)
+                this.rand = new Random();
+            else
+                this.rand = new Random(seed);
 
         }
-
-        public void Generate(Vector2 mazeEntry, int seed = 0)
+        //mazeEntry and mazeExit in  coordinate space e.g. upperleft node is (0,0)
+        public void Generate(Vector2 mazeEntry, Vector2 mazeExit, int seed = 0)
         {
+            this.mazeExit = mazeExit;
+            this.mazeEntry = mazeEntry;
             //Fill Maze with nodes and walls
-            for (int x = 0; x < widthInCoordinates; x++)
+            for (int y = 0; y < heightInCoordinates ; y++)
             {
-                for (int y = 0; y < heightInCoordinates; y++)
+                for (int x = 0; x < widthInCoordinates; x++)
                 {
                     nodes.Add(new Node(new Vector2(x, y)));
 
                     // If the current x-coordinate is not at the rightmost side of the Maze, adds a wall between the current coordinate and the one to the right.
                     if (x < widthInCoordinates - 1)
                         walls.Add(new Wall(new Vector2(x, y), new Vector2(x + 1, y)));
+                        
+                    
+                        
                     // If the current y-coordinate is not at the bottom side of the Maze, adds a wall between the current coordinate and the one to the bottom.
                     if (y < heightInCoordinates - 1)
-                        walls.Add(new Wall(new Vector2(x, y), new Vector2(x, y + 1)));
+                        walls.Add(new Wall(new Vector2(x, y), new Vector2(x, y + 1)));           
                 }
             }
-
-            if (seed == 0)
-                rand = new Random();
-            else
-                rand = new Random(seed);
-
 
             DFS();
 
@@ -99,7 +108,17 @@ namespace Curse_of_the_Abyss
                 walls.Add(new Wall(new Vector2(i, heightInCoordinates - 1), new Vector2(i, heightInCoordinates)));
             }
             RemoveWall(new Vector2(mazeEntry.X - 1, mazeEntry.Y), mazeEntry);
-            //TODO: remove wall at end
+            RemoveWall(mazeExit, new Vector2(mazeExit.X+1, mazeExit.Y));
+            //walls.Clear(); //CHANGE
+
+            //add deadend nodes to list
+            foreach(Node i in nodes)
+            {
+                if (i.walls == 3)
+                    deadend_nodes.Add(i);
+            }
+            //sort deadends furthest from mazeExit in descending order
+            deadend_nodes.Sort((x, y) => y.walkDistance.CompareTo(x.walkDistance));
         }
 
         public void DFS()
@@ -107,9 +126,11 @@ namespace Curse_of_the_Abyss
             //Init Queue for unvisited nodes
             unvisitedNodesQueue = new Stack<Node>();
             var len = nodes.Count;
+            int x, y;
             for (int i = 0; i < len; i++)
             {
-                if (nodes[i].coordinateInMaze == mazeEntry)
+                //start from mazeExit, so we can place eggs in deadends that are furthest away from exit
+                if (nodes[i].coordinateInMaze == mazeExit)
                 {
                     currentGenerationNode = nodes[i];
                     break;
@@ -133,8 +154,14 @@ namespace Curse_of_the_Abyss
                         if (walls[i].firstNodeCoordinate == currentGenerationNode.coordinateInMaze && walls[i].secondNodeCoordinate == adjacentNode.coordinateInMaze ||
                             walls[i].firstNodeCoordinate == adjacentNode.coordinateInMaze && walls[i].secondNodeCoordinate == currentGenerationNode.coordinateInMaze)
                         {
+                            //remove wall count for nodes
+                            x = (int)walls[i].firstNodeCoordinate.X;
+                            y = (int)walls[i].firstNodeCoordinate.Y;
+                            nodes[y * widthInCoordinates + x].walls--;
+                            x = (int)walls[i].secondNodeCoordinate.X;
+                            y = (int)walls[i].secondNodeCoordinate.Y;
+                            nodes[y * widthInCoordinates + x].walls--;
                             walls.RemoveAt(i);
-
                             adjacentNode.walkDistance = currentGenerationNode.walkDistance + 1;
                             if (adjacentNode.walkDistance > longestWalkDistance)
                                 longestWalkDistance = adjacentNode.walkDistance;
@@ -147,48 +174,88 @@ namespace Curse_of_the_Abyss
                     unvisitedNodesQueue.Push(currentGenerationNode);
                 }
                 else
+                {
                     currentGenerationNode = unvisitedNodesQueue.Pop();
+                }
+                    
             }
         }
 
         public void RemoveWall(Vector2 firstNodeCoordinate, Vector2 secondNodeCoordinate)
         {
+            int x, y;
             for (int i = 0; i < walls.Count; i++)
             {
                 if (walls[(int)i].firstNodeCoordinate == firstNodeCoordinate && walls[(int)i].secondNodeCoordinate == secondNodeCoordinate)
+                {
+                    x = (int)walls[i].firstNodeCoordinate.X;
+                    y = (int)walls[i].firstNodeCoordinate.Y;
+                    if(y < heightInCoordinates && x < widthInCoordinates)
+                        nodes[y * widthInCoordinates + x].walls--;
+                    x = (int)walls[i].secondNodeCoordinate.X;
+                    y = (int)walls[i].secondNodeCoordinate.Y;
+                    if(y < heightInCoordinates && x < widthInCoordinates)
+                        nodes[y * widthInCoordinates + x].walls--;
                     walls.RemoveAt((int)i);
+                }
+                    
             }
         }
 
-        //add walls as obstacles for collision detection
-        public void AddObstacles(List<Sprite> sprites)
+        /*add walls as obstacles for collision detection*/
+        public void AddAsObstacles(List<Sprite> sprites)
         {
             for (int i = 0; i < walls.Count; ++i)
-                walls[i].AddObstacle(this, sprites);
+                walls[i].AddAsObstacle(this, sprites);
+        }
+        //get worldcoordinate of where sprite is to be placed in NodeCoordinate of maze s.t. sprite is in center of that node.
+        public Vector2 placeInCenterOfNode(Vector2 NodeCoordinate, int width, int height)
+        {
+            Vector2 res = new Vector2(positionOnWindow.X + NodeCoordinate.X * coordinateSize.X + (nodeDrawSize.X - width) / 2,
+                positionOnWindow.Y + NodeCoordinate.Y * coordinateSize.Y + (nodeDrawSize.Y - height) / 2);
+            return res;
+        }
+
+        //get a place for an egg in a deadend node
+        public List<Node> getEggPlaces(int num_eggs)
+        {
+            int len = deadend_nodes.Count;
+            if (len < num_eggs)
+                return deadend_nodes;
+            else
+            {
+                List<Node> res = new List<Node>();
+                
+                for(int i = 0; i < num_eggs; i++)
+                {
+                    res.Add(deadend_nodes[(2*i)%len]);
+                }
+                return res;
+            }
         }
         public void Draw(Matrix matrix)
-        //public void Draw()
         {
-            // Draws all of the nodes within the Maze.
+            spriteBatch.Begin(transformMatrix: matrix);
+            //Draws all of the nodes within the Maze.
+            //Color red = Color.Red;
+            //Color blue = Color.Blue;
             //for (int i = 0; i < nodes.Count; ++i)
             //{
-            //    // The lerp value used to blend between the two colors of the maze depending on how far the current node is away from the origin relative to the furthest node from the origin.
-            //    float lerpValue = ((float)nodes[i].walkDistance + 1.0f) / longestWalkDistance;
-
-            //    // Uses this lerp value to blend between the two maze colors.
-            //    Color drawColor = new Color(MathHelper.Lerp(coordinateOriginBlendColor.R, coordinateDistanceBlendColor.R, lerpValue) / 255, MathHelper.Lerp(coordinateOriginBlendColor.G,
-            //        coordinateDistanceBlendColor.G, lerpValue) / 255, MathHelper.Lerp(coordinateOriginBlendColor.B, coordinateDistanceBlendColor.B, lerpValue) / 255);
-
-            //    // Draws the current node with the resulting color.
-            //    nodes[i].Draw(drawColor, this, spriteBatch, texture);
+            //    if (i % 2 == 0)
+            //        // Draws the current node with the resulting color.
+            //        nodes[i].Draw(red, this, spriteBatch, wall_horizontal);
+            //    else
+            //        nodes[i].Draw(blue, this, spriteBatch, wall_horizontal);
             //}
-
-
-            spriteBatch.Begin(transformMatrix: matrix);
+            //foreach (var n in nodes)
+            //{
+            //    if (n.walls == 3)
+            //        n.Draw(red, this, spriteBatch, wall_horizontal);
+            //}
 
             // Draws all of the walls within the Maze.
             for (int i = 0; i < walls.Count; ++i)
-                walls[i].Draw(this, spriteBatch, texture);
+                walls[i].Draw(this, spriteBatch, wall_horizontal, wall_vertical);
 
             spriteBatch.End();
         }
