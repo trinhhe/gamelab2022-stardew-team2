@@ -100,10 +100,6 @@ namespace Curse_of_the_Abyss
                     {
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
                     }
-                    else if(s.name == "obstacle"&& spatial)
-                    {
-                        level.toAdd.Add(new Electro_Spatial(position.X,s.position.Y));
-                    }
                     remove = true;
                     break;
                 }

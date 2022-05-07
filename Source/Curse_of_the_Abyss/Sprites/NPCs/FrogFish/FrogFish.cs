@@ -187,7 +187,7 @@ namespace Curse_of_the_Abyss
                     break;
                 case (Attack.NPCs):
                     attackTimer = 0;
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         int random = rand.Next(1000);
                         int speed = rand.Next(2) + 2;
