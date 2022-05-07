@@ -41,7 +41,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new MazeRandom(), new Bossfight("frogfish"), new Level2()};
+            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
