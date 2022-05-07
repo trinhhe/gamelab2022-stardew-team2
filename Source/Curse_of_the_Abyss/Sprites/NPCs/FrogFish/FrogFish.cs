@@ -40,7 +40,7 @@ namespace Curse_of_the_Abyss
             new Rectangle(x + 142 * scale, y + scale * 57, 31 * scale, 109 * scale),
             new Rectangle(x + 173 * scale, y + scale * 73, 29 * scale, 47 * scale)};
             defeated = false;
-            antenna = new Antenna(x,y+scale*23,scale);
+            antenna = new Antenna(x,y+scale*23,scale,level,player);
             rand = new Random();
             collidable = true;
             this.player = player;
@@ -64,11 +64,11 @@ namespace Curse_of_the_Abyss
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
             //change stages and decide, when the boss is defeated
-            if (stage == 3 && health.curr_health <= 0) defeated = true;
+            if (stage == 4) defeated = true;
             else if (health.curr_health <= 0)
             {
-                stage++;
-                health.maxhealth = 100;
+                stage+=1;
+                health.curr_health = 100;
                 antenna.hit = false;
             }
             
@@ -101,7 +101,7 @@ namespace Curse_of_the_Abyss
                 //movement inside of border
                 if (position.X < 500) xVelocity = 1;
                 else if (position.Right > 1920) xVelocity = -1;
-                if (position.Y < 0) yVelocity = 1;
+                if (position.Y < level.submarine.position.Bottom) yVelocity = 1;
                 else if (position.Bottom > 1022) yVelocity = -1;
             }
             //update position
@@ -177,7 +177,8 @@ namespace Curse_of_the_Abyss
             {
                 case (Attack.Canonball):
                     attackTimer = (stage-1)*1500;
-                    level.toAdd.Add(new ShootingSprite(antenna.position.X, antenna.position.Y, player.position.X + player.position.Width / 2, player.position.Y + player.position.Height / 2, 3));
+                    antenna.attack = true;
+                    Antenna.animationManager.Play(Antenna.animations["attack"]);
                     break;
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;
@@ -186,7 +187,7 @@ namespace Curse_of_the_Abyss
                     break;
                 case (Attack.NPCs):
                     attackTimer = 0;
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         int random = rand.Next(1000);
                         int speed = rand.Next(2) + 2;

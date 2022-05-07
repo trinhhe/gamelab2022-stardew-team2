@@ -9,7 +9,7 @@ namespace Curse_of_the_Abyss
     {
         static Animation animation;
         AnimationManager animationManager;
-        public string[] collidables = {"frogfish","targetingNPC" };
+        public string[] collidables = {"frogfish","targetingNPC","waterplayer" };
         public Explosion(Rectangle position)
         {
             name = "explosion";
@@ -40,7 +40,7 @@ namespace Curse_of_the_Abyss
             {
                 animationManager = new AnimationManager(animation);
             }
-            animationManager.Draw(spritebatch,position,0.1f,0);
+            animationManager.Draw(spritebatch,position,0.1f,0, SpriteEffects.None);
             if (animationManager.animation.CurrentFrame == animationManager.animation.FrameCount - 1) remove = true;
         }
 
@@ -51,11 +51,15 @@ namespace Curse_of_the_Abyss
                 case ("frogfish"):
                     if (((FrogFish)s).antenna.hit) { 
                         ((FrogFish)s).health.curr_health -= 30;
-                        ((FrogFish)s).antenna.hit = false;
+                        collidables[0] = "";
                     }
                     break;
                 case ("targetingNPC"):
                     ((TargetingNPC)s).health = 0;
+                    break;
+                case ("waterplayer"):
+                    ((WaterPlayer)s).health.curr_health -= (int) ((WaterPlayer)s).health.curr_health/15;
+                    collidables[2] = "";
                     break;
             }
         }

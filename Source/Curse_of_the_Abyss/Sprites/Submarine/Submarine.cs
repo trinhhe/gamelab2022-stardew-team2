@@ -177,12 +177,12 @@ namespace Curse_of_the_Abyss
                 animationManager5 = new AnimationManager(animations["Shut"]);
                 animationManager6 = new AnimationManager(animations["BombCD"]);
             }
-            animationManager1.Draw(spritebatch, position, 1f, 0f);
-            animationManager2.Draw(spritebatch, oxyPosition , 0.2f, 0f);
-            animationManager3.Draw(spritebatch, bombButtonPosition, 0.2f, 0f);
-            animationManager4.Draw(spritebatch, lightLeverPosition, 0.2f, 0f);
-            animationManager5.Draw(spritebatch, shutPosition, 0.2f, 0f);
-            animationManager6.Draw(spritebatch, new Rectangle(shutPosition.Right + 10, shutPosition.Y,16,16), 0.2f, 0f);
+            animationManager1.Draw(spritebatch, position, 1f, 0f, SpriteEffects.None);
+            animationManager2.Draw(spritebatch, oxyPosition , 0.2f, 0f, SpriteEffects.None);
+            animationManager3.Draw(spritebatch, bombButtonPosition, 0.2f, 0f, SpriteEffects.None);
+            animationManager4.Draw(spritebatch, lightLeverPosition, 0.2f, 0f, SpriteEffects.None);
+            animationManager5.Draw(spritebatch, shutPosition, 0.2f, 0f, SpriteEffects.None);
+            animationManager6.Draw(spritebatch, new Rectangle(shutPosition.Right + 10, shutPosition.Y,16,16), 0.2f, 0f, SpriteEffects.None);
             spritebatch.Draw(ShootingTerminalTexture, machineGunTerminalPosition, new Rectangle(0, 0, 11, 20), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             spritebatch.Draw(ControlDeskTexture, steerPosition, new Rectangle(0, 0, 22, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             if (machineGunOn)

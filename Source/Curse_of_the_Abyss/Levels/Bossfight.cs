@@ -28,6 +28,7 @@ namespace Curse_of_the_Abyss
             Egg.LoadContent(content);
             Dynamite.LoadContent(content);
             DialogBox.LoadContent(content);
+            MovingPlatform.LoadContent(content);
         }
         public Bossfight(string bosstype)
         {
@@ -52,8 +53,10 @@ namespace Curse_of_the_Abyss
                     Antenna antenna = (boss as FrogFish).antenna;
                     sprites.Add(antenna);
                     lightTargets.Add(antenna);
-                    Dynamite dynamite = new Dynamite(10, 988,true,this,waterPlayer);
+                    Dynamite dynamite = new Dynamite(10, 404,true,this,waterPlayer);
                     sprites.Add(dynamite);
+                    MovingPlatform platform = new MovingPlatform(96,798,96,445,2,60,true);
+                    sprites.Add(platform);
                     break;
             }
             sprites.Add(boss);
