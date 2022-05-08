@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Curse_of_the_Abyss
 {
@@ -100,7 +101,13 @@ namespace Curse_of_the_Abyss
             renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
             
             darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
-            DarknessRender.LoadContent(Content); 
+            DarknessRender.LoadContent(Content);
+
+            //music
+            Song song = Content.Load<Song>("Soundeffects/bg_music_fast");  // Put the name of your song here instead of "song_title"
+            MediaPlayer.Volume=0.05f;
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void Update(GameTime gameTime)
