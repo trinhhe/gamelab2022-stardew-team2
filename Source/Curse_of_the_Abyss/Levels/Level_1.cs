@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using TiledSharp;
 using System;
+using Microsoft.Xna.Framework.Media;
 
 namespace Curse_of_the_Abyss 
 {
@@ -31,6 +32,13 @@ namespace Curse_of_the_Abyss
             Egg.LoadContent(content);
             Rock.LoadContent(content);
             DialogBox.LoadContent(content);
+
+            //music
+            Song song = content.Load<Song>("Soundeffects/bg_music_fast");  // Put the name of your song here instead of "song_title"
+            MediaPlayer.Volume = 0.05f;
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
+
         }
         public Level1()
         {
