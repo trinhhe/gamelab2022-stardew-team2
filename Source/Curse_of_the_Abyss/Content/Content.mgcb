@@ -830,6 +830,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/bg_music_fast.mp3
 
+#begin Soundeffects/gibberish.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/gibberish.wav
+
 #begin SPWalk_left.png
 /importer:TextureImporter
 /processor:TextureProcessor
