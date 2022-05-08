@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using System;
 namespace Curse_of_the_Abyss
@@ -13,6 +14,7 @@ namespace Curse_of_the_Abyss
         public float linearVelocity;
         private string[] collidables = {"targetingNPC","frogfish","torch"};
         public Vector2 real_position;
+        public static SoundEffect sound;
         public Bullet(float x, float y)
         {
             this.name = "bullet";
@@ -20,10 +22,12 @@ namespace Curse_of_the_Abyss
             this.position = new Rectangle((int)x, (int)y, 10, 10);
             this.linearVelocity = Constants.submarine_bullet_velocity;
             this.collidable = true;
+            sound.Play(0.05f,0,0);
         }
         public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("bullet");
+            sound = content.Load<SoundEffect>("Soundeffects/gun_shot");
         }
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {

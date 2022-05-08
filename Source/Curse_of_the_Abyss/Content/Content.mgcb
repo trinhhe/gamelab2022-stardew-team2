@@ -872,6 +872,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/gibberish.wav
 
+#begin Soundeffects/gun_shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/gun_shot.wav
+
 #begin SPWalk_left.png
 /importer:TextureImporter
 /processor:TextureProcessor
