@@ -67,7 +67,7 @@ namespace Curse_of_the_Abyss
                 waterplayer_lightmask,
                 new Rectangle(current_level.waterPlayer.position.X - (width-current_level.waterPlayer.position.Width)/2, current_level.waterPlayer.position.Y - (height-current_level.waterPlayer.position.Height)/2, width, height),
                 null, 
-                color * 0.7f,
+                color * 0.8f,
                 0, 
                 Vector2.Zero, 
                 SpriteEffects.None,
@@ -208,7 +208,7 @@ namespace Curse_of_the_Abyss
         //every NPC targeted by the lightbeam should start glowing
         private void markTargets(Level current)
         {
-            Rectangle lightcone = new Rectangle(current.submarine.lamp.position.X, current.submarine.lamp.position.Y, (int)((float)lightmask.Width * Constants.light_width_scale), (int)((float)lightmask.Height * Constants.light_height_scale));
+            Rectangle lightcone = new Rectangle(current.submarine.lamp.position.X, current.submarine.lamp.position.Y, (int)((float)lightmask.Width * Constants.light_width_scale), (int)((float)lightmask.Height * Constants.light_height_scale * 0.9));
             
             //corners of lightbeam triangle
             Vector2 lightconePos = new Vector2(lightcone.X, lightcone.Y);

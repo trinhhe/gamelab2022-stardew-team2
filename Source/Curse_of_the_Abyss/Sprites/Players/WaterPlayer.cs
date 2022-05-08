@@ -521,7 +521,7 @@ namespace Curse_of_the_Abyss
                 else
                     animationManager.Stop(2);
             }
-            else if (yVelocity < 0 && !movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
+            else if (yVelocity < 0 && !movingRight)  
             {
                 animationManager.Play(animations["JumpFallLeft"]);
                 if (animationManager.animation.CurrentFrame == 1)
