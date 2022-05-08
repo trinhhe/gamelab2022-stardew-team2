@@ -70,7 +70,7 @@ namespace Curse_of_the_Abyss
             {
                 position.Y += 1;
                 s = CheckCollision(sprites,collidables);
-                if (s == null && state != State.Jumping) state = State.Falling;
+                if (s == null && state!= State.Jumping) state = State.Falling;
                 position.Y -= 1;
             }
             position.X += (int)xVelocity;
@@ -504,44 +504,46 @@ namespace Curse_of_the_Abyss
                     animationManager.Play(animations["Crouch"]);
                     //keep crouching
                     if (animationManager.animation.CurrentFrame == 4)
-                        animationManager.Stop(4);                   
-                }           
+                        animationManager.Stop(4);
+                }
             }
-            else if (yVelocity < 0 && movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
-            {
-                animationManager.Play(animations["JumpFallRight"]);
-                if (animationManager.animation.CurrentFrame == 1)
-                    animationManager.Stop(1);
+            else if ((state == State.Jumping || state == State.Falling)&&!maze) {
+                if (yVelocity < 0 && movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
+                {
+                    animationManager.Play(animations["JumpFallRight"]);
+                    if (animationManager.animation.CurrentFrame == 1)
+                        animationManager.Stop(1);
+                }
+                else if (yVelocity > 0 && movingRight)
+                {
+                    animationManager.Play(animations["JumpFallRight"]);
+                    if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
+                        animationManager.Stop(3);
+                    else
+                        animationManager.Stop(2);
+                }
+                else if (yVelocity < 0 && !movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
+                {
+                    animationManager.Play(animations["JumpFallLeft"]);
+                    if (animationManager.animation.CurrentFrame == 1)
+                        animationManager.Stop(1);
+                }
+                else if (yVelocity > 0 && !movingRight)
+                {
+                    animationManager.Play(animations["JumpFallLeft"]);
+                    if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
+                        animationManager.Stop(3);
+                    else
+                        animationManager.Stop(2);
+                }
             }
-            else if (yVelocity > 0 && movingRight)
+            else if (state == State.Running && !maze && xVelocity != 0)
             {
-                animationManager.Play(animations["JumpFallRight"]);
-                if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
-                    animationManager.Stop(3);
-                else
-                    animationManager.Stop(2);
-            }
-            else if (yVelocity < 0 && !movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
-            {
-                animationManager.Play(animations["JumpFallLeft"]);
-                if (animationManager.animation.CurrentFrame == 1)
-                    animationManager.Stop(1);
-            }
-            else if (yVelocity > 0 && !movingRight)
-            {
-                animationManager.Play(animations["JumpFallLeft"]);
-                if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
-                    animationManager.Stop(3);
-                else
-                    animationManager.Stop(2);
-            }
-            else if (state != State.Standing && !maze && xVelocity !=0)
-            {
-                if (movingRight) 
+                if (movingRight)
                     animationManager.Play(animations["RunRight"]);
                 else
                     animationManager.Play(animations["RunLeft"]);
-                if(state != State.Running)
+                if (state != State.Running)
                 {
                     // int extra = movingRight ? 1 : 0;
                     animationManager.Stop(2);
