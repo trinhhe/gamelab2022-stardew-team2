@@ -40,8 +40,11 @@ namespace Curse_of_the_Abyss
                 {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) },
                 {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 7, 0.15f, true) },
                 {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) },
-                {"JumpFallRight", new Animation(content.Load<Texture2D>("MCJumpFall_right"), 5, 0.1f, false) },
-                {"JumpFallLeft", new Animation(content.Load<Texture2D>("MCJumpFall_left"), 5, 0.1f, false) }
+                {"JumpFallRight", new Animation(content.Load<Texture2D>("MCJumpFall_right"), 4, 0.1f, true) },
+                {"JumpFallLeft", new Animation(content.Load<Texture2D>("MCJumpFall_left"), 4, 0.1f, true) },
+                {"JumpFallFront", new Animation(content.Load<Texture2D>("MCJumpFall_front"), 4, 0.1f, true) },
+                {"CrawlRight" , new Animation(content.Load<Texture2D>("MCCrawl_right"), 5, 0.15f, true) },
+                {"CrawlLeft" , new Animation(content.Load<Texture2D>("MCCrawl_left"), 5, 0.15f, true) },
             };
         }
 
@@ -93,8 +96,12 @@ namespace Curse_of_the_Abyss
             //draw current frame
             if (dodging)
             {
+                Rectangle tmp;
                 //draw entire crouch rectangle but actual position height is 30 to dodge spriteshoots
-                Rectangle tmp = new Rectangle(position.X, position.Y - 30, position.Width, 60);
+                if (animationManager.animation == animations["Crouch"])
+                    tmp = new Rectangle(position.X, position.Y - 30, position.Width, 60);
+                else
+                    tmp = new Rectangle(position.X, position.Y, animationManager.animation.FrameWidth, animationManager.animation.FrameHeight);
                 animationManager.Draw(spritebatch, tmp, 0.1f, 0f, SpriteEffects.None);
             }
             else
@@ -499,21 +506,53 @@ namespace Curse_of_the_Abyss
         {
             if (dodging)
             {
-                if (state == State.Standing || state == State.Running || state == State.Falling)
+                if (state == State.Standing|| state == State.Falling)
                 {
+                    bool crawled_before = false;
+                    if (animationManager.animation == animations["CrawlRight"] || animationManager.animation == animations["CrawlLeft"])
+                        crawled_before = true;
                     animationManager.Play(animations["Crouch"]);
                     //keep crouching
-                    if (animationManager.animation.CurrentFrame == 4)
-                        animationManager.Stop(4);
+                    if (animationManager.animation.CurrentFrame == 4 || crawled_before)
+                        animationManager.Stop(4);  
+                }
+                else if (state == State.Running)
+                {
+                    
+                    if(xVelocity > 0)
+                        animationManager.Play(animations["CrawlRight"]);
+                    else
+                    {
+                        animationManager.Play(animations["CrawlLeft"]);
+                    }
                 }
             }
             else if ((state == State.Jumping || state == State.Falling)&&!maze) {
-                if (yVelocity < 0 && movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
+                // jumping up
+                if (yVelocity < 0 && xVelocity == 0)
+                {
+                    animationManager.Play(animations["JumpFallFront"]);
+
+                    if (animationManager.animation.CurrentFrame == 1)
+                        animationManager.Stop(1);
+                }
+                // falling down
+                else if (yVelocity > 0 && xVelocity == 0)
+                {
+                    animationManager.Play(animations["JumpFallFront"]);
+                    if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
+                        animationManager.Stop(3);
+                    else
+                        animationManager.Stop(2);  
+                }
+                // jumping up
+                else if (yVelocity < 0 && movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
                 {
                     animationManager.Play(animations["JumpFallRight"]);
                     if (animationManager.animation.CurrentFrame == 1)
                         animationManager.Stop(1);
                 }
+                // falling down
                 else if (yVelocity > 0 && movingRight)
                 {
                     animationManager.Play(animations["JumpFallRight"]);
