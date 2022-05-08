@@ -11,7 +11,7 @@ namespace Curse_of_the_Abyss
         public static Texture2D texture;
         public int ground;
         public float linearVelocity;
-        private string[] collidables = {"targetingNPC","frogfish"};
+        private string[] collidables = {"targetingNPC","frogfish","torch"};
         public Vector2 real_position;
         public Bullet(float x, float y)
         {
@@ -50,59 +50,78 @@ namespace Curse_of_the_Abyss
 
         public override void XCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "targetingNPC")
+            switch (s.name)
             {
-                TargetingNPC t = s as TargetingNPC;
-                t.health -= 1;
-                remove = true;
-            }
-            else if (s.name == "frogfish")
-            {
-                FrogFish f = s as FrogFish;
-                foreach (Rectangle r in f.mainBodyPosition)
-                {
-                    if (position.Intersects(r))
-                    {
-                        f.health.curr_health -= f.antenna.hit? 1:0;
-                        remove = true;
-                        break;
-                    }
-                }
-                if (position.Intersects(f.antenna.position))
-                {
-                    f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                case ("targetingNPC"):
+                    TargetingNPC t = s as TargetingNPC;
+                    t.health -= 1;
                     remove = true;
-                }
+                    break;
+                case ("frogfish"):
+                    FrogFish f = s as FrogFish;
+                    foreach (Rectangle r in f.mainBodyPosition)
+                    {
+                        if (position.Intersects(r))
+                        {
+                            f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                            remove = true;
+                            break;
+                        }
+                    }
+                    if (position.Intersects(f.antenna.position))
+                    {
+                        f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                        remove = true;
+                    }
+                    break;
+                case ("torch"):
+                    Torch torch = s as Torch;
+                    if (position.Intersects(torch.top))
+                    {
+                        torch.lightmask = true;
+                        torch.setLight();
+                        remove = true;
+                    }
+                    break;
             }
         }
 
         public override void YCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "targetingNPC")
-            {
-                TargetingNPC t = s as TargetingNPC;
-                t.health -= 1;
-                remove = true;
-            }else if (s.name == "frogfish")
-            {
-                FrogFish f = s as FrogFish;
-                foreach (Rectangle r in f.mainBodyPosition)
-                {
-                    if (position.Intersects(r))
+            switch (s.name) {
+                case ("targetingNPC"):
+                    TargetingNPC t = s as TargetingNPC;
+                    t.health -= 1;
+                    remove = true;
+                    break;
+                case ("frogfish"):
+                    FrogFish f = s as FrogFish;
+                    foreach (Rectangle r in f.mainBodyPosition)
+                    {
+                        if (position.Intersects(r))
+                        {
+                            f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                            remove = true;
+                            break;
+                        }
+                    }
+                    if (position.Intersects(f.antenna.position))
                     {
                         f.health.curr_health -= f.antenna.hit ? 1 : 0;
                         remove = true;
-                        break;
                     }
-                }
-                if (position.Intersects(f.antenna.position))
-                {
-                    f.health.curr_health -= f.antenna.hit ? 1 : 0;
-                    remove = true;
-                }
+                    break;
+                case ("torch"):
+                    Torch torch = s as Torch;
+                    if (position.Intersects(torch.top))
+                    {
+                        torch.lightmask = true;
+                        torch.setLight();
+                        remove = true;
+                    }
+                    break;
             }
+            
         }
     }
-
-    
 }

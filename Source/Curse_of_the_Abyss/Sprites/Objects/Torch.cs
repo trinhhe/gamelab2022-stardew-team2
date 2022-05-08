@@ -9,14 +9,15 @@ namespace Curse_of_the_Abyss
     {
         public static Dictionary<string, Animation> animations;
         public AnimationManager animationManager;
-
         public bool lit = false;
+        public Rectangle top;
 
         public Torch(int x, int y)
         {
             name = "torch";
             collidable = true;
             position = new Rectangle(x, y, (int)192/7, (int)661/7);
+            top = new Rectangle(x,y+(int)221/7,(int)191/7,(int)90/7);
             //lightmask = true; // for debubgging
             
         }
