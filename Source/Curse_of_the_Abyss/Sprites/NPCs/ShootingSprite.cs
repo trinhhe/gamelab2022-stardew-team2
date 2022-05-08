@@ -8,8 +8,10 @@ using static System.Math;
 namespace Curse_of_the_Abyss
 {
 
-    public class ShootingSprite : MovableSprite
+    public class ShootingSprite : RotatableSprite
     {
+        protected AnimationManager animationManager;
+        Animation animation;
         public static Texture2D texture;
         int targetx;
         int targety;
@@ -23,16 +25,22 @@ namespace Curse_of_the_Abyss
             targetx = coordx;
             targety = coordy;
             this.speed = speed; //how fast the shooting sprite should be
+            animation = new Animation(texture, 5, 0.1f, false);
             init(); //do rest there to keep this part of code clean
         }
 
         public static void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("cannonball");
+            texture = content.Load<Texture2D>("ink_larger");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
-        {   
+        {
+            if (animationManager == null)
+            {
+                
+                animationManager = new AnimationManager(animation);
+            }
             
             //update position of Player 
             position.X += (int)xVelocity;
@@ -47,20 +55,19 @@ namespace Curse_of_the_Abyss
                 position.X += (int)xVelocity;
             }
 
+            if (animationManager.animation.CurrentFrame == 4)
+                animationManager.Stop(4);
+            animationManager.Update(gametime);
         }
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            //this block currently chooses one specific frame to draw
-            //TO DO: Decide current frame in getState method instead of here
-            int width = texture.Width;
-            int height = texture.Width;
-            Rectangle source = new Rectangle(0, 0, width, height);
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
 
-
-
-            //draw current frame
-            spritebatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
+            animationManager.Draw(spritebatch, position, 0.1f, rotation, SpriteEffects.None);
         }
         public override void XCollision(Sprite s, GameTime gameTime)
         {
@@ -99,9 +106,11 @@ namespace Curse_of_the_Abyss
             xVelocity = xunit * speed;
             yVelocity = yunit * speed;
 
-
+            rotation = (float)(Atan2(yunit, xunit)+PI);
+            rotationOrigin = new Vector2(animation.Texture.Width / 2, animation.Texture.Height / 2);
             collidable = true;
 
         }
+
     }
 }
