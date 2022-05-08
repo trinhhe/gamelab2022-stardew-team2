@@ -62,7 +62,7 @@ namespace Curse_of_the_Abyss
                 animationManager.Play(animations["attack"]);
             }
 
-            animationManager.Draw(spritebatch,position,0.1f,0, SpriteEffects.None);
+            animationManager.Draw(spritebatch,position,0.09f,0, SpriteEffects.None);
         }
     }
 }

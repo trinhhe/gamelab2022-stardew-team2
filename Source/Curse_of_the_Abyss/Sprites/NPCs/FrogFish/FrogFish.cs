@@ -90,6 +90,7 @@ namespace Curse_of_the_Abyss
                 {
                     hitTimer = 0;
                     antenna.hit = false;
+                    moveTimer += 8000;
                 }
             }
             else

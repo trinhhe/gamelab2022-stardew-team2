@@ -24,6 +24,8 @@ namespace Curse_of_the_Abyss
 
         private float _speed;
 
+        private Level _level;
+
         public float Layer
         {
             get { return _layer; }
@@ -36,19 +38,21 @@ namespace Curse_of_the_Abyss
             }
         }
 
-        public ScrollingBackground(Texture2D texture, WaterPlayer player, float scrollingSpeed, int num_parts, bool constantSpeed = false)
-          : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, num_parts, constantSpeed)
+        public ScrollingBackground(Texture2D texture, WaterPlayer player, float scrollingSpeed, int num_parts,Level level, bool constantSpeed = false)
+          : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, num_parts,level, constantSpeed)
         {
 
         }
 
-        public ScrollingBackground(List<Texture2D> textures, WaterPlayer player, float scrollingSpeed, int num_parts, bool constantSpeed = false)
+        public ScrollingBackground(List<Texture2D> textures, WaterPlayer player, float scrollingSpeed, int num_parts,Level level, bool constantSpeed = false)
         {
             _player = player;
 
             _num_parts = num_parts;
 
             _sprites = new List<BackgroundSprite>();
+
+            _level = level;
 
             for (int i = 0; i < textures.Count; i++)
             {
@@ -72,6 +76,7 @@ namespace Curse_of_the_Abyss
 
         public void Update(GameTime gameTime, bool at_boundary)
         {
+            if (_level.dialog.active) return;
             ApplySpeed(gameTime, at_boundary);
 
             CheckPosition();

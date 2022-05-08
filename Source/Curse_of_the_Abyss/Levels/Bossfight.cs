@@ -96,10 +96,48 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
-            dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_test);
+            dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_boss);
+            dialog.active = true;
 
             eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
+        }
+
+        public override void check_dialog()
+        {
+            switch (dialogID)
+            {
+                case (0):
+                    if (((FrogFish)boss).antenna.hit == true)
+                    {
+                        dialog = new DialogBox(new Rectangle(650, 880, 1190, 200), Constants.dialog_boss_hit);
+                        dialog.active = true;
+                        dialogID++;
+                        waterPlayer.state = WaterPlayer.State.Standing;
+                        submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
+                    }
+                    break;
+                case (1):
+                    if (boss.stage == 2)
+                    {
+                        dialog = new DialogBox(new Rectangle(650, 880, 1190, 200), Constants.dialog_boss_stage);
+                        dialog.active = true;
+                        dialogID++;
+                        waterPlayer.state = WaterPlayer.State.Standing;
+                        submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
+                    }
+                    break;
+                case (2):
+                    if (boss.stage == 3)
+                    {
+                        dialog = new DialogBox(new Rectangle(650, 880, 1190, 200), Constants.dialog_boss_final);
+                        dialog.active = true;
+                        dialogID++;
+                        waterPlayer.state = WaterPlayer.State.Standing;
+                        submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
+                    }
+                    break;
+            }
         }
     }
 }

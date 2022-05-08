@@ -11,6 +11,7 @@ namespace Curse_of_the_Abyss
     public class Level2:Level{
         int shooterupdate = 0;
         protected List<StationaryShooterNPC> shooters;
+        Torch torch1;
 
 
         //load the content of every item, object or character in this level
@@ -81,7 +82,7 @@ namespace Curse_of_the_Abyss
             sprites.Add(rock1);
        
             
-            Torch torch1 = new Torch(620, 932);
+            torch1 = new Torch(620, 932);
             sprites.Add(torch1);
             lightTargets.Add(torch1);
             Torch torch2 = new Torch(2752, 545-32);
@@ -98,6 +99,8 @@ namespace Curse_of_the_Abyss
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (dialog.active) return;
 
             if (waterPlayer.position.X > num_parts *1920)
             {
@@ -144,8 +147,8 @@ namespace Curse_of_the_Abyss
             sprites.Add(waterPlayer);
             sprites.Add(submarine);
             InitSprites();
-            dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_first);
-            dialog.active = false;
+            dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_second);
+            dialog.active = true;
 
             eggs = new EggCollection();
 
@@ -164,7 +167,32 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(798, 613);
             
         }
-
+        public override void check_dialog()
+        {
+            switch (dialogID)
+            {
+                case (0):
+                    if (waterPlayer.position.Intersects(torch1.position))
+                    {
+                        dialog = new DialogBox(new Rectangle(670, 880, 1190, 200), Constants.dialog_torch);
+                        dialog.active = true;
+                        dialogID++;
+                        waterPlayer.state = WaterPlayer.State.Standing;
+                        submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
+                    }
+                    break;
+                case (1):
+                    if (torch1.animationManager.animation == Torch.animations["light"] && torch1.animationManager.animation.CurrentFrame==torch1.animationManager.animation.FrameCount-1)
+                    {
+                        dialog = new DialogBox(new Rectangle(670, 880, 1190, 200), Constants.dialog_torch_hit);
+                        dialog.active = true;
+                        dialogID++;
+                        waterPlayer.state = WaterPlayer.State.Standing;
+                        submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
+                    }
+                    break;
+            }
+        }
     }
     
 }

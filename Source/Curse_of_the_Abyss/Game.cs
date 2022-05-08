@@ -91,7 +91,7 @@ namespace Curse_of_the_Abyss
                 current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
 
             // scrolling backgrounds
-            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
+            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
 
             // camera
             _camera = new Camera(current_level.num_parts);
@@ -119,7 +119,7 @@ namespace Curse_of_the_Abyss
                 current_level.Reset();
                 current_level.eggcounter.set(last_level_eggcount);
                 // reset scrolling backgrounds
-                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
             }
 
             //switch level
@@ -153,7 +153,7 @@ namespace Curse_of_the_Abyss
                 DarknessRender.LoadContent(Content);
 
                 // set new scrolling backgrounds based on level
-                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter);
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
 
                 // set camera to match number of "screen widths" in the new level
                 _camera = new Camera(current_level.num_parts);
