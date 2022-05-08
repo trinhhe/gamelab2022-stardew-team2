@@ -643,6 +643,30 @@
 /processorParam:TextureFormat=Color
 /build:Mazewall_vertical.png
 
+#begin MCCrawl_left.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MCCrawl_left.png
+
+#begin MCCrawl_right.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MCCrawl_right.png
+
 #begin MCCrouchSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -654,6 +678,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MCCrouchSprite.png
+
+#begin MCJumpFall_front.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MCJumpFall_front.png
 
 #begin MCJumpFall_left.png
 /importer:TextureImporter
