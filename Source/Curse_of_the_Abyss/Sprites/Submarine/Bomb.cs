@@ -112,9 +112,12 @@ namespace Curse_of_the_Abyss
                     break;
                 case ("torch"):
                     Torch torch = s as Torch;
-                    torch.lightmask = true;
-                    torch.setLight();
-                    startExplosion();
+                    if (position.Intersects(torch.top))
+                    {
+                        torch.lightmask = true;
+                        torch.setLight();
+                        startExplosion();
+                    }
                     break;
 
             }

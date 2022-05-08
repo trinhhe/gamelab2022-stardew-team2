@@ -90,14 +90,14 @@ namespace Curse_of_the_Abyss
         public static Tuple<string, string>[] dialog_torch = { new Tuple<string, string>("wp", "Maya, can you see this."),
                                                                new Tuple<string, string>("sp", "Do I have to remind you, that everything here is completely dark."),
                                                                new Tuple<string, string>("wp", "I mean the torch here right next to me."),
-                                                               new Tuple<string, string>("sp", "Oh, you mean that big fancy thing, they alway use at the underwater olympics."),
+                                                               new Tuple<string, string>("sp", "Oh, you mean that big fancy thing, they always use at the underwater olympics."),
                                                                new Tuple<string, string>("wp", "Exactly, it uses a special chemical reaction, such that the flames can burn underwater!"),
                                                                new Tuple<string, string>("wp", "Maybe, we can enlight the whole area using these!"),
                                                                new Tuple<string, string>("wp", "Try shooting at them with a bomb or bullet, that should be enough."),
                                                                new Tuple<string, string>("sp", "Roger that.")};
-        public static Tuple<string, string>[] dialog_torch_hit = { new Tuple<string, string>("wp", "It works! I can see much more now"),
+        public static Tuple<string, string>[] dialog_torch_hit = { new Tuple<string, string>("wp", "It works! I can see much more now."),
                                                                new Tuple<string, string>("sp", "Somehow it is weird to find these torches here, I mean why should they be here."),
-                                                               new Tuple<string, string>("wp", "True, it's almost, like someone placed them there to help us")};
+                                                               new Tuple<string, string>("wp", "True, it's almost, like someone placed them there to help us.")};
         public static Tuple<string, string>[] dialog_boss = { new Tuple<string, string>("wp", "WHAT IS THIS????!!!!!"),
                                                                new Tuple<string, string>("sp", "Seems like a giant frog fish and it seems angry."),
                                                                new Tuple<string, string>("wp", "WHAT CAN WE DO TO CALM IT DOWN??!!"),
