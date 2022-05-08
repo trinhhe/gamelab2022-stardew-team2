@@ -39,7 +39,9 @@ namespace Curse_of_the_Abyss
             {
                 {"Crouch", new Animation(content.Load<Texture2D>("MCCrouchSprite"), 5, 0.03f, false) },
                 {"RunRight", new Animation(content.Load<Texture2D>("MCSiderun_right"), 7, 0.15f, true) },
-                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) }
+                {"RunLeft",new Animation(content.Load<Texture2D>("MCSiderun_left"),7,0.15f,true) },
+                {"JumpFallRight", new Animation(content.Load<Texture2D>("MCJumpFall_right"), 5, 0.1f, false) },
+                {"JumpFallLeft", new Animation(content.Load<Texture2D>("MCJumpFall_left"), 5, 0.1f, false) }
             };
         }
 
@@ -317,7 +319,7 @@ namespace Curse_of_the_Abyss
             //switch to falling if wanted
             if (!KB_curState.IsKeyDown(Keys.W))
             {
-                state = State.Falling;
+                //state = State.Falling;
             }
             else
                 yVelocity += Constants.fall_velocity;
@@ -505,6 +507,34 @@ namespace Curse_of_the_Abyss
                         animationManager.Stop(4);                   
                 }           
             }
+            else if (yVelocity < 0 && movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
+            {
+                animationManager.Play(animations["JumpFallRight"]);
+                if (animationManager.animation.CurrentFrame == 1)
+                    animationManager.Stop(1);
+            }
+            else if (yVelocity > 0 && movingRight)
+            {
+                animationManager.Play(animations["JumpFallRight"]);
+                if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
+                    animationManager.Stop(3);
+                else
+                    animationManager.Stop(2);
+            }
+            else if (yVelocity < 0 && !movingRight) //not using State.Jumping, jumping state time too short to animate the flying movement 
+            {
+                animationManager.Play(animations["JumpFallLeft"]);
+                if (animationManager.animation.CurrentFrame == 1)
+                    animationManager.Stop(1);
+            }
+            else if (yVelocity > 0 && !movingRight)
+            {
+                animationManager.Play(animations["JumpFallLeft"]);
+                if (animationManager.animation.CurrentFrame == 2 || animationManager.animation.CurrentFrame == 3)
+                    animationManager.Stop(3);
+                else
+                    animationManager.Stop(2);
+            }
             else if (state != State.Standing && !maze && xVelocity !=0)
             {
                 if (movingRight) 
@@ -517,6 +547,7 @@ namespace Curse_of_the_Abyss
                     animationManager.Stop(2);
                 }
             }
+
             else
             {
                 animationManager.Play(animations["Crouch"]);

@@ -10,7 +10,7 @@ namespace Curse_of_the_Abyss
     public class AnimationManager
     {
         public Animation animation;
-        private float timer;
+        public float timer;
         //public Rectangle position;
 
         public AnimationManager(Animation animation)
