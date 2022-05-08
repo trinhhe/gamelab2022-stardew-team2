@@ -495,7 +495,7 @@ namespace Curse_of_the_Abyss
             }
         }
 
-        private void setAnimation()
+        public void setAnimation()
         {
             if (dodging)
             {

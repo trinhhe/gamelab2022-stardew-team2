@@ -133,7 +133,7 @@ namespace Curse_of_the_Abyss
                 else if (text_index == dialog[dialogpos].Item2.Length) sound.Pause();
 
                 //draw box
-                spriteBatch.Draw(box, position,null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
+                spriteBatch.Draw(box, position,null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.06f);
 
                 //draw text
                 Vector2 temp = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 35 * position.Height / 162f);
@@ -151,12 +151,12 @@ namespace Curse_of_the_Abyss
                 Vector2 temp3 = new Vector2(position.X + 163 * position.Width / 677f, position.Y + 6 * position.Height / 162f);
                 if (dialog[dialogpos].Item1 == "wp")
                 {
-                    spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
+                    spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.05f);
                     spriteBatch.DrawString(name, "Kenny", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
                 }
                 else if (dialog[dialogpos].Item1 == "sp")
                 {
-                    spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.09f);
+                    spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.05f);
                     spriteBatch.DrawString(name, "Maya", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
                 }
 
