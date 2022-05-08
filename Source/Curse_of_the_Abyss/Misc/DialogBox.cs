@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
             profil_sp = content.Load<Texture2D>("Dialogbox/sp_profil");
             name = content.Load<SpriteFont>("Dialogbox/Name");
             animation = new Animation(content.Load<Texture2D>("Dialogbox/Arrow"), 5, 0.1f, true);
-            typing = content.Load<SoundEffect>("Soundeffects/Appearing_text");
+            typing = content.Load<SoundEffect>("Soundeffects/gibberish");
         }
 
         public void Update(GameTime gameTime)
@@ -50,8 +50,10 @@ namespace Curse_of_the_Abyss
             if (sound == null && text_index>1)
             {
                 sound = typing.CreateInstance();
+                sound.Volume = 0.2f;
                 sound.IsLooped = true;
                 sound.Play();
+                
             }
             KeyboardState KBstate = Keyboard.GetState();
 
@@ -128,6 +130,7 @@ namespace Curse_of_the_Abyss
                 {
                     sound = typing.CreateInstance();
                     sound.IsLooped = true;
+                    sound.Volume = 0.2f;
                     sound.Play();
                 }
                 else if (text_index == dialog[dialogpos].Item2.Length) sound.Pause();
