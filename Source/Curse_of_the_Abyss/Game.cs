@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
+            levels = new Level[] { new Level1(),new Level2(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -103,11 +103,7 @@ namespace Curse_of_the_Abyss
             darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
             DarknessRender.LoadContent(Content);
 
-            //music
-            Song song = Content.Load<Song>("Soundeffects/bg_music_fast");  // Put the name of your song here instead of "song_title"
-            MediaPlayer.Volume=0.05f;
-            MediaPlayer.Play(song);
-            MediaPlayer.IsRepeating = true;
+            
         }
 
         protected override void Update(GameTime gameTime)
