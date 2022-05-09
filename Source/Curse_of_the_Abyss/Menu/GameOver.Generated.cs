@@ -45,10 +45,10 @@ namespace Curse_of_the_Abyss
 			textBox1.DisabledBackground = new SolidBrush("#00000000");
 
 			var textBox2 = new TextBox();
-			textBox2.Text = "next time ";
+			textBox2.Text = " next time";
 			textBox2.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox2.DisabledTextColor = Color.Black;
-			textBox2.Left = (int)Math.Round(665 * scale);
+			textBox2.Left = (int)Math.Round(645 * scale);
 			textBox2.Top = (int)Math.Round(565 * scale);
 			textBox2.Enabled = false;
 			textBox2.Scale = new Vector2(0.65f * (float)scale, 0.65f * (float)scale);
