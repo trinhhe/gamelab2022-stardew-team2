@@ -16,8 +16,7 @@ namespace Curse_of_the_Abyss
             switch (levelcounter)
             {
                 // switch background based on level
-                case 0:
-                case 1:
+                default:
                     {
                         return new List<ScrollingBackground>()
                         {
@@ -39,16 +38,7 @@ namespace Curse_of_the_Abyss
                             },
                         };
                     }
-                default:
-                    {
-                        return new List<ScrollingBackground>()
-                        {
-                            new ScrollingBackground(content.Load<Texture2D>("bg"), player, 0f, num_parts,level)
-                            {
-                                Layer = 0.1f,
-                            },
-                        };
-                    }
+
             }
             
         }
