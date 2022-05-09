@@ -824,6 +824,42 @@
 /processorParam:Quality=Best
 /build:Soundeffects/Appearing_text.wav
 
+#begin splashscreen/game_logo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:splashscreen/game_logo.png
+
+#begin splashscreen/gpl_logo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:splashscreen/gpl_logo.png
+
+#begin splashscreen/monogame_logo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:splashscreen/monogame_logo.png
+
 #begin SPWalk_left.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -937,6 +973,78 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:torch0.png
+
+#begin UI/Button.png
+/copy:UI/Button.png
+
+#begin UI/Egg_UI.png
+/copy:UI/Egg_UI.png
+
+#begin UI/exit_logo.png
+/copy:UI/exit_logo.png
+
+#begin UI/gameover_logo.png
+/copy:UI/gameover_logo.png
+
+#begin UI/Logo.png
+/copy:UI/Logo.png
+
+#begin UI/MenuBackground.png
+/copy:UI/MenuBackground.png
+
+#begin UI/MenuBackground_1080p.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/MenuBackground_1080p.png
+
+#begin UI/MenuBackground_16_9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/MenuBackground_16_9.png
+
+#begin UI/MenuBackground_2k.png
+/copy:UI/MenuBackground_2k.png
+
+#begin UI/pieces_of_eight_108.fnt
+/copy:UI/pieces_of_eight_108.fnt
+
+#begin UI/pieces_of_eight_1081.png
+/copy:UI/pieces_of_eight_1081.png
+
+#begin UI/pieces_of_eight_1082.png
+/copy:UI/pieces_of_eight_1082.png
+
+#begin UI/pieces_of_eight_1083.png
+/copy:UI/pieces_of_eight_1083.png
+
+#begin UI/pieces_of_eight_1084.png
+/copy:UI/pieces_of_eight_1084.png
+
+#begin UI/pieces_of_eight_1085.png
+/copy:UI/pieces_of_eight_1085.png
+
+#begin UI/score_logo.png
+/copy:UI/score_logo.png
+
+#begin UI/settings_bg.png
+/copy:UI/settings_bg.png
+
+#begin UI/settings_logo.png
+/copy:UI/settings_logo.png
 
 #begin underwater_env.jpeg
 /importer:TextureImporter
