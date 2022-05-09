@@ -9,6 +9,7 @@ using Myra.Graphics2D.UI.Properties;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace Curse_of_the_Abyss
@@ -123,7 +124,7 @@ namespace Curse_of_the_Abyss
 			textButton2.FocusedBackground = new SolidBrush("#00000000");
 
 			var textBox3 = new TextBox();
-			textBox3.Text = "Volume";
+			textBox3.Text = "Music volume";
 			textBox3.TextColor = Color.Black;
 			textBox3.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox3.Enabled = false;
@@ -172,7 +173,8 @@ namespace Curse_of_the_Abyss
 			horizontalSlider1.Left = (int)Math.Round(810 * scale);
 			horizontalSlider1.Top = (int)Math.Round(520 * scale);
 			horizontalSlider1.Width = (int)Math.Round(125 * scale);
-			horizontalSlider1.Value = SoundEffect.MasterVolume * 100;
+			// horizontalSlider1.Value = SoundEffect.MasterVolume * 100;
+			horizontalSlider1.Value = 4 * MediaPlayer.Volume * 100;
 
 			var horizontalSlider2 = new HorizontalSlider();
 			horizontalSlider2.Left = (int)Math.Round(810 * scale);
@@ -212,7 +214,8 @@ namespace Curse_of_the_Abyss
 
 			horizontalSlider1.ValueChanged += (s, a) =>
 			{
-				SoundEffect.MasterVolume = horizontalSlider1.Value / 100;
+				// SoundEffect.MasterVolume = horizontalSlider1.Value / 100;
+				MediaPlayer.Volume = 0.25f * (horizontalSlider1.Value / 100);
 			};
 
 			horizontalSlider2.ValueChanged += (s, a) =>

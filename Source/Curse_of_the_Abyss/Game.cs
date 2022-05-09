@@ -75,6 +75,7 @@ namespace Curse_of_the_Abyss
 
             // default audio volume
             SoundEffect.MasterVolume = 0.5f;
+            MediaPlayer.Volume = 0.1f;
 
             /* window resizing disabled for now
              * only 16:9 aspect ratio currently supported
