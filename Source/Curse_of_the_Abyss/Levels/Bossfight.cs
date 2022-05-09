@@ -78,6 +78,7 @@ namespace Curse_of_the_Abyss
             if (boss.defeated)
             {
                 completed = true;
+                eggcounter.set(eggcounter.get() + 10);
             }
             
             foreach(Sprite s in toAdd)

@@ -50,7 +50,7 @@ namespace Curse_of_the_Abyss
             if (sound == null && text_index>1)
             {
                 sound = typing.CreateInstance();
-                sound.Volume = 0.2f;
+                sound.Volume = 0.3f;
                 sound.IsLooped = true;
                 sound.Play();
                 
@@ -130,7 +130,7 @@ namespace Curse_of_the_Abyss
                 {
                     sound = typing.CreateInstance();
                     sound.IsLooped = true;
-                    sound.Volume = 0.2f;
+                    sound.Volume = 0.3f;
                     sound.Play();
                 }
                 else if (text_index == dialog[dialogpos].Item2.Length) sound.Pause();

@@ -872,6 +872,24 @@
 /processorParam:Quality=Best
 /build:Soundeffects/Appearing_text.wav
 
+#begin Soundeffects/bg_music_fast.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/bg_music_fast.mp3
+
+#begin Soundeffects/gibberish.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/gibberish.wav
+
+#begin Soundeffects/gun_shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/gun_shot.wav
+
 #begin splashscreen/game_logo.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -907,24 +925,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:splashscreen/monogame_logo.png
-
-#begin Soundeffects/bg_music_fast.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Soundeffects/bg_music_fast.mp3
-
-#begin Soundeffects/gibberish.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Soundeffects/gibberish.wav
-
-#begin Soundeffects/gun_shot.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Soundeffects/gun_shot.wav
 
 #begin SPWalk_left.png
 /importer:TextureImporter
@@ -1059,28 +1059,10 @@
 /copy:UI/MenuBackground.png
 
 #begin UI/MenuBackground_1080p.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UI/MenuBackground_1080p.png
+/copy:UI/MenuBackground_1080p.png
 
 #begin UI/MenuBackground_16_9.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UI/MenuBackground_16_9.png
+/copy:UI/MenuBackground_16_9.png
 
 #begin UI/MenuBackground_2k.png
 /copy:UI/MenuBackground_2k.png

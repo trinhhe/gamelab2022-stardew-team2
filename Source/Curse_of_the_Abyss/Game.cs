@@ -267,7 +267,7 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // draw backgrounds
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp);
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.LinearWrap);
             foreach (var sb in _scrollingBackgrounds)
                 sb.Draw(gameTime, _spriteBatch);
 
