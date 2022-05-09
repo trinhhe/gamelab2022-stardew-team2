@@ -17,7 +17,7 @@ namespace Curse_of_the_Abyss
         public Healthbar healthbar;
         public Eggcounter eggcounter;
         protected TmxMap TileMap;
-        protected EggCollection eggs;
+        public EggCollection eggs;
         public MapManager MapManager;
         public Matrix matrix;
         public int num_parts; // number of "screen widths" (i.e. multiples of 1920) that the level is composed of

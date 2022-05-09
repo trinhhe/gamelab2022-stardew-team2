@@ -3,9 +3,15 @@ using FontStashSharp;
 using System;
 using System.Collections.Generic;
 
+using Myra.Assets;
+using Myra.Graphics2D.TextureAtlases;
+using Myra.Graphics2D.UI;
+using Myra.Graphics2D.UI.Styles;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
 namespace Curse_of_the_Abyss
@@ -16,13 +22,20 @@ namespace Curse_of_the_Abyss
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
 
+        // splash screen
+        private SplashScreenManager splashscreen;
+
         // menu
-        private IMGUI _ui;
-        private Menu _menu;
+        public static Desktop _desktop;
+        public static MainMenu _mainmenu;
         public static bool paused;
+        public static bool res_changed;
+        public static bool loading;
+        public static double loading_timer = 0.001;
 
         // screen and camera
         public static int RenderHeight, RenderWidth;
+        public Brightness _brightness;
         private Camera _camera;
         private Sprite cam_target;
 
@@ -51,13 +64,17 @@ namespace Curse_of_the_Abyss
         protected override void Initialize()
         {
             paused = true;
+            loading = true;
 
             // default resolution
-            _graphics.PreferredBackBufferWidth = 1600;//1920;
-            _graphics.PreferredBackBufferHeight = 900; //1080;
+            _graphics.PreferredBackBufferWidth = 1600;
+            _graphics.PreferredBackBufferHeight = 900;
 
-            Settings.Graphics = _graphics;
-            Settings.IsFullscreen = false;
+            ResolutionSettings.Graphics = _graphics;
+            ResolutionSettings.IsFullscreen = false;
+
+            // default audio volume
+            SoundEffect.MasterVolume = 0.5f;
 
             /* window resizing disabled for now
              * only 16:9 aspect ratio currently supported
@@ -74,14 +91,17 @@ namespace Curse_of_the_Abyss
 
         protected override void LoadContent()
         {
+            // screen brightness settings
+            _brightness = new Brightness(GraphicsDevice, Content);
+
+            // splash screen
+            splashscreen = new SplashScreenManager(2, 0.5f, 2, Keys.Space, Content);
+
             // menu UI
-            FontSystem fontSystem = FontSystemFactory.Create(GraphicsDevice, 2048, 2048);
-            fontSystem.AddFont(TitleContainer.OpenStream($"{Content.RootDirectory}/menu-font.ttf"));
-
-            GuiHelper.Setup(this, fontSystem);
-
-            _ui = new IMGUI();
-            _menu = new Menu();
+            Myra.MyraEnvironment.Game = this;
+            _desktop = new Desktop();
+            _mainmenu = new MainMenu(this);
+            _desktop.Root = _mainmenu;
 
             // game contents
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -108,6 +128,21 @@ namespace Curse_of_the_Abyss
 
         protected override void Update(GameTime gameTime)
         {
+            // scale UI if resolution changed
+            if (res_changed)
+            {
+                _desktop.Root = _mainmenu.settings_screen;
+                res_changed = false;
+            }
+            
+            // splash screen
+            if (splashscreen.Running)
+                splashscreen.Update(gameTime);
+
+            // update loading screen progress bar
+            if(_mainmenu.CurrState == MainMenu.State.Loading)
+                Loading.Update(gameTime);
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) 
             {
                 paused = true;
@@ -116,7 +151,7 @@ namespace Curse_of_the_Abyss
 
             if (current_level.game_over)
             {
-                _menu._screen = Menu.MenuScreens.Game_over;
+                _desktop.Root = _mainmenu.gameover_screen;
                 paused = true;
                 IsMouseVisible = true;
                 current_level.Reset();
@@ -129,9 +164,13 @@ namespace Curse_of_the_Abyss
             if (current_level.completed)
             {
                 Content.Unload();
+                Score.total_eggs += current_level.eggs.eggsTotal;
                 if (levelcounter == levels.Length - 1)
                 {
-                    _menu._screen = Menu.MenuScreens.Demo_end;
+                    // game completed
+                    Score.collected_eggs = current_level.eggcounter.get();
+                    _mainmenu.score_screen = new Score();
+                    _desktop.Root = _mainmenu.score_screen;
                     paused = true;
                     IsMouseVisible = true;
                     current_level = levels[0];
@@ -205,22 +244,12 @@ namespace Curse_of_the_Abyss
                 IsMouseVisible = false;
             }
 
-            else
-            {
-                GuiHelper.UpdateSetup(gameTime);
-                _ui.UpdateAll(gameTime);
-
-                _menu.CreateMenu();
-                _menu.UpdateInput();
-
-                GuiHelper.UpdateCleanup();
-            }
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+
             // Constants.scale = (float)(GraphicsDevice.Viewport.Height / 1080f);
             var scaleX = GraphicsDevice.Viewport.Width/(float)RenderWidth;
             var scaleY = GraphicsDevice.Viewport.Height/(float)RenderHeight;
@@ -267,21 +296,34 @@ namespace Curse_of_the_Abyss
             _spriteBatch.End();
 
             // draw UI
+            if (!splashscreen.Running)
+            {
             _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
             current_level.healthbar.Draw(_spriteBatch);
             current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
             if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
             _spriteBatch.End();
+            }
 
             // menu
-            if (paused)
+            if (paused & !splashscreen.Running)
             {
-                GraphicsDevice.Clear(Color.Black);
-
-                _ui.Draw(gameTime);
+                _desktop.Render();
             }
-            
-                
+
+            // splash screen
+            if (splashscreen.Running)
+            {
+                _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+                splashscreen.Draw(_spriteBatch);
+                _spriteBatch.End();
+            }
+
+            // brightness setting
+            _spriteBatch.Begin();
+            _brightness.Draw(_spriteBatch, _graphics);
+            _spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }
