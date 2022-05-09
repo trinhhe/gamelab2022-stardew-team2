@@ -20,7 +20,7 @@ namespace Curse_of_the_Abyss
 			double scale = MainMenu.scale;
 
 			var image1 = new Image();
-			image1.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/MenuBackground_16_9.png");
+			image1.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>(MainMenu.path_to_bg);
 
 			var image2 = new Image();
 			image2.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/gameover_logo.png");
