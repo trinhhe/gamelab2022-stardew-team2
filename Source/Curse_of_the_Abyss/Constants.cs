@@ -57,7 +57,7 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("wp", "I will, but how did we hit that rock? I thought our navigation system is unfallible."),
                                                                new Tuple<string, string>("sp", "Well maybe someone didn't take the 'No drinks near the mainboard' rule serious enough."),
                                                                new Tuple<string, string>("wp", "..."),
-                                                               new Tuple<string, string>("sp", "Nethertheless, let's focus on our task!"),
+                                                               new Tuple<string, string>("sp", "Nevertheless, let's focus on our task!"),
                                                                new Tuple<string, string>("sp", "First try to get on top of that rock to get a better view of the area."),
                                                                new Tuple<string, string>("sp", "Use the WASD keys to move around. And pay attention to the sea Urchin!")};
         public static Tuple<string, string>[] dialog_submarine = { new Tuple<string, string>("wp", "It seems like the eggs are scattered all over the ocean floor."),
