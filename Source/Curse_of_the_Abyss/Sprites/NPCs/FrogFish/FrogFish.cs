@@ -46,6 +46,7 @@ namespace Curse_of_the_Abyss
             this.player = player;
             moveTimer = 5000;
             this.level = level;
+            level.eggs.eggsTotal += 6;
         }
 
         public static void LoadContent(ContentManager content)
@@ -69,6 +70,7 @@ namespace Curse_of_the_Abyss
             {
                 stage+=1;
                 health.curr_health = 100;
+                level.eggcounter.set(level.eggcounter.get() + 2);
                 antenna.hit = false;
             }
             
