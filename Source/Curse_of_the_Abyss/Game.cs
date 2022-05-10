@@ -44,6 +44,11 @@ namespace Curse_of_the_Abyss
         Level[] levels;
         int levelcounter;
         int last_level_eggcount;
+        
+        //life
+        int lifes;
+        Texture2D player_life;
+        SpriteFont life_counter;
 
         // scrolling backgrounds
         private List<ScrollingBackground> _scrollingBackgrounds;
@@ -59,6 +64,7 @@ namespace Curse_of_the_Abyss
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
+            lifes = 3;
         }
 
         protected override void Initialize()
@@ -124,7 +130,8 @@ namespace Curse_of_the_Abyss
             darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
             DarknessRender.LoadContent(Content);
 
-            
+            player_life = Content.Load<Texture2D>("UI/player_UI");
+            life_counter = Content.Load<SpriteFont>("Eggcounter");
         }
 
         protected override void Update(GameTime gameTime)
@@ -152,9 +159,20 @@ namespace Curse_of_the_Abyss
 
             if (current_level.game_over)
             {
+                if (lifes <= 1)
+                { 
+                    current_level = levels[0];
+                    last_level_eggcount = 0;
+                    Content.Unload();
+                }
+                else
+                {
+                    lifes--;
+                }
                 _desktop.Root = _mainmenu.gameover_screen;
                 paused = true;
                 IsMouseVisible = true;
+                current_level.LoadContent(Content);
                 current_level.Reset();
                 current_level.eggcounter.set(last_level_eggcount);
                 // reset scrolling backgrounds
@@ -303,6 +321,8 @@ namespace Curse_of_the_Abyss
             current_level.healthbar.Draw(_spriteBatch);
             current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
             if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
+            _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
+            _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);
             _spriteBatch.End();
             }
 

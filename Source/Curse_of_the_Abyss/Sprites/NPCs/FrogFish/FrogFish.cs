@@ -20,6 +20,7 @@ namespace Curse_of_the_Abyss
         public Attack attack;
         Bossfight level;
         public Rectangle[] mainBodyPosition;
+        bool created;
 
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
@@ -46,7 +47,7 @@ namespace Curse_of_the_Abyss
             this.player = player;
             moveTimer = 5000;
             this.level = level;
-            level.eggs.eggsTotal += 6;
+            created = false;
         }
 
         public static void LoadContent(ContentManager content)
@@ -64,6 +65,11 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
+            if (created)
+            {
+                level.eggs.eggsTotal += 6;
+                created = false;
+            }
             //change stages and decide, when the boss is defeated
             if (stage == 4) defeated = true;
             else if (health.curr_health <= 0)
