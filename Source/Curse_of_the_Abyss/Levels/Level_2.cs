@@ -174,7 +174,8 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(5223, 491);
             eggs.addEgg(1441, 613);
             eggs.addEgg(798, 613);
-            
+
+            lightTargets.Add(waterPlayer);
         }
         public override void check_dialog()
         {

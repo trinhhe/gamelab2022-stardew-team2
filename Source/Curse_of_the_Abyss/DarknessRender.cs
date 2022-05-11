@@ -59,20 +59,23 @@ namespace Curse_of_the_Abyss
                     0f
                 ); //adjusting color * 1f lower will make light area darker
             }
-                
-            var width = (int) ((float)waterplayer_lightmask.Width * Constants.waterplayer_light_width_scale);
-            var height = (int) ((float) waterplayer_lightmask.Height * Constants.waterplayer_light_height_scale);
-            //lightcircle around waterplayer
-            _spriteBatch.Draw(
-                waterplayer_lightmask,
-                new Rectangle(current_level.waterPlayer.position.X - (width-current_level.waterPlayer.position.Width)/2, current_level.waterPlayer.position.Y - (height-current_level.waterPlayer.position.Height)/2, width, height),
-                null, 
-                color * 0.8f,
-                0, 
-                Vector2.Zero, 
-                SpriteEffects.None,
-                0f
-            );
+            if(!current_level.waterPlayer.lightupon)
+            {
+                var width = (int)((float)waterplayer_lightmask.Width * Constants.waterplayer_light_width_scale);
+                var height = (int)((float)waterplayer_lightmask.Height * Constants.waterplayer_light_height_scale);
+                //lightcircle around waterplayer
+                _spriteBatch.Draw(
+                    waterplayer_lightmask,
+                    new Rectangle(current_level.waterPlayer.position.X - (width - current_level.waterPlayer.position.Width) / 2, current_level.waterPlayer.position.Y - (height - current_level.waterPlayer.position.Height) / 2, width, height),
+                    null,
+                    color * 0.8f,
+                    0,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+            
             //lightmask submarine
             _spriteBatch.Draw(
                 submarine_lightmask,
@@ -124,21 +127,25 @@ namespace Curse_of_the_Abyss
             //NPC and obstacle lightmasks
             foreach (Sprite s in current_level.lightTargets)
             {
-                if (s.lightmask && s.name != "torch")
+                if (s.lightmask && s.name == "targetingNPC" && !s.lightupon)
+                {
+                    //Console.WriteLine(((TargetingNPC)s).lightupon);
+                    
                     _spriteBatch.Draw(
                         waterplayer_lightmask,
                         new Rectangle(s.position.X - 20, s.position.Y - 20, s.position.Width + 40, s.position.Height + 20),
                         null,
-                        color * 1f,
+                        color * 0.9f,
                         0,
                         Vector2.Zero,
                         SpriteEffects.None,
                         0f
                     );
+                }
                 else if (s.lightmask && s.name == "torch")
                     _spriteBatch.Draw(
                         torch_lightmask,
-                        new Rectangle(s.position.X+s.position.Width/2-70*7, s.position.Y - 50*7,  140*7,  100*7),
+                        new Rectangle(s.position.X + s.position.Width / 2 - 70 * 7, s.position.Y - 50 * 7, 140 * 7, 100 * 7),
                         null,
                         color * 1f,
                         0,
@@ -223,15 +230,27 @@ namespace Curse_of_the_Abyss
             {
                 foreach (Sprite s in current.lightTargets)
                 {
+                    //if (s.name == "waterplayer" || s.name == "targetingNPC")
+                    //    s.lightupon = false;
                     //check if NPC's center point in lightbeam and screen
                     Vector2 temp = new Vector2(s.position.X + s.position.Width / 2, s.position.Y + s.position.Height / 2);
                     if (inTriangle(temp, lightconePos, bottomLeft, bottomRight)
-                        && temp.X>upperLeftborder.X && temp.Y>upperLeftborder.Y 
-                        && temp.X<bottomRightborder.X && temp.Y<bottomRightborder.Y
-                        && s.name!="torch"
+                        && temp.X > upperLeftborder.X && temp.Y > upperLeftborder.Y
+                        && temp.X < bottomRightborder.X && temp.Y < bottomRightborder.Y
+                        && s.name != "torch"
                         )
+                    {
                         s.lightmask = true;
+                        s.lightupon = true;
+                    }
+                    else
+                        s.lightupon = false;
                 }
+            }
+            else
+            {
+                foreach (Sprite s in current.lightTargets)
+                    s.lightupon = false;
             }
         }
 

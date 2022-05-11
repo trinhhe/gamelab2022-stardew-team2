@@ -135,7 +135,8 @@ namespace Curse_of_the_Abyss
                 waterPlayer.position.Y = (int)wp_pos.Y;
                 
             }
-                
+
+            lightTargets.Add(waterPlayer);
         }
     }
 }

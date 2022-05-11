@@ -111,6 +111,7 @@ namespace Curse_of_the_Abyss
 
             eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
+            lightTargets.Add(waterPlayer);
         }
 
         public override void check_dialog()
