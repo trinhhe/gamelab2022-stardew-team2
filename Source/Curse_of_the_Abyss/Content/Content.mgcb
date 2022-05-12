@@ -890,6 +890,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/gun_shot.wav
 
+#begin Soundeffects/life_loss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/life_loss.wav
+
 #begin splashscreen/game_logo.png
 /importer:TextureImporter
 /processor:TextureProcessor

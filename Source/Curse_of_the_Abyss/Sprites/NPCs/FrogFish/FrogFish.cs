@@ -26,7 +26,7 @@ namespace Curse_of_the_Abyss
         {
             name = "frogfish";
             stage = 1;
-            health = new Healthbar(new Rectangle(1840,95,80,810),100,true,false);
+            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 274, scale * 177);
@@ -136,7 +136,7 @@ namespace Curse_of_the_Abyss
 
             //draw health
             health.Draw(spritebatch);
-            spritebatch.DrawString(font,health.curr_health.ToString()+"/100",new Vector2(1840,910),Color.Black);
+            spritebatch.DrawString(font,health.curr_health.ToString()+"/100",new Vector2(1840,920),Color.Black);
         }
 
         
