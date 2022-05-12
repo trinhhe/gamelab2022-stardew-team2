@@ -890,6 +890,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/gun_shot.wav
 
+#begin Soundeffects/life_loss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/life_loss.wav
+
 #begin splashscreen/game_logo.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1052,6 +1058,13 @@
 #begin UI/gameover_logo.png
 /copy:UI/gameover_logo.png
 
+#begin UI/Lifefont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:UI/Lifefont.spritefont
+
 #begin UI/Logo.png
 /copy:UI/Logo.png
 
@@ -1084,6 +1097,18 @@
 
 #begin UI/pieces_of_eight_1085.png
 /copy:UI/pieces_of_eight_1085.png
+
+#begin UI/player_UI.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/player_UI.png
 
 #begin UI/score_logo.png
 /copy:UI/score_logo.png

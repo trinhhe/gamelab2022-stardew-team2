@@ -20,12 +20,13 @@ namespace Curse_of_the_Abyss
         public Attack attack;
         Bossfight level;
         public Rectangle[] mainBodyPosition;
+        bool created;
 
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
             stage = 1;
-            health = new Healthbar(new Rectangle(1840,95,80,810),100,true,false);
+            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 274, scale * 177);
@@ -46,6 +47,7 @@ namespace Curse_of_the_Abyss
             this.player = player;
             moveTimer = 5000;
             this.level = level;
+            created = false;
         }
 
         public static void LoadContent(ContentManager content)
@@ -63,12 +65,18 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
+            if (created)
+            {
+                level.eggs.eggsTotal += 6;
+                created = false;
+            }
             //change stages and decide, when the boss is defeated
             if (stage == 4) defeated = true;
             else if (health.curr_health <= 0)
             {
                 stage+=1;
                 health.curr_health = 100;
+                level.eggcounter.set(level.eggcounter.get() + 2);
                 antenna.hit = false;
             }
             
@@ -128,7 +136,7 @@ namespace Curse_of_the_Abyss
 
             //draw health
             health.Draw(spritebatch);
-            spritebatch.DrawString(font,health.curr_health.ToString()+"/100",new Vector2(1840,910),Color.Black);
+            spritebatch.DrawString(font,health.curr_health.ToString()+"/100",new Vector2(1840,920),Color.Black);
         }
 
         

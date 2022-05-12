@@ -142,7 +142,6 @@ namespace Curse_of_the_Abyss
             sprites.Add(submarine);
             InitSprites();
             dialog = new DialogBox(new Rectangle(650,0,1190,200),Constants.dialog_first);
-            dialog.active = true;
 
             eggs = new EggCollection();
 
@@ -164,6 +163,10 @@ namespace Curse_of_the_Abyss
             switch (dialogID)
             {
                 case (0):
+                    dialog.active = true;
+                    dialogID++;
+                    break;
+                case (1):
                     if (waterPlayer.position.X > 300)
                     {
                         dialog = new DialogBox(new Rectangle(0, 880, 1190, 200),Constants.dialog_submarine);

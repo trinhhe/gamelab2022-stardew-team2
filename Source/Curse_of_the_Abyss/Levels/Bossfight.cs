@@ -78,7 +78,7 @@ namespace Curse_of_the_Abyss
             if (boss.defeated)
             {
                 completed = true;
-                eggcounter.set(eggcounter.get() + 10);
+                eggcounter.set(eggcounter.get() + 8);
             }
             
             foreach(Sprite s in toAdd)
@@ -107,10 +107,10 @@ namespace Curse_of_the_Abyss
             sprites.Add(submarine);
             InitSprites();
             dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_boss);
-            dialog.active = true;
 
             eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
+            eggs.eggsTotal = 8;
             lightTargets.Add(waterPlayer);
         }
 
@@ -119,6 +119,10 @@ namespace Curse_of_the_Abyss
             switch (dialogID)
             {
                 case (0):
+                    dialog.active = true;
+                    dialogID++;
+                    break;
+                case (1):
                     if (((FrogFish)boss).antenna.hit == true)
                     {
                         dialog = new DialogBox(new Rectangle(650, 880, 1190, 200), Constants.dialog_boss_hit);
@@ -128,7 +132,7 @@ namespace Curse_of_the_Abyss
                         submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
                     }
                     break;
-                case (1):
+                case (2):
                     if (boss.stage == 2)
                     {
                         dialog = new DialogBox(new Rectangle(650, 880, 1190, 200), Constants.dialog_boss_stage);
@@ -138,7 +142,7 @@ namespace Curse_of_the_Abyss
                         submarine.submarinePlayer.state = SubmarinePlayer.State.Standing;
                     }
                     break;
-                case (2):
+                case (3):
                     if (boss.stage == 3)
                     {
                         dialog = new DialogBox(new Rectangle(650, 880, 1190, 200), Constants.dialog_boss_final);

@@ -44,6 +44,12 @@ namespace Curse_of_the_Abyss
         Level[] levels;
         int levelcounter;
         int last_level_eggcount;
+        
+        //life
+        int lifes,life_timer;
+        Texture2D player_life;
+        SpriteFont life_counter;
+        bool lost_life,secondphase;
 
         // scrolling backgrounds
         private List<ScrollingBackground> _scrollingBackgrounds;
@@ -59,6 +65,7 @@ namespace Curse_of_the_Abyss
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
+            lifes = 3;
         }
 
         protected override void Initialize()
@@ -124,7 +131,8 @@ namespace Curse_of_the_Abyss
             darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
             DarknessRender.LoadContent(Content);
 
-            
+            player_life = Content.Load<Texture2D>("UI/player_UI");
+            life_counter = Content.Load<SpriteFont>("Eggcounter");
         }
 
         protected override void Update(GameTime gameTime)
@@ -150,13 +158,43 @@ namespace Curse_of_the_Abyss
                 IsMouseVisible = true;
             }
 
+            //update life timer
+            life_timer += (int) gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (life_timer > 2000) lost_life = secondphase = false;
+            
             if (current_level.game_over)
             {
-                _desktop.Root = _mainmenu.gameover_screen;
-                paused = true;
-                IsMouseVisible = true;
+                //player has no lifes left
+                if (lifes <= 1)
+                { 
+                    current_level = levels[0];
+                    last_level_eggcount = 0;
+                    Content.Unload();
+                    for(int i = 0; i < levels.Length; i++)
+                    {
+                        levels[i].dialogID = 0;     //reset dialogs after game over
+                    }
+                    _desktop.Root = _mainmenu.gameover_screen;
+                    paused = true;
+                    IsMouseVisible = true;
+                    lifes = 3;
+                }
+                //player has remaining levels
+                else
+                {
+                    lifes--;
+                    lost_life = true;
+                    life_timer = 0;
+                }
+                current_level.LoadContent(Content);
+                player_life = Content.Load<Texture2D>("UI/player_UI");
+                life_counter = Content.Load<SpriteFont>("Eggcounter");
                 current_level.Reset();
                 current_level.eggcounter.set(last_level_eggcount);
+                if (!current_level.is_maze_gen)
+                    current_level.InitMapManager(_spriteBatch);
+                else
+                    current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
                 // reset scrolling backgrounds
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
             }
@@ -185,6 +223,8 @@ namespace Curse_of_the_Abyss
                     current_level = levels[levelcounter];
                 }
                 current_level.LoadContent(Content);
+                player_life = Content.Load<Texture2D>("UI/player_UI");
+                life_counter = Content.Load<SpriteFont>("Eggcounter");
                 current_level.Reset();
                 if (!current_level.is_maze_gen)
                     current_level.InitMapManager(_spriteBatch);
@@ -250,7 +290,11 @@ namespace Curse_of_the_Abyss
 
         protected override void Draw(GameTime gameTime)
         {
-
+            if (lost_life)
+            {
+                Life_loss(life_timer>1000);
+                return;
+            }
             // Constants.scale = (float)(GraphicsDevice.Viewport.Height / 1080f);
             var scaleX = GraphicsDevice.Viewport.Width/(float)RenderWidth;
             var scaleY = GraphicsDevice.Viewport.Height/(float)RenderHeight;
@@ -303,6 +347,8 @@ namespace Curse_of_the_Abyss
             current_level.healthbar.Draw(_spriteBatch);
             current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
             if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
+            _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
+            _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);
             _spriteBatch.End();
             }
 
@@ -326,6 +372,22 @@ namespace Curse_of_the_Abyss
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void Life_loss(bool secondphase)
+        {
+            if(secondphase&& !this.secondphase)
+            {
+                this.secondphase = true;
+                SoundEffect loss = Content.Load<SoundEffect>("Soundeffects/life_loss");
+                loss.Play();
+            }
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+            _spriteBatch.Begin(SpriteSortMode.BackToFront);
+            _spriteBatch.Draw(player_life,new Rectangle(_graphics.PreferredBackBufferWidth/2-100,_graphics.PreferredBackBufferHeight/2-25,50,50),null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.01f);
+            _spriteBatch.DrawString(life_counter, "x0" + ((secondphase)?lifes:lifes+1).ToString(), new Vector2(_graphics.PreferredBackBufferWidth/2 -40, _graphics.PreferredBackBufferHeight/2-50), Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0.01f);
+            _spriteBatch.End();
         }
     }
 }
