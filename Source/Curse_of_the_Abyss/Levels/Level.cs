@@ -192,7 +192,7 @@ namespace Curse_of_the_Abyss
                 }
                 else
                 {
-                    speed = rand.Next(3) + 2;
+                    speed = rand.Next(3) + 1;
                 }
                 int x_index;
                 

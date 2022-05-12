@@ -120,7 +120,7 @@ namespace Curse_of_the_Abyss
                         break;
                 case ("pathNPC"):
                         s.remove = true;
-                        health.curr_health -= health.maxhealth / 2;
+                        health.curr_health -= health.maxhealth / 4;
                         break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
