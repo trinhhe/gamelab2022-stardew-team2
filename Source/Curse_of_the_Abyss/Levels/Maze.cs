@@ -83,6 +83,15 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(1650, 395);
             
         }
-
+        public override void check_dialog()
+        {
+            switch (dialogID)
+            {
+                case (0):
+                    dialog.active = true;
+                    dialogID++;
+                    break;
+            }
+        }
     }
 }

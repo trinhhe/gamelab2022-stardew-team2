@@ -159,12 +159,18 @@ namespace Curse_of_the_Abyss
 
             if (current_level.game_over)
             {
+                //player has no lifes left
                 if (lifes <= 1)
                 { 
                     current_level = levels[0];
                     last_level_eggcount = 0;
                     Content.Unload();
+                    for(int i = 0; i < levels.Length; i++)
+                    {
+                        levels[i].dialogID = 0;     //reset dialogs after game over
+                    }
                 }
+                //player has remaining levels
                 else
                 {
                     lifes--;
