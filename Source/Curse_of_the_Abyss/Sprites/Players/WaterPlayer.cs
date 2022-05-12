@@ -17,11 +17,14 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State { Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp;//needed for different situations in states
-        private int lastY;//needed to decide how heigh player can jump
+        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp,hit;//needed for different situations in states
+        private bool hitDraw;
+        private int lastY,hitDrawTimer;//needed to decide how heigh player can jump
+        public int hitTimer;
         public Healthbar health;
         //list of objects the player can collide with
         private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
+        private string[] hitcollidables = { "obstacle", "stationaryNPC", "rock", "SeaUrchin" };
 
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
@@ -61,18 +64,21 @@ namespace Curse_of_the_Abyss
             setAnimation();
             animationManager.Update(gametime);
 
+            hitTimer += (int) gametime.ElapsedGameTime.TotalMilliseconds;
+            hitDrawTimer += (int)gametime.ElapsedGameTime.TotalMilliseconds;
+            if (hitTimer > 2000) hit = false;
             //update position of Player and check for collisions(in both directions)
             position.X += (int)xVelocity;
-            Sprite s = CheckCollision(sprites,collidables);
+            Sprite s = CheckCollision(sprites,(hit)?hitcollidables:collidables);
             if (s != null) XCollision(s, gametime);
             position.X -= (int)xVelocity;
             position.Y += (int)yVelocity;
-            s = CheckCollision(sprites,collidables);
+            s = CheckCollision(sprites, (hit) ? hitcollidables : collidables);
             if (s != null) YCollision(s, gametime);
             else if(!maze)//gravity
             {
                 position.Y += 1;
-                s = CheckCollision(sprites,collidables);
+                s = CheckCollision(sprites, (hit) ? hitcollidables : collidables);
                 if (s == null && state!= State.Jumping) state = State.Falling;
                 position.Y -= 1;
             }
@@ -82,7 +88,15 @@ namespace Curse_of_the_Abyss
 
         public override void Draw(SpriteBatch spritebatch)
         {
-
+            if (hit)
+            {
+                if (hitDrawTimer > 100)
+                {
+                    hitDraw = !hitDraw;
+                    hitDrawTimer = 0;
+                }
+                if (hitDraw) return;
+            }
             //check if player is doging
             if (dodging && !wasdodging) { position.Height = 30; position.Y += 30; wasdodging = true; }
             else if (!dodging && wasdodging) { position.Height = 60; position.Y -= 30; wasdodging = false; }
@@ -115,13 +129,18 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("targetingNPC"):
-                        s.remove = true;
-                        health.curr_health -= health.maxhealth / 10;
-                        break;
+                    s.remove = true;
+                    health.curr_health -= health.maxhealth / 10;
+                    hit = true;
+                    hitTimer = 0;
+                    moveOnContact(10,s.position);
+                    break;
                 case ("pathNPC"):
-                        s.remove = true;
-                        health.curr_health -= health.maxhealth / 4;
-                        break;
+                    health.curr_health -= health.maxhealth / 4;
+                    hit = true;
+                    hitTimer = 0;
+                    moveOnContact(15, s.position);
+                    break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
                 case ("rock"):
@@ -147,18 +166,18 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("targetingNPC"):
-                    {                       
-                        s.remove = true;
-                        health.curr_health -= health.maxhealth / 10;
-                        break;
-                    }
+                    s.remove = true;
+                    health.curr_health -= health.maxhealth / 10;
+                    hit = true;
+                    hitTimer = 0;
+                    moveOnContact(10, s.position);
+                    break;
                 case ("pathNPC"):
-                    {
-                        s.remove = true;
-                        health.curr_health -= health.maxhealth / 2;
-                        
-                        break;
-                    }
+                    health.curr_health -= health.maxhealth / 4;
+                    hit = true;
+                    hitTimer = 0;
+                    moveOnContact(15, s.position);
+                    break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
                 case ("rock"):
@@ -606,6 +625,18 @@ namespace Curse_of_the_Abyss
             position.Y += 30;
             if (s == null) return false;
             else return true;
+        }
+
+        public void moveOnContact(int intensity,Rectangle NPCpos)
+        {
+            int ydirection=0,xdirection =0;
+            if (position.Bottom > NPCpos.Bottom) ydirection = 1;
+            else if (position.Top < NPCpos.Top) ydirection = -1;
+            if (position.Left < NPCpos.Left) xdirection = -1;
+            else if (position.Right > NPCpos.Right) xdirection = 1;
+
+            position.X += intensity*xdirection * (int)Constants.max_run_velocity;
+            position.Y += intensity*ydirection * (int)Constants.max_run_velocity; 
         }
     }
 }

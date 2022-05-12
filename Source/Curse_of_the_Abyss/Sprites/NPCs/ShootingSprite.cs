@@ -71,11 +71,13 @@ namespace Curse_of_the_Abyss
         }
         public override void XCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "waterplayer")
+            if (s.name == "waterplayer" && !((WaterPlayer)s).hit)
             {
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth/10;
                 remove = true;
+                player.hit = true;
+                player.hitTimer = 1000;
             }
             else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately after spawning
             {
@@ -85,11 +87,13 @@ namespace Curse_of_the_Abyss
         }
         public override void YCollision(Sprite s, GameTime gameTime)
         {
-            if (s.name == "waterplayer")
+            if (s.name == "waterplayer" && !((WaterPlayer)s).hit)
             {
                 WaterPlayer player = s as WaterPlayer;
                 player.health.curr_health -= player.health.maxhealth / 10;
                 remove = true;
+                player.hit = true;
+                player.hitTimer = 1000;
             }
             else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately after spawning
             {

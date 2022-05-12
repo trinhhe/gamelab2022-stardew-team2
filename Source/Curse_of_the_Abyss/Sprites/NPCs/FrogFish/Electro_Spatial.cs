@@ -69,8 +69,13 @@ namespace Curse_of_the_Abyss
         }
         public void Collision(Sprite s, GameTime gameTime)
         {
-            ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
-            collidables[0] = "";
+            if (!((WaterPlayer)s).hit)
+            {
+                ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
+                ((WaterPlayer)s).hit = true;
+                ((WaterPlayer)s).hitTimer = 500;
+                collidables[0] = "";
+            }
         }
 
         

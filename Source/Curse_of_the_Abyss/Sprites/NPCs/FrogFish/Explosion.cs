@@ -58,8 +58,14 @@ namespace Curse_of_the_Abyss
                     ((TargetingNPC)s).health = 0;
                     break;
                 case ("waterplayer"):
-                    ((WaterPlayer)s).health.curr_health -= (int) ((WaterPlayer)s).health.curr_health/15;
-                    collidables[2] = "";
+                    if (!((WaterPlayer)s).hit)
+                    {
+                        ((WaterPlayer)s).health.curr_health -= (int)((WaterPlayer)s).health.curr_health / 15;
+                        collidables[2] = "";
+                        ((WaterPlayer)s).hit = true;
+                        ((WaterPlayer)s).hitTimer = 0;
+                        ((WaterPlayer)s).moveOnContact(5,position);
+                    }
                     break;
             }
         }

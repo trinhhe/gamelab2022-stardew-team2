@@ -96,9 +96,11 @@ namespace Curse_of_the_Abyss
             {
                 if (s.position.Contains(v))
                 {
-                    if (s.name == "waterplayer")
+                    if (s.name == "waterplayer" && !((WaterPlayer)s).hit)
                     {
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
+                        ((WaterPlayer)s).hit = true;
+                        ((WaterPlayer)s).hitTimer = 1000;
                     }
                     remove = true;
                     break;
@@ -111,9 +113,11 @@ namespace Curse_of_the_Abyss
             {
                 if (s.position.Contains(v))
                 {
-                    if (s.name == "waterplayer")
+                    if (s.name == "waterplayer" && !((WaterPlayer)s).hit)
                     {
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
+                        ((WaterPlayer)s).hit = true;
+                        ((WaterPlayer)s).hitTimer = 1000;
                     }
                     else if (s.name == "obstacle" && spatial)
                     {
