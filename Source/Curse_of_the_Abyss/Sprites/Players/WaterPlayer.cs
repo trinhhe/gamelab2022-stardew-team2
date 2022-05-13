@@ -129,7 +129,7 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("targetingNPC"):
-                    s.remove = true;
+                    s.destroy = true;
                     health.curr_health -= health.maxhealth / 10;
                     hit = true;
                     hitTimer = 0;
@@ -166,7 +166,7 @@ namespace Curse_of_the_Abyss
             switch (s.name)
             {
                 case ("targetingNPC"):
-                    s.remove = true;
+                    s.destroy = true;
                     health.curr_health -= health.maxhealth / 10;
                     hit = true;
                     hitTimer = 0;
