@@ -200,7 +200,7 @@ namespace Curse_of_the_Abyss
                     if(b.animationManager.animation.CurrentFrame == 5)
                     {
                         b.animationManager.animation.FrameSpeed = 0.2f;
-                        if (b.other != null) b.other.remove = true;
+                        if (b.other != null) b.other.destroy = true;
                     }
                     if(b.animationManager.animation.CurrentFrame == b.animationManager.animation.FrameCount-1)
                     {
