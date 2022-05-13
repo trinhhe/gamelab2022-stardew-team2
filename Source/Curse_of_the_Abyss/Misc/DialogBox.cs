@@ -172,7 +172,7 @@ namespace Curse_of_the_Abyss
                 else animationManager.animation.FrameSpeed = 0.1f;
                 Rectangle temp5 = new Rectangle(position.X + (int)(650 * position.Width / 677f), position.Y + (int)(144 * position.Height / 162f), (int)(14 * position.Width / 677f) + 1, (int)(10 * position.Height / 162f) + 1);
                 Vector2 temp6 = new Vector2(position.X + 623 * position.Width / 677f, position.Y + 140 * position.Height / 162f);
-                animationManager.Draw(spriteBatch,temp5,0.09f,0, SpriteEffects.None);
+                animationManager.Draw(spriteBatch,temp5,0.05f,0, SpriteEffects.None);
                 spriteBatch.DrawString(name, "Enter", temp6, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
 
             }

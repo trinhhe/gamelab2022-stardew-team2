@@ -141,7 +141,6 @@ namespace Curse_of_the_Abyss
             sprites.Add(submarine);
             InitSprites();
             dialog = new DialogBox(new Rectangle(650,0,1190,200),Constants.dialog_first);
-
             eggs = new EggCollection();
 
             //Add eggs here

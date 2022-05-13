@@ -192,6 +192,7 @@ namespace Curse_of_the_Abyss
         {
             wp_pos_prev = new Rectangle(0, 0, 0, 0);
             sb_pos_prev = new Rectangle(0, 0, 0, 0);
+            eggs_collected = 0;
         }
 
         //spawns Targeting NPCs in given time interval (time in milliseconds)

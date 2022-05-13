@@ -133,13 +133,12 @@ namespace Curse_of_the_Abyss
                     health.curr_health -= health.maxhealth / 10;
                     hit = true;
                     hitTimer = 0;
-                    moveOnContact(10,s.position);
                     break;
                 case ("pathNPC"):
                     health.curr_health -= health.maxhealth / 4;
                     hit = true;
                     hitTimer = 0;
-                    moveOnContact(15, s.position);
+                    //moveOnContact(15, s.position);
                     break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
@@ -170,13 +169,12 @@ namespace Curse_of_the_Abyss
                     health.curr_health -= health.maxhealth / 10;
                     hit = true;
                     hitTimer = 0;
-                    moveOnContact(10, s.position);
                     break;
                 case ("pathNPC"):
                     health.curr_health -= health.maxhealth / 4;
                     hit = true;
                     hitTimer = 0;
-                    moveOnContact(15, s.position);
+                    //moveOnContact(15, s.position);
                     break;
                 case ("stationaryNPC"):
                 case ("obstacle"):
