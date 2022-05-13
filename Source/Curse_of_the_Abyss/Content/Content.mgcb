@@ -1086,16 +1086,7 @@
 /copy:UI/Button.png
 
 #begin UI/Egg_UI.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UI/Egg_UI.png
+/copy:UI/Egg_UI.png
 
 #begin UI/exit_logo.png
 /copy:UI/exit_logo.png
