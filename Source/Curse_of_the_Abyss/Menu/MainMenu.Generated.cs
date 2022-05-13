@@ -31,21 +31,27 @@ namespace Curse_of_the_Abyss
 
 			var image3 = new Image();
 			image3.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/Button.png");
-			image3.Left = (int)Math.Round(670 * scale); ;
-			image3.Top = (int)Math.Round(560 * scale); ;
+			image3.Left = (int)Math.Round(670 * scale);
+			image3.Top = (int)Math.Round(560 * scale);
 			image3.Scale = new Vector2(0.5f * (float) scale, 0.5f * (float)scale);
 
 			var image4 = new Image();
 			image4.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/Button.png");
-			image4.Left = (int)Math.Round(670 * scale); ;
-			image4.Top = (int)Math.Round(620 * scale); ;
+			image4.Left = (int)Math.Round(670 * scale);
+			image4.Top = (int)Math.Round(620 * scale);
 			image4.Scale = new Vector2(0.5f * (float) scale, 0.5f * (float) scale);
 
 			var image5 = new Image();
 			image5.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/Button.png");
-			image5.Left = (int)Math.Round(670 * scale); ;
-			image5.Top = (int)Math.Round(680 * scale); ;
+			image5.Left = (int)Math.Round(670 * scale);
+			image5.Top = (int)Math.Round(680 * scale);
 			image5.Scale = new Vector2(0.5f * (float) scale, 0.5f * (float) scale);
+
+			var image6 = new Image();
+			image6.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/Button.png");
+			image6.Left = (int)Math.Round(670 * scale);
+			image6.Top = (int)Math.Round(745 * scale);
+			image6.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
 
 			var textButton1 = new TextButton();
 			textButton1.Text = "PLAY";
@@ -54,8 +60,8 @@ namespace Curse_of_the_Abyss
 			textButton1.PressedTextColor = Color.White;
 			textButton1.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textButton1.PressedBackground = new SolidBrush("#00000000");
-			textButton1.Left = (int)Math.Round(770 * scale); ;
-			textButton1.Top = (int)Math.Round(565 * scale); ;
+			textButton1.Left = (int)Math.Round(770 * scale);
+			textButton1.Top = (int)Math.Round(565 * scale);
 			textButton1.GridColumnSpan = 0;
 			textButton1.Scale = new Vector2(0.25f * (float) scale, 0.25f * (float) scale);
 			textButton1.Background = new SolidBrush("#00000000");
@@ -71,8 +77,8 @@ namespace Curse_of_the_Abyss
 			textButton2.PressedTextColor = Color.White;
 			textButton2.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textButton2.PressedBackground = new SolidBrush("#00000000");
-			textButton2.Left = (int)Math.Round(735 * scale); ;
-			textButton2.Top = (int)Math.Round(610 * scale); ;
+			textButton2.Left = (int)Math.Round(735 * scale);
+			textButton2.Top = (int)Math.Round(670 * scale);
 			textButton2.GridColumnSpan = 0;
 			textButton2.Scale = new Vector2(0.45f * (float) scale, 0.45f * (float) scale);
 			textButton2.Background = new SolidBrush("#00000000");
@@ -80,6 +86,23 @@ namespace Curse_of_the_Abyss
 			textButton2.DisabledBackground = new SolidBrush("#00000000");
 			textButton2.FocusedBackground = new SolidBrush("#00000000");
 			textButton2.DisabledBorder = new SolidBrush("#00000000");
+
+			var textButton4 = new TextButton();
+			textButton4.Text = "tutorial";
+			textButton4.TextColor = Color.Black;
+			textButton4.OverTextColor = Color.White;
+			textButton4.PressedTextColor = Color.White;
+			textButton4.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+			textButton4.PressedBackground = new SolidBrush("#00000000");
+			textButton4.Left = (int)Math.Round(732 * scale);
+			textButton4.Top = (int)Math.Round(610 * scale);
+			textButton4.GridColumnSpan = 0;
+			textButton4.Scale = new Vector2(0.45f * (float)scale, 0.45f * (float)scale);
+			textButton4.Background = new SolidBrush("#00000000");
+			textButton4.OverBackground = new SolidBrush("#00000000");
+			textButton4.DisabledBackground = new SolidBrush("#00000000");
+			textButton4.FocusedBackground = new SolidBrush("#00000000");
+			textButton4.DisabledBorder = new SolidBrush("#00000000");
 
 			var textButton3 = new TextButton();
 			textButton3.Text = "EXIT";
@@ -89,7 +112,7 @@ namespace Curse_of_the_Abyss
 			textButton3.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textButton3.PressedBackground = new SolidBrush("#00000000");
 			textButton3.Left = (int)Math.Round(765 * scale); ;
-			textButton3.Top = (int)Math.Round(685 * scale); ;
+			textButton3.Top = (int)Math.Round(750 * scale); ;
 			textButton3.GridColumnSpan = 0;
 			textButton3.Scale = new Vector2(0.25f * (float) scale, 0.25f * (float) scale);
 			textButton3.Background = new SolidBrush("#00000000");
@@ -105,9 +128,11 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(image3);
 			Widgets.Add(image4);
 			Widgets.Add(image5);
+			Widgets.Add(image6);
 			Widgets.Add(textButton1);
 			Widgets.Add(textButton2);
 			Widgets.Add(textButton3);
+			Widgets.Add(textButton4);
 
 
 			// functionality
@@ -121,6 +146,16 @@ namespace Curse_of_the_Abyss
 				}
 				else
 				{
+					if (Game.init_pause)
+                    {
+						Game._timeElapsed = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+						Game.init_pause = false;
+					}
+                    else
+                    {
+						Game._timePaused += (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds() - Game._pauseStart;
+						Game._pauseStart = 0;
+					}
 					Game.paused = false;
 				}
 			};
@@ -133,6 +168,11 @@ namespace Curse_of_the_Abyss
 			textButton3.Click += (s, a) =>
 			{
 				Game._desktop.Root = exit_screen;
+			};
+
+			textButton4.Click += (s, a) =>
+			{
+				Game._desktop.Root = tut1_screen;
 			};
 		}
 

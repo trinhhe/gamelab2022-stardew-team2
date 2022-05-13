@@ -1050,13 +1050,28 @@
 /copy:UI/Button.png
 
 #begin UI/Egg_UI.png
-/copy:UI/Egg_UI.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Egg_UI.png
 
 #begin UI/exit_logo.png
 /copy:UI/exit_logo.png
 
 #begin UI/gameover_logo.png
 /copy:UI/gameover_logo.png
+
+#begin UI/left_arrow.png
+/copy:UI/left_arrow.png
+
+#begin UI/left_arrow_highlight.png
+/copy:UI/left_arrow_highlight.png
 
 #begin UI/Lifefont.spritefont
 /importer:FontDescriptionImporter
@@ -1110,6 +1125,12 @@
 /processorParam:TextureFormat=Color
 /build:UI/player_UI.png
 
+#begin UI/right_arrow.png
+/copy:UI/right_arrow.png
+
+#begin UI/right_arrow_highlight.png
+/copy:UI/right_arrow_highlight.png
+
 #begin UI/score_logo.png
 /copy:UI/score_logo.png
 
@@ -1118,6 +1139,42 @@
 
 #begin UI/settings_logo.png
 /copy:UI/settings_logo.png
+
+#begin UI/tutorial_1.png
+/copy:UI/tutorial_1.png
+
+#begin UI/tutorial_10.png
+/copy:UI/tutorial_10.png
+
+#begin UI/tutorial_11.png
+/copy:UI/tutorial_11.png
+
+#begin UI/tutorial_2.png
+/copy:UI/tutorial_2.png
+
+#begin UI/tutorial_3.png
+/copy:UI/tutorial_3.png
+
+#begin UI/tutorial_4.png
+/copy:UI/tutorial_4.png
+
+#begin UI/tutorial_5.png
+/copy:UI/tutorial_5.png
+
+#begin UI/tutorial_6.png
+/copy:UI/tutorial_6.png
+
+#begin UI/tutorial_7.png
+/copy:UI/tutorial_7.png
+
+#begin UI/tutorial_8.png
+/copy:UI/tutorial_8.png
+
+#begin UI/tutorial_9.png
+/copy:UI/tutorial_9.png
+
+#begin UI/tutorial_logo.png
+/copy:UI/tutorial_logo.png
 
 #begin underwater_env.jpeg
 /importer:TextureImporter

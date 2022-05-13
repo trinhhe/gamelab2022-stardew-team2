@@ -13,7 +13,7 @@ using System;
 
 namespace Curse_of_the_Abyss
 {
-	partial class Score: Panel
+	partial class ScoreTime: Panel
 	{
 		private void BuildUI()
 		{
@@ -65,7 +65,7 @@ namespace Curse_of_the_Abyss
 			textBox3.DisabledBackground = new SolidBrush("#00000000");
 
 			var textButton1 = new TextButton();
-			textButton1.Text = "Back";
+			textButton1.Text = "Next";
 			textButton1.GridColumnSpan = 0;
 			textButton1.TextColor = Color.Black;
 			textButton1.OverTextColor = Color.White;
@@ -83,57 +83,32 @@ namespace Curse_of_the_Abyss
 			textButton1.DisabledBorder = new SolidBrush("#00000000");
 
 			var textBox4 = new TextBox();
-			textBox4.Text = "You collected";
+			textBox4.Text = "Total time";
 			textBox4.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox4.DisabledTextColor = Color.Black;
-			textBox4.Left = (int)Math.Round(660 * scale);
+			textBox4.Left = (int)Math.Round(695 * scale);
 			textBox4.Top = (int)Math.Round(570 * scale);
 			textBox4.Enabled = false;
 			textBox4.Scale = new Vector2(0.45f * (float)scale, 0.45f * (float)scale);
 			textBox4.DisabledBackground = new SolidBrush("#00000000");
 
+			TimeSpan t = TimeSpan.FromMilliseconds(time);
+			string parsed_time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms",
+									t.Hours,
+									t.Minutes,
+									t.Seconds,
+									t.Milliseconds);
+
 			var textBox5 = new TextBox();
-			String collected_eggs_string = Score.collected_eggs.ToString(); 
-			if(collected_eggs_string.Length == 1)
-				collected_eggs_string = "0" + collected_eggs_string;
-			textBox5.Text = collected_eggs_string;
+			textBox5.Text = parsed_time;
 			textBox5.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox5.DisabledTextColor = Color.Black;
-			textBox5.HorizontalAlignment = Myra.Graphics2D.UI.HorizontalAlignment.Left;
-			textBox5.Left = (int)Math.Round(705 * scale);
+			textBox5.Left = (int)Math.Round(630 * scale);
 			textBox5.Top = (int)Math.Round(620 * scale);
 			textBox5.Enabled = false;
-			textBox5.Scale = new Vector2(0.45f * (float)scale, 0.45f * (float)scale);
+			textBox5.Scale = new Vector2(0.4f * (float)scale, 0.4f * (float)scale);
 			textBox5.DisabledBackground = new SolidBrush("#00000000");
 
-			var textBox6 = new TextBox();
-			textBox6.Text = "/";
-			textBox6.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
-			textBox6.DisabledTextColor = Color.Black;
-			textBox6.Left = (int)Math.Round(745 * scale);
-			textBox6.Top = (int)Math.Round(620 * scale);
-			textBox6.Enabled = false;
-			textBox6.Scale = new Vector2(0.45f * (float)scale, 0.45f * (float)scale);
-			textBox6.DisabledBackground = new SolidBrush("#00000000");
-
-			var textBox7 = new TextBox();
-			String total_eggs_string = Score.total_eggs.ToString();
-			if (total_eggs_string.Length == 1)
-				total_eggs_string = "0" + total_eggs_string;
-			textBox7.Text = total_eggs_string;
-			textBox7.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
-			textBox7.DisabledTextColor = Color.Black;
-			textBox7.Left = (int)Math.Round(770 * scale);
-			textBox7.Top = (int)Math.Round(620 * scale);
-			textBox7.Enabled = false;
-			textBox7.Scale = new Vector2(0.45f * (float)scale, 0.45f * (float)scale);
-			textBox7.DisabledBackground = new SolidBrush("#00000000");
-
-			var image4 = new Image();
-			image4.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/Egg_UI.png");
-			image4.Left = (int)Math.Round(830 * scale);
-			image4.Top = (int)Math.Round(625 * scale);
-			image4.Scale = new Vector2(2.5f * (float)scale, 2.5f * (float)scale);
 
 			Background = new SolidBrush("#00000000");
 			DisabledBackground = new SolidBrush("#00000000");
@@ -146,16 +121,13 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(textButton1);
 			Widgets.Add(textBox4);
 			Widgets.Add(textBox5);
-			Widgets.Add(textBox6);
-			Widgets.Add(textBox7);
-			Widgets.Add(image4);
 
 
 			// functionality
 
 			textButton1.Click += (s, a) =>
 			{
-				Game._desktop.Root = Game._mainmenu;
+				Game._desktop.Root = Game._mainmenu.leaderboard_entry_screen;
 			};
 		}
 

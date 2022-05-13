@@ -32,6 +32,8 @@ namespace Curse_of_the_Abyss
         int eggs_collected;
         public DialogBox dialog;
         public int dialogID;
+        private bool enter_dialog;
+        private int dialog_start;
 
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
         Rectangle sb_pos_prev = new Rectangle(0, 0, 0, 0);
@@ -69,7 +71,21 @@ namespace Curse_of_the_Abyss
             if (dialog.active)
             {
                 dialog.Update(gameTime);
+                if (!enter_dialog)
+                {
+                    dialog_start = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+                    enter_dialog = true;
+                }
                 return;
+            }
+            else
+            {
+                if (enter_dialog)
+                {
+                    Game._timePaused += (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds() - dialog_start;
+                    dialog_start = 0;
+                    enter_dialog = false;
+                }
             }
 
             Rectangle wp_pos_curr = waterPlayer.position;

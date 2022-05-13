@@ -29,9 +29,11 @@ namespace Curse_of_the_Abyss
         public static Desktop _desktop;
         public static MainMenu _mainmenu;
         public static bool paused;
+        public static bool init_pause;
         public static bool res_changed;
         public static bool loading;
         public static double loading_timer = 0.001;
+        public static float sfx_vol;
 
         // screen and camera
         public static int RenderHeight, RenderWidth;
@@ -44,12 +46,18 @@ namespace Curse_of_the_Abyss
         Level[] levels;
         int levelcounter;
         int last_level_eggcount;
+        int total_eggs;
         
         //life
         int lifes,life_timer;
         Texture2D player_life;
         SpriteFont life_counter;
         bool lost_life,secondphase;
+
+        //timers
+        public static int _timeElapsed;
+        public static int _timePaused;
+        public static int _pauseStart;
 
         // scrolling backgrounds
         private List<ScrollingBackground> _scrollingBackgrounds;
@@ -71,7 +79,8 @@ namespace Curse_of_the_Abyss
         protected override void Initialize()
         {
             paused = true;
-            loading = true;
+            init_pause = true;
+            loading = false;
 
             // default resolution
             _graphics.PreferredBackBufferWidth = 1600;
@@ -81,7 +90,8 @@ namespace Curse_of_the_Abyss
             ResolutionSettings.IsFullscreen = false;
 
             // default audio volume
-            SoundEffect.MasterVolume = 0.5f;
+            SoundEffect.MasterVolume = 0.4f;
+            sfx_vol = SoundEffect.MasterVolume;
             MediaPlayer.Volume = 0.1f;
 
             /* window resizing disabled for now
@@ -156,6 +166,7 @@ namespace Curse_of_the_Abyss
             {
                 paused = true;
                 IsMouseVisible = true;
+                _pauseStart = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
             }
 
             //update life timer
@@ -179,7 +190,7 @@ namespace Curse_of_the_Abyss
                     IsMouseVisible = true;
                     lifes = 3;
                 }
-                //player has remaining levels
+                //player has remaining lives
                 else
                 {
                     lifes--;
@@ -203,18 +214,26 @@ namespace Curse_of_the_Abyss
             if (current_level.completed)
             {
                 Content.Unload();
-                Score.total_eggs += current_level.eggs.eggsTotal;
+                total_eggs += current_level.eggs.eggsTotal;
                 if (levelcounter == levels.Length - 1)
                 {
                     // game completed
-                    Score.collected_eggs = current_level.eggcounter.get();
-                    _mainmenu.score_screen = new Score();
-                    _desktop.Root = _mainmenu.score_screen;
+                    _timeElapsed = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds() - _timeElapsed;
+                    _timeElapsed -= _timePaused;
+                    _mainmenu.score_eggs_screen = new ScoreEggs(current_level.eggcounter.get(), total_eggs);
+                    _mainmenu.score_time_screen = new ScoreTime(_timeElapsed);
+                    _mainmenu.leaderboard_entry_screen = new Leaderboard_entry(current_level.eggcounter.get(), total_eggs,
+                        _timeElapsed);
+                    _desktop.Root = _mainmenu.score_eggs_screen;
                     paused = true;
                     IsMouseVisible = true;
                     current_level = levels[0];
                     levelcounter = 0;
-                    last_level_eggcount = 0;
+                    last_level_eggcount = 0;       
+                    init_pause = true;
+                    _timePaused = 0;
+                    _pauseStart = 0;
+                    total_eggs = 0;
                 }
                 else
                 {
@@ -250,6 +269,9 @@ namespace Curse_of_the_Abyss
 
             if (!paused)
             {
+                //resume SFX
+                SoundEffect.MasterVolume = sfx_vol;
+
                 current_level.Update(gameTime);
 
                 current_level.camera_transform = _camera.Transform;
@@ -283,6 +305,11 @@ namespace Curse_of_the_Abyss
                 current_level.cam_target = cam_target;
 
                 IsMouseVisible = false;
+            }
+            else
+            {
+                // mute SFX
+                SoundEffect.MasterVolume = 0f;
             }
 
             base.Update(gameTime);
@@ -356,6 +383,14 @@ namespace Curse_of_the_Abyss
             if (paused & !splashscreen.Running)
             {
                 _desktop.Render();
+            }
+
+            // leaderboard name error
+            if (Leaderboard_entry.name_error) 
+            {
+                _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+                _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "ERROR: Invalid name", new Vector2(840, 770), Color.Red);
+                _spriteBatch.End();
             }
 
             // splash screen

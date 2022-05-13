@@ -45,7 +45,7 @@ namespace Curse_of_the_Abyss
 			textBox1.GridColumnSpan = 0;
 			textBox1.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox1.DisabledTextColor = Color.Black;
-			textBox1.Left = (int) Math.Round(630 * scale);
+			textBox1.Left = (int) Math.Round(628 * scale);
 			textBox1.Top = (int) Math.Round(444 * scale);
 			textBox1.Enabled = false;
 			textBox1.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
@@ -146,7 +146,7 @@ namespace Curse_of_the_Abyss
 			textBox4.Enabled = false;
 			textBox4.DisabledTextColor = Color.Black;
 			textBox4.Left = (int)Math.Round(635 * scale);
-			textBox4.Top = (int)Math.Round(550 * scale);
+			textBox4.Top = (int)Math.Round(585 * scale);
 			textBox4.GridColumnSpan = 0;
 			textBox4.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
 			textBox4.Background = new SolidBrush("#00000000");
@@ -161,7 +161,7 @@ namespace Curse_of_the_Abyss
 			textBox5.Enabled = false;
 			textBox5.DisabledTextColor = Color.Black;
 			textBox5.Left = (int)Math.Round(648 * scale);
-			textBox5.Top = (int)Math.Round(550 * scale);
+			textBox5.Top = (int)Math.Round(585 * scale);
 			textBox5.GridColumnSpan = 0;
 			textBox5.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
 			textBox5.Background = new SolidBrush("#00000000");
@@ -169,18 +169,39 @@ namespace Curse_of_the_Abyss
 			textBox5.DisabledBackground = new SolidBrush("#00000000");
 			textBox5.FocusedBackground = new SolidBrush("#00000000");
 
+			var textBox6 = new TextBox();
+			textBox6.Text = "SFX volume";
+			textBox6.TextColor = Color.Black;
+			textBox6.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+			textBox6.Enabled = false;
+			textBox6.DisabledTextColor = Color.Black;
+			textBox6.Left = (int)Math.Round(630 * scale);
+			textBox6.Top = (int)Math.Round(550 * scale);
+			textBox6.GridColumnSpan = 0;
+			textBox6.GridRowSpan = 0;
+			textBox6.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
+			textBox6.Background = new SolidBrush("#00000000");
+			textBox6.OverBackground = new SolidBrush("#00000000");
+			textBox6.DisabledBackground = new SolidBrush("#00000000");
+			textBox6.FocusedBackground = new SolidBrush("#00000000");
+
 			var horizontalSlider1 = new HorizontalSlider();
 			horizontalSlider1.Left = (int)Math.Round(810 * scale);
 			horizontalSlider1.Top = (int)Math.Round(520 * scale);
 			horizontalSlider1.Width = (int)Math.Round(125 * scale);
-			// horizontalSlider1.Value = SoundEffect.MasterVolume * 100;
 			horizontalSlider1.Value = 4 * MediaPlayer.Volume * 100;
 
 			var horizontalSlider2 = new HorizontalSlider();
 			horizontalSlider2.Left = (int)Math.Round(810 * scale);
-			horizontalSlider2.Top = (int)Math.Round(555 * scale);
+			horizontalSlider2.Top = (int)Math.Round(590 * scale);
 			horizontalSlider2.Width = (int)Math.Round(125 * scale);
 			horizontalSlider2.Value = Brightness.brightnessValue;
+
+			var horizontalSlider3 = new HorizontalSlider();
+			horizontalSlider3.Left = (int)Math.Round(810 * scale);
+			horizontalSlider3.Top = (int)Math.Round(555 * scale);
+			horizontalSlider3.Width = (int)Math.Round(125 * scale);
+			horizontalSlider3.Value = 2 * Game.sfx_vol * 100;
 
 			Background = new SolidBrush("#00000000");
 			DisabledBackground = new SolidBrush("#00000000");
@@ -196,6 +217,8 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(textBox4);
 			Widgets.Add(textBox5);
 			Widgets.Add(horizontalSlider2);
+			Widgets.Add(textBox6);
+			Widgets.Add(horizontalSlider3);
 
 
 			// functionality
@@ -214,13 +237,17 @@ namespace Curse_of_the_Abyss
 
 			horizontalSlider1.ValueChanged += (s, a) =>
 			{
-				// SoundEffect.MasterVolume = horizontalSlider1.Value / 100;
 				MediaPlayer.Volume = 0.25f * (horizontalSlider1.Value / 100);
 			};
 
 			horizontalSlider2.ValueChanged += (s, a) =>
 			{
 				Brightness.brightnessValue = (byte) (horizontalSlider2.Value + 10f);
+			};
+
+			horizontalSlider3.ValueChanged += (s, a) =>
+			{
+				Game.sfx_vol = 0.5f * horizontalSlider3.Value / 100;
 			};
 
 			comboBox1.SelectedIndexChanged += (s, a) =>
