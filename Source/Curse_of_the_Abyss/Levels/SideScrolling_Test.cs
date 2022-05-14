@@ -16,6 +16,7 @@ namespace Curse_of_the_Abyss
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
         {
+            completed = true;
             num_parts = 2;
 
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
