@@ -22,9 +22,9 @@ namespace Curse_of_the_Abyss
 
         //healthbar
         public static int max_player_health = 5000;
-        public static int health_gain = 3000; //500
+        public static int health_gain = 2500; //500
         public static int health_loss = 1; //1
-        public static int submarine_oxygen_cooldown = 20000;
+        public static int submarine_oxygen_cooldown = 18000;
 
         //submarine
         public static float max_run_velocity_submarine = 6.5f;
