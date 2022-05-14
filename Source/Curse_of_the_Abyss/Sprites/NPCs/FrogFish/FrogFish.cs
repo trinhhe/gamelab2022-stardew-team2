@@ -43,6 +43,8 @@ namespace Curse_of_the_Abyss
             new Rectangle(x + 173 * scale, y + scale * 73, 29 * scale, 47 * scale)};
             defeated = false;
             antenna = new Antenna(x,y+scale*23,scale,level,player);
+            antenna.lightmask = true;
+            level.lightTargets.Add(antenna);
             rand = new Random();
             collidable = true;
             this.player = player;
