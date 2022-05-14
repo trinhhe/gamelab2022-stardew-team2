@@ -48,6 +48,11 @@ namespace Curse_of_the_Abyss
                 {"JumpFallFront", new Animation(content.Load<Texture2D>("MCJumpFall_front"), 4, 0.1f, true) },
                 {"CrawlRight" , new Animation(content.Load<Texture2D>("MCCrawl_right"), 5, 0.15f, true) },
                 {"CrawlLeft" , new Animation(content.Load<Texture2D>("MCCrawl_left"), 5, 0.15f, true) },
+                {"SwimBase" , new Animation(content.Load<Texture2D>("Swim_base"), 1, 0.1f, true) },
+                {"SwimUp" , new Animation(content.Load<Texture2D>("Swim_up"), 3, 0.15f, true) },
+                {"SwimDown" , new Animation(content.Load<Texture2D>("Swim_down"), 3, 0.15f, true) },
+                {"SwimLeft" , new Animation(content.Load<Texture2D>("Swim_left"), 3, 0.15f, true) },
+                {"SwimRight" , new Animation(content.Load<Texture2D>("Swim_right"), 3, 0.15f, true) },
             };
         }
 
@@ -605,7 +610,29 @@ namespace Curse_of_the_Abyss
                     animationManager.Stop(2);
                 }
             }
-
+            else if (maze)
+            {
+                double absxvel = Math.Abs(xVelocity);
+                double absyvel = Math.Abs(yVelocity);
+                if (xVelocity == 0 && yVelocity == 0)
+                    animationManager.Play(animations["SwimBase"]);
+                else if (xVelocity > 0 && absxvel > absyvel)
+                {
+                    animationManager.Play(animations["SwimRight"]);
+                }
+                else if (xVelocity < 0 && absxvel > absyvel)
+                {
+                    animationManager.Play(animations["SwimLeft"]);
+                }
+                else if (yVelocity > 0 && absyvel > absxvel)
+                {
+                    animationManager.Play(animations["SwimDown"]);
+                }
+                else if (yVelocity < 0 && absyvel > absxvel)
+                {
+                    animationManager.Play(animations["SwimUp"]);
+                }
+            }
             else
             {
                 animationManager.Play(animations["Crouch"]);
