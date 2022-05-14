@@ -27,7 +27,7 @@ namespace Curse_of_the_Abyss
         public static int submarine_oxygen_cooldown = 18000;
 
         //submarine
-        public static float max_run_velocity_submarine = 7.5f;
+        public static float max_run_velocity_submarine = 6.5f;
         public static float run_accelerate_submarine = 0.18f;
         public static float submarine_bomb_velocity = 2.75f;
         public static int submarine_bomb_cooldown = 3000;
