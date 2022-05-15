@@ -47,7 +47,7 @@ namespace Curse_of_the_Abyss
         //SFX VOLUMES
         //player
         public static float grunt_volume = 0.6f;
-        public static float swim_volume = 1f;
+        public static float swim_volume = 0.8f;
         public static float jump_volume = 1f;
         //boss attacks
         public static float spatial_electricity_volume = 0.20f;
