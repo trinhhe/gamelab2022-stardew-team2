@@ -15,6 +15,8 @@ namespace Curse_of_the_Abyss
         RenderTarget2D darkness;
         GraphicsDevice graphicsDevice;
         Color color;
+        public int alpha_value;
+        
         public DarknessRender(GraphicsDevice graphicsDevice, int RenderHeight, int RenderWidth){
             // this.current_level = current_level;
             // this._spriteBatch = _spriteBatch;
@@ -26,8 +28,10 @@ namespace Curse_of_the_Abyss
                 AlphaSourceBlend = Blend.One,
                 AlphaDestinationBlend = Blend.One,
             };
-            color = new Color(0,0,0,255);
+            color = new Color(0,0,0,255); //255
+            alpha_value = 0;
         }
+
         public static void LoadContent(ContentManager content)
         {
             lightmask = content.Load<Texture2D>("Lightmask/light");
@@ -41,6 +45,30 @@ namespace Curse_of_the_Abyss
 
         public void LightMasking(Level current_level, SpriteBatch _spriteBatch){
             graphicsDevice.SetRenderTarget(darkness);
+            if (current_level.darknessTransition)
+            {
+                if(!current_level.darknessReverse)
+                {
+                    if (alpha_value < 255)
+                        alpha_value += Constants.darkness_transition_steps;
+                    else
+                        alpha_value = 255;  
+                }
+                else
+                {
+                    if (alpha_value > 0)
+                        alpha_value -= Constants.darkness_transition_steps;
+                    else
+                        alpha_value = 0;
+                    
+                }
+                color = new Color(0, 0, 0, alpha_value);
+            }
+            else
+            {
+                alpha_value = 0;
+                color = new Color(0, 0, 0, 255);
+            }
             graphicsDevice.Clear(color);
             markTargets(current_level);
             _spriteBatch.Begin(blendState: blend);

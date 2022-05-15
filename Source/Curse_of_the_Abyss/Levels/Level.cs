@@ -23,7 +23,7 @@ namespace Curse_of_the_Abyss
         public int num_parts; // number of "screen widths" (i.e. multiples of 1920) that the level is composed of
         public bool game_over;
         public bool completed;
-        public bool darkness;
+        public bool darkness, darknessTransition, darknessReverse; //darkness transition, reverse for boss
         public List<Sprite> lightTargets;
         public int randomTimer;
         public Matrix camera_transform;
@@ -35,6 +35,7 @@ namespace Curse_of_the_Abyss
         private bool enter_dialog;
         private int dialog_start;
 
+        public DarknessRender darknessRender;
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
         Rectangle sb_pos_prev = new Rectangle(0, 0, 0, 0);
 

@@ -66,6 +66,7 @@ namespace Curse_of_the_Abyss
                     sprites.Add(dynamite);
                     MovingPlatform platform = new MovingPlatform(96,798,96,445,2,60,true);
                     sprites.Add(platform);
+                    darknessTransition = true;
                     break;
             }
             sprites.Add(boss);
