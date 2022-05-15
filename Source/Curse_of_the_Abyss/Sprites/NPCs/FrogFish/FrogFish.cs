@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
 
@@ -23,6 +24,7 @@ namespace Curse_of_the_Abyss
         public Rectangle[] mainBodyPosition;
         public static Dictionary<string, Animation> animations;
         AnimationManager animationManager;
+        public static SoundEffect electroAttackSFX;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
@@ -69,6 +71,7 @@ namespace Curse_of_the_Abyss
             bar = content.Load<Texture2D>("bar_dark");
             healthBar = content.Load<Texture2D>("health");
             font = content.Load<SpriteFont>("O2");
+            electroAttackSFX = content.Load<SoundEffect>("Soundeffects/electro_attack");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
@@ -203,6 +206,7 @@ namespace Curse_of_the_Abyss
                     attackTimer = (stage-1)*1000;
                     antenna.attack = true;
                     Antenna.animationManager.Play(Antenna.animations["attack"]);
+                    electroAttackSFX.Play(Constants.electro_attack_volumne, 0, 0);
                     break;
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;

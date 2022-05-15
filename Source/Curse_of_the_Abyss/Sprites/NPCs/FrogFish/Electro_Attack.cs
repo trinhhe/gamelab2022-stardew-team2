@@ -22,7 +22,7 @@ namespace Curse_of_the_Abyss
         Vector2 rot_center; //center of energyball, used for rotation
         bool spatial;
         Bossfight level;
-        public static SoundEffect gruntSFX;
+        public static SoundEffect gruntSFX, spatialElectricitySFX;
         public Electro_Attack(int x, int y, int coordx, int coordy, int speed,bool spatial,Bossfight level)
         {
             name = "electroSprite";
@@ -41,6 +41,8 @@ namespace Curse_of_the_Abyss
             animation = new Animation(content.Load<Texture2D>("Boss/Electro_Attack"),3,0.3f,true);
             Electro_Spatial.LoadContent(content);
             gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
+            spatialElectricitySFX = content.Load<SoundEffect>("Soundeffects/spatial_electricity");
+            
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -103,7 +105,7 @@ namespace Curse_of_the_Abyss
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
                         ((WaterPlayer)s).hit = true;
                         ((WaterPlayer)s).hitTimer = 1000;
-                        gruntSFX.Play(Constants.grunt_volumne, 0, 0);
+                        gruntSFX.Play(Constants.grunt_volume, 0, 0);
                     }
                     remove = true;
                     break;
@@ -121,11 +123,12 @@ namespace Curse_of_the_Abyss
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
                         ((WaterPlayer)s).hit = true;
                         ((WaterPlayer)s).hitTimer = 1000;
-                        gruntSFX.Play(Constants.grunt_volumne, 0, 0);
+                        gruntSFX.Play(Constants.grunt_volume, 0, 0);
                     }
                     else if (s.name == "obstacle" && spatial)
                     {
                         level.toAdd.Add(new Electro_Spatial(position.X-32, s.position.Y-22));
+                        spatialElectricitySFX.Play(Constants.spatial_electricity_volume, 0, 0);
                     }
                     remove = true;
                     break;

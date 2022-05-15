@@ -67,7 +67,7 @@ namespace Curse_of_the_Abyss
                         ((WaterPlayer)s).hit = true;
                         ((WaterPlayer)s).hitTimer = 0;
                         ((WaterPlayer)s).moveOnContact(5,position);
-                        gruntSFX.Play(Constants.grunt_volumne, 0, 0);
+                        gruntSFX.Play(Constants.grunt_volume, 0, 0);
                     }
                     break;
             }
