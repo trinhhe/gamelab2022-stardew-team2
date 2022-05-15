@@ -59,7 +59,20 @@ namespace Curse_of_the_Abyss
             image7.Top = (int)Math.Round(805 * scale);
             image7.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
 
-            var textButton1 = new TextButton();
+			var imageButton1 = new ImageButton();
+			imageButton1.Image = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/credits_icon.png");
+			imageButton1.OverImage = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/credits_icon_highlight.png");
+			imageButton1.PressedBackground = new SolidBrush("#00000000");
+			imageButton1.Left = (int)Math.Round(1550 * scale);
+			imageButton1.Top = (int)Math.Round(10 * scale);
+			imageButton1.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
+			imageButton1.Background = new SolidBrush("#00000000");
+			imageButton1.OverBackground = new SolidBrush("#00000000");
+			imageButton1.DisabledBackground = new SolidBrush("#E8E8E800");
+			imageButton1.FocusedBackground = new SolidBrush("#FFFFFFFF");
+			imageButton1.FocusedBorder = new SolidBrush("#00000000");
+
+			var textButton1 = new TextButton();
 			textButton1.Text = "PLAY";
 			textButton1.TextColor = Color.Black;
 			textButton1.OverTextColor = Color.White;
@@ -158,6 +171,7 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(textButton3);
 			Widgets.Add(textButton4);
 			Widgets.Add(textButton5);
+			Widgets.Add(imageButton1);
 
 
 			// functionality
@@ -203,6 +217,11 @@ namespace Curse_of_the_Abyss
 			textButton5.Click += (s, a) =>
 			{
 				Game._desktop.Root = leaderboard_screen;
+			};
+
+			imageButton1.Click += (s, a) =>
+			{
+				Game._desktop.Root = Game._mainmenu.credits_screen;
 			};
 
 		}

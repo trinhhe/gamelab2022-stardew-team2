@@ -92,7 +92,7 @@ namespace Curse_of_the_Abyss
                 {"Oxygen", new Animation(content.Load<Texture2D>("O2Button"), 2, 0.2f, true)},
                 {"OxyCD", new Animation(content.Load<Texture2D>("Bomb_Gauge"), 7, Constants.submarine_oxygen_cooldown / 6000f,true)},
                 {"Bomb" , new Animation(content.Load<Texture2D>("Button"), 2, 0.3f, true)},
-                {"BombCD", new Animation(content.Load<Texture2D>("Bomb_Gauge"), 7, Constants.submarine_bomb_cooldown / 7000f,true)},
+                {"BombCD", new Animation(content.Load<Texture2D>("Bomb_Gauge"), 7, Constants.submarine_bomb_cooldown / 6000f,true)},
                 {"Light", new Animation(content.Load<Texture2D>("lever"), 2, 0.2f, true)},
                 {"Shut", new Animation(content.Load<Texture2D>("Shut"), 2, 0.2f, true)}
             };
@@ -130,7 +130,7 @@ namespace Curse_of_the_Abyss
             {
                 animationManager3.Stop(1);
                 animationManager5.Stop(0);
-                animationManager6.Stop(0);
+                animationManager6.Stop(6);
             }
             else
             {
@@ -139,7 +139,7 @@ namespace Curse_of_the_Abyss
             if (oxygenCooldown >= Constants.submarine_oxygen_cooldown)
             {
                 animationManager2.Stop(1);
-                animationManager7.Stop(0);
+                animationManager7.Stop(6);
             }
             else
             {
