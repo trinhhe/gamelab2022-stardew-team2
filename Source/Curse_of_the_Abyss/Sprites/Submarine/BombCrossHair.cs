@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
             position.Width = 30;
             position.Height = 30;
             Sprite s = CheckCollision(sprites,collidables);
-            while (s == null && position.Y < 1080||s.name == "frogfish")
+            while ((s == null && position.Y < 1080)||(position.Y < 1080 &&s.name == "frogfish"))
             {
                 if(s!= null)
                 {
