@@ -974,6 +974,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/egg_collect.wav
 
+#begin Soundeffects/electro_attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/electro_attack.wav
+
 #begin Soundeffects/error.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1003,11 +1009,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/game_over.wav
-
-#begin Soundeffects/electro_attack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
 
 #begin Soundeffects/gibberish.wav
 /importer:WavImporter
@@ -1057,17 +1058,17 @@
 /processorParam:Quality=Best
 /build:Soundeffects/oxygen_refill.wav
 
-#begin Soundeffects/submarine_movement.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Soundeffects/submarine_movement.wav
-
 #begin Soundeffects/spatial_electricity.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/spatial_electricity.wav
+
+#begin Soundeffects/submarine_movement.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/submarine_movement.wav
 
 #begin Soundeffects/swim.wav
 /importer:WavImporter
@@ -1305,9 +1306,6 @@
 
 #begin UI/gameover_logo.png
 /copy:UI/gameover_logo.png
-
-#begin UI/leaderboard_bg.png
-/copy:UI/leaderboard_bg.png
 
 #begin UI/leaderboard_bg.png
 /importer:TextureImporter

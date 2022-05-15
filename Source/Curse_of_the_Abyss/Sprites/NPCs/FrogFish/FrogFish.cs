@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
-            stage = 3;
+            stage = 1;
             health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
