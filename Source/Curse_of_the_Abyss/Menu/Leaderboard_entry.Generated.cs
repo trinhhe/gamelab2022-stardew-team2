@@ -117,7 +117,7 @@ namespace Curse_of_the_Abyss
 					string json = JsonSerializer.Serialize(_data);
 					string path = "leaderboard.json";
 					File.AppendAllText(@path, json + System.Environment.NewLine);
-					Game._mainmenu.leaderboard_screen = new Leaderboard();
+					Game._mainmenu.leaderboard_screen = new Leaderboard(show_score: true);
 					Game._desktop.Root = Game._mainmenu.leaderboard_screen;
 				}
 			};

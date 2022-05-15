@@ -127,7 +127,6 @@ namespace Curse_of_the_Abyss
 
 			textButton1.Click += (s, a) =>
 			{
-				Game._mainmenu.leaderboard_screen = new Leaderboard();
 				Game._desktop.Root = Game._mainmenu.leaderboard_entry_screen;
 			};
 		}
