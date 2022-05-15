@@ -27,7 +27,7 @@ namespace Curse_of_the_Abyss
         private Vector2 scaledMousePosition;
         private int shootingFrequency, shootingCount, bombCooldown, machineGunCooldown, oxygenCooldown, lightCooldown;
         public bool movingRight;//needed for different situations in states
-        public bool machineGunOn, steeringOn, lightOn, mouseMode;
+        public bool machineGunOn, steeringOn, lightOn, mouseMode,lightCDActive;
         public Lamp lamp;
         public Level level;
 
@@ -188,6 +188,12 @@ namespace Curse_of_the_Abyss
                 bombs.Remove(b);
             }
 
+            if (lightCDActive && lightCooldown >= Constants.submarine_light_cooldown)
+            {
+                lightCDActive = false;
+                lightOn = false;
+                lamp.lightOn = false;
+            }
         }
 
 
@@ -462,10 +468,9 @@ namespace Curse_of_the_Abyss
         }
         private void LightMode()
         {
-            if (Keyboard.HasBeenPressed(Keys.Up) && lightOn)
+            if (Keyboard.HasBeenPressed(Keys.Up) && lightOn && !lightCDActive)
             {
-                lightOn = false;
-                lamp.lightOn = false;
+                lightCDActive = true;
                 submarinePlayer.toggleToMove();
                 xVelocity = 0;
                 state = State.Standing;

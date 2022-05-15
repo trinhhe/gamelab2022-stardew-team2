@@ -56,8 +56,8 @@ namespace Curse_of_the_Abyss
                 animationManager.Update(gametime);
 
                 //update position of Player 
-                if (position.X + (int)xVelocity < leftBound) position.X = leftBound;
-                else if(position.X + (int)xVelocity > rightBound) position.X = rightBound - position.Width;
+                if (position.X + (int)xVelocity <= leftBound) position.X = leftBound;
+                else if(position.X + (int)xVelocity +position.Width>= rightBound) position.X = rightBound - position.Width;
                 else position.X += (int)xVelocity;
 
                
