@@ -31,7 +31,6 @@ namespace Curse_of_the_Abyss
         public static bool paused;
         public static bool init_pause;
         public static bool res_changed;
-        public static bool startup;
         public static bool loading;
         public static double loading_timer = 0.001;
         public static float sfx_vol;
@@ -94,7 +93,6 @@ namespace Curse_of_the_Abyss
             paused = true;
             init_pause = true;
             loading = false;
-            startup = true;
 
             // default resolution
             _graphics.PreferredBackBufferWidth = 1600;
@@ -144,9 +142,6 @@ namespace Curse_of_the_Abyss
             // game contents
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             current_level.LoadContent(Content);
-
-            //MediaPlayer.Play(Content.Load<Song>("Soundeffects/mainmenu_theme"));
-            //MediaPlayer.IsRepeating = true;
 
             if (!current_level.is_maze_gen)
                 current_level.InitMapManager(_spriteBatch);
