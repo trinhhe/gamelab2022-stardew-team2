@@ -9,7 +9,6 @@ namespace Curse_of_the_Abyss
     class LowHPScreen
     {
         private static Texture2D texture;
-        private static Texture2D blank;
         public static int time;
         private static int timer;
         private static bool increment;

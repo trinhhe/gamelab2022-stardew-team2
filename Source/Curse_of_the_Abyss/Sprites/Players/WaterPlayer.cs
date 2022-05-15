@@ -26,8 +26,9 @@ namespace Curse_of_the_Abyss
         //list of objects the player can collide with
         private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
         private string[] hitcollidables = { "obstacle", "stationaryNPC", "rock", "SeaUrchin" };
-        static SoundEffect jumpSFX, gruntSFX, swimSFX;
+        static SoundEffect jumpSFX, gruntSFX, swimSFX, breathingSFX;
         static SoundEffectInstance swimSFXInstance;
+        static SoundEffectInstance breathingSFXInstance;
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
         {
@@ -59,7 +60,12 @@ namespace Curse_of_the_Abyss
             jumpSFX = content.Load<SoundEffect>("Soundeffects/jump");
             gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
             swimSFX = content.Load<SoundEffect>("Soundeffects/swim");
+            breathingSFX = content.Load<SoundEffect>("Soundeffects/breathing_scared");
             swimSFXInstance = swimSFX.CreateInstance();
+
+            breathingSFXInstance = breathingSFX.CreateInstance();
+            breathingSFXInstance.IsLooped = true;
+            breathingSFXInstance.Volume = 0.2f;
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -95,6 +101,11 @@ namespace Curse_of_the_Abyss
             }
             position.X += (int)xVelocity;
 
+
+            if (health.curr_health > 1 && health.curr_health < 0.25 * Constants.max_player_health)
+                breathingSFXInstance.Play();
+            else
+                breathingSFXInstance.Pause();
         }
 
         public override void Draw(SpriteBatch spritebatch)

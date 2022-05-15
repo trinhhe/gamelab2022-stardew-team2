@@ -968,6 +968,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/bomb_drop.wav
 
+#begin Soundeffects/breathing_scared.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/breathing_scared.wav
+
 #begin Soundeffects/egg_collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

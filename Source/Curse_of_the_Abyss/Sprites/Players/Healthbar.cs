@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
 namespace Curse_of_the_Abyss
@@ -13,6 +14,7 @@ namespace Curse_of_the_Abyss
         public int maxhealth, curr_health;
         public static SpriteFont font;
         private bool loadingOn, darkness,playerHealth;
+
 
         public Healthbar(Rectangle pos, int maxHealth, bool darkness, bool playerHealth)
         {
