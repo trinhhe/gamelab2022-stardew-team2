@@ -20,7 +20,6 @@ namespace Curse_of_the_Abyss
         public Attack attack;
         Bossfight level;
         public Rectangle[] mainBodyPosition;
-        bool created;
         static Animation animation;
         AnimationManager animationManager;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
@@ -50,7 +49,6 @@ namespace Curse_of_the_Abyss
             this.player = player;
             moveTimer = 5000;
             this.level = level;
-            created = false;
         }
 
         public static void LoadContent(ContentManager content)
@@ -68,18 +66,12 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
-            if (created)
-            {
-                level.eggs.eggsTotal += 6;
-                created = false;
-            }
             //change stages and decide, when the boss is defeated
             if (stage == 4) defeated = true;
             else if (health.curr_health <= 0)
             {
                 stage+=1;
                 health.curr_health = 100;
-                level.eggcounter.set(level.eggcounter.get() + 2);
                 antenna.hit = false;
             }
             
@@ -200,7 +192,7 @@ namespace Curse_of_the_Abyss
             switch (attack)
             {
                 case (Attack.Canonball):
-                    attackTimer = (stage-1)*1500;
+                    attackTimer = (stage-1)*1000;
                     antenna.attack = true;
                     Antenna.animationManager.Play(Antenna.animations["attack"]);
                     break;

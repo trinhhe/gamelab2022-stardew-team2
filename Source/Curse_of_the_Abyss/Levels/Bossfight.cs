@@ -78,7 +78,6 @@ namespace Curse_of_the_Abyss
             if (boss.defeated)
             {
                 completed = true;
-                eggcounter.set(eggcounter.get() + 8);
             }
             
             foreach(Sprite s in toAdd)
@@ -110,7 +109,6 @@ namespace Curse_of_the_Abyss
 
             eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
-            eggs.eggsTotal = 8;
             lightTargets.Add(waterPlayer);
         }
 
