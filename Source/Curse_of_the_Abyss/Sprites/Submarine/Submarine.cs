@@ -139,6 +139,7 @@ namespace Curse_of_the_Abyss
             else
             {
                 animationManager6.Update(gametime);
+                if (animationManager6.animation.CurrentFrame == 5) animationManager6.Stop(5);
             }
             if (oxygenCooldown >= Constants.submarine_oxygen_cooldown)
             {
@@ -148,6 +149,7 @@ namespace Curse_of_the_Abyss
             else
             {
                 animationManager7.Update(gametime);
+                if (animationManager7.animation.CurrentFrame == 5) animationManager7.Stop(5);
             }
             if (state == State.Driving)
                 animationManager1.Update(gametime);
@@ -310,6 +312,8 @@ namespace Curse_of_the_Abyss
                         healthbar.curr_health += Constants.health_gain;
                     oxygenCooldown = 0;
                     animationManager2.Stop(0);
+                    animations["OxyCD"].CurrentFrame = 0;
+                    animationManager7.Play(animations["OxyCD"]);
                 }
             }
 
@@ -354,6 +358,8 @@ namespace Curse_of_the_Abyss
                     bombCooldown = 0;
                     animationManager3.Stop(0);
                     animationManager5.Stop(1);
+                    animations["BombCD"].CurrentFrame = 0;
+                    animationManager6.Play(animations["BombCD"]);
                     return;
                 } 
             }
