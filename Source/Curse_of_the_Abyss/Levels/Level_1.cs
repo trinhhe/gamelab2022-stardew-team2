@@ -170,19 +170,19 @@ namespace Curse_of_the_Abyss
                 case 6:
                     spritebatch.Draw(RedCircle, new Rectangle(175, 100, 122, 118), Color.White);
                     break;
-                case 7:
+                case 9:
                     spritebatch.Draw(RedCircle, new Rectangle(175, 100, 122, 118), Color.White);
                     break;
-                case 8:
-                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
-                    break;
-                case 9:
-                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
-                    break;
                 case 10:
-                    spritebatch.Draw(RedCircle, new Rectangle(385, 100, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
                     break;
                 case 11:
+                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
+                    break;
+                case 12:
+                    spritebatch.Draw(RedCircle, new Rectangle(385, 100, 122, 118), Color.White);
+                    break;
+                case 13:
                     spritebatch.Draw(RedCircle, new Rectangle(465, 100, 122, 118), Color.White);
                     break;
             }

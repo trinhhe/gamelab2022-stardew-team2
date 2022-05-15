@@ -70,6 +70,8 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("wp", "Use the oxygen station on the leftmost edge of the submarine to refill my oxygen tank."),
                                                                new Tuple<string, string>("wp", "However, it only fills up a certain amount each time and has a pretty long cooldown."),
                                                                new Tuple<string, string>("wp", "To the right of it is the bomb station. It drops bombs that destroy rocks and kill blowfish."),
+                                                               new Tuple<string, string>("wp", "See that red crosshair directly under the bomb station?"),
+                                                               new Tuple<string, string>("wp", "It shows you where the bomb will land."),
                                                                new Tuple<string, string>("sp", "(realizing she actually has to do work)"),
                                                                new Tuple<string, string>("wp", "To the right of the bomb station is the light station."),
                                                                new Tuple<string, string>("wp", "You can use it to illuminte dark areas. You'll need that later."),
