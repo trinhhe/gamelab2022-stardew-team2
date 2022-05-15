@@ -20,8 +20,8 @@ namespace Curse_of_the_Abyss
         public Attack attack;
         Bossfight level;
         public Rectangle[] mainBodyPosition;
-        bool created;
-
+        static Animation animation;
+        AnimationManager animationManager;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
@@ -42,17 +42,18 @@ namespace Curse_of_the_Abyss
             new Rectangle(x + 173 * scale, y + scale * 73, 29 * scale, 47 * scale)};
             defeated = false;
             antenna = new Antenna(x,y+scale*23,scale,level,player);
+            antenna.lightmask = true;
+            level.lightTargets.Add(antenna);
             rand = new Random();
             collidable = true;
             this.player = player;
             moveTimer = 5000;
             this.level = level;
-            created = false;
         }
 
         public static void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("Boss/FrogFish");
+            animation = new Animation(content.Load<Texture2D>("Boss/FrogFish"),8, 0.25f, false);
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
             TargetingNPC.LoadContent(content);
@@ -65,25 +66,20 @@ namespace Curse_of_the_Abyss
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
-            if (created)
-            {
-                level.eggs.eggsTotal += 6;
-                created = false;
-            }
             //change stages and decide, when the boss is defeated
             if (stage == 4) defeated = true;
             else if (health.curr_health <= 0)
             {
                 stage+=1;
                 health.curr_health = 100;
-                level.eggcounter.set(level.eggcounter.get() + 2);
                 antenna.hit = false;
             }
             
             //change back to light if needed
             if (darknessTimer > 10000)
             {
-                level.darkness = false;
+                //level.darkness = false;
+                level.darknessReverse = true;
             }
             darknessTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -127,12 +123,24 @@ namespace Curse_of_the_Abyss
             antenna.position.X += (int)xVelocity;
             antenna.position.Y += (int)yVelocity;
 
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            //update animation
+            animationManager.Play(animation);
+            animationManager.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spritebatch)
         {
             //draw boss sprite
-            spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
+            //spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
             //draw health
             health.Draw(spritebatch);
@@ -185,13 +193,14 @@ namespace Curse_of_the_Abyss
             switch (attack)
             {
                 case (Attack.Canonball):
-                    attackTimer = (stage-1)*1500;
+                    attackTimer = (stage-1)*1000;
                     antenna.attack = true;
                     Antenna.animationManager.Play(Antenna.animations["attack"]);
                     break;
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;
                     level.darkness = true;
+                    level.darknessReverse = false;
                     darknessTimer = 0;
                     break;
                 case (Attack.NPCs):

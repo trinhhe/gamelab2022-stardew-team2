@@ -48,7 +48,7 @@ namespace Curse_of_the_Abyss
 
         public void Update(GameTime gameTime)
         {
-            if (sound == null && text_index>1)
+            if (sound == null && text_index>=1)
             {
                 sound = typing.CreateInstance();
                 sound.Volume = 0.3f;

@@ -100,7 +100,7 @@ namespace Curse_of_the_Abyss
                 completed = true;
             }
 
-            SpawnNPCs(15000, gameTime);
+            SpawnNPCs(17000, gameTime);
         }
         public override void Reset()
         {
@@ -122,7 +122,6 @@ namespace Curse_of_the_Abyss
             sprites.Add(submarine);
             InitSprites();
             dialog = new DialogBox(new Rectangle(650, 0, 1190, 200), Constants.dialog_maze);
-            dialog.active = true; //CHANGE BACK
 
             eggs = new EggCollection();
             if(MazeGenerator != null)
@@ -137,6 +136,17 @@ namespace Curse_of_the_Abyss
             }
 
             lightTargets.Add(waterPlayer);
+        }
+
+        public override void check_dialog()
+        {
+            switch (dialogID)
+            {
+                case (0):
+                    dialog.active = true;
+                    dialogID++;
+                    break;
+            }
         }
     }
 }

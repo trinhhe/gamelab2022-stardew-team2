@@ -66,6 +66,7 @@ namespace Curse_of_the_Abyss
                     sprites.Add(dynamite);
                     MovingPlatform platform = new MovingPlatform(96,798,96,445,2,60,true);
                     sprites.Add(platform);
+                    darknessTransition = true;
                     break;
             }
             sprites.Add(boss);
@@ -78,7 +79,6 @@ namespace Curse_of_the_Abyss
             if (boss.defeated)
             {
                 completed = true;
-                eggcounter.set(eggcounter.get() + 8);
             }
             
             foreach(Sprite s in toAdd)
@@ -110,7 +110,6 @@ namespace Curse_of_the_Abyss
 
             eggcounter = new Eggcounter(1875,10);
             eggs = new EggCollection();
-            eggs.eggsTotal = 8;
             lightTargets.Add(waterPlayer);
         }
 
