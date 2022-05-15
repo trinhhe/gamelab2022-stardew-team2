@@ -38,11 +38,15 @@ namespace Curse_of_the_Abyss
             // draw egg icon
             spritebatch.Draw(egg, position, Color.White);
 
+            string toDraw = eggcount.ToString();
+
+            if (eggcount < 10) toDraw = "0" + toDraw;
+
             // draw egg counter
             if (!darkness)
-                spritebatch.DrawString(font, eggcount.ToString(), new Vector2(position.X - 30, position.Y - 6), Color.Black);
+                spritebatch.DrawString(font, toDraw, new Vector2(position.X - 50, position.Y - 6), Color.Black);
             else
-                spritebatch.DrawString(font, eggcount.ToString(), new Vector2(position.X - 30, position.Y - 6), Color.White);
+                spritebatch.DrawString(font, toDraw, new Vector2(position.X - 50, position.Y - 6), Color.White);
         }
     }
 }
