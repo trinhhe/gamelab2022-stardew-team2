@@ -69,8 +69,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
-            levels = new Level[] { new SideScrollingTest() };
+            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -216,7 +215,7 @@ namespace Curse_of_the_Abyss
                 // reset scrolling backgrounds
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
             }
-
+            if (lost_life) return;
             //switch level
             if (current_level.completed)
             {
