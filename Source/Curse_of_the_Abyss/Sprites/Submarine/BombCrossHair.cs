@@ -11,6 +11,7 @@ namespace Curse_of_the_Abyss
     {
         Submarine sub;
         static Texture2D texture;
+        static Color color = Color.Red;
         private string[] collidables = { "obstacle", "targetingNPC", "rock", "antenna", "frogfish", "torch" };
         public BombCrossHair(Submarine sub)
         {
@@ -21,6 +22,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("crosshair");
+            color.A = 90;
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -64,7 +66,7 @@ namespace Curse_of_the_Abyss
         public override void Draw(SpriteBatch spritebatch)
         {
             base.Draw(spritebatch);
-            spritebatch.Draw(texture,position,Color.Red);
+            spritebatch.Draw(texture, position, color);
         }
 
     }

@@ -38,7 +38,7 @@ namespace Curse_of_the_Abyss
 			textBox1.Text = "D";
 			textBox1.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox1.DisabledTextColor = Color.Black;
-			textBox1.Left = (int)Math.Round(710 * scale);
+			textBox1.Left = (int)Math.Round(700 * scale);
 			textBox1.Top = (int)Math.Round(420 * scale);
 			textBox1.Enabled = false;
 			textBox1.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
@@ -48,7 +48,7 @@ namespace Curse_of_the_Abyss
 			textBox2.Text = "evelopers";
 			textBox2.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox2.DisabledTextColor = Color.Black;
-			textBox2.Left = (int)Math.Round(735 * scale);
+			textBox2.Left = (int)Math.Round(725 * scale);
 			textBox2.Top = (int)Math.Round(420 * scale);
 			textBox2.Enabled = false;
 			textBox2.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
