@@ -13,7 +13,7 @@ using System;
 
 namespace Curse_of_the_Abyss
 {
-	partial class Tutorial1: Panel
+	partial class Tutorial0: Panel
 	{
 		private void BuildUI()
 		{
@@ -29,7 +29,7 @@ namespace Curse_of_the_Abyss
 			image2.Scale = new Vector2(0.5f * (float) scale, 0.5f * (float) scale);
 
 			var image3 = new Image();
-			image3.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/tutorial_1.png");
+			image3.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/tutorial_0.png");
 			image3.Left = 0;
 			image3.Top = 0;
 
@@ -49,19 +49,6 @@ namespace Curse_of_the_Abyss
 			textButton1.DisabledBackground = new SolidBrush("#00000000");
 			textButton1.FocusedBackground = new SolidBrush("#00000000");
 			textButton1.DisabledBorder = new SolidBrush("#00000000");
-
-			var imageButton1 = new ImageButton();
-			imageButton1.Image = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/left_arrow.png");
-			imageButton1.OverImage = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/left_arrow_highlight.png");
-			imageButton1.PressedBackground = new SolidBrush("#00000000");
-			imageButton1.Left = (int)Math.Round(500 * scale);
-			imageButton1.Top = (int)Math.Round(750 * scale);
-			imageButton1.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
-			imageButton1.Background = new SolidBrush("#00000000");
-			imageButton1.OverBackground = new SolidBrush("#00000000");
-			imageButton1.DisabledBackground = new SolidBrush("#E8E8E800");
-			imageButton1.FocusedBackground = new SolidBrush("#FFFFFFFF");
-			imageButton1.FocusedBorder = new SolidBrush("#00000000");
 
 			var imageButton2 = new ImageButton();
 			imageButton2.Image = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/right_arrow.png");
@@ -83,7 +70,6 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(image2);
 			Widgets.Add(image3);
 			Widgets.Add(textButton1);
-			Widgets.Add(imageButton1);
 			Widgets.Add(imageButton2);
 
 
@@ -94,14 +80,9 @@ namespace Curse_of_the_Abyss
 				Game._desktop.Root = Game._mainmenu;
 			};
 
-			imageButton1.Click += (s, a) =>
-			{
-				Game._desktop.Root = Game._mainmenu.tut0_screen;
-			};
-
 			imageButton2.Click += (s, a) =>
 			{
-				Game._desktop.Root = Game._mainmenu.tut2_screen;
+				Game._desktop.Root = Game._mainmenu.tut1_screen;
 			};
 		}
 

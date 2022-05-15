@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -91,11 +92,13 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(textBox2);
 			Widgets.Add(textButton1);
 
+
 			// functionality
 
 			textButton1.Click += (s, a) =>
 			{
-				if(textBox2.Text is null)
+				string name = textBox2.Text;
+				if (name is null || name.Length > 16 || !name.All(char.IsLetterOrDigit))
                 {
 					name_error = true;
                 }
@@ -112,7 +115,7 @@ namespace Curse_of_the_Abyss
 					});
 
 					string json = JsonSerializer.Serialize(_data);
-					string path = "./leaderboard.json";
+					string path = "leaderboard.json";
 					File.AppendAllText(@path, json + System.Environment.NewLine);
 					Game._mainmenu.leaderboard_screen = new Leaderboard();
 					Game._desktop.Root = Game._mainmenu.leaderboard_screen;

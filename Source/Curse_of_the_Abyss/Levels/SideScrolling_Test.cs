@@ -45,6 +45,7 @@ namespace Curse_of_the_Abyss
 
         public override void Update(GameTime gameTime)
         {
+            completed = true;
             base.Update(gameTime);
 
             if (waterPlayer.position.X > 3840)

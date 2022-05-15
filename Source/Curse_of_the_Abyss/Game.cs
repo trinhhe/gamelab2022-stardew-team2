@@ -69,7 +69,8 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
+            //levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
+            levels = new Level[] { new SideScrollingTest() };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -135,6 +136,9 @@ namespace Curse_of_the_Abyss
             // camera
             _camera = new Camera(current_level.num_parts);
 
+            // low HP screen
+            LowHPScreen.LoadContent(Content);
+
             // always render at 1080p but display at user-defined resolution after
             renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
             
@@ -161,6 +165,9 @@ namespace Curse_of_the_Abyss
             // update loading screen progress bar
             if(_mainmenu.CurrState == MainMenu.State.Loading)
                 Loading.Update(gameTime);
+
+            // low hp screen
+            LowHPScreen.Update(gameTime);
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) 
             {
@@ -370,13 +377,21 @@ namespace Curse_of_the_Abyss
             // draw UI
             if (!splashscreen.Running)
             {
-            _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
-            current_level.healthbar.Draw(_spriteBatch);
-            current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
-            if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
-            _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
-            _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);
-            _spriteBatch.End();
+                _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+                if (current_level.waterPlayer.health.curr_health < Constants.max_player_health * 0.25)
+                {
+                    LowHPScreen.Draw(_spriteBatch);
+                }
+                current_level.healthbar.Draw(_spriteBatch);
+                current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
+                if (current_level.GetType() == typeof(Level1) && current_level.dialogID == 2)
+                {
+                    ((Level1) current_level).DrawTutorial(_spriteBatch);
+                }
+                if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
+                _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
+                _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);
+                _spriteBatch.End();
             }
 
             // menu
@@ -389,7 +404,7 @@ namespace Curse_of_the_Abyss
             if (Leaderboard_entry.name_error) 
             {
                 _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
-                _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "ERROR: Invalid name", new Vector2(840, 770), Color.Red);
+                _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "ERROR: Invalid name. Empty or too long.", new Vector2(740, 770), Color.Red);
                 _spriteBatch.End();
             }
 
@@ -406,6 +421,8 @@ namespace Curse_of_the_Abyss
             _brightness.Draw(_spriteBatch, _graphics);
             _spriteBatch.End();
 
+            
+            
             base.Draw(gameTime);
         }
 
