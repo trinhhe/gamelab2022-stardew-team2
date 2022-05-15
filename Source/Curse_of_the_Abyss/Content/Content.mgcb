@@ -1004,17 +1004,34 @@
 /processorParam:Quality=Best
 /build:Soundeffects/game_over.wav
 
+#begin Soundeffects/electro_attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+
 #begin Soundeffects/gibberish.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/gibberish.wav
 
+#begin Soundeffects/grunt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/grunt.wav
+
 #begin Soundeffects/gun_shot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/gun_shot.wav
+
+#begin Soundeffects/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/jump.wav
 
 #begin Soundeffects/life_loss.wav
 /importer:WavImporter
@@ -1045,6 +1062,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/submarine_movement.wav
+
+#begin Soundeffects/spatial_electricity.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/spatial_electricity.wav
+
+#begin Soundeffects/swim.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/swim.wav
 
 #begin splashscreen/game_logo.png
 /importer:TextureImporter

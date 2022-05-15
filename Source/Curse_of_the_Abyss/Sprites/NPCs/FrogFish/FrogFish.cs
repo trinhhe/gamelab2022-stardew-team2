@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework.Media;
@@ -26,15 +27,11 @@ namespace Curse_of_the_Abyss
         AnimationManager animationManager;
 
         public static Dictionary<int, Song> songs;
-        
-
-
-
-
+        public static SoundEffect electroAttackSFX;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
-            stage = 1;
+            stage = 3;
             health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
@@ -88,6 +85,7 @@ namespace Curse_of_the_Abyss
 
             MediaPlayer.Play(songs[1]);
             MediaPlayer.IsRepeating = true;
+            electroAttackSFX = content.Load<SoundEffect>("Soundeffects/electro_attack");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
@@ -231,6 +229,7 @@ namespace Curse_of_the_Abyss
                     attackTimer = (stage-1)*1000;
                     antenna.attack = true;
                     Antenna.animationManager.Play(Antenna.animations["attack"]);
+                    electroAttackSFX.Play(Constants.electro_attack_volumne, 0, 0);
                     break;
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;

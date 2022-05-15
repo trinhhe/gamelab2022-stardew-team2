@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
 
@@ -25,7 +26,8 @@ namespace Curse_of_the_Abyss
         //list of objects the player can collide with
         private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
         private string[] hitcollidables = { "obstacle", "stationaryNPC", "rock", "SeaUrchin" };
-
+        static SoundEffect jumpSFX, gruntSFX, swimSFX;
+        static SoundEffectInstance swimSFXInstance;
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
         {
@@ -54,6 +56,10 @@ namespace Curse_of_the_Abyss
                 {"SwimLeft" , new Animation(content.Load<Texture2D>("Swim_left"), 3, 0.15f, true) },
                 {"SwimRight" , new Animation(content.Load<Texture2D>("Swim_right"), 3, 0.15f, true) },
             };
+            jumpSFX = content.Load<SoundEffect>("Soundeffects/jump");
+            gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
+            swimSFX = content.Load<SoundEffect>("Soundeffects/swim");
+            swimSFXInstance = swimSFX.CreateInstance();
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -138,11 +144,13 @@ namespace Curse_of_the_Abyss
                     health.curr_health -= health.maxhealth / 10;
                     hit = true;
                     hitTimer = 0;
+                    gruntSFX.Play(0.5f, 0, 0);
                     break;
                 case ("pathNPC"):
                     health.curr_health -= health.maxhealth / 4;
                     hit = true;
                     hitTimer = 0;
+                    gruntSFX.Play(0.5f, 0, 0);
                     //moveOnContact(15, s.position);
                     break;
                 case ("stationaryNPC"):
@@ -163,6 +171,7 @@ namespace Curse_of_the_Abyss
                     }
                 case ("SeaUrchin"):
                     health.curr_health = 0;
+                    gruntSFX.Play(0.5f, 0, 0);
                     break;
             }
         }
@@ -174,11 +183,13 @@ namespace Curse_of_the_Abyss
                     health.curr_health -= health.maxhealth / 10;
                     hit = true;
                     hitTimer = 0;
+                    gruntSFX.Play(0.5f, 0, 0);
                     break;
                 case ("pathNPC"):
                     health.curr_health -= health.maxhealth / 4;
                     hit = true;
                     hitTimer = 0;
+                    gruntSFX.Play(0.5f, 0, 0);
                     //moveOnContact(15, s.position);
                     break;
                 case ("stationaryNPC"):
@@ -201,6 +212,7 @@ namespace Curse_of_the_Abyss
                     }
                 case ("SeaUrchin"):
                     health.curr_health = 0;
+                    gruntSFX.Play(0.5f, 0, 0);
                     break;
             }
         }
@@ -230,6 +242,7 @@ namespace Curse_of_the_Abyss
                 lastY = position.Y;
                 state = State.Jumping;
                 yVelocity = Constants.jump_velocity;
+                jumpSFX.Play(Constants.jump_volume,0f,0f);
             }
             //dodging
             else if (KB_curState.IsKeyDown(Keys.S))
@@ -308,6 +321,7 @@ namespace Curse_of_the_Abyss
                 lastY = position.Y;
                 yVelocity = Constants.jump_velocity;
                 state = State.Jumping;
+                jumpSFX.Play(Constants.jump_volume, 0f, 0f);
             }//dodging
             else if (KB_curState.IsKeyDown(Keys.S))
             {
@@ -390,6 +404,7 @@ namespace Curse_of_the_Abyss
         //movement in maze
         private void Swimming()
         {
+            
             if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
             {//swim right
                 if (!swimmingRight)
@@ -496,6 +511,16 @@ namespace Curse_of_the_Abyss
                     }
                 }
             }
+
+            //sfx
+            //if (swimSFXInstance.State == SoundState.Stopped)
+            if (Math.Abs(xVelocity) > 0 || Math.Abs(yVelocity) > 0)
+            {
+                swimSFXInstance.Volume = Constants.swim_volume;
+                swimSFXInstance.Play();
+            } 
+            else
+                swimSFXInstance.Stop();
         }
         //calls function depending on state
         private void getState(List<Sprite> sprites)

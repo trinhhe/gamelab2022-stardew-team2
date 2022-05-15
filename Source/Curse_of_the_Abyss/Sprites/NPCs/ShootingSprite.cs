@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using static System.Math;
 
@@ -17,7 +18,7 @@ namespace Curse_of_the_Abyss
         int targety;
         int speed;
         private string[] collidables = { "obstacle","waterplayer","SeaUrchin","stationaryNPC" };
-
+        public static SoundEffect gruntSFX;
         public ShootingSprite(int x, int y, int coordx, int coordy, int speed)
         {
             name = "shootingSprite";
@@ -32,6 +33,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("ink_larger");
+            gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -78,6 +80,7 @@ namespace Curse_of_the_Abyss
                 remove = true;
                 player.hit = true;
                 player.hitTimer = 1000;
+                gruntSFX.Play(0.5f, 0, 0);
             }
             else if(s.name == "stationaryNPC") //needed otherwise it disappears immediately after spawning
             {
@@ -94,6 +97,7 @@ namespace Curse_of_the_Abyss
                 remove = true;
                 player.hit = true;
                 player.hitTimer = 1000;
+                gruntSFX.Play(0.5f, 0, 0);
             }
             else if (s.name == "stationaryNPC") //needed otherwise it disappears immediately after spawning
             {

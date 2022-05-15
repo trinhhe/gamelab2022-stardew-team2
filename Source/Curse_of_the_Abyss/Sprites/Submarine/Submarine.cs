@@ -259,8 +259,7 @@ namespace Curse_of_the_Abyss
             // healthbar.Draw(spritebatch);
             machineGun.Draw(spritebatch);
             lamp.Draw(spritebatch);
-            //moved to darknessRender
-            //bombCrossHair.Draw(spritebatch);
+            bombCrossHair.Draw(spritebatch);
             //moved to DarknessRender to render after darkness map
             // foreach (Sprite b in bullets)
             // {
