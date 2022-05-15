@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
 namespace Curse_of_the_Abyss
@@ -9,7 +10,7 @@ namespace Curse_of_the_Abyss
     public class Egg : Sprite
     {
         public static Texture2D texture;
-
+        public static SoundEffect sound;
 
 
         public Egg(int x, int y)
@@ -22,6 +23,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("Egg");
+            sound = content.Load<SoundEffect>("Soundeffects/egg_collect");
         }
 
 
@@ -79,6 +81,7 @@ namespace Curse_of_the_Abyss
                     gotEgg = true;
                     eggsCollected += 1;
                     toRemove = curEgg;
+                    Egg.sound.Play(0.2f,0,0);
                 }
 
             }

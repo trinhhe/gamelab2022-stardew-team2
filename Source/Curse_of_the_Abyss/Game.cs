@@ -63,6 +63,8 @@ namespace Curse_of_the_Abyss
         private List<ScrollingBackground> _scrollingBackgrounds;
 
         public DarknessRender darknessrender;
+
+        
         public Game()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -196,6 +198,9 @@ namespace Curse_of_the_Abyss
                     paused = true;
                     IsMouseVisible = true;
                     lifes = 3;
+                    current_level.LoadContent(Content);
+                    player_life = Content.Load<Texture2D>("UI/player_UI");
+                    life_counter = Content.Load<SpriteFont>("Eggcounter");
                 }
                 //player has remaining lives
                 else
@@ -205,9 +210,6 @@ namespace Curse_of_the_Abyss
                     life_timer = 0;
                     if (current_level.GetType() == typeof(Bossfight)) stage = ((Bossfight)current_level).boss.stage;
                 }
-                current_level.LoadContent(Content);
-                player_life = Content.Load<Texture2D>("UI/player_UI");
-                life_counter = Content.Load<SpriteFont>("Eggcounter");
                 current_level.Reset();
                 if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.stage = stage;
                 current_level.eggcounter.set(last_level_eggcount);

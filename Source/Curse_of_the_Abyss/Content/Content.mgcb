@@ -962,6 +962,30 @@
 /processorParam:Quality=Best
 /build:Soundeffects/bg_music_fast.mp3
 
+#begin Soundeffects/bomb_drop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/bomb_drop.wav
+
+#begin Soundeffects/egg_collect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/egg_collect.wav
+
+#begin Soundeffects/error.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/error.wav
+
+#begin Soundeffects/game_over.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/game_over.wav
+
 #begin Soundeffects/gibberish.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -985,6 +1009,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/light_switch.wav
+
+#begin Soundeffects/oxygen_refill.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/oxygen_refill.wav
+
+#begin Soundeffects/submarine_movement.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/submarine_movement.wav
 
 #begin splashscreen/game_logo.png
 /importer:TextureImporter

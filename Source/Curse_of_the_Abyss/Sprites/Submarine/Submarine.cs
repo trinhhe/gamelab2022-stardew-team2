@@ -32,7 +32,8 @@ namespace Curse_of_the_Abyss
         public Lamp lamp;
         public Level level;
         public BombCrossHair bombCrossHair;
-        static SoundEffect lightSwitch;
+        static SoundEffect lightSwitch, movementSound, oxyRefillSound, errorSound;
+        SoundEffectInstance movementSoundInstance;
         
         /* custom Keyboard class for when button is pressed and released
         required for entering and leaving station with the same key */
@@ -107,7 +108,11 @@ namespace Curse_of_the_Abyss
             cooldown = content.Load<Texture2D>("health");
             BombCrossHair.LoadContent(content);
 
+            //Soundeffects
             lightSwitch = content.Load<SoundEffect>("Soundeffects/light_switch");
+            movementSound = content.Load<SoundEffect>("Soundeffects/submarine_movement");
+            oxyRefillSound = content.Load<SoundEffect>("Soundeffects/oxygen_refill");
+            errorSound = content.Load<SoundEffect>("Soundeffects/error");
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -314,7 +319,9 @@ namespace Curse_of_the_Abyss
                     animationManager2.Stop(0);
                     animations["OxyCD"].CurrentFrame = 0;
                     animationManager7.Play(animations["OxyCD"]);
+                    oxyRefillSound.Play();
                 }
+                else errorSound.Play(0.1f, 0, 0);
             }
 
             if (submarinePlayer.position.Intersects(steerPosition) && Keyboard.HasBeenPressed(Keys.Up) && !steeringOn)
@@ -351,9 +358,9 @@ namespace Curse_of_the_Abyss
 
             if (submarinePlayer.position.Intersects(bombButtonPosition) && Keyboard.HasBeenPressed(Keys.Up))
             {
-                if (bombCooldown > Constants.submarine_bomb_cooldown) 
+                if (bombCooldown > Constants.submarine_bomb_cooldown)
                 {
-                    Bomb bomb = new Bomb(bombButtonPosition.X-5, bombButtonPosition.Y + 50);
+                    Bomb bomb = new Bomb(bombButtonPosition.X - 5, bombButtonPosition.Y + 50);
                     bombs.Add(bomb);
                     bombCooldown = 0;
                     animationManager3.Stop(0);
@@ -361,7 +368,8 @@ namespace Curse_of_the_Abyss
                     animations["BombCD"].CurrentFrame = 0;
                     animationManager6.Play(animations["BombCD"]);
                     return;
-                } 
+                }
+                else errorSound.Play(0.1f, 0, 0);
             }
             if (submarinePlayer.position.Intersects(lightLeverPosition) && Keyboard.HasBeenPressed(Keys.Up) && !lightOn)
             {
@@ -374,7 +382,7 @@ namespace Curse_of_the_Abyss
                     lamp.lightOn = true;
                     lightSwitch.Play();
                 }
-                
+                else errorSound.Play(0.5f, 0, 0);
             }
         }
 
@@ -388,11 +396,20 @@ namespace Curse_of_the_Abyss
                 submarinePlayer.toggleToMove();
                 xVelocity = 0;
                 state = State.Standing;
+                if (movementSoundInstance != null) movementSoundInstance.Stop();
             }
             if (steeringOn) {
+
+                //create sound instance
+                if(movementSoundInstance == null )
+                {
+                    movementSoundInstance = movementSound.CreateInstance();
+                    movementSoundInstance.IsLooped = true;
+                }
                 //move right
                 if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))
                 {
+                    movementSoundInstance.Play();//play sound
                     movingRight = true;
                     if (xVelocity < 0)
                     {
@@ -408,7 +425,9 @@ namespace Curse_of_the_Abyss
                     }
                 }
                 else if (KB_curState.IsKeyDown(Keys.Left) && !KB_curState.IsKeyDown(Keys.Right))
-                {   //move left
+                {
+                    movementSoundInstance.Play();
+                    //move left
                     movingRight = false;
                     if (xVelocity > 0)
                     {
@@ -432,6 +451,7 @@ namespace Curse_of_the_Abyss
                         else
                         {
                             xVelocity = 0;
+                            movementSoundInstance.Stop();
                         }
                     }
                     else
@@ -441,6 +461,7 @@ namespace Curse_of_the_Abyss
                         else
                         {
                             xVelocity = 0;
+                            movementSoundInstance.Stop();
                         }
                     }
                 }

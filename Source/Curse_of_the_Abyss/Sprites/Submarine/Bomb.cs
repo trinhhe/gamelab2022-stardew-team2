@@ -14,7 +14,8 @@ namespace Curse_of_the_Abyss
         public AnimationManager animationManager;
         public static Dictionary<string, Animation> animations;
         public Sprite other;
-        public static SoundEffect explosion;
+        public static SoundEffect explosion,dropSound;
+        SoundEffectInstance dropInstance;
         public Bomb(int x, int y)
         {
             this.name = "bomb";
@@ -22,6 +23,9 @@ namespace Curse_of_the_Abyss
             this.linearVelocity = Constants.submarine_bomb_velocity;
             collidable = true;
             animationManager = new AnimationManager(animations["bomb"]);
+            dropInstance = dropSound.CreateInstance();
+            dropInstance.Volume = 0.2f;
+            dropInstance.Play();
         }
         public static void LoadContent(ContentManager content)
         {
@@ -31,6 +35,7 @@ namespace Curse_of_the_Abyss
                 {"explosion", new Animation(content.Load<Texture2D>("explosion"), 9, 0.1f, false) } //part of the draw is a stemp from pixilart
             };
             explosion = content.Load<SoundEffect>("mixkit-sea-mine-explosion-1184"); //this soundtrack is from mixkit
+            dropSound = content.Load<SoundEffect>("Soundeffects/bomb_drop");
         }
         public override void Update(List<Sprite> sprites,GameTime gametime)
         {
@@ -126,6 +131,7 @@ namespace Curse_of_the_Abyss
         private void startExplosion()
         {
             animationManager.Play(animations["explosion"]);
+            dropInstance.Stop();
             explosion.Play(0.2f, 0, 0);
             lightmask = true;
         }
