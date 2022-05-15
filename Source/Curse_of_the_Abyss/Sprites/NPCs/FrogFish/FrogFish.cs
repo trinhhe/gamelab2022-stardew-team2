@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Curse_of_the_Abyss
 {
@@ -21,7 +22,7 @@ namespace Curse_of_the_Abyss
         Bossfight level;
         public Rectangle[] mainBodyPosition;
         bool created;
-        static Animation animation;
+        public static Dictionary<string, Animation> animations;
         AnimationManager animationManager;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
@@ -48,14 +49,20 @@ namespace Curse_of_the_Abyss
             rand = new Random();
             collidable = true;
             this.player = player;
-            moveTimer = 5000;
+            moveTimer = 000;
             this.level = level;
             created = false;
         }
 
         public static void LoadContent(ContentManager content)
         {
-            animation = new Animation(content.Load<Texture2D>("Boss/FrogFish"),8, 0.25f, false);
+            //animation = new Animation(content.Load<Texture2D>("Boss/FrogFish"),8, 0.25f, false);
+            animations = new Dictionary<string, Animation>()
+            {
+                {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.25f,false) },
+                {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.25f, false) },
+                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.25f,false) }
+            };
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
             TargetingNPC.LoadContent(content);
@@ -133,10 +140,10 @@ namespace Curse_of_the_Abyss
 
             if (animationManager == null)
             {
-                animationManager = new AnimationManager(animation);
+                animationManager = new AnimationManager(animations.First().Value);
             }
             //update animation
-            animationManager.Play(animation);
+            setAnimation();
             animationManager.Update(gameTime);
         }
 
@@ -145,7 +152,7 @@ namespace Curse_of_the_Abyss
             //draw boss sprite
             if (animationManager == null)
             {
-                animationManager = new AnimationManager(animation);
+                animationManager = new AnimationManager(animations.First().Value);
             }
             animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
             //spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
@@ -223,6 +230,15 @@ namespace Curse_of_the_Abyss
                     }
                     break;
             }
+        }
+        public void setAnimation()
+        {
+            if (stage == 1)
+                animationManager.Play(animations["Stage1"]);
+            else if (stage == 2)
+                animationManager.Play(animations["Stage2"]);
+            else
+                animationManager.Play(animations["Stage3"]);
         }
     }
 }
