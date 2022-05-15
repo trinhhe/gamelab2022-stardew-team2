@@ -74,7 +74,7 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("wp", "It shows you where the bomb will land."),
                                                                new Tuple<string, string>("sp", "(realizing she actually has to do work)"),
                                                                new Tuple<string, string>("wp", "To the right of the bomb station is the light station."),
-                                                               new Tuple<string, string>("wp", "You can use it to illuminte dark areas. You'll need that later."),
+                                                               new Tuple<string, string>("wp", "You can use it to illuminate dark areas. You'll need that later."),
                                                                new Tuple<string, string>("wp", "Next to it you have the control station, which moves the submarine."),
                                                                new Tuple<string, string>("wp", "Use the machine gun on the rightmost edge of the submarine to deal damage to blowfish."),
                                                                new Tuple<string, string>("wp", "Do you remember how to activate them?"),
@@ -85,7 +85,7 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("wp", "You can access it at any time."),
                                                                new Tuple<string, string>("sp", "Gotcha!"),
                                                                new Tuple<string, string>("wp", "Perfect, now let us get these eggs.")};
-        public static Tuple<string, string>[] dialog_maze = { new Tuple<string, string>("sp", "The computer is telling me that your jetpack has reloaded."),
+        public static Tuple<string, string>[] dialog_maze = { new Tuple<string, string>("sp", "The computer is telling me that your jet-pack has reloaded."),
                                                                new Tuple<string, string>("sp", "You can now move much more freely around than before."),
                                                                new Tuple<string, string>("wp", "Oh, that's nice, however I can't see anything around here now."),
                                                                new Tuple<string, string>("sp", "I can help you there, the submarine possesses a light station."),
@@ -125,7 +125,7 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("sp", "And Kenny,"),
                                                                new Tuple<string, string>("sp", "Please pay attention that the dynamite does not explode near you"),
                                                                new Tuple<string, string>("wp", "Since when am I the careless person between us two?")};
-        public static Tuple<string, string>[] dialog_boss_stage = { new Tuple<string, string>("wp", "Its health was completely down, how can it regenerate so fast"),
+        public static Tuple<string, string>[] dialog_boss_stage = { new Tuple<string, string>("wp", "Its health was completely down, how can  it regenerate so fast"),
                                                                new Tuple<string, string>("sp", "Have you never played any video games before?"),
                                                                new Tuple<string, string>("sp", "A bossfight like this consists of multiple stages."),
                                                                new Tuple<string, string>("wp", "Normally, I would say, that we are not in a video game, but now I'm greatful for any information."),
