@@ -25,7 +25,7 @@ namespace Curse_of_the_Abyss
                 if (Game._mainmenu.loading_screen.loadingbar.Value >= 55f & Game._mainmenu.loading_screen.loadingbar.Value < 75f)
                 {
                     Game.loading_timer = 1000;
-                    Game._mainmenu.loading_screen.loadingbar.Value += 0.4f;
+                    Game._mainmenu.loading_screen.loadingbar.Value += 0.5f;
                 }
                 else if (Game._mainmenu.loading_screen.loadingbar.Value >= 75f & Game._mainmenu.loading_screen.loadingbar.Value < 90f)
                 {
@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
                 else if (Game._mainmenu.loading_screen.loadingbar.Value >= 90f)
                 {
                     Game.loading_timer = 1;
-                    Game._mainmenu.loading_screen.loadingbar.Value += 0.4f;
+                    Game._mainmenu.loading_screen.loadingbar.Value += 0.5f;
                 }
             }
         }

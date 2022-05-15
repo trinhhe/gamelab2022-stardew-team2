@@ -634,6 +634,18 @@
 /processorParam:TextureFormat=Color
 /build:Lightmask/waterplayer_lightmask.png
 
+#begin lowhp_screen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:lowhp_screen.png
+
 #begin maps/bossfight.tmx
 /copy:maps/bossfight.tmx
 
@@ -838,6 +850,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Octopus.png
+
+#begin redcircle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:redcircle.png
 
 #begin rock.png
 /importer:TextureImporter
@@ -1165,6 +1189,9 @@
 
 #begin UI/gameover_logo.png
 /copy:UI/gameover_logo.png
+
+#begin UI/leaderboard_bg.png
+/copy:UI/leaderboard_bg.png
 
 #begin UI/left_arrow.png
 /copy:UI/left_arrow.png

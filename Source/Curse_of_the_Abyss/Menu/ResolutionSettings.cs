@@ -8,6 +8,9 @@ namespace Curse_of_the_Abyss
     {
         public static GraphicsDeviceManager Graphics;
         public static bool IsFullscreen;
+        public static int curr_width;
+        public static int curr_height;
+
         public static void ToggleFullscreen()
         {
             if (!ResolutionSettings.IsFullscreen)
@@ -29,6 +32,8 @@ namespace Curse_of_the_Abyss
             Graphics.PreferredBackBufferWidth = width;
             Graphics.PreferredBackBufferHeight = height;
             Graphics.ApplyChanges();
+            curr_width = width;
+            curr_height = height;
         }
 
     }

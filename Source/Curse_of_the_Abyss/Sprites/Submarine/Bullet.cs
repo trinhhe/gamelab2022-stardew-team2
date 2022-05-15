@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using System;
@@ -13,6 +12,7 @@ namespace Curse_of_the_Abyss
         public int ground;
         public float linearVelocity;
         private string[] collidables = {"targetingNPC","frogfish","torch"};
+        private string[] collidables2 = { "targetingNPC", "torch" };
         public Vector2 real_position;
         public static SoundEffect sound;
         public Bullet(float x, float y)
@@ -36,13 +36,16 @@ namespace Curse_of_the_Abyss
             this.position.X = (int)Math.Round((double)real_position.X);
             Sprite s = CheckCollision(sprites, collidables);
             if (s!= null) XCollision(s, gametime);
-            
+            s = CheckCollision(sprites, collidables2);
+            if (s != null) XCollision(s, gametime);
             real_position.X -= inc.X;
             this.position.X = (int)Math.Round((double)real_position.X);
             real_position.Y += inc.Y;
             this.position.Y = (int)Math.Round((double)real_position.Y);
             s = CheckCollision(sprites, collidables);
             if (s!=null) YCollision(s, gametime);
+            s = CheckCollision(sprites, collidables2);
+            if (s != null) YCollision(s, gametime);
             real_position.X += inc.X;
             this.position.X = (int)Math.Round((double)real_position.X);
         }

@@ -54,8 +54,12 @@ namespace Curse_of_the_Abyss
 			var listItem0 = new ListItem();
 			listItem0.Text = "Select ...";
 
+			//disable suport for 4k res
+			//var listItem1 = new ListItem();
+			//listItem1.Text = "3840x2160";
+
 			var listItem1 = new ListItem();
-			listItem1.Text = "3840x2160";
+			listItem1.Text = "2560x1440";
 
 			var listItem2 = new ListItem();
 			listItem2.Text = "1920x1080";
@@ -68,7 +72,8 @@ namespace Curse_of_the_Abyss
 
 			var listItem5 = new ListItem();
 			listItem5.Text = "1280x720";
-			
+
+
 			var comboBox1 = new ComboBox();
 			comboBox1.GridColumnSpan = 0;
 			comboBox1.Left = (int)(810 * scale);
@@ -257,8 +262,8 @@ namespace Curse_of_the_Abyss
 				switch (comboBox1.SelectedIndex)
 				{
 					case 1:
-						target_width = 3840;
-						target_height = 2160;
+						target_width = 2560;
+						target_height = 1440;
 						MainMenu.path_to_bg = "Content/UI/MenuBackground_2k.png";
 						Game.res_changed = true;
 						break;

@@ -14,6 +14,7 @@ namespace Curse_of_the_Abyss
 		public Exit exit_screen;
 
 		// tutorial screens
+		public Tutorial0 tut0_screen;
 		public Tutorial1 tut1_screen;
 		public Tutorial2 tut2_screen;
 		public Tutorial3 tut3_screen;
@@ -48,6 +49,7 @@ namespace Curse_of_the_Abyss
 			gameover_screen = new GameOver();
 
 			// tutorial screens
+			tut0_screen = new Tutorial0();
 			tut1_screen = new Tutorial1();
 			tut2_screen = new Tutorial2();
 			tut3_screen = new Tutorial3();

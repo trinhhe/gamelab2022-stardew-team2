@@ -13,7 +13,8 @@ namespace Curse_of_the_Abyss
     {
         public Rectangle position;
         Tuple<string, string>[] dialog;
-        int dialogpos, nextpageTimer, text_index, textTimer, spacetimer;
+        public int dialogpos;
+        int nextpageTimer, text_index, textTimer, spacetimer;
         public int delimiter;
         public bool active;
         static Texture2D box, profil_wp, profil_sp;

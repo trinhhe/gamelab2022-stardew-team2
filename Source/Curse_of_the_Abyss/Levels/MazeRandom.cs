@@ -100,7 +100,7 @@ namespace Curse_of_the_Abyss
                 completed = true;
             }
 
-            SpawnNPCs(15000, gameTime);
+            SpawnNPCs(17000, gameTime);
         }
         public override void Reset()
         {

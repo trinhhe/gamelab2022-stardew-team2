@@ -10,13 +10,55 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
+using System.Linq;
+using System.IO;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Curse_of_the_Abyss
 {
 	partial class Leaderboard: Panel
 	{
+		public class data
+		{
+			public int Collected_eggs { get; set; }
+			public int Total_eggs { get; set; }
+			public int Time { get; set; }
+			public string Name { get; set; }
+		}
+
 		private void BuildUI()
 		{
+			// read entries from JSON
+			using (StreamWriter w = File.AppendText("leaderboard.json"));
+			string[] allLines = File.ReadAllLines("leaderboard.json");
+			int num_lines = allLines.Length;
+			List<data> entries = new();
+
+			for (int i = 0; i < num_lines; i++)
+			{
+				List<data> entry = JsonSerializer.Deserialize<List<data>>(allLines[i]);
+				entries.Add(entry[0]);
+			}
+
+			data last_entry;
+			if (num_lines != 0)
+				last_entry = entries.Last();
+			else
+				last_entry = new data()
+				{
+					Collected_eggs = 0,
+					Total_eggs = 0,
+					Time = 0,
+					Name = "N/A"
+				};
+
+			List<data> sorted_entires = (entries.OrderByDescending(e => e.Collected_eggs).ThenBy(e => e.Time)).ToList();
+
+			int rank = sorted_entires.FindIndex(e => e.Name == last_entry.Name 
+				&& e.Collected_eggs == last_entry.Collected_eggs
+				&& e.Time == last_entry.Time);
+			
 			double scale = MainMenu.scale;
 
 			var image1 = new Image();
@@ -29,74 +71,190 @@ namespace Curse_of_the_Abyss
 			image2.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
 
 			var image3 = new Image();
-			image3.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/settings_bg.png");
-			image3.Left = (int)Math.Round(525 * scale);
-			image3.Top = (int)Math.Round(330 * scale);
-			image3.Scale = new Vector2(0.7f * (float)scale, 0.7f * (float)scale);
+			image3.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("Content/UI/leaderboard_bg.png");
 
 			var textBox1 = new TextBox();
 			textBox1.Text = "Leaderboard";
 			textBox1.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox1.DisabledTextColor = Color.Black;
 			textBox1.Left = (int)Math.Round(680 * scale);
-			textBox1.Top = (int)Math.Round(440 * scale);
+			textBox1.Top = (int)Math.Round(420 * scale);
 			textBox1.Enabled = false;
 			textBox1.Scale = new Vector2(0.5f * (float)scale, 0.5f * (float)scale);
 			textBox1.DisabledBackground = new SolidBrush("#00000000");
 
-			var textBox2 = new TextBox();
-			textBox2.Text = "test";
-			textBox2.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
-			textBox2.DisabledTextColor = Color.Black;
-			textBox2.Enabled = false;
-			textBox2.Scale = new Vector2();
-			textBox2.DisabledBackground = new SolidBrush("#00000000");
+			var grid = new Grid();
+			grid.ColumnSpacing = 20;
+			grid.RowSpacing = 1;
+			
+			grid.DefaultRowProportion = new Proportion
+			{
+				Type = Myra.Graphics2D.UI.ProportionType.Auto,
+			};
+			grid.ColumnsProportions.Add(new Proportion
+			{
+				Type = Myra.Graphics2D.UI.ProportionType.Auto,
+			});
+			grid.ColumnsProportions.Add(new Proportion
+			{
+				Type = Myra.Graphics2D.UI.ProportionType.Auto,
+			});
+			grid.ColumnsProportions.Add(new Proportion
+			{
+				Type = Myra.Graphics2D.UI.ProportionType.Fill,
+			});
 
-			var textBox3 = new TextBox();
-			textBox3.Text = "test";
-			textBox3.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
-			textBox3.DisabledTextColor = Color.Black;
-			textBox3.Enabled = false;
-			textBox3.Scale = new Vector2();
-			textBox3.DisabledBackground = new SolidBrush("#00000000");
+			var textBox5 = new TextBox();
+			textBox5.Text = "#";
+			textBox5.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+			textBox5.DisabledTextColor = Color.Black;
+			textBox5.Enabled = false;
+			textBox5.DisabledBackground = new SolidBrush("#00000000");
+			textBox5.GridRow = 0;
+			textBox5.GridColumn = 0;
+			grid.Widgets.Add(textBox5);
 
-			var _gridRight = new Panel();
-            //_gridRight.ColumnSpacing = 1;
-            //_gridRight.RowSpacing = 1;
-            //_gridRight.DefaultRowProportion = new Proportion
-            //{
-            //    Type = Myra.Graphics2D.UI.ProportionType.Auto,
-            //};
-            //_gridRight.ColumnsProportions.Add(new Proportion
-            //{
-            //    Type = Myra.Graphics2D.UI.ProportionType.Auto,
-            //});
-            //_gridRight.ColumnsProportions.Add(new Proportion
-            //{
-            //    Type = Myra.Graphics2D.UI.ProportionType.Auto,
-            //});
-            //_gridRight.ColumnsProportions.Add(new Proportion
-            //{
-            //    Type = Myra.Graphics2D.UI.ProportionType.Fill,
-            //});
+			var textBox6 = new TextBox();
+			textBox6.Text = " Name";
+			textBox6.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+			textBox6.DisabledTextColor = Color.Black;
+			textBox6.Enabled = false;
+			textBox6.DisabledBackground = new SolidBrush("#00000000");
+			textBox6.GridRow = 0;
+			textBox6.GridColumn = 1;
+			grid.Widgets.Add(textBox6);
 
-            _gridRight.Widgets.Add(textBox2);
-			_gridRight.Widgets.Add(textBox3);
+			var textBox7 = new TextBox();
+			textBox7.Text = "Eggs collected";
+			textBox7.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+			textBox7.DisabledTextColor = Color.Black;
+			textBox7.Enabled = false;
+			textBox7.DisabledBackground = new SolidBrush("#00000000");
+			textBox7.GridRow = 0;
+			textBox7.GridColumn = 2;
+			grid.Widgets.Add(textBox7);
+
+			var textBox8 = new TextBox();
+			textBox8.Text = "Time";
+			textBox8.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+			textBox8.DisabledTextColor = Color.Black;
+			textBox8.Enabled = false;
+			textBox8.DisabledBackground = new SolidBrush("#00000000");
+			textBox8.GridRow = 0;
+			textBox8.GridColumn = 3;
+			grid.Widgets.Add(textBox8);
+
+			for (int i = 0; i < num_lines; i++)
+			{
+				var textBox0 = new TextBox();
+				textBox0.Text = (i+1).ToString() + ".";
+				textBox0.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+				textBox0.DisabledTextColor = Color.Black;
+				textBox0.Enabled = false;
+				textBox0.DisabledBackground = new SolidBrush("#00000000");
+				textBox0.GridRow = i+1;
+				textBox0.GridColumn = 0;
+				grid.Widgets.Add(textBox0);
+
+				var textBox2 = new TextBox();
+				string name = sorted_entires[i].Name;
+				name = string.Concat(name[0].ToString().ToUpper(), name.AsSpan(1));
+				if (name[0] == 'B')
+					name = " " + name;
+				textBox2.Text = name;
+				textBox2.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+				textBox2.DisabledTextColor = Color.Black;
+				textBox2.Enabled = false;
+				textBox2.DisabledBackground = new SolidBrush("#00000000");
+				textBox2.GridRow = i+1;
+				textBox2.GridColumn = 1;
+				grid.Widgets.Add(textBox2);
+
+				var textBox3 = new TextBox();
+				textBox3.Text = sorted_entires[i].Collected_eggs.ToString();
+				textBox3.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+				textBox3.DisabledTextColor = Color.Black;
+				textBox3.Enabled = false;
+				textBox3.DisabledBackground = new SolidBrush("#00000000");
+				textBox3.GridRow = i+1;
+				textBox3.GridColumn = 2;
+				grid.Widgets.Add(textBox3);
+
+				var textBox4 = new TextBox();
+				TimeSpan t = TimeSpan.FromMilliseconds(sorted_entires[i].Time);
+				string parsed_time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms",
+										t.Hours,
+										t.Minutes,
+										t.Seconds,
+										t.Milliseconds);
+				textBox4.Text = parsed_time;
+				textBox4.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
+				textBox4.DisabledTextColor = Color.Black;
+				textBox4.Enabled = false;
+				textBox4.DisabledBackground = new SolidBrush("#00000000");
+				textBox4.GridRow = i+1;
+				textBox4.GridColumn = 3;
+				grid.Widgets.Add(textBox4);
+			}
 
 			var scrollViewer1 = new ScrollViewer();
-            scrollViewer1.Left = (int)Math.Round(633 * scale);
-            scrollViewer1.Top = (int)Math.Round(510 * scale);
-            scrollViewer1.Width = (int)Math.Round(300 * scale);
-            scrollViewer1.Content = _gridRight;
+            scrollViewer1.Left = (int)Math.Round(363 * scale);
+            scrollViewer1.Top = (int)Math.Round(500 * scale);
+            scrollViewer1.Width = (int)Math.Round(870 * scale);
+			scrollViewer1.Height = (int)Math.Round(190 * scale);
+			//scrollViewer1.ShowHorizontalScrollBar = false;
+			scrollViewer1.Content = grid;
+
+			TimeSpan _t = TimeSpan.FromMilliseconds(last_entry.Time);
+			string _parsed_time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms",
+									_t.Hours,
+									_t.Minutes,
+									_t.Seconds,
+									_t.Milliseconds);
+
+			var textBox9 = new TextBox();
+			var textBox10 = new TextBox();
+			var textBox11 = new TextBox();
+
+			if (num_lines != 0)
+			{
+				textBox9.Text = "You ranked " + (rank + 1).ToString() + ". with";
+				textBox9.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+				textBox9.DisabledTextColor = Color.Black;
+				textBox9.Left = (int)Math.Round(370 * scale);
+				textBox9.Top = (int)Math.Round(700 * scale);
+				textBox9.Enabled = false;
+				textBox9.Scale = new Vector2(0.3f * (float)scale, 0.3f * (float)scale);
+				textBox9.DisabledBackground = new SolidBrush("#00000000");
+
+				textBox10.Text = last_entry.Collected_eggs.ToString() + " eggs collected within ";
+				textBox10.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+				textBox10.DisabledTextColor = Color.Black;
+				textBox10.Left = (int)Math.Round(620 * scale);
+				textBox10.Top = (int)Math.Round(700 * scale);
+				textBox10.Enabled = false;
+				textBox10.Scale = new Vector2(0.3f * (float)scale, 0.3f * (float)scale);
+				textBox10.DisabledBackground = new SolidBrush("#00000000");
+
+				textBox11.Text = _parsed_time;
+				textBox11.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+				textBox11.DisabledTextColor = Color.Black;
+				textBox11.Left = (int)Math.Round(900 * scale);
+				textBox11.Top = (int)Math.Round(700 * scale);
+				textBox11.Enabled = false;
+				textBox11.Scale = new Vector2(0.3f * (float)scale, 0.3f * (float)scale);
+				textBox11.DisabledBackground = new SolidBrush("#00000000");
+            }
+
 
 			var textButton1 = new TextButton();
-			textButton1.Text = "Next";
+			textButton1.Text = "Exit";
 			textButton1.TextColor = Color.Black;
 			textButton1.OverTextColor = Color.White;
 			textButton1.PressedTextColor = Color.White;
 			textButton1.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textButton1.PressedBackground = new SolidBrush("#00000000");
-			textButton1.Left = (int)Math.Round(745 * scale);
+			textButton1.Left = (int)Math.Round(760 * scale);
 			textButton1.Top = (int)Math.Round(740 * scale);
 			textButton1.GridColumnSpan = 0;
 			textButton1.Scale = new Vector2(0.3f * (float)scale, 0.3f * (float)scale);
@@ -115,7 +273,13 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(textBox1);
 			Widgets.Add(scrollViewer1);
 			Widgets.Add(textButton1);
-	
+			if(num_lines != 0)
+            {
+				Widgets.Add(textBox9);
+				Widgets.Add(textBox10);
+				Widgets.Add(textBox11);
+			}
+
 
 			// functionality
 

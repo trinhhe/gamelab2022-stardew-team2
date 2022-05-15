@@ -12,12 +12,13 @@ namespace Curse_of_the_Abyss
     public class Level1:Level{
         int shooterupdate = 0;
         protected List<StationaryShooterNPC> shooters;
-
+        Texture2D RedCircle;
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
+            RedCircle = content.Load<Texture2D>("redcircle");
             SeaUrchin.LoadContent(content);
             MovingPlatform.LoadContent(content);
             WaterPlayer.LoadContent(content);
@@ -53,7 +54,7 @@ namespace Curse_of_the_Abyss
             SeaUrchin seaUrchin1 = new SeaUrchin(80, 350);
             sprites.Add(seaUrchin1);
             
-            MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 700, 2,128, changedir: true);
+            MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 500, 2,128, changedir: true);
             sprites.Add(movableObstacle1);
             MovingPlatform movableObstacle2 = new MovingPlatform(2500, 892, 2500, 350, 2, 50, changedir: true);
             sprites.Add(movableObstacle2);
@@ -154,6 +155,37 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(4750, 1035);
             eggs.addEgg(4220, 650);
             eggs.addEgg(5026, 330);
+        }
+
+        public virtual void DrawTutorial(SpriteBatch spritebatch)
+        {
+            switch (dialog.dialogpos)
+            {
+                case 4:
+                    spritebatch.Draw(RedCircle, new Rectangle(60, 60, 122, 118), Color.White);
+                    break;
+                case 5:
+                    spritebatch.Draw(RedCircle, new Rectangle(60, 60, 122, 118), Color.White);
+                    break;
+                case 6:
+                    spritebatch.Draw(RedCircle, new Rectangle(175, 100, 122, 118), Color.White);
+                    break;
+                case 7:
+                    spritebatch.Draw(RedCircle, new Rectangle(175, 100, 122, 118), Color.White);
+                    break;
+                case 8:
+                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
+                    break;
+                case 9:
+                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
+                    break;
+                case 10:
+                    spritebatch.Draw(RedCircle, new Rectangle(385, 100, 122, 118), Color.White);
+                    break;
+                case 11:
+                    spritebatch.Draw(RedCircle, new Rectangle(465, 100, 122, 118), Color.White);
+                    break;
+            }
         }
 
         public override void check_dialog()

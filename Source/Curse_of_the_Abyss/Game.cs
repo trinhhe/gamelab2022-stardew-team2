@@ -47,12 +47,12 @@ namespace Curse_of_the_Abyss
         int levelcounter;
         int last_level_eggcount;
         int total_eggs;
-        
+
         //life
-        int lifes,life_timer;
+        int lifes, life_timer;
         Texture2D player_life;
         SpriteFont life_counter;
-        bool lost_life,secondphase;
+        bool lost_life, secondphase;
 
         //timers
         public static int _timeElapsed;
@@ -69,7 +69,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
+            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -130,14 +130,17 @@ namespace Curse_of_the_Abyss
                 current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
 
             // scrolling backgrounds
-            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
+            _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
 
             // camera
             _camera = new Camera(current_level.num_parts);
 
+            // low HP screen
+            LowHPScreen.LoadContent(Content);
+
             // always render at 1080p but display at user-defined resolution after
             renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
-            
+
             darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
             DarknessRender.LoadContent(Content);
 
@@ -153,14 +156,17 @@ namespace Curse_of_the_Abyss
                 _desktop.Root = _mainmenu.settings_screen;
                 res_changed = false;
             }
-            
+
             // splash screen
             if (splashscreen.Running)
                 splashscreen.Update(gameTime);
 
             // update loading screen progress bar
-            if(_mainmenu.CurrState == MainMenu.State.Loading)
+            if (_mainmenu.CurrState == MainMenu.State.Loading)
                 Loading.Update(gameTime);
+
+            // low hp screen
+            LowHPScreen.Update(gameTime);
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) 
             {
@@ -170,18 +176,18 @@ namespace Curse_of_the_Abyss
             }
 
             //update life timer
-            life_timer += (int) gameTime.ElapsedGameTime.TotalMilliseconds;
+            life_timer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (life_timer > 2000) lost_life = secondphase = false;
-            
+
             if (current_level.game_over)
             {
                 //player has no lifes left
                 if (lifes <= 1)
-                { 
+                {
                     current_level = levels[0];
                     last_level_eggcount = 0;
                     Content.Unload();
-                    for(int i = 0; i < levels.Length; i++)
+                    for (int i = 0; i < levels.Length; i++)
                     {
                         levels[i].dialogID = 0;     //reset dialogs after game over
                     }
@@ -207,7 +213,7 @@ namespace Curse_of_the_Abyss
                 else
                     current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
                 // reset scrolling backgrounds
-                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
             }
 
             //switch level
@@ -229,7 +235,7 @@ namespace Curse_of_the_Abyss
                     IsMouseVisible = true;
                     current_level = levels[0];
                     levelcounter = 0;
-                    last_level_eggcount = 0;       
+                    last_level_eggcount = 0;
                     init_pause = true;
                     _timePaused = 0;
                     _pauseStart = 0;
@@ -249,13 +255,13 @@ namespace Curse_of_the_Abyss
                     current_level.InitMapManager(_spriteBatch);
                 else
                     current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
-                
+
                 current_level.eggcounter.set(last_level_eggcount);
-                
+
                 DarknessRender.LoadContent(Content);
 
                 // set new scrolling backgrounds based on level
-                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter,current_level);
+                _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
 
                 // set camera to match number of "screen widths" in the new level
                 _camera = new Camera(current_level.num_parts);
@@ -292,7 +298,7 @@ namespace Curse_of_the_Abyss
                 {
                     cam_target = new Sprite(new Rectangle(wp_left + (sb_right - wp_left) / 2, 0, 0, 0));
                 }
-                else if (sb_right < wp_right) 
+                else if (sb_right < wp_right)
                 {
                     cam_target = new Sprite(new Rectangle(sb_left + (wp_right - sb_left) / 2, 0, 0, 0));
                 }
@@ -319,21 +325,21 @@ namespace Curse_of_the_Abyss
         {
             if (lost_life)
             {
-                Life_loss(life_timer>1000);
+                Life_loss(life_timer > 1000);
                 return;
             }
             // Constants.scale = (float)(GraphicsDevice.Viewport.Height / 1080f);
-            var scaleX = GraphicsDevice.Viewport.Width/(float)RenderWidth;
-            var scaleY = GraphicsDevice.Viewport.Height/(float)RenderHeight;
+            var scaleX = GraphicsDevice.Viewport.Width / (float)RenderWidth;
+            var scaleY = GraphicsDevice.Viewport.Height / (float)RenderHeight;
             // global constant matrix to translate mouse position from virtual resolution (1920,1080) <---> actual resolution
             Constants.transform_matrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
-            if(current_level.darkness)
+            if (current_level.darkness)
             {
                 //setup darkness map with light sources masking
                 darknessrender.LightMasking(current_level, _spriteBatch);
             }
-            
+
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
@@ -352,31 +358,39 @@ namespace Curse_of_the_Abyss
 
             // draw sprites
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
-            current_level.Draw(_spriteBatch); 
-            _spriteBatch.End();               
-            
+            current_level.Draw(_spriteBatch);
+            _spriteBatch.End();
+
             // render at 1080p
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _camera.Transform * Constants.transform_matrix); 
+            _spriteBatch.Begin(transformMatrix: _camera.Transform * Constants.transform_matrix);
             _spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
-            
+
             // draw darkness map with lightmasks and other sprites that have to render after darkness map
             darknessrender.Draw(current_level, _spriteBatch);
-            
+
             _spriteBatch.End();
 
             // draw UI
             if (!splashscreen.Running)
             {
-            _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
-            current_level.healthbar.Draw(_spriteBatch);
-            current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
-            if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
-            _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
-            _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);
-            _spriteBatch.End();
+                _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
+                if (current_level.waterPlayer.health.curr_health < Constants.max_player_health * 0.25)
+                {
+                    LowHPScreen.Draw(_spriteBatch);
+                }
+                current_level.healthbar.Draw(_spriteBatch);
+                current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
+                if (current_level.GetType() == typeof(Level1) && current_level.dialogID == 2)
+                {
+                    ((Level1) current_level).DrawTutorial(_spriteBatch);
+                }
+                if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
+                _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
+                _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);
+                _spriteBatch.End();
             }
 
             // menu
@@ -386,10 +400,10 @@ namespace Curse_of_the_Abyss
             }
 
             // leaderboard name error
-            if (Leaderboard_entry.name_error) 
+            if (Leaderboard_entry.name_error)
             {
                 _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
-                _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "ERROR: Invalid name", new Vector2(840, 770), Color.Red);
+                _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "ERROR: Invalid name. Empty or too long.", new Vector2(740, 770), Color.Red);
                 _spriteBatch.End();
             }
 
@@ -406,12 +420,14 @@ namespace Curse_of_the_Abyss
             _brightness.Draw(_spriteBatch, _graphics);
             _spriteBatch.End();
 
+            
+            
             base.Draw(gameTime);
         }
 
         private void Life_loss(bool secondphase)
         {
-            if(secondphase&& !this.secondphase)
+            if (secondphase && !this.secondphase)
             {
                 this.secondphase = true;
                 SoundEffect loss = Content.Load<SoundEffect>("Soundeffects/life_loss");
@@ -420,8 +436,8 @@ namespace Curse_of_the_Abyss
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin(SpriteSortMode.BackToFront);
-            _spriteBatch.Draw(player_life,new Rectangle(_graphics.PreferredBackBufferWidth/2-100,_graphics.PreferredBackBufferHeight/2-25,50,50),null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.01f);
-            _spriteBatch.DrawString(life_counter, "x0" + ((secondphase)?lifes:lifes+1).ToString(), new Vector2(_graphics.PreferredBackBufferWidth/2 -40, _graphics.PreferredBackBufferHeight/2-50), Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0.01f);
+            _spriteBatch.Draw(player_life, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - 100, _graphics.PreferredBackBufferHeight / 2 - 25, 50, 50), null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.01f);
+            _spriteBatch.DrawString(life_counter, "x0" + ((secondphase) ? lifes : lifes + 1).ToString(), new Vector2(_graphics.PreferredBackBufferWidth / 2 - 40, _graphics.PreferredBackBufferHeight / 2 - 50), Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0.01f);
             _spriteBatch.End();
         }
     }
