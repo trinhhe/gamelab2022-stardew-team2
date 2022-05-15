@@ -26,7 +26,8 @@ namespace Curse_of_the_Abyss
         //list of objects the player can collide with
         private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
         private string[] hitcollidables = { "obstacle", "stationaryNPC", "rock", "SeaUrchin" };
-        static SoundEffect jumpSFX, gruntSFX;
+        static SoundEffect jumpSFX, gruntSFX, swimSFX;
+        static SoundEffectInstance swimSFXInstance;
 
         public WaterPlayer(int x, int y, Healthbar healthbar)
         {
@@ -57,6 +58,8 @@ namespace Curse_of_the_Abyss
             };
             jumpSFX = content.Load<SoundEffect>("Soundeffects/jump");
             gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
+            swimSFX = content.Load<SoundEffect>("Soundeffects/swim");
+            swimSFXInstance = swimSFX.CreateInstance();
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -239,7 +242,7 @@ namespace Curse_of_the_Abyss
                 lastY = position.Y;
                 state = State.Jumping;
                 yVelocity = Constants.jump_velocity;
-                jumpSFX.Play(1f,0f,0f);
+                jumpSFX.Play(Constants.jump_volume,0f,0f);
             }
             //dodging
             else if (KB_curState.IsKeyDown(Keys.S))
@@ -318,7 +321,7 @@ namespace Curse_of_the_Abyss
                 lastY = position.Y;
                 yVelocity = Constants.jump_velocity;
                 state = State.Jumping;
-                jumpSFX.Play(1f, 0f, 0f);
+                jumpSFX.Play(Constants.jump_volume, 0f, 0f);
             }//dodging
             else if (KB_curState.IsKeyDown(Keys.S))
             {
@@ -401,6 +404,7 @@ namespace Curse_of_the_Abyss
         //movement in maze
         private void Swimming()
         {
+            
             if (KB_curState.IsKeyDown(Keys.D) && !KB_curState.IsKeyDown(Keys.A))
             {//swim right
                 if (!swimmingRight)
@@ -507,6 +511,16 @@ namespace Curse_of_the_Abyss
                     }
                 }
             }
+
+            //sfx
+            //if (swimSFXInstance.State == SoundState.Stopped)
+            if (Math.Abs(xVelocity) > 0 || Math.Abs(yVelocity) > 0)
+            {
+                swimSFXInstance.Volume = Constants.swim_volume;
+                swimSFXInstance.Play();
+            } 
+            else
+                swimSFXInstance.Stop();
         }
         //calls function depending on state
         private void getState(List<Sprite> sprites)
