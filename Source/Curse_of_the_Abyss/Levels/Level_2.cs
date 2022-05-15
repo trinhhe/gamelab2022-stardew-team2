@@ -196,7 +196,7 @@ namespace Curse_of_the_Abyss
                     }
                     break;
                 case (2):
-                    if (torch1.animationManager.animation == Torch.animations["light"] && torch1.animationManager.animation.CurrentFrame==torch1.animationManager.animation.FrameCount-1)
+                    if (torch1.animationManager is not null && torch1.animationManager.animation == Torch.animations["light"] && torch1.animationManager.animation.CurrentFrame==torch1.animationManager.animation.FrameCount-1)
                     {
                         dialog = new DialogBox(new Rectangle(670, 880, 1190, 200), Constants.dialog_torch_hit);
                         dialog.active = true;

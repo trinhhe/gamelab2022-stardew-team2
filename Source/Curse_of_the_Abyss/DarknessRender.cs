@@ -153,16 +153,27 @@ namespace Curse_of_the_Abyss
                         SpriteEffects.None,
                         0f
                     );
+                else if (s.lightmask && s.name == "antenna" && !s.lightupon)
+                    _spriteBatch.Draw(
+                        waterplayer_lightmask,
+                        new Rectangle(s.position.X - s.position.Width / 2, s.position.Y - s.position.Height / 2 , (int) (2f*s.position.Width), (int)(2f * s.position.Height)),
+                        null,
+                        color * 0.8f,
+                        0,
+                        Vector2.Zero,
+                        SpriteEffects.None,
+                        0f
+                    );
             }
-            // lightmask health
+            //lightmask health
             // _spriteBatch.Draw(
             //     health_lightmask,
             //     new Rectangle(current_level.healthbar.position.X, current_level.healthbar.position.Y, current_level.healthbar.position.Width, current_level.healthbar.position.Height),
-            //     null, 
-            //     color * 1f, 
-            //     0, 
-            //     Vector2.Zero,  
-            //     SpriteEffects.None, 
+            //     null,
+            //     color * 1f,
+            //     0,
+            //     Vector2.Zero,
+            //     SpriteEffects.None,
             //     0f
             // );
             _spriteBatch.End();

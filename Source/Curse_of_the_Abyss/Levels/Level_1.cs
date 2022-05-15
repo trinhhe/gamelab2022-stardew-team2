@@ -53,7 +53,7 @@ namespace Curse_of_the_Abyss
             SeaUrchin seaUrchin1 = new SeaUrchin(80, 350);
             sprites.Add(seaUrchin1);
             
-            MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 540, 2, 128, changedir: true);
+            MovingPlatform movableObstacle1 = new MovingPlatform(120, 1022, 120, 700, 2,128, changedir: true);
             sprites.Add(movableObstacle1);
             MovingPlatform movableObstacle2 = new MovingPlatform(2500, 892, 2500, 350, 2, 50, changedir: true);
             sprites.Add(movableObstacle2);
@@ -119,7 +119,7 @@ namespace Curse_of_the_Abyss
 
                 }
             }
-            SpawnNPCs(13000,gameTime);
+            SpawnNPCs(13750,gameTime);
         }
         public override void Reset()
         {

@@ -21,7 +21,8 @@ namespace Curse_of_the_Abyss
         Bossfight level;
         public Rectangle[] mainBodyPosition;
         bool created;
-
+        static Animation animation;
+        AnimationManager animationManager;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
@@ -42,6 +43,8 @@ namespace Curse_of_the_Abyss
             new Rectangle(x + 173 * scale, y + scale * 73, 29 * scale, 47 * scale)};
             defeated = false;
             antenna = new Antenna(x,y+scale*23,scale,level,player);
+            antenna.lightmask = true;
+            level.lightTargets.Add(antenna);
             rand = new Random();
             collidable = true;
             this.player = player;
@@ -52,7 +55,7 @@ namespace Curse_of_the_Abyss
 
         public static void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("Boss/FrogFish");
+            animation = new Animation(content.Load<Texture2D>("Boss/FrogFish"),8, 0.25f, false);
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
             TargetingNPC.LoadContent(content);
@@ -127,12 +130,24 @@ namespace Curse_of_the_Abyss
             antenna.position.X += (int)xVelocity;
             antenna.position.Y += (int)yVelocity;
 
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            //update animation
+            animationManager.Play(animation);
+            animationManager.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spritebatch)
         {
             //draw boss sprite
-            spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
+            if (animationManager == null)
+            {
+                animationManager = new AnimationManager(animation);
+            }
+            animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
+            //spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
             //draw health
             health.Draw(spritebatch);

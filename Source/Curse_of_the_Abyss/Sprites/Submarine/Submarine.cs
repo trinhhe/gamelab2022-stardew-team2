@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+
 namespace Curse_of_the_Abyss
 {
 
@@ -29,8 +30,35 @@ namespace Curse_of_the_Abyss
         public bool machineGunOn, steeringOn, lightOn, mouseMode;
         public Lamp lamp;
         public Level level;
+
+        /* custom Keyboard class for when button is pressed and released
+        required for entering and leaving station with the same key */
+        public class Keyboard
+        {
+            static KeyboardState currentKeyState;
+            static KeyboardState previousKeyState;
+
+            public static KeyboardState GetState()
+            {
+                previousKeyState = currentKeyState;
+                currentKeyState = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+                return currentKeyState;
+            }
+
+            public static bool IsPressed(Keys key)
+            {
+                return currentKeyState.IsKeyDown(key);
+            }
+
+            public static bool HasBeenPressed(Keys key)
+            {
+                return currentKeyState.IsKeyDown(key) && !previousKeyState.IsKeyDown(key);
+            }
+        }
+
         public Submarine(int x, int y, Healthbar healthbar, Level level)
         {
+
             name = "submarine";
             position = new Rectangle(x, y, 600, 200);
             // all submarine features' positions are relative to how the assets are drawn on the submarine.
@@ -245,7 +273,7 @@ namespace Curse_of_the_Abyss
         private void Standing(GameTime gametime)
         {
             //player at oxygenstation and preparing to fill
-            if (submarinePlayer.position.Intersects(oxyPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(oxyPosition) && Keyboard.HasBeenPressed(Keys.Up))
             {
                 if (oxygenCooldown > Constants.submarine_oxygen_cooldown)
                 {
@@ -258,7 +286,7 @@ namespace Curse_of_the_Abyss
                 }
             }
 
-            if (submarinePlayer.position.Intersects(steerPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(steerPosition) && Keyboard.HasBeenPressed(Keys.Up) && !steeringOn)
             {
                 steeringOn = !steeringOn;
                 submarinePlayer.toggleToMove();
@@ -279,10 +307,10 @@ namespace Curse_of_the_Abyss
             if (steeringOn)
                 state = State.Driving;
 
-            if (submarinePlayer.position.Intersects(machineGunTerminalPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(machineGunTerminalPosition) && Keyboard.HasBeenPressed(Keys.Up))
             {
                 submarinePlayer.setVelocityZero();
-                if (machineGunCooldown > Constants.submarine_machine_gun_cooldown)
+                if (machineGunCooldown > Constants.submarine_machine_gun_cooldown && !machineGunOn)
                 {
                     machineGunOn = !machineGunOn;
                     submarinePlayer.toggleToMove();
@@ -290,7 +318,7 @@ namespace Curse_of_the_Abyss
                 }
             }
 
-            if (submarinePlayer.position.Intersects(bombButtonPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(bombButtonPosition) && Keyboard.HasBeenPressed(Keys.Up))
             {
                 if (bombCooldown > Constants.submarine_bomb_cooldown) 
                 {
@@ -302,7 +330,7 @@ namespace Curse_of_the_Abyss
                     return;
                 } 
             }
-            if (submarinePlayer.position.Intersects(lightLeverPosition) && KB_curState.IsKeyDown(Keys.Down))
+            if (submarinePlayer.position.Intersects(lightLeverPosition) && Keyboard.HasBeenPressed(Keys.Up) && !lightOn)
             {
                 if (lightCooldown > Constants.submarine_light_cooldown)
                 {
@@ -320,7 +348,7 @@ namespace Curse_of_the_Abyss
         {
             double max_v = Constants.max_run_velocity_submarine;
             xAcceleration = Constants.run_accelerate_submarine;
-            if (KB_curState.IsKeyDown(Keys.Up) && steeringOn)
+            if (Keyboard.HasBeenPressed(Keys.Up) && steeringOn)
             {
                 steeringOn = !steeringOn;
                 submarinePlayer.toggleToMove();
@@ -387,7 +415,7 @@ namespace Curse_of_the_Abyss
 
         private void MachineGunMode()
         {
-            if (KB_curState.IsKeyDown(Keys.Up) && machineGunOn)
+            if (Keyboard.HasBeenPressed(Keys.Up) && machineGunOn)
             {
                 machineGunOn = !machineGunOn;
                 submarinePlayer.toggleToMove();
@@ -434,7 +462,7 @@ namespace Curse_of_the_Abyss
         }
         private void LightMode()
         {
-            if (KB_curState.IsKeyDown(Keys.Up) && lightOn)
+            if (Keyboard.HasBeenPressed(Keys.Up) && lightOn)
             {
                 lightOn = false;
                 lamp.lightOn = false;

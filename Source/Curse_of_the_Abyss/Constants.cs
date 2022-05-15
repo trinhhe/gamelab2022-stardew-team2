@@ -17,19 +17,19 @@ namespace Curse_of_the_Abyss
         public static float max_jumping_height = 20;
 
         //submarineplayer
-        public static float submarineplayer_max_run_velocity = 3;
-        public static float submarineplayer_run_accelerate = 0.1f;
+        public static float submarineplayer_max_run_velocity = 3.5f;
+        public static float submarineplayer_run_accelerate = 0.15f;
 
         //healthbar
         public static int max_player_health = 5000;
-        public static int health_gain = 3750; //500
+        public static int health_gain = 2500; //500
         public static int health_loss = 1; //1
-        public static int submarine_oxygen_cooldown = 25000;
+        public static int submarine_oxygen_cooldown = 18000;
 
         //submarine
-        public static float max_run_velocity_submarine = 5f;
-        public static float run_accelerate_submarine = 0.15f;
-        public static float submarine_bomb_velocity = 2f;
+        public static float max_run_velocity_submarine = 6.5f;
+        public static float run_accelerate_submarine = 0.18f;
+        public static float submarine_bomb_velocity = 2.75f;
         public static int submarine_bomb_cooldown = 3000;
         public static float submarine_bullet_velocity = 20f;
         public static int submarine_machine_gun_cooldown = 3000; //milliseconds
@@ -64,12 +64,14 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("sp", "We still need to gather as many as we possibly can, all of humanity is counting on us."),
                                                                new Tuple<string, string>("sp", "Unfortunately, you took the last suit and I can't help you."),
                                                                new Tuple<string, string>("wp", "Actually you can, you could just operate the submarine with all of its functionalities."),
-                                                               new Tuple<string, string>("wp", "First, the oxygen station should be on the left of the submarine, using it will refill my oxygen bar."),
-                                                               new Tuple<string, string>("wp", "However, it only fills up a small amount each time and has a pretty long cooldown."),
-                                                               new Tuple<string, string>("wp", "Next to it is the bombstation, which drops bombs that destroy fish and rocks."),
+                                                               new Tuple<string, string>("wp", "Use the oxygen station on the leftmost edge of the submarine to refill my oxygen tank."),
+                                                               new Tuple<string, string>("wp", "However, it only fills up a certain amount each time and has a pretty long cooldown."),
+                                                               new Tuple<string, string>("wp", "To the right of it is the bomb station. It drops bombs that destroy rocks and kill blowfish."),
                                                                new Tuple<string, string>("sp", "(realizing she actually has to do work)"),
-                                                               new Tuple<string, string>("wp", "On the right side, there is a machine gun, that deals damage to some of the fish here."),
-                                                               new Tuple<string, string>("wp", "And next to it, you have the steering wheel, which moves the submarine."),
+                                                               new Tuple<string, string>("wp", "To the right of the bomb station is the light station."),
+                                                               new Tuple<string, string>("wp", "You can use it to illuminte dark areas. You'll need that later."),
+                                                               new Tuple<string, string>("wp", "Use the machine gun on the rightmost edge of the submarine to deal damage to blowfish."),
+                                                               new Tuple<string, string>("wp", "To the left of it, you have the steering wheel, which moves the submarine."),
                                                                new Tuple<string, string>("wp", "Do you remember how to activate them?"),
                                                                new Tuple<string, string>("sp", "Of course, I can move around and interact with stations using the arrow keys."),
                                                                new Tuple<string, string>("sp", "And aim with the machine gun by moving the mouse."),
