@@ -181,6 +181,7 @@ namespace Curse_of_the_Abyss
 
             if (current_level.game_over)
             {
+                int stage = 1;
                 //player has no lifes left
                 if (lifes <= 1)
                 {
@@ -202,11 +203,13 @@ namespace Curse_of_the_Abyss
                     lifes--;
                     lost_life = true;
                     life_timer = 0;
+                    if (current_level.GetType() == typeof(Bossfight)) stage = ((Bossfight)current_level).boss.stage;
                 }
                 current_level.LoadContent(Content);
                 player_life = Content.Load<Texture2D>("UI/player_UI");
                 life_counter = Content.Load<SpriteFont>("Eggcounter");
                 current_level.Reset();
+                if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.stage = stage;
                 current_level.eggcounter.set(last_level_eggcount);
                 if (!current_level.is_maze_gen)
                     current_level.InitMapManager(_spriteBatch);
@@ -215,7 +218,7 @@ namespace Curse_of_the_Abyss
                 // reset scrolling backgrounds
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
             }
-
+            if (lost_life) return;
             //switch level
             if (current_level.completed)
             {

@@ -30,6 +30,7 @@ namespace Curse_of_the_Abyss
         public bool machineGunOn, steeringOn, lightOn, mouseMode,lightCDActive;
         public Lamp lamp;
         public Level level;
+        BombCrossHair bombCrossHair;
 
         /* custom Keyboard class for when button is pressed and released
         required for entering and leaving station with the same key */
@@ -102,6 +103,7 @@ namespace Curse_of_the_Abyss
             Lamp.LoadContent(content);
             bar = content.Load<Texture2D>("bar");
             cooldown = content.Load<Texture2D>("health");
+            BombCrossHair.LoadContent(content);
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -168,6 +170,7 @@ namespace Curse_of_the_Abyss
             submarinePlayer.Update(sprites, gametime);
             healthbar.Update(sprites, gametime);
             lamp.Update(sprites, gametime);
+            bombCrossHair.Update(sprites, gametime);
             foreach (Sprite b in bullets)
             {
                 b.Update(sprites, gametime);
@@ -244,6 +247,7 @@ namespace Curse_of_the_Abyss
             // healthbar.Draw(spritebatch);
             machineGun.Draw(spritebatch);
             lamp.Draw(spritebatch);
+            bombCrossHair.Draw(spritebatch);
             //moved to DarknessRender to render after darkness map
             // foreach (Sprite b in bullets)
             // {
@@ -285,6 +289,7 @@ namespace Curse_of_the_Abyss
             machineGunCooldown = Constants.submarine_machine_gun_cooldown;
             oxygenCooldown = Constants.submarine_oxygen_cooldown;
             lightCooldown = Constants.submarine_light_cooldown;
+            bombCrossHair = new BombCrossHair(this);
         }
 
         private void Standing(GameTime gametime)
