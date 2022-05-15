@@ -78,7 +78,8 @@ namespace Curse_of_the_Abyss
             //change back to light if needed
             if (darknessTimer > 10000)
             {
-                level.darkness = false;
+                //level.darkness = false;
+                level.darknessReverse = true;
             }
             darknessTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -199,6 +200,7 @@ namespace Curse_of_the_Abyss
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;
                     level.darkness = true;
+                    level.darknessReverse = false;
                     darknessTimer = 0;
                     break;
                 case (Attack.NPCs):
