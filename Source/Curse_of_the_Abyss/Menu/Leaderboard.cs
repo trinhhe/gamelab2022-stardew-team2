@@ -3,9 +3,9 @@ namespace Curse_of_the_Abyss
 {
 	public partial class Leaderboard
 	{
-		public Leaderboard()
+		public Leaderboard(bool show_score)
 		{
-			BuildUI();
+			BuildUI(show_score);
 		}
 	}
 }

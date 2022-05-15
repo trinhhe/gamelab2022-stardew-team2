@@ -27,7 +27,7 @@ namespace Curse_of_the_Abyss
 			public string Name { get; set; }
 		}
 
-		private void BuildUI()
+		private void BuildUI(bool show_score)
 		{
 			// read entries from JSON
 			using (StreamWriter w = File.AppendText("leaderboard.json"));
@@ -125,7 +125,7 @@ namespace Curse_of_the_Abyss
 			grid.Widgets.Add(textBox6);
 
 			var textBox7 = new TextBox();
-			textBox7.Text = "Eggs collected";
+			textBox7.Text = "Eggs";
 			textBox7.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
 			textBox7.DisabledTextColor = Color.Black;
 			textBox7.Enabled = false;
@@ -216,7 +216,7 @@ namespace Curse_of_the_Abyss
 			var textBox10 = new TextBox();
 			var textBox11 = new TextBox();
 
-			if (num_lines != 0)
+			if (num_lines != 0 && show_score)
 			{
 				textBox9.Text = "You ranked " + (rank + 1).ToString() + ". with";
 				textBox9.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
@@ -273,7 +273,7 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(textBox1);
 			Widgets.Add(scrollViewer1);
 			Widgets.Add(textButton1);
-			if(num_lines != 0)
+			if(num_lines != 0 && show_score)
             {
 				Widgets.Add(textBox9);
 				Widgets.Add(textBox10);

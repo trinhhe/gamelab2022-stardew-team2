@@ -47,7 +47,7 @@ namespace Curse_of_the_Abyss
 			loading_screen = new Loading();
 			settings_screen = new Settings(game);
 			exit_screen = new Exit(game);
-			leaderboard_screen = new Leaderboard();
+			leaderboard_screen = new Leaderboard(show_score: false);
 			credits_screen = new Credits();
 			gameover_screen = new GameOver();
 

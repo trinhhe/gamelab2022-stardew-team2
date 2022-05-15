@@ -82,7 +82,7 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("sp", "The up arrow key allows me to enter and leave the stations."),
                                                                new Tuple<string, string>("sp", "And I can aim with the machine gun by moving the mouse."),
                                                                new Tuple<string, string>("wp", "If you still need help, click the tutorial button in the main menu."),
-                                                               new Tuple<string, string>("wp", "You can access it at any time."),
+                                                               new Tuple<string, string>("wp", "You can access it at any time. Hit the ESC key to bring up the menu."),
                                                                new Tuple<string, string>("sp", "Gotcha!"),
                                                                new Tuple<string, string>("wp", "Perfect, now let us get these eggs.")};
         public static Tuple<string, string>[] dialog_maze = { new Tuple<string, string>("sp", "The computer is telling me that your jet-pack has reloaded."),
