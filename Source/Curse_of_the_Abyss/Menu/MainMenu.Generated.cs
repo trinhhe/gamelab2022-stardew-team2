@@ -197,6 +197,11 @@ namespace Curse_of_the_Abyss
 					}
 					Game.paused = false;
 				}
+                if (Game.startup)
+                {
+					Game.startup = false;
+					//game.current_level.play_music();
+                }
 			};
 
 			textButton4.Click += (s, a) =>

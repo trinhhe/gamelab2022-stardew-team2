@@ -35,10 +35,8 @@ namespace Curse_of_the_Abyss
             DialogBox.LoadContent(content);
 
             //music
-            Song song = content.Load<Song>("Soundeffects/bg_music_fast");  // Put the name of your song here instead of "song_title"
-            MediaPlayer.Play(song);
-            MediaPlayer.IsRepeating = true;
-
+            song = content.Load<Song>("Soundeffects/bg_music_fast");
+            play_music();
         }
         public Level1()
         {

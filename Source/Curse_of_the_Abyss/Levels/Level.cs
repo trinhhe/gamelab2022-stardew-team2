@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using TiledSharp;
@@ -34,6 +35,7 @@ namespace Curse_of_the_Abyss
         public int dialogID;
         private bool enter_dialog;
         private int dialog_start;
+        protected Song song;
 
         public DarknessRender darknessRender;
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
@@ -239,6 +241,12 @@ namespace Curse_of_the_Abyss
         public virtual void check_dialog()
         {
 
+        }
+
+        public void play_music()
+        {
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
         }
     }
 
