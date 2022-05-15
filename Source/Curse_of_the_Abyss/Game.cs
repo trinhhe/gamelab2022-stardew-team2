@@ -48,6 +48,16 @@ namespace Curse_of_the_Abyss
         int last_level_eggcount;
         int total_eggs;
 
+        // difficulty
+        public enum Diffculty
+        {
+            Easy,
+            Medium,
+            Hard
+        }
+
+        public static Diffculty CurrDifficulty;
+
         //life
         int lifes, life_timer;
         Texture2D player_life;
@@ -106,6 +116,10 @@ namespace Curse_of_the_Abyss
             RenderWidth = 1920;
 
             _graphics.ApplyChanges();
+
+            // default difficulty
+            Game.CurrDifficulty = Diffculty.Medium;
+            Constants.init_constants();
 
             base.Initialize();
         }

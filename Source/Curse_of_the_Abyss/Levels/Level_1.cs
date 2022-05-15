@@ -13,6 +13,7 @@ namespace Curse_of_the_Abyss
         int shooterupdate = 0;
         protected List<StationaryShooterNPC> shooters;
         Texture2D RedCircle;
+        public static int spawn_timer;
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
@@ -120,7 +121,7 @@ namespace Curse_of_the_Abyss
 
                 }
             }
-            SpawnNPCs(13750,gameTime);
+            SpawnNPCs(spawn_timer, gameTime);
         }
         public override void Reset()
         {

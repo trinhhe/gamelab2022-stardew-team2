@@ -150,7 +150,7 @@ namespace Curse_of_the_Abyss
 			textBox4.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox4.Enabled = false;
 			textBox4.DisabledTextColor = Color.Black;
-			textBox4.Left = (int)Math.Round(635 * scale);
+			textBox4.Left = (int)Math.Round(630 * scale);
 			textBox4.Top = (int)Math.Round(585 * scale);
 			textBox4.GridColumnSpan = 0;
 			textBox4.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
@@ -165,7 +165,7 @@ namespace Curse_of_the_Abyss
 			textBox5.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 			textBox5.Enabled = false;
 			textBox5.DisabledTextColor = Color.Black;
-			textBox5.Left = (int)Math.Round(648 * scale);
+			textBox5.Left = (int)Math.Round(643 * scale);
 			textBox5.Top = (int)Math.Round(585 * scale);
 			textBox5.GridColumnSpan = 0;
 			textBox5.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
@@ -190,6 +190,73 @@ namespace Curse_of_the_Abyss
 			textBox6.DisabledBackground = new SolidBrush("#00000000");
 			textBox6.FocusedBackground = new SolidBrush("#00000000");
 
+			var textBox7 = new TextBox();
+			textBox7.Text = "D";
+			textBox7.TextColor = Color.Black;
+			textBox7.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+			textBox7.Enabled = false;
+			textBox7.DisabledTextColor = Color.Black;
+			textBox7.Left = (int)Math.Round(630 * scale);
+			textBox7.Top = (int)Math.Round(620 * scale);
+			textBox7.GridColumnSpan = 0;
+			textBox7.GridRowSpan = 0;
+			textBox7.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
+			textBox7.Background = new SolidBrush("#00000000");
+			textBox7.OverBackground = new SolidBrush("#00000000");
+			textBox7.DisabledBackground = new SolidBrush("#00000000");
+			textBox7.FocusedBackground = new SolidBrush("#00000000");
+
+			var textBox8 = new TextBox();
+			textBox8.Text = "ifficulty";
+			textBox8.TextColor = Color.Black;
+			textBox8.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
+			textBox8.Enabled = false;
+			textBox8.DisabledTextColor = Color.Black;
+			textBox8.Left = (int)Math.Round(643 * scale);
+			textBox8.Top = (int)Math.Round(620 * scale);
+			textBox8.GridColumnSpan = 0;
+			textBox8.GridRowSpan = 0;
+			textBox8.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
+			textBox8.Background = new SolidBrush("#00000000");
+			textBox8.OverBackground = new SolidBrush("#00000000");
+			textBox8.DisabledBackground = new SolidBrush("#00000000");
+			textBox7.FocusedBackground = new SolidBrush("#00000000");
+
+			var listItem6 = new ListItem();
+			listItem6.Text = "Easy";
+
+			var listItem7 = new ListItem();
+			listItem7.Text = "Medium";
+
+			var listItem8 = new ListItem();
+			listItem8.Text = "Hard";
+
+
+			var comboBox2 = new ComboBox();
+			comboBox2.GridColumnSpan = 0;
+			comboBox2.Left = (int)(810 * scale);
+			comboBox2.Top = (int)(623 * scale);
+			comboBox2.Width = (int)(125 * scale);
+			comboBox2.Items.Add(listItem6);
+			comboBox2.Items.Add(listItem7);
+			comboBox2.Items.Add(listItem8);
+
+			switch (Game.CurrDifficulty)
+			{
+				case Game.Diffculty.Easy:
+					comboBox2.SelectedItem = listItem6;
+					break;
+				case Game.Diffculty.Medium:
+					comboBox2.SelectedItem = listItem7;
+					break;
+				case Game.Diffculty.Hard:
+					comboBox2.SelectedItem = listItem8;
+					break;
+				default:
+					comboBox2.SelectedItem = listItem7;
+					break;
+			}
+			
 			var horizontalSlider1 = new HorizontalSlider();
 			horizontalSlider1.Left = (int)Math.Round(810 * scale);
 			horizontalSlider1.Top = (int)Math.Round(520 * scale);
@@ -224,6 +291,9 @@ namespace Curse_of_the_Abyss
 			Widgets.Add(horizontalSlider2);
 			Widgets.Add(textBox6);
 			Widgets.Add(horizontalSlider3);
+			Widgets.Add(textBox7);
+			Widgets.Add(textBox8);
+			Widgets.Add(comboBox2);
 
 
 			// functionality
@@ -299,6 +369,27 @@ namespace Curse_of_the_Abyss
 
 				curr_width = target_width;
 				curr_height = target_height;
+			};
+
+
+			comboBox2.SelectedIndexChanged += (s, a) =>
+			{
+				switch (comboBox2.SelectedIndex)
+				{
+					case 0:
+						Game.CurrDifficulty = Game.Diffculty.Easy;
+						break;
+					case 1:
+						Game.CurrDifficulty = Game.Diffculty.Medium;
+						break;
+					case 2:
+						Game.CurrDifficulty = Game.Diffculty.Hard;
+						break;
+					default:
+						Game.CurrDifficulty = Game.Diffculty.Medium;
+						break;
+				}
+				Constants.init_constants();
 			};
 		}
 

@@ -22,13 +22,13 @@ namespace Curse_of_the_Abyss
 
         //healthbar
         public static int max_player_health = 5000;
-        public static int health_gain = 2500; //500
+        public static int health_gain = 2000; //500
         public static int health_loss = 1; //1
-        public static int submarine_oxygen_cooldown = 18000;
+        public static int submarine_oxygen_cooldown = 20000;
 
         //submarine
         public static float max_run_velocity_submarine = 6.5f;
-        public static float run_accelerate_submarine = 0.18f;
+        public static float run_accelerate_submarine = 0.2f;
         public static float submarine_bomb_velocity = 2.75f;
         public static int submarine_bomb_cooldown = 3000;
         public static float submarine_bullet_velocity = 20f;
@@ -36,6 +36,39 @@ namespace Curse_of_the_Abyss
         public static float machine_gun_turn_velocity = 1.5f;
         public static int machine_gun_shooting_frequency = 30; //lower is more bullets
         public static int submarine_light_cooldown = 2000;
+
+        public static void init_constants()
+        {
+            switch (Game.CurrDifficulty)
+            {
+                case Game.Diffculty.Easy:
+                    max_player_health = 6000;
+                    health_gain = 4000;
+                    submarine_oxygen_cooldown = 12000;
+                    submarineplayer_max_run_velocity = 4.5f;
+                    submarineplayer_run_accelerate = 0.3f;
+                    Level1.spawn_timer = 15000;
+                    break;
+                case Game.Diffculty.Medium:
+                    max_player_health = 5000;
+                    health_gain = 2500;
+                    submarine_oxygen_cooldown = 20000;
+                    submarineplayer_max_run_velocity = 3.5f;
+                    submarineplayer_run_accelerate = 0.15f;
+                    Level1.spawn_timer = 13000;
+                    break;
+                case Game.Diffculty.Hard:
+                    max_player_health = 4000;
+                    health_gain = 1500;
+                    submarine_oxygen_cooldown = 20000;
+                    submarineplayer_max_run_velocity = 2.75f;
+                    submarineplayer_run_accelerate = 0.1f;
+                    Level1.spawn_timer = 9000;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         //darkness
         public static float light_width_scale = 1.2f;
