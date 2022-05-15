@@ -968,11 +968,23 @@
 /processorParam:Quality=Best
 /build:Soundeffects/gibberish.wav
 
+#begin Soundeffects/grunt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/grunt.wav
+
 #begin Soundeffects/gun_shot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/gun_shot.wav
+
+#begin Soundeffects/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/jump.wav
 
 #begin Soundeffects/life_loss.wav
 /importer:WavImporter

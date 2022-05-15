@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using static System.Math;
 
@@ -21,7 +22,7 @@ namespace Curse_of_the_Abyss
         Vector2 rot_center; //center of energyball, used for rotation
         bool spatial;
         Bossfight level;
-
+        public static SoundEffect gruntSFX;
         public Electro_Attack(int x, int y, int coordx, int coordy, int speed,bool spatial,Bossfight level)
         {
             name = "electroSprite";
@@ -39,6 +40,7 @@ namespace Curse_of_the_Abyss
         {
             animation = new Animation(content.Load<Texture2D>("Boss/Electro_Attack"),3,0.3f,true);
             Electro_Spatial.LoadContent(content);
+            gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -101,6 +103,7 @@ namespace Curse_of_the_Abyss
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
                         ((WaterPlayer)s).hit = true;
                         ((WaterPlayer)s).hitTimer = 1000;
+                        gruntSFX.Play(Constants.grunt_volumne, 0, 0);
                     }
                     remove = true;
                     break;
@@ -118,6 +121,7 @@ namespace Curse_of_the_Abyss
                         ((WaterPlayer)s).health.curr_health -= ((WaterPlayer)s).health.maxhealth / 10;
                         ((WaterPlayer)s).hit = true;
                         ((WaterPlayer)s).hitTimer = 1000;
+                        gruntSFX.Play(Constants.grunt_volumne, 0, 0);
                     }
                     else if (s.name == "obstacle" && spatial)
                     {

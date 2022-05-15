@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
 
@@ -14,7 +15,7 @@ namespace Curse_of_the_Abyss
         private string[] collidables = { "waterplayer" };
         int timer;
         bool timerSet;
-        
+        public static SoundEffect gruntSFX;
 
         public Electro_Spatial(int x, int y)
         {
@@ -28,6 +29,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("Boss/Electro_spatial");
+            gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -75,6 +77,7 @@ namespace Curse_of_the_Abyss
                 ((WaterPlayer)s).hit = true;
                 ((WaterPlayer)s).hitTimer = 500;
                 collidables[0] = "";
+                gruntSFX.Play(Constants.grunt_volumne, 0, 0);
             }
         }
 

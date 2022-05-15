@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
-
+using Microsoft.Xna.Framework.Audio;
 namespace Curse_of_the_Abyss
 {
     class Explosion:Sprite
@@ -10,6 +10,7 @@ namespace Curse_of_the_Abyss
         static Animation animation;
         AnimationManager animationManager;
         public string[] collidables = {"frogfish","targetingNPC","waterplayer" };
+        public static SoundEffect gruntSFX;
         public Explosion(Rectangle position)
         {
             name = "explosion";
@@ -21,6 +22,7 @@ namespace Curse_of_the_Abyss
         public static void LoadContent(ContentManager content)
         {
             animation = new Animation(content.Load<Texture2D>("explosion"),9,0.2f,false);
+            gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
         }
 
         public override void Update(List<Sprite> sprites, GameTime gametime)
@@ -65,6 +67,7 @@ namespace Curse_of_the_Abyss
                         ((WaterPlayer)s).hit = true;
                         ((WaterPlayer)s).hitTimer = 0;
                         ((WaterPlayer)s).moveOnContact(5,position);
+                        gruntSFX.Play(Constants.grunt_volumne, 0, 0);
                     }
                     break;
             }
