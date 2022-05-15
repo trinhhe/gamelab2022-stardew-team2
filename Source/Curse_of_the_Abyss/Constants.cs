@@ -77,6 +77,15 @@ namespace Curse_of_the_Abyss
         public static float waterplayer_light_height_scale = 1.1f;
         public static int darkness_transition_steps = 5; //steps from 0 to 255 alpha value darkness transition in boss fight
 
+        //SFX VOLUMES
+        //player
+        public static float grunt_volume = 0.6f;
+        public static float swim_volume = 1f;
+        public static float jump_volume = 1f;
+        //boss attacks
+        public static float spatial_electricity_volume = 0.20f;
+        public static float electro_attack_volumne = 0.4f;
+
         //dialogs
         public static float textspeed = 1;
         public static float text_scale = 1.3f;
