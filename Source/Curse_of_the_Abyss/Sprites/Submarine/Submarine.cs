@@ -31,7 +31,7 @@ namespace Curse_of_the_Abyss
         public bool machineGunOn, steeringOn, lightOn, mouseMode,lightCDActive;
         public Lamp lamp;
         public Level level;
-        BombCrossHair bombCrossHair;
+        public BombCrossHair bombCrossHair;
         static SoundEffect lightSwitch;
         
         /* custom Keyboard class for when button is pressed and released

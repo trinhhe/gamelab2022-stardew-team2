@@ -162,28 +162,28 @@ namespace Curse_of_the_Abyss
             switch (dialog.dialogpos)
             {
                 case 4:
-                    spritebatch.Draw(RedCircle, new Rectangle(60, 60, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.oxyPosition.X-70, submarine.oxyPosition.Y-60, 122, 118), Color.White);
                     break;
                 case 5:
-                    spritebatch.Draw(RedCircle, new Rectangle(60, 60, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.oxyPosition.X - 70, submarine.oxyPosition.Y - 60, 122, 118), Color.White);
                     break;
                 case 6:
-                    spritebatch.Draw(RedCircle, new Rectangle(175, 100, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.bombButtonPosition.X - 54, submarine.bombButtonPosition.Y - 42, 122, 118), Color.White);
                     break;
-                case 9:
-                    spritebatch.Draw(RedCircle, new Rectangle(175, 100, 122, 118), Color.White);
+                case 7:
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.bombCrossHair.position.X - 46, submarine.bombCrossHair.position.Y - 44, 122, 118), Color.White);
                     break;
                 case 10:
-                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.lightLeverPosition.X - 50, submarine.lightLeverPosition.Y - 37, 122, 118), Color.White);
                     break;
                 case 11:
-                    spritebatch.Draw(RedCircle, new Rectangle(285, 100, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.lightLeverPosition.X - 50, submarine.lightLeverPosition.Y - 37, 122, 118), Color.White);
                     break;
                 case 12:
-                    spritebatch.Draw(RedCircle, new Rectangle(385, 100, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.steerPosition.X - 50, submarine.steerPosition.Y - 40, 122, 118), Color.White);
                     break;
                 case 13:
-                    spritebatch.Draw(RedCircle, new Rectangle(465, 100, 122, 118), Color.White);
+                    spritebatch.Draw(RedCircle, new Rectangle(submarine.machineGun.position.X - 50, submarine.machineGun.position.Y - 75, 122, 118), Color.White);
                     break;
             }
         }

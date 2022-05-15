@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Curse_of_the_Abyss
 {
-    class BombCrossHair:Sprite
+    public class BombCrossHair:Sprite
     {
         Submarine sub;
         static Texture2D texture;
