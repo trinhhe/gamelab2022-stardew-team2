@@ -31,13 +31,33 @@ namespace Curse_of_the_Abyss
             position.Width = 30;
             position.Height = 30;
             Sprite s = CheckCollision(sprites,collidables);
-            while (s == null&& position.Y<1080)
+            while (s == null && position.Y < 1080||s.name == "frogfish")
             {
+                if(s!= null)
+                {
+                    bool stop = false;
+                    FrogFish f = s as FrogFish;
+                    foreach (Rectangle r in f.mainBodyPosition)
+                    {
+                        if (position.Intersects(r))
+                        {
+                            f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                            stop = true;
+                            break;
+                        }
+                    }
+                    if (position.Intersects(f.antenna.position))
+                    {
+                        f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                        stop = true;
+                    }
+                    if (stop) break;
+                }
                 position.Y += 30;
                 s = CheckCollision(sprites, collidables);
             }
 
-            if (s != null) position.Y = s.position.Top-position.Height/2;
+            if (s != null && s.name!= "frogfish") position.Y = s.position.Top-position.Height/2;
 
         }
 
