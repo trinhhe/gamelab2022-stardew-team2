@@ -69,7 +69,8 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
+            //levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
+            levels = new Level[] { new SideScrollingTest() };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -404,6 +405,7 @@ namespace Curse_of_the_Abyss
             {
                 _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
                 _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "ERROR: Invalid name. Empty or too long.", new Vector2(740, 770), Color.Red);
+                _spriteBatch.DrawString(Content.Load<SpriteFont>("O2"), "Can only contain alphanumericals.", new Vector2(770, 800), Color.Red);
                 _spriteBatch.End();
             }
 
