@@ -9,18 +9,37 @@ namespace Curse_of_the_Abyss
     class LowHPScreen
     {
         private static Texture2D texture;
-        private static int time;
+        private static Texture2D blank;
+        public static int time;
         private static int timer;
         private static bool increment;
         private static Color color;
+        private static int alpha;
+        public static int min_alpha;
+        public static int max_alpha;
 
         public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("lowhp_screen");
             increment = true;
-            time = 5;
-            color = Color.White;
-            color.A = 0;
+            SetBrightMode();
+            color = new Color(alpha, alpha, alpha, alpha);
+        }
+
+        public static void SetDarkMode()
+        {
+            min_alpha = 60;
+            max_alpha = 120;
+            time = 44;
+            alpha = min_alpha;
+        }
+
+        public static void SetBrightMode()
+        {
+            min_alpha = 180;
+            max_alpha = 255;
+            time = 30;
+            alpha = min_alpha;
         }
 
         public static void Update(GameTime gameTime)
@@ -30,22 +49,24 @@ namespace Curse_of_the_Abyss
             if (timer > time)
             {
                 if (increment)
-                    color.A += 5;
+                    alpha += 5;
                 else
-                    color.A -= 5;
+                    alpha -= 5;
                 timer = 0;
             }
 
-            if (color.A == 255)
+            if (alpha == max_alpha)
             {
-                color.A = 255;
+                alpha = max_alpha;
                 increment = false;
             }
-            else if (color.A == 0)
+            else if (alpha == min_alpha)
             {
-                color.A = 0;
+                alpha = min_alpha;
                 increment = true;
             }
+
+            color = new Color(alpha, alpha, alpha, alpha);
         }
 
         public static void Draw(SpriteBatch spritebatch)
