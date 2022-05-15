@@ -81,8 +81,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new MazeRandom(), new Level2(), new Bossfight("frogfish") };
-            //levels = new Level[] { new SideScrollingTest() };
+            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -101,6 +100,8 @@ namespace Curse_of_the_Abyss
 
             ResolutionSettings.Graphics = _graphics;
             ResolutionSettings.IsFullscreen = false;
+            ResolutionSettings.curr_height = _graphics.PreferredBackBufferHeight;
+            ResolutionSettings.curr_width = _graphics.PreferredBackBufferWidth;
 
             // default audio volume
             SoundEffect.MasterVolume = 0.4f;
@@ -118,7 +119,7 @@ namespace Curse_of_the_Abyss
             _graphics.ApplyChanges();
 
             // default difficulty
-            Game.CurrDifficulty = Diffculty.Medium;
+            CurrDifficulty = Diffculty.Medium;
             Constants.init_constants();
 
             base.Initialize();

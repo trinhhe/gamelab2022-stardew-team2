@@ -16,11 +16,7 @@ namespace Curse_of_the_Abyss
 {
 	partial class Settings: Panel
 	{
-		public static int initial_height = 900;
-		public static int initial_width = 1600;
-		public static int curr_height = initial_height;
-		public static int curr_width = initial_width;
-
+		static int initial_width = 1600;
 		private void BuildUI(Game game)
 		{
 			double scale = MainMenu.scale;
@@ -51,13 +47,6 @@ namespace Curse_of_the_Abyss
 			textBox1.Scale = new Vector2(0.28f * (float)scale, 0.28f * (float)scale);
 			textBox1.DisabledBackground = new SolidBrush("#00000000");
 
-			var listItem0 = new ListItem();
-			listItem0.Text = "Select ...";
-
-			//disable suport for 4k res
-			//var listItem1 = new ListItem();
-			//listItem1.Text = "3840x2160";
-
 			var listItem1 = new ListItem();
 			listItem1.Text = "2560x1440";
 
@@ -79,13 +68,33 @@ namespace Curse_of_the_Abyss
 			comboBox1.Left = (int)(810 * scale);
 			comboBox1.Top = (int)(450 * scale);
 			comboBox1.Width = (int)(125 * scale);
-			comboBox1.Items.Add(listItem0);
 			comboBox1.Items.Add(listItem1);
 			comboBox1.Items.Add(listItem2);
 			comboBox1.Items.Add(listItem3);
 			comboBox1.Items.Add(listItem4);
 			comboBox1.Items.Add(listItem5);
-			comboBox1.SelectedItem = listItem0;
+
+			switch (ResolutionSettings.curr_width)
+			{
+				case 2560:
+					comboBox1.SelectedItem = listItem1;
+					break;
+				case 1920:
+					comboBox1.SelectedItem = listItem2;
+					break;
+				case 1600:
+					comboBox1.SelectedItem = listItem3;
+					break;
+				case 1366:
+					comboBox1.SelectedItem = listItem4;
+					break;
+				case 1280:
+					comboBox1.SelectedItem = listItem5;
+					break;
+				default:
+					comboBox1.SelectedItem = listItem3;
+					break;
+			}
 
 			var textButton1 = new TextButton();
 			textButton1.Text = "Back";
@@ -331,35 +340,35 @@ namespace Curse_of_the_Abyss
 				int target_height;
 				switch (comboBox1.SelectedIndex)
 				{
-					case 1:
+					case 0:
 						target_width = 2560;
 						target_height = 1440;
 						MainMenu.path_to_bg = "Content/UI/MenuBackground_2k.png";
 						Game.res_changed = true;
 						break;
-					case 2:
+					case 1:
 						target_width = 1920;
 						target_height = 1080;
 						Game.res_changed = true;
 						break;
-					case 3:
+					case 2:
 						target_width = 1600;
 						target_height = 900;
 						Game.res_changed = true;
 						break;
-					case 4:
+					case 3:
 						target_width = 1366;
 						target_height = 768;
 						Game.res_changed = true;
 						break;
-					case 5:
+					case 4:
 						target_width = 1280;
 						target_height = 720;
 						Game.res_changed = true;
 						break;
 					default:
-						target_width = curr_width;
-						target_height = curr_height;
+						target_width = ResolutionSettings.curr_width;
+						target_height = ResolutionSettings.curr_height;
 						break;
 				}
 
@@ -367,8 +376,8 @@ namespace Curse_of_the_Abyss
 				ResolutionSettings.ChangeResolution(target_width, target_height);
 				Game._mainmenu = new MainMenu(game);
 
-				curr_width = target_width;
-				curr_height = target_height;
+				ResolutionSettings.curr_width = target_width;
+				ResolutionSettings.curr_height = target_height;
 			};
 
 
