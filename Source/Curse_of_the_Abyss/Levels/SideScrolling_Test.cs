@@ -45,7 +45,7 @@ namespace Curse_of_the_Abyss
 
         public override void Update(GameTime gameTime)
         {
-            completed = true;
+            //completed = true;
             base.Update(gameTime);
 
             if (waterPlayer.position.X > 3840)
@@ -74,7 +74,17 @@ namespace Curse_of_the_Abyss
             eggs = new EggCollection();
 
             //Add eggs here
-            eggs.addEgg(100, 900);
+            eggs.addEgg(100, 950);
+            eggs.addEgg(110, 950);
+            eggs.addEgg(120, 950);
+            eggs.addEgg(130, 950);
+            eggs.addEgg(140, 950);
+            eggs.addEgg(150, 950);
+            eggs.addEgg(160, 950);
+            eggs.addEgg(170, 950);
+            eggs.addEgg(180, 950);
+            eggs.addEgg(190, 950);
+            eggs.addEgg(200, 950);
         }
 
     }
