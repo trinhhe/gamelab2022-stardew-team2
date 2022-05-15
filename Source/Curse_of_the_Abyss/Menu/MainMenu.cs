@@ -11,6 +11,7 @@ namespace Curse_of_the_Abyss
 		public ScoreTime score_time_screen;
 		public Leaderboard_entry leaderboard_entry_screen;
 		public Leaderboard leaderboard_screen;
+		public Credits credits_screen;
 		public Exit exit_screen;
 
 		// tutorial screens
@@ -37,6 +38,7 @@ namespace Curse_of_the_Abyss
 			GameOver,
 			Score,
 			Tutorial,
+			Credits,
 			Exit
 		}
 		public State CurrState = State.Menu;
@@ -46,6 +48,7 @@ namespace Curse_of_the_Abyss
 			settings_screen = new Settings(game);
 			exit_screen = new Exit(game);
 			leaderboard_screen = new Leaderboard();
+			credits_screen = new Credits();
 			gameover_screen = new GameOver();
 
 			// tutorial screens
