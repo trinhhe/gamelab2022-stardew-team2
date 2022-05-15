@@ -277,7 +277,7 @@
 /processorParam:TextureFormat=Color
 /build:Boss/Electro_spatial.png
 
-#begin Boss/Frog_fish.png
+#begin Boss/FrogFish_stage1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -287,9 +287,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Boss/Frog_fish.png
+/build:Boss/FrogFish_stage1.png
 
-#begin Boss/FrogFish.png
+#begin Boss/FrogFish_stage2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -299,7 +299,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Boss/FrogFish.png
+/build:Boss/FrogFish_stage2.png
+
+#begin Boss/FrogFish_stage3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Boss/FrogFish_stage3.png
 
 #begin Boss/TNTBarrel.png
 /importer:TextureImporter
