@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
         private Sprite cam_target;
 
         // levels
-        public Level current_level;
+        public static Level current_level;
         Level[] levels;
         int levelcounter;
         int last_level_eggcount;
