@@ -31,12 +31,7 @@ namespace Curse_of_the_Abyss
             DialogBox.LoadContent(content);
             MovingPlatform.LoadContent(content);
 
-
-            //music
-            Song song = content.Load<Song>("Soundeffects/bg_music_fast");  // Put the name of your song here instead of "song_title"
-            MediaPlayer.Play(song);
-            MediaPlayer.IsRepeating = true;
-
+            
 
         }
         public Bossfight(string bosstype)

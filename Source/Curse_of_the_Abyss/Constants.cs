@@ -117,7 +117,7 @@ namespace Curse_of_the_Abyss
                                                                new Tuple<string, string>("sp", "Roger that.")};
         public static Tuple<string, string>[] dialog_torch_hit = { new Tuple<string, string>("wp", "It works! I can see much more now."),
                                                                new Tuple<string, string>("sp", "Somehow it is weird to find these torches here, I mean why should they be here."),
-                                                               new Tuple<string, string>("wp", "True, it's almost, like someone placed them there to help us.")};
+                                                               new Tuple<string, string>("wp", "True, it's almost like someone placed them there to help us.")};
         public static Tuple<string, string>[] dialog_boss = { new Tuple<string, string>("wp", "WHAT IS THIS????!!!!!"),
                                                                new Tuple<string, string>("sp", "Seems like a giant frog fish and it seems angry."),
                                                                new Tuple<string, string>("wp", "WHAT CAN WE DO TO CALM IT DOWN??!!"),

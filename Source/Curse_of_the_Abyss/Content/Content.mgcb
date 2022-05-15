@@ -962,11 +962,52 @@
 /processorParam:Quality=Best
 /build:Soundeffects/bg_music_fast.mp3
 
+#begin Soundeffects/bomb_drop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/bomb_drop.wav
+
+#begin Soundeffects/egg_collect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/egg_collect.wav
+
+#begin Soundeffects/error.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/error.wav
+
+#begin Soundeffects/frogfish_stage1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/frogfish_stage1.mp3
+
+#begin Soundeffects/frogfish_stage2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/frogfish_stage2.mp3
+
+#begin Soundeffects/frogfish_stage3.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/frogfish_stage3.mp3
+
+#begin Soundeffects/game_over.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/game_over.wav
+
 #begin Soundeffects/electro_attack.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Soundeffects/electro_attack.wav
 
 #begin Soundeffects/gibberish.wav
 /importer:WavImporter
@@ -1003,6 +1044,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/light_switch.wav
+
+#begin Soundeffects/oxygen_refill.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/oxygen_refill.wav
+
+#begin Soundeffects/submarine_movement.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/submarine_movement.wav
 
 #begin Soundeffects/spatial_electricity.wav
 /importer:WavImporter
@@ -1246,6 +1299,21 @@
 
 #begin UI/gameover_logo.png
 /copy:UI/gameover_logo.png
+
+#begin UI/leaderboard_bg.png
+/copy:UI/leaderboard_bg.png
+
+#begin UI/leaderboard_bg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/leaderboard_bg.png
 
 #begin UI/left_arrow.png
 /copy:UI/left_arrow.png

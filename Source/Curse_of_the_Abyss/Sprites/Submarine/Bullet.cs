@@ -22,7 +22,7 @@ namespace Curse_of_the_Abyss
             this.position = new Rectangle((int)x, (int)y, 10, 10);
             this.linearVelocity = Constants.submarine_bullet_velocity;
             this.collidable = true;
-            sound.Play(0.05f,0,0);
+            sound.Play(0.1f,0,0);
         }
         public static void LoadContent(ContentManager content)
         {

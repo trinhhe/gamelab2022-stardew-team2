@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
+using Microsoft.Xna.Framework.Media;
 
 namespace Curse_of_the_Abyss
 {
@@ -24,6 +25,8 @@ namespace Curse_of_the_Abyss
         public Rectangle[] mainBodyPosition;
         public static Dictionary<string, Animation> animations;
         AnimationManager animationManager;
+
+        public static Dictionary<int, Song> songs;
         public static SoundEffect electroAttackSFX;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
@@ -71,6 +74,17 @@ namespace Curse_of_the_Abyss
             bar = content.Load<Texture2D>("bar_dark");
             healthBar = content.Load<Texture2D>("health");
             font = content.Load<SpriteFont>("O2");
+            
+            songs = new Dictionary<int, Song>()
+            {
+                {1,content.Load<Song>("Soundeffects/frogfish_stage1") },
+                {2,content.Load<Song>("Soundeffects/frogfish_stage2")},
+                {3,content.Load<Song>("Soundeffects/frogfish_stage3") }
+            };
+
+
+            MediaPlayer.Play(songs[1]);
+            MediaPlayer.IsRepeating = true;
             electroAttackSFX = content.Load<SoundEffect>("Soundeffects/electro_attack");
         }
 
@@ -83,6 +97,15 @@ namespace Curse_of_the_Abyss
                 stage+=1;
                 health.curr_health = 100;
                 antenna.hit = false;
+                MediaPlayer.Stop();
+                int i = stage;
+                if (stage > 3)
+                {
+                    i = 3; //we only have 3 songs for frogfish atm
+                }
+
+                MediaPlayer.Play(songs[i]);
+                MediaPlayer.IsRepeating = true;
             }
             
             //change back to light if needed
