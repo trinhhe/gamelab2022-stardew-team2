@@ -249,6 +249,8 @@ namespace Curse_of_the_Abyss
                 }
                 
             }
+            //bomb crosshair
+            current_level.submarine.bombCrossHair.Draw(_spriteBatch);
         }
 
         //every NPC targeted by the lightbeam should start glowing
