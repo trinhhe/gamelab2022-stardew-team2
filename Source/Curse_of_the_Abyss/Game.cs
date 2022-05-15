@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
         private Sprite cam_target;
 
         // levels
-        public Level current_level;
+        Level current_level;
         Level[] levels;
         int levelcounter;
         int last_level_eggcount;
@@ -386,7 +386,7 @@ namespace Curse_of_the_Abyss
                 _spriteBatch.Begin(transformMatrix: Constants.transform_matrix);
                 current_level.healthbar.Draw(_spriteBatch);
                 current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
-                if (current_level.waterPlayer.health.curr_health < Constants.max_player_health * 0.25) LowHPScreen.Draw(this, _spriteBatch);
+                if (current_level.waterPlayer.health.curr_health < Constants.max_player_health * 0.25) LowHPScreen.Draw(_spriteBatch);
                 if (current_level.GetType() == typeof(Level1) && current_level.dialogID == 2) ((Level1) current_level).DrawTutorial(_spriteBatch);
                 if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
                 _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
