@@ -13,7 +13,7 @@ namespace Curse_of_the_Abyss
     {
         public static Texture2D SubmarineTexture, O2ButtonTexture, ButtonTexture, BombTexture, ShootingTerminalTexture, ShutTexture, ControlDeskTexture, LeverTexture, bar, cooldown, BombCooldownTexture, CrosshairTexture;
         public static Dictionary<string, Animation> animations;
-        protected AnimationManager animationManager1, animationManager2, animationManager3, animationManager4, animationManager5, animationManager6;
+        protected AnimationManager animationManager1, animationManager2, animationManager3, animationManager4, animationManager5, animationManager6, animationManager7;
         private KeyboardState KB_curState;
         //states are needed to decide in which phase the submarine is actually
         public enum State {Standing, Driving, OxygenMode, MachineGunMode, LightMode};
@@ -89,6 +89,7 @@ namespace Curse_of_the_Abyss
             {
                 {"Drive", new Animation(content.Load<Texture2D>("submarine_animation"), 4, 0.05f, false)},
                 {"Oxygen", new Animation(content.Load<Texture2D>("O2Button"), 2, 0.2f, true)},
+                {"OxyCD", new Animation(content.Load<Texture2D>("Bomb_Gauge"), 7, Constants.submarine_oxygen_cooldown / 6000f,true)},
                 {"Bomb" , new Animation(content.Load<Texture2D>("Button"), 2, 0.3f, true)},
                 {"BombCD", new Animation(content.Load<Texture2D>("Bomb_Gauge"), 7, Constants.submarine_bomb_cooldown / 7000f,true)},
                 {"Light", new Animation(content.Load<Texture2D>("lever"), 2, 0.2f, true)},
@@ -120,6 +121,7 @@ namespace Curse_of_the_Abyss
                 animationManager4 = new AnimationManager(animations["Light"]);
                 animationManager5 = new AnimationManager(animations["Shut"]);
                 animationManager6 = new AnimationManager(animations["BombCD"]);
+                animationManager7 = new AnimationManager(animations["OxyCD"]);
             }
 
             if (bombCooldown >= Constants.submarine_bomb_cooldown)
@@ -133,7 +135,14 @@ namespace Curse_of_the_Abyss
                 animationManager6.Update(gametime);
             }
             if (oxygenCooldown >= Constants.submarine_oxygen_cooldown)
+            {
                 animationManager2.Stop(1);
+                animationManager7.Stop(0);
+            }
+            else
+            {
+                animationManager7.Update(gametime);
+            }
             if (state == State.Driving)
                 animationManager1.Update(gametime);
             else
@@ -210,6 +219,7 @@ namespace Curse_of_the_Abyss
                 animationManager4 = new AnimationManager(animations["Light"]);
                 animationManager5 = new AnimationManager(animations["Shut"]);
                 animationManager6 = new AnimationManager(animations["BombCD"]);
+                animationManager7 = new AnimationManager(animations["OxyCD"]);
             }
             animationManager1.Draw(spritebatch, position, 1f, 0f, SpriteEffects.None);
             animationManager2.Draw(spritebatch, oxyPosition , 0.2f, 0f, SpriteEffects.None);
@@ -217,6 +227,7 @@ namespace Curse_of_the_Abyss
             animationManager4.Draw(spritebatch, lightLeverPosition, 0.2f, 0f, SpriteEffects.None);
             animationManager5.Draw(spritebatch, shutPosition, 0.2f, 0f, SpriteEffects.None);
             animationManager6.Draw(spritebatch, new Rectangle(shutPosition.Right + 10, shutPosition.Y,16,16), 0.2f, 0f, SpriteEffects.None);
+            animationManager7.Draw(spritebatch, new Rectangle(oxyPosition.X-20,oxyPosition.Y -10,16,16), 0.2f, 0f, SpriteEffects.None);
             spritebatch.Draw(ShootingTerminalTexture, machineGunTerminalPosition, new Rectangle(0, 0, 11, 20), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             spritebatch.Draw(ControlDeskTexture, steerPosition, new Rectangle(0, 0, 22, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
             if (machineGunOn)
