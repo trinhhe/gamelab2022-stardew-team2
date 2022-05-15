@@ -944,6 +944,12 @@
 /processorParam:Quality=Best
 /build:Soundeffects/life_loss.wav
 
+#begin Soundeffects/light_switch.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/light_switch.wav
+
 #begin splashscreen/game_logo.png
 /importer:TextureImporter
 /processor:TextureProcessor

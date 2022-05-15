@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Curse_of_the_Abyss
 {
@@ -31,7 +32,8 @@ namespace Curse_of_the_Abyss
         public Lamp lamp;
         public Level level;
         BombCrossHair bombCrossHair;
-
+        static SoundEffect lightSwitch;
+        
         /* custom Keyboard class for when button is pressed and released
         required for entering and leaving station with the same key */
         public class Keyboard
@@ -104,6 +106,8 @@ namespace Curse_of_the_Abyss
             bar = content.Load<Texture2D>("bar");
             cooldown = content.Load<Texture2D>("health");
             BombCrossHair.LoadContent(content);
+
+            lightSwitch = content.Load<SoundEffect>("Soundeffects/light_switch");
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)
@@ -205,6 +209,7 @@ namespace Curse_of_the_Abyss
                 lightCDActive = false;
                 lightOn = false;
                 lamp.lightOn = false;
+                lightSwitch.Play();
             }
         }
 
@@ -361,6 +366,7 @@ namespace Curse_of_the_Abyss
                     state = State.LightMode;
                     lightOn = true;
                     lamp.lightOn = true;
+                    lightSwitch.Play();
                 }
                 
             }
