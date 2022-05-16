@@ -33,7 +33,7 @@ namespace Curse_of_the_Abyss
         public Level level;
         public BombCrossHair bombCrossHair;
         static SoundEffect lightSwitch, movementSound, oxyRefillSound, errorSound;
-        SoundEffectInstance movementSoundInstance;
+        public SoundEffectInstance movementSoundInstance;
         
         /* custom Keyboard class for when button is pressed and released
         required for entering and leaving station with the same key */
@@ -113,6 +113,7 @@ namespace Curse_of_the_Abyss
             movementSound = content.Load<SoundEffect>("Soundeffects/submarine_movement");
             oxyRefillSound = content.Load<SoundEffect>("Soundeffects/oxygen_refill");
             errorSound = content.Load<SoundEffect>("Soundeffects/error");
+            
         }
 
         public override void Update(List<Sprite> sprites,GameTime gametime)

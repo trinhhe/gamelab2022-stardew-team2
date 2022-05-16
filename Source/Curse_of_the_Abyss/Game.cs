@@ -211,6 +211,7 @@ namespace Curse_of_the_Abyss
 
             if (current_level.game_over)
             {
+                current_level.submarine.movementSoundInstance.Stop();
                 int stage = 1;
                 //player has no lifes left
                 if (lifes <= 1)
