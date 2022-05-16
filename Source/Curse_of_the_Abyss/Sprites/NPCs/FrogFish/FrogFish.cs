@@ -115,7 +115,7 @@ namespace Curse_of_the_Abyss
             {
                 stage += 1;
                 if (stage < 4)
-                    health.curr_health = 2;
+                    health.curr_health = 100;
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
