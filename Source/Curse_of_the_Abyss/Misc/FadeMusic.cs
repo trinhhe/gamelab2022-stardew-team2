@@ -6,7 +6,7 @@ namespace Curse_of_the_Abyss
 {
     class FadeMusic
     {
-        private static int time = 70;
+        private static int time = 60;
         private static int timer;
         private static float init_vol;
         private static float curr_vol;

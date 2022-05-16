@@ -228,6 +228,12 @@ namespace Curse_of_the_Abyss
                     IsMouseVisible = true;
                     lifes = 3;
                     current_level.LoadContent(Content);
+
+                    // play main menu music again
+                    MainMenu.LoadContent(Content);
+                    MainMenu.PlayMusic();
+                    stop_menusound = false;
+
                     player_life = Content.Load<Texture2D>("UI/player_UI");
                     life_counter = Content.Load<SpriteFont>("Eggcounter");
                     for (int i = 0; i < levels.Length; i++)
@@ -283,9 +289,7 @@ namespace Curse_of_the_Abyss
                 if (levelcounter == levels.Length - 1)
                 {
                     // game completed
-                    Console.WriteLine(_timeElapsed);
                     _timeElapsed = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds() - _timeElapsed;
-                    Console.WriteLine(_timeElapsed);
                     _timeElapsed -= _timePaused;
                     _mainmenu.score_eggs_screen = new ScoreEggs(current_level.eggcounter.get(), total_eggs);
                     _mainmenu.score_time_screen = new ScoreTime(_timeElapsed);
@@ -301,14 +305,22 @@ namespace Curse_of_the_Abyss
                     _timePaused = 0;
                     _pauseStart = 0;
                     total_eggs = 0;
+
+                    current_level.LoadContent(Content);
+                    // play main menu music again
+                    MainMenu.LoadContent(Content);
+                    MainMenu.PlayMusic();
+                    stop_menusound = false;
                 }
                 else
                 {
                     levelcounter++;
                     last_level_eggcount = current_level.eggcounter.get();
                     current_level = levels[levelcounter];
+                    current_level.LoadContent(Content);
                 }
-                current_level.LoadContent(Content);
+                
+                stop_menusound = false;
                 player_life = Content.Load<Texture2D>("UI/player_UI");
                 life_counter = Content.Load<SpriteFont>("Eggcounter");
                 current_level.Reset();
