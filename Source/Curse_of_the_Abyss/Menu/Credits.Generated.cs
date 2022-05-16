@@ -18,8 +18,6 @@ namespace Curse_of_the_Abyss
 	{
 		private void BuildUI()
 		{
-
-
 			double scale = MainMenu.scale;
 
 			var image1 = new Image();

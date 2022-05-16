@@ -54,16 +54,16 @@ namespace Curse_of_the_Abyss
                     health_gain = 2500;
                     submarine_oxygen_cooldown = 20000;
                     submarineplayer_max_run_velocity = 3.5f;
-                    submarineplayer_run_accelerate = 0.15f;
-                    Level1.spawn_timer = 13000;
+                    submarineplayer_run_accelerate = 0.2f;
+                    Level1.spawn_timer = 12000;
                     break;
                 case Game.Diffculty.Hard:
                     max_player_health = 4000;
                     health_gain = 1500;
-                    submarine_oxygen_cooldown = 20000;
-                    submarineplayer_max_run_velocity = 2.75f;
-                    submarineplayer_run_accelerate = 0.1f;
-                    Level1.spawn_timer = 9000;
+                    submarine_oxygen_cooldown = 17500;
+                    submarineplayer_max_run_velocity = 3f;
+                    submarineplayer_run_accelerate = 0.15f;
+                    Level1.spawn_timer = 8000;
                     break;
                 default:
                     break;
