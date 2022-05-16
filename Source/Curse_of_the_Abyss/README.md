@@ -7,7 +7,11 @@
 
 The players needs to navigate through different environments and fight many hostile creatures while collecting as many eggs as possible.
 The playstyle is asynchornous, one player runs in the underwater and is targeted by multiple NPCs and has to overcome many obstacles, 
-while the other player has a supportive role and assists the main player from a submarine
+while the other player has a supportive role and assists the main player from a submarine¨
+
+## Tutorial
+At the beginning of the first level you are presented with a dialogue that provides you with all the necessary explanations and controls on how to play the game. The tutorial even highlights the submarine stations with a red circle over the course of the dialogue.
+Should you require further assistance you can always access the text-based tutorial in the menu. You can access the main menu at any time by pressing the ESC key.
 
 ## Controls
 ### Underwater player
