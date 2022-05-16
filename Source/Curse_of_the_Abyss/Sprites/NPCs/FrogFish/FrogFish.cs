@@ -65,10 +65,10 @@ namespace Curse_of_the_Abyss
             //animation = new Animation(content.Load<Texture2D>("Boss/FrogFish"),8, 0.25f, false);
             animations = new Dictionary<string, Animation>()
             {
-                {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.25f,false) },
-                {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.25f, false) },
-                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.25f,false) },
-                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.3f, false) },
+                {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.6f,false) },
+                {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.6f, false) },
+                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.6f,false) },
+                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.4f, false) },
             };
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
