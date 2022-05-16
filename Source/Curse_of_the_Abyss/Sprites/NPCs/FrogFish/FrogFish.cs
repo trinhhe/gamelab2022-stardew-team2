@@ -100,6 +100,7 @@ namespace Curse_of_the_Abyss
             if (stage == 4)
             {
                 MediaPlayer.Stop();
+                winSFXInstance.Volume = Constants.win_volume;
                 winSFXInstance.Play();
                 antenna.hit = true;
                 endAnimationAntenna = true;
@@ -119,7 +120,7 @@ namespace Curse_of_the_Abyss
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
-                //MediaPlayer.Stop();
+                MediaPlayer.Stop();
                 int i = stage;
                 if (stage > 3)
                 {
@@ -251,7 +252,7 @@ namespace Curse_of_the_Abyss
                     attackTimer = (stage-1)*1000;
                     antenna.attack = true;
                     Antenna.animationManager.Play(Antenna.animations["attack"]);
-                    electroAttackSFX.Play(Constants.electro_attack_volumne, 0, 0);
+                    electroAttackSFX.Play(Constants.electro_attack_volume, 0, 0);
                     break;
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;
