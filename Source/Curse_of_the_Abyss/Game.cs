@@ -230,6 +230,7 @@ namespace Curse_of_the_Abyss
                             
                     }
                     // reset timers
+                    init_pause = true;
                     _timeElapsed = 0;
                     _timePaused = 0;
                     _pauseStart = 0;
