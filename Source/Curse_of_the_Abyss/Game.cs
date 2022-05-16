@@ -229,6 +229,10 @@ namespace Curse_of_the_Abyss
                         }
                             
                     }
+                    // reset timers
+                    _timeElapsed = 0;
+                    _timePaused = 0;
+                    _pauseStart = 0;
                 }
                 //player has remaining lives
                 else
@@ -253,6 +257,7 @@ namespace Curse_of_the_Abyss
                 renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
                 // reset darknessrender
                 darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+
             }
             if (lost_life) return;
             //switch level
