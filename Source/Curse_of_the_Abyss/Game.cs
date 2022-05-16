@@ -216,6 +216,7 @@ namespace Curse_of_the_Abyss
                 if (lifes <= 1)
                 {
                     current_level = levels[0];
+                    levelcounter = 0;
                     last_level_eggcount = 0;
                     Content.Unload();
                     for (int i = 0; i < levels.Length; i++)
@@ -229,6 +230,20 @@ namespace Curse_of_the_Abyss
                     current_level.LoadContent(Content);
                     player_life = Content.Load<Texture2D>("UI/player_UI");
                     life_counter = Content.Load<SpriteFont>("Eggcounter");
+                    for (int i = 0; i < levels.Length; i++)
+                    {
+                        if (levels[i].GetType() == typeof(MazeRandom))
+                        {
+                            ((MazeRandom)levels[i]).keepMaze = false;
+                            ((MazeRandom)levels[i]).nrGameOver++;
+                        }
+                            
+                    }
+                    // reset timers
+                    init_pause = true;
+                    _timeElapsed = 0;
+                    _timePaused = 0;
+                    _pauseStart = 0;
                 }
                 //player has remaining lives
                 else
@@ -247,6 +262,13 @@ namespace Curse_of_the_Abyss
                     current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
                 // reset scrolling backgrounds
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
+                // reset camera
+                _camera = new Camera(current_level.num_parts);
+                // reset renderTarget
+                renderTarget = new RenderTarget2D(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+                // reset darknessrender
+                darknessrender = new DarknessRender(GraphicsDevice, current_level.num_parts * RenderWidth, RenderHeight);
+
             }
             if (lost_life) return;
             //switch level

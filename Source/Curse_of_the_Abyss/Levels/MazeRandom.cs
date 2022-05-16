@@ -10,12 +10,13 @@ namespace Curse_of_the_Abyss
 {
     class MazeRandom:Level
     {
-        public int seed;
+        public int seed, nrGameOver;
         public int mazeWallThickness, mazeHeight, mazeWidth;
         //remember positions to restore eggs when Reset() gets called
         public List<Vector2> remember_eggs;
         public Texture2D wall_horizontal, wall_vertical;
         Vector2 entry;
+        public bool keepMaze;
         public override void LoadContent(ContentManager content)
         {
 
@@ -56,37 +57,50 @@ namespace Curse_of_the_Abyss
 
         public override void InitMazeGenerator(SpriteBatch _spriteBatch, int mazeDrawWidth, int mazeDrawHeight)
         {
-            Vector2 coordinateSize = new Vector2((float)waterPlayer.position.Width * 2f, (float)waterPlayer.position.Height * 1.8f); // (82,108)
-            mazeWallThickness = 20;
-            mazeWidth = (mazeDrawWidth) / ((int)coordinateSize.X);
-            mazeHeight = (mazeDrawHeight - 300) / ((int)coordinateSize.Y);
-            // to center maze
-            int paddingWidth = ((mazeDrawWidth - mazeWallThickness) % mazeWidth) / 2;
-            //int paddingHeight = ((mazeDrawHeight - 300) % mazeHeight);
-            //Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}", mazeDrawWidth, mazeDrawHeight, coordinateSize, mazeWidth, mazeHeight, paddingWidth);
-
-            Vector2 mazePositionOnWindow = new Vector2(0 + paddingWidth, 300);
-            MazeGenerator = new MazeGenerator(_spriteBatch, wall_horizontal, wall_vertical, mazePositionOnWindow, coordinateSize, coordinateSize + new Vector2(mazeWallThickness, mazeWallThickness), mazeWallThickness, mazeWidth, mazeHeight, seed);
-            entry = new Vector2(0, mazeHeight - 1);
-            //random exit on right 
-            Vector2 exit = new Vector2(mazeWidth - 1, MazeGenerator.rand.Next(0, mazeHeight));
-            MazeGenerator.Generate(entry, exit);
-            MazeGenerator.AddAsObstacles(sprites);
-            //Vector2 test = new Vector2(4, 6);
-            Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
-            waterPlayer.position.X = (int)wp_pos.X;
-            waterPlayer.position.Y = (int)wp_pos.Y;
-            int num_eggs = 4;
-            Vector2 egg_pos;
-            remember_eggs = new List<Vector2>();
-            List<Node> egg_places = MazeGenerator.getEggPlaces(num_eggs);
-            foreach(Node ep in egg_places)
+            if(!keepMaze)
             {
-                egg_pos = MazeGenerator.placeInCenterOfNode(new Vector2(ep.coordinateInMaze.X, ep.coordinateInMaze.Y), 18, 18);
-                eggs.addEgg((int)egg_pos.X, (int)egg_pos.Y);
-                remember_eggs.Add(egg_pos);
+                Vector2 coordinateSize = new Vector2((float)waterPlayer.position.Width * 2f, (float)waterPlayer.position.Height * 1.8f); // (82,108)
+                mazeWallThickness = 20;
+                mazeWidth = (mazeDrawWidth) / ((int)coordinateSize.X);
+                mazeHeight = (mazeDrawHeight - 300) / ((int)coordinateSize.Y);
+                // to center maze
+                int paddingWidth = ((mazeDrawWidth - mazeWallThickness) % mazeWidth) / 2;
+                //int paddingHeight = ((mazeDrawHeight - 300) % mazeHeight);
+                //Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}", mazeDrawWidth, mazeDrawHeight, coordinateSize, mazeWidth, mazeHeight, paddingWidth);
+
+                Vector2 mazePositionOnWindow = new Vector2(0 + paddingWidth, 300);
+                MazeGenerator = new MazeGenerator(_spriteBatch, wall_horizontal, wall_vertical, mazePositionOnWindow, coordinateSize, coordinateSize + new Vector2(mazeWallThickness, mazeWallThickness), mazeWallThickness, mazeWidth, mazeHeight, seed);
+                entry = new Vector2(0, mazeHeight - 1);
+                //random exit on right 
+                Vector2 exit = new Vector2(mazeWidth - 1, MazeGenerator.rand.Next(0, mazeHeight));
+                MazeGenerator.Generate(entry, exit);
+                MazeGenerator.AddAsObstacles(sprites);
+                //Vector2 test = new Vector2(4, 6);
+                Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                waterPlayer.position.X = (int)wp_pos.X;
+                waterPlayer.position.Y = (int)wp_pos.Y;
+                int num_eggs = 4;
+                Vector2 egg_pos;
+                remember_eggs = new List<Vector2>();
+                List<Node> egg_places = MazeGenerator.getEggPlaces(num_eggs);
+                foreach (Node ep in egg_places)
+                {
+                    egg_pos = MazeGenerator.placeInCenterOfNode(new Vector2(ep.coordinateInMaze.X, ep.coordinateInMaze.Y), 18, 18);
+                    eggs.addEgg((int)egg_pos.X, (int)egg_pos.Y);
+                    remember_eggs.Add(egg_pos);
+                }
+                keepMaze = true;
+
+                if(nrGameOver > 0)
+                {
+                    MazeGenerator.AddAsObstacles(sprites);
+                    foreach (Vector2 t in remember_eggs)
+                        eggs.addEgg((int)t.X, (int)t.Y);
+                    Vector2 tmp = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                    waterPlayer.position.X = (int)tmp.X;
+                    waterPlayer.position.Y = (int)tmp.Y;
+                }
             }
-            
         }
 
         public override void Update(GameTime gameTime)
@@ -122,7 +136,7 @@ namespace Curse_of_the_Abyss
             dialog = new DialogBox(new Rectangle(630, 0, 1190, 200), Constants.dialog_maze);
 
             eggs = new EggCollection();
-            if(MazeGenerator != null)
+            if(MazeGenerator != null && keepMaze)
             {
                 MazeGenerator.AddAsObstacles(sprites);
                 foreach (Vector2 t in remember_eggs)

@@ -65,10 +65,10 @@ namespace Curse_of_the_Abyss
             //animation = new Animation(content.Load<Texture2D>("Boss/FrogFish"),8, 0.25f, false);
             animations = new Dictionary<string, Animation>()
             {
-                {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.25f,false) },
-                {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.25f, false) },
-                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.25f,false) },
-                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.3f, false) },
+                {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.6f,false) },
+                {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.6f, false) },
+                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.6f,false) },
+                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.4f, false) },
             };
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
@@ -100,6 +100,7 @@ namespace Curse_of_the_Abyss
             if (stage == 4)
             {
                 MediaPlayer.Stop();
+                winSFXInstance.Volume = Constants.win_volume;
                 winSFXInstance.Play();
                 antenna.hit = true;
                 endAnimationAntenna = true;
@@ -119,7 +120,7 @@ namespace Curse_of_the_Abyss
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
-                //MediaPlayer.Stop();
+                MediaPlayer.Stop();
                 int i = stage;
                 if (stage > 3)
                 {
@@ -251,7 +252,7 @@ namespace Curse_of_the_Abyss
                     attackTimer = (stage-1)*1000;
                     antenna.attack = true;
                     Antenna.animationManager.Play(Antenna.animations["attack"]);
-                    electroAttackSFX.Play(Constants.electro_attack_volumne, 0, 0);
+                    electroAttackSFX.Play(Constants.electro_attack_volume, 0, 0);
                     break;
                 case (Attack.Darkness):
                     attackTimer = (stage - 1) * 500;
