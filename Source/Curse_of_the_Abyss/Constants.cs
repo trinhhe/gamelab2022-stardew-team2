@@ -56,7 +56,7 @@ namespace Curse_of_the_Abyss
                     submarine_oxygen_cooldown = 20000;
                     submarineplayer_max_run_velocity = 3.5f;
                     submarineplayer_run_accelerate = 0.2f;
-                    Level1.spawn_timer = 14000;
+                    Level1.spawn_timer = 13000;
                     Level2.spawn_timer = 16000;
                     break;
                 case Game.Diffculty.Hard:
