@@ -9,6 +9,8 @@ using Myra.Graphics2D.UI.Properties;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Microsoft.Xna.Framework.Media;
+
 using System;
 
 
@@ -178,6 +180,13 @@ namespace Curse_of_the_Abyss
 
 			textButton1.Click += (s, a) =>
 			{
+				if (!Game.stop_menusound)
+				{
+					Game.stop_menusound = true;
+					FadeMusic.Fade(MediaPlayer.Volume);
+					
+				}
+
 				if (Game.loading)
 				{
 					Game._desktop.Root = loading_screen;

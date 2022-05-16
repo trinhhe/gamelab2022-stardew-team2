@@ -56,12 +56,10 @@ namespace Curse_of_the_Abyss
 
             if (alpha == max_alpha)
             {
-                alpha = max_alpha;
                 increment = false;
             }
             else if (alpha == min_alpha)
             {
-                alpha = min_alpha;
                 increment = true;
             }
 

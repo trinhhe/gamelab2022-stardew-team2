@@ -62,6 +62,8 @@ namespace Curse_of_the_Abyss
 					Game._mainmenu.CurrState = MainMenu.State.Menu;
 					Game.loading = false;
 					Game.paused = false;
+					Game._timeElapsed = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+					Game.init_pause = false;
 				}
 			};
 		}

@@ -30,6 +30,7 @@ namespace Curse_of_the_Abyss
         public static MainMenu _mainmenu;
         public static bool paused;
         public static bool init_pause;
+        public static bool stop_menusound;
         public static bool res_changed;
         public static bool loading;
         public static double loading_timer = 0.001;
@@ -82,7 +83,6 @@ namespace Curse_of_the_Abyss
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
-            //levels = new Level[] { new SideScrollingTest() };
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -93,7 +93,8 @@ namespace Curse_of_the_Abyss
         {
             paused = true;
             init_pause = true;
-            loading = false;
+            loading = true;
+            stop_menusound = false;
 
             // default resolution
             _graphics.PreferredBackBufferWidth = 1600;
@@ -144,6 +145,9 @@ namespace Curse_of_the_Abyss
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             current_level.LoadContent(Content);
 
+            MainMenu.LoadContent(Content);
+            MainMenu.PlayMusic();
+
             if (!current_level.is_maze_gen)
                 current_level.InitMapManager(_spriteBatch);
             else
@@ -170,6 +174,12 @@ namespace Curse_of_the_Abyss
 
         protected override void Update(GameTime gameTime)
         {
+            if (!FadeMusic.done)
+            {
+                FadeMusic.Update(gameTime);
+            }
+
+
             // scale UI if resolution changed
             if (res_changed)
             {
@@ -251,7 +261,9 @@ namespace Curse_of_the_Abyss
                 if (levelcounter == levels.Length - 1)
                 {
                     // game completed
+                    Console.WriteLine(_timeElapsed);
                     _timeElapsed = (int)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds() - _timeElapsed;
+                    Console.WriteLine(_timeElapsed);
                     _timeElapsed -= _timePaused;
                     _mainmenu.score_eggs_screen = new ScoreEggs(current_level.eggcounter.get(), total_eggs);
                     _mainmenu.score_time_screen = new ScoreTime(_timeElapsed);

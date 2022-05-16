@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
         public int dialogID;
         private bool enter_dialog;
         private int dialog_start;
-        protected Song song;
+        public Song song;
 
         public DarknessRender darknessRender;
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
