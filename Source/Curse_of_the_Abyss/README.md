@@ -16,10 +16,8 @@ Should you require further assistance you can always access the text-based tutor
 ## Controls
 ### Underwater player
 
-For the most parts of the game, the player uses the keyboard keys WASD to move left and right, to jump and to dodge in a traditional fashion.
-In a maze section, the player is no longer able to jump and dodge, however he uses the same keys to swim around freely in the maze in any direction.
-During the bossfight, the player can now make use of the TNT barrel on the left side of the screen, if the player is close enough, he can press the E Key to collect dynamite.
-The E key can again be used to place dynamite on the ground and to pick it up(cooldown of 1 second). Dynamite can not be placed while not touching the ground.
+In general, the player uses the keyboard keys WASD to move left and right, to jump and to dodge in a traditional fashion. However, in a maze section, the player is no longer able to jump and dodge, however he uses the same keys to swim around freely in the maze in any direction.
+During the bossfight, the player can now make use of the TNT barrel on the left side of the screen, if the player is close enough, he can press the E Key to collect dynamite. The E key can again be used to place dynamite on the ground and to pick it up(cooldown of 1 second). Dynamite can also be thrown mid-air.
 
 ### Submarine player
 
@@ -42,5 +40,5 @@ In this stage (indicated by a red shining antenna) the boss can be damaged by ei
 The frogfish has 3 different attacks it throws at the player.
 In the first stage, it constantly throws cannonballs at the player.
 From the second stage on, it can additionally change the lighting intensity of the level and turn it completely dark for a short period of time. 
-In the third and final stage, the boss additionally spawns randomly 4 minions, that attack the player.
+In the third and final stage, the boss additionally spawns randomly 4 minions, that attack the player. His attacks also deal AoE damage.
 After bringing the boss' life to 0 for a third time, the players completed the first level of the game.
