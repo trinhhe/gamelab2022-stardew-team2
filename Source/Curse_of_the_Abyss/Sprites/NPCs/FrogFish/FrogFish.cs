@@ -27,7 +27,10 @@ namespace Curse_of_the_Abyss
         AnimationManager animationManager;
 
         public static Dictionary<int, Song> songs;
-        public static SoundEffect electroAttackSFX;
+        public static SoundEffect electroAttackSFX, winSFX;
+        public static SoundEffectInstance winSFXInstance;
+        public bool endAnimationAntenna; //used for not drawing seperate antenna spread during death animation
+        public double celebrationTime = 0;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
@@ -64,7 +67,8 @@ namespace Curse_of_the_Abyss
             {
                 {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.25f,false) },
                 {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.25f, false) },
-                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.25f,false) }
+                {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.25f,false) },
+                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.3f, false) },
             };
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
@@ -79,25 +83,43 @@ namespace Curse_of_the_Abyss
             {
                 {1,content.Load<Song>("Soundeffects/frogfish_stage1") },
                 {2,content.Load<Song>("Soundeffects/frogfish_stage2")},
-                {3,content.Load<Song>("Soundeffects/frogfish_stage3") }
+                {3,content.Load<Song>("Soundeffects/frogfish_stage3") },
             };
-
 
             MediaPlayer.Play(songs[1]);
             MediaPlayer.IsRepeating = true;
             electroAttackSFX = content.Load<SoundEffect>("Soundeffects/electro_attack");
+            winSFX = content.Load<SoundEffect>("Soundeffects/win");
+            winSFXInstance = winSFX.CreateInstance();
         }
 
         public override void Update(List<Sprite> sprites, GameTime gameTime)
         {
             //change stages and decide, when the boss is defeated
-            if (stage == 4) defeated = true;
+            //if (stage == 4) defeated = true;
+            if (stage == 4)
+            {
+                MediaPlayer.Stop();
+                winSFXInstance.Play();
+                antenna.hit = true;
+                endAnimationAntenna = true;
+                level.darkness = false;
+                position = new Rectangle(position.X, position.Y, scale * 283, scale * 230);
+                if (animationManager.animation.CurrentFrame == 5)
+                    animationManager.Stop(5);
+                celebrationTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (celebrationTime > 10000) //coincides with win sound 10s
+                    defeated = true;
+            }
             else if (health.curr_health <= 0)
             {
-                stage+=1;
-                health.curr_health = 100;
+                stage += 1;
+                if (stage < 4)
+                    health.curr_health = 2;
+                else
+                    health.curr_health = 0;
                 antenna.hit = false;
-                MediaPlayer.Stop();
+                //MediaPlayer.Stop();
                 int i = stage;
                 if (stage > 3)
                 {
@@ -256,8 +278,10 @@ namespace Curse_of_the_Abyss
                 animationManager.Play(animations["Stage1"]);
             else if (stage == 2)
                 animationManager.Play(animations["Stage2"]);
-            else
+            else if (stage == 3)
                 animationManager.Play(animations["Stage3"]);
+            else
+                animationManager.Play(animations["Die"]);
         }
     }
 }

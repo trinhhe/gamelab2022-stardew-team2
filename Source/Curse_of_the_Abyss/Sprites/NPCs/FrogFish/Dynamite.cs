@@ -87,8 +87,8 @@ namespace Curse_of_the_Abyss
             {
                 animationManager = new AnimationManager(animation);
             }
-            if (barrel) spritebatch.Draw(barrel_text,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.5f);
-            else animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
+            spritebatch.Draw(barrel_text,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.5f);
+            if(!barrel) animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
         }
 
         public void collision(Sprite s)
@@ -101,7 +101,7 @@ namespace Curse_of_the_Abyss
                     {
                         if (player.KB_curState.IsKeyDown(Keys.E) && takenTimer > 5000)
                         {
-                            Dynamite dynamite = new Dynamite(player.position.X + player.position.Width - 1, player.position.Y + 20, false, level, player);
+                            Dynamite dynamite = new Dynamite(player.position.X + player.position.Width -1, player.position.Y + 20, false, level, player);
                             level.toAdd.Add(dynamite);
                             level.lightTargets.Add(dynamite);
                             takenTimer = 0;

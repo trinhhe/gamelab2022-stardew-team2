@@ -14,6 +14,7 @@ namespace Curse_of_the_Abyss
         public static AnimationManager animationManager;
         Bossfight level;
         WaterPlayer player;
+        public bool deadfish;
         public Antenna(int x, int y,int scale,Bossfight level,WaterPlayer player)
         {
             name = "antenna";
@@ -52,17 +53,22 @@ namespace Curse_of_the_Abyss
             }
             
             animationManager.Update(gametime);
+            deadfish = ((FrogFish)level.boss).endAnimationAntenna;
         }
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            if (hit) animationManager.Play(animations["hit"]);
-            else if (animationManager.animation != animations["attack"])
+            if (!deadfish)
             {
-                animationManager.Play(animations["attack"]);
-            }
+                if (hit) animationManager.Play(animations["hit"]);
+                else if (animationManager.animation != animations["attack"])
+                {
+                    animationManager.Play(animations["attack"]);
+                }
 
-            animationManager.Draw(spritebatch,position,0.09f,0, SpriteEffects.None);
+                animationManager.Draw(spritebatch, position, 0.09f, 0, SpriteEffects.None);
+            }
+            
         }
     }
 }
