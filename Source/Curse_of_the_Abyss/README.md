@@ -24,7 +24,7 @@ The E key can again be used to place dynamite on the ground and to pick it up(co
 ### Submarine player
 
 The submarine player can use the left and right arrow keys to move around in the submarine.
-Additionally, he can use the down arrow key to interact with a station and the up arrow key to leave an active station.
+Additionally, he can use the up arrow key to interact with a station or leave it.
 From left to right, there are five stations, the player can interact with:
 
 * <ins> The Oxygen Station: </ins> interacting with this station, the life of the underwater player is refilled by a small amount, after a short cooldown, the station can be reused. This station is crucial if health is low. Do not forget, that the underwater player loses constantly health.
