@@ -221,6 +221,7 @@ namespace Curse_of_the_Abyss
                     levelcounter = 0;
                     last_level_eggcount = 0;
                     Content.Unload();
+                    LowHPScreen.LoadContent(Content);
                     for (int i = 0; i < levels.Length; i++)
                     {
                         levels[i].dialogID = 0;     //reset dialogs after game over
@@ -284,6 +285,7 @@ namespace Curse_of_the_Abyss
             {
                 Content.Unload();
 
+                LowHPScreen.LoadContent(Content);
                 if (current_level.darkness) LowHPScreen.SetDarkMode();
                 else LowHPScreen.SetBrightMode();
 
