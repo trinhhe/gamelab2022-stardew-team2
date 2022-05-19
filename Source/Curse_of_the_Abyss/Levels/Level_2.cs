@@ -184,7 +184,8 @@ namespace Curse_of_the_Abyss
                 case (1):
                     if (waterPlayer.position.Intersects(torch1.position))
                     {
-                        dialog = new DialogBox(new Rectangle(670, 880, 1190, 200), Constants.dialog_torch);
+                        Vector2 temp = Vector2.Transform(new Vector2(670, 880), Matrix.Invert(camera_transform));
+                        dialog = new DialogBox(new Rectangle((int)temp.X, (int)temp.Y, 1190, 200), Constants.dialog_torch);
                         dialog.active = true;
                         dialogID++;
                         waterPlayer.state = WaterPlayer.State.Standing;
@@ -194,7 +195,8 @@ namespace Curse_of_the_Abyss
                 case (2):
                     if (torch1.animationManager is not null && torch1.animationManager.animation == Torch.animations["light"] && torch1.animationManager.animation.CurrentFrame==torch1.animationManager.animation.FrameCount-1)
                     {
-                        dialog = new DialogBox(new Rectangle(670, 880, 1190, 200), Constants.dialog_torch_hit);
+                        Vector2 temp = Vector2.Transform(new Vector2(670, 880), Matrix.Invert(camera_transform));
+                        dialog = new DialogBox(new Rectangle((int)temp.X, (int)temp.Y, 1190, 200), Constants.dialog_torch_hit);
                         dialog.active = true;
                         dialogID++;
                         waterPlayer.state = WaterPlayer.State.Standing;

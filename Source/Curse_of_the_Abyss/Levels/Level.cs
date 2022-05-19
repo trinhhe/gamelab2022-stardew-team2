@@ -229,7 +229,7 @@ namespace Curse_of_the_Abyss
                     x_index = rand.Next(2);
                 }
                 int y_index = rand.Next(2);
-                var x_pos = new List<int> { -100, 2100};
+                var x_pos = new List<int> { -100, 2000};
                 var y_pos = new List<int> { 400, 900 };
                 Vector2 temp = Vector2.Transform(new Vector2(x_pos[x_index],y_pos[y_index]),Matrix.Invert(camera_transform));
                 TargetingNPC targetingNPC = new TargetingNPC((int)temp.X, (int)temp.Y, waterPlayer, speed);

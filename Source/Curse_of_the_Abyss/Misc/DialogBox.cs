@@ -137,17 +137,17 @@ namespace Curse_of_the_Abyss
                 else if (text_index == dialog[dialogpos].Item2.Length) sound.Pause();
 
                 //draw box
-                spriteBatch.Draw(box, position,null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.06f);
+                spriteBatch.Draw(box, position,null, Color.White,0,Vector2.Zero,SpriteEffects.None,0.01f);
 
                 //draw text
                 Vector2 temp = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 35 * position.Height / 162f);
                 Vector2 temp4 = new Vector2(position.X + 172 * position.Width / 677f, position.Y + 95 * position.Height / 162f);
                 if (text_index<=delimiter) 
-                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,Constants.text_scale, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0,text_index), temp, Color.White, 0, Vector2.Zero,Constants.text_scale, SpriteEffects.None, 0.005f);
                 else
                 {
-                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0, delimiter+1), temp, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.05f);
-                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(delimiter+1, text_index-delimiter-1), temp4, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.05f);
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(0, delimiter+1), temp, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.005f);
+                    spriteBatch.DrawString(text, dialog[dialogpos].Item2.Substring(delimiter+1, text_index-delimiter-1), temp4, Color.White, 0, Vector2.Zero, Constants.text_scale, SpriteEffects.None, 0.005f);
                 }
 
                 //draw profil picture and names
@@ -155,13 +155,13 @@ namespace Curse_of_the_Abyss
                 Vector2 temp3 = new Vector2(position.X + 163 * position.Width / 677f, position.Y + 6 * position.Height / 162f);
                 if (dialog[dialogpos].Item1 == "wp")
                 {
-                    spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.05f);
-                    spriteBatch.DrawString(name, "Kenny", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
+                    spriteBatch.Draw(profil_wp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.005f);
+                    spriteBatch.DrawString(name, "Kenny", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.005f);
                 }
                 else if (dialog[dialogpos].Item1 == "sp")
                 {
-                    spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.05f);
-                    spriteBatch.DrawString(name, "Maya", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
+                    spriteBatch.Draw(profil_sp, temp2, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.005f);
+                    spriteBatch.DrawString(name, "Maya", temp3, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.005f);
                 }
 
                 //draw arrow animation
@@ -173,8 +173,8 @@ namespace Curse_of_the_Abyss
                 else animationManager.animation.FrameSpeed = 0.1f;
                 Rectangle temp5 = new Rectangle(position.X + (int)(650 * position.Width / 677f), position.Y + (int)(144 * position.Height / 162f), (int)(14 * position.Width / 677f) + 1, (int)(10 * position.Height / 162f) + 1);
                 Vector2 temp6 = new Vector2(position.X + 623 * position.Width / 677f, position.Y + 140 * position.Height / 162f);
-                animationManager.Draw(spriteBatch,temp5,0.05f,0, SpriteEffects.None);
-                spriteBatch.DrawString(name, "Enter", temp6, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.05f);
+                animationManager.Draw(spriteBatch,temp5,0.005f,0, SpriteEffects.None);
+                spriteBatch.DrawString(name, "Enter", temp6, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0.005f);
 
             }
         }

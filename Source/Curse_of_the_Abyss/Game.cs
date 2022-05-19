@@ -357,8 +357,6 @@ namespace Curse_of_the_Abyss
 
                 current_level.Update(gameTime);
 
-                current_level.camera_transform = _camera.Transform;
-
                 foreach (var sb in _scrollingBackgrounds)
                     sb.Update(gameTime, current_level.at_boundary);
 
@@ -386,6 +384,7 @@ namespace Curse_of_the_Abyss
 
                 _camera.Follow(cam_target);
                 current_level.cam_target = cam_target;
+                current_level.camera_transform = _camera.Transform;
 
                 IsMouseVisible = false;
             }
@@ -457,7 +456,6 @@ namespace Curse_of_the_Abyss
                 current_level.healthbar.Draw(_spriteBatch);
                 current_level.eggcounter.Draw(_spriteBatch,current_level.darkness);
                 if (current_level.waterPlayer.health.curr_health < Constants.max_player_health * 0.25) LowHPScreen.Draw(_spriteBatch);
-                if (current_level.GetType() == typeof(Level1) && current_level.dialogID == 2) ((Level1) current_level).DrawTutorial(_spriteBatch);
                 if (current_level.GetType() == typeof(Bossfight)) ((Bossfight)current_level).boss.health.Draw(_spriteBatch);
                 _spriteBatch.Draw(player_life,new Rectangle(1875,60,40,40),Color.White);
                 _spriteBatch.DrawString(life_counter,lifes.ToString(),new Vector2(1845,55),(current_level.darkness)?Color.White:Color.Black,0, Vector2.Zero,1,SpriteEffects.None,0.01f);

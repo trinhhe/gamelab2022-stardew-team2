@@ -156,34 +156,40 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(5026, 330);
         }
 
-        public virtual void DrawTutorial(SpriteBatch spritebatch)
+        public override void Draw(SpriteBatch spritebatch)
         {
-            switch (dialog.dialogpos)
+            base.Draw(spritebatch);
+            if (dialogID == 2)
             {
-                case 4:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.oxyPosition.X-70, submarine.oxyPosition.Y-60, 122, 118), Color.White);
-                    break;
-                case 5:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.oxyPosition.X - 70, submarine.oxyPosition.Y - 60, 122, 118), Color.White);
-                    break;
-                case 6:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.bombButtonPosition.X - 54, submarine.bombButtonPosition.Y - 42, 122, 118), Color.White);
-                    break;
-                case 7:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.bombCrossHair.position.X - 46, submarine.bombCrossHair.position.Y - 44, 122, 118), Color.White);
-                    break;
-                case 10:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.lightLeverPosition.X - 50, submarine.lightLeverPosition.Y - 37, 122, 118), Color.White);
-                    break;
-                case 11:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.lightLeverPosition.X - 50, submarine.lightLeverPosition.Y - 37, 122, 118), Color.White);
-                    break;
-                case 12:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.steerPosition.X - 50, submarine.steerPosition.Y - 40, 122, 118), Color.White);
-                    break;
-                case 13:
-                    spritebatch.Draw(RedCircle, new Rectangle(submarine.machineGun.position.X - 50, submarine.machineGun.position.Y - 75, 122, 118), Color.White);
-                    break;
+                Vector2 temp = Vector2.Zero;
+                switch (dialog.dialogpos)
+                {
+                    case 4:
+                    case 5:
+                        temp = new Vector2(submarine.oxyPosition.X - 70, submarine.oxyPosition.Y - 60);
+                        break;
+                    case 6:
+                        temp = new Vector2(submarine.bombButtonPosition.X - 54, submarine.bombButtonPosition.Y - 42);
+                        break;
+                    case 7:
+                        temp = new Vector2(submarine.bombCrossHair.position.X - 46, submarine.bombCrossHair.position.Y - 44);
+                        break;
+                    case 10:
+                    case 11:
+                        temp = new Vector2(submarine.lightLeverPosition.X - 50, submarine.lightLeverPosition.Y - 37);
+                        break;
+                    case 12:
+                        temp = new Vector2(submarine.steerPosition.X - 50, submarine.steerPosition.Y - 40);
+                        break;
+                    case 13:
+                        temp = new Vector2(submarine.machineGun.position.X - 50, submarine.machineGun.position.Y - 75);
+                        break;
+                }
+                if(temp != Vector2.Zero)
+                {
+                    //temp = Vector2.Transform(temp, Constants.transform_matrix * camera_transform );
+                    spritebatch.Draw(RedCircle, new Rectangle((int)temp.X, (int)temp.Y, 122, 118), Color.White);
+                }
             }
         }
 
@@ -198,7 +204,8 @@ namespace Curse_of_the_Abyss
                 case (1):
                     if (waterPlayer.position.X > 300)
                     {
-                        dialog = new DialogBox(new Rectangle(0, 880, 1190, 200),Constants.dialog_submarine);
+                        Vector2 temp = Vector2.Transform(new Vector2(0, 880), Matrix.Invert(camera_transform));
+                        dialog = new DialogBox(new Rectangle((int)temp.X,(int)temp.Y, 1190, 200),Constants.dialog_submarine);
                         dialog.active = true;
                         dialogID++;
                         waterPlayer.state = WaterPlayer.State.Standing;
