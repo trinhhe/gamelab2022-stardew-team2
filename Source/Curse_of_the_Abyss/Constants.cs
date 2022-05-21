@@ -10,6 +10,7 @@ namespace Curse_of_the_Abyss
         public static Matrix transform_matrix;
         //waterplayer
         public static float max_run_velocity = 5;
+        public static float init_max_run_velocity = max_run_velocity;
         public static float jump_velocity = -2;
         public static float fall_velocity = 0.3f;
         public static float max_y_velocity = 5;
@@ -28,6 +29,7 @@ namespace Curse_of_the_Abyss
 
         //submarine
         public static float max_run_velocity_submarine = 6.5f;
+        public static float init_max_run_velocity_submarine = max_run_velocity_submarine;
         public static float run_accelerate_submarine = 0.2f;
         public static float submarine_bomb_velocity = 2.75f;
         public static int submarine_bomb_cooldown = 3000;

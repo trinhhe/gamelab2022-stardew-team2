@@ -40,6 +40,7 @@ namespace Curse_of_the_Abyss
         public DarknessRender darknessRender;
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
         Rectangle sb_pos_prev = new Rectangle(0, 0, 0, 0);
+        int inbounds_counter;
 
         public MazeGenerator MazeGenerator;
         public bool is_maze_gen;
@@ -58,7 +59,6 @@ namespace Curse_of_the_Abyss
                     sprites.Add(new Obstacle(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height)));
                 }
             }
-            
         }
 
 
@@ -69,6 +69,12 @@ namespace Curse_of_the_Abyss
 
         public virtual void Update(GameTime gameTime)
         {
+            if (inbounds_counter > 60)
+            {
+                Constants.max_run_velocity_submarine = Constants.init_max_run_velocity_submarine;
+                inbounds_counter = 0;
+            }
+
             check_dialog();
 
             if (dialog.active)
@@ -107,21 +113,23 @@ namespace Curse_of_the_Abyss
             // ensure that waterplayer and submarine can never leave the bounds of the camera
             int sb_mid = sb_pos_curr.X + sb_pos_curr.Width / 2;
             int wp_mid = wp_pos_curr.X + wp_pos_curr.Width / 2;
-            int sb_dist_to_cam;
-            int wp_dist_to_cam;
+            int sb_dist_to_cam, wp_dist_to_cam;
 
             if (!(cam_target == null))
             {
                 wp_dist_to_cam = Math.Abs(wp_mid - cam_target.position.X);
                 sb_dist_to_cam = Math.Abs(sb_mid - cam_target.position.X);
-                if (wp_dist_to_cam > 960 - wp_pos_curr.Width / 2 & sb_dist_to_cam > 960 - sb_pos_curr.Width / 2)
+ 
+                if (wp_dist_to_cam > 960 - wp_pos_curr.Width / 2 || sb_dist_to_cam > 960 - sb_pos_curr.Width / 2)
                 {
+                    Constants.max_run_velocity_submarine = Constants.init_max_run_velocity;
                     at_boundary = true;
-                    waterPlayer.position.X = wp_pos_prev.X;
                     submarine.SetPos(sb_pos_prev.X);
+                    waterPlayer.position.X = wp_pos_prev.X;
                 }
                 else
                 {
+                    inbounds_counter++;
                     at_boundary = false;
                     wp_pos_prev = wp_pos_curr;
                     sb_pos_prev = sb_pos_curr;
