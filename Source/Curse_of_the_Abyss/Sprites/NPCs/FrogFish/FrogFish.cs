@@ -111,6 +111,15 @@ namespace Curse_of_the_Abyss
                 celebrationTime += gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (celebrationTime > 10000) //coincides with win sound 10s
                     defeated = true;
+
+                //kill remaining electro attacks and fish and stop player health from falling down
+                foreach(Sprite s in sprites)
+                {
+                    if (s.name == "targetingNPC") ((TargetingNPC)s).health = 0;
+                    else if (s.name == "waterplayer") ((WaterPlayer)s).health.curr_health += 1;
+                    else if (new string[] { "electroSprite", "electroSpatial" }.Contains(s.name)) s.remove = true;
+                }
+                
             }
             else if (health.curr_health <= 0)
             {
@@ -120,6 +129,7 @@ namespace Curse_of_the_Abyss
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
+                hitTimer = 10000;
                 MediaPlayer.Stop();
                 int i = stage;
                 if (stage > 3)
