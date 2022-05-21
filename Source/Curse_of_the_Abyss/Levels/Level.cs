@@ -223,12 +223,13 @@ namespace Curse_of_the_Abyss
                     speed = rand.Next(2) + 2;
                 }
                 int x_index;
-                
-                if (waterPlayer.position.X < 400)
+                Vector2 temp = Vector2.Transform(new Vector2(300,0),Matrix.Invert(camera_transform));
+                Vector2 temp2 = Vector2.Transform(new Vector2(1620, 0), Matrix.Invert(camera_transform));
+                if (waterPlayer.position.X < temp.X)
                 {
                     x_index = 1;
                 }
-                else if (waterPlayer.position.X > 1520*num_parts)
+                else if (waterPlayer.position.X > temp2.X)
                 {
                     x_index = 0;
                 }
@@ -239,7 +240,7 @@ namespace Curse_of_the_Abyss
                 int y_index = rand.Next(2);
                 var x_pos = new List<int> { -100, 2000};
                 var y_pos = new List<int> { 400, 900 };
-                Vector2 temp = Vector2.Transform(new Vector2(x_pos[x_index],y_pos[y_index]),Matrix.Invert(camera_transform));
+                temp = Vector2.Transform(new Vector2(x_pos[x_index],y_pos[y_index]),Matrix.Invert(camera_transform));
                 TargetingNPC targetingNPC = new TargetingNPC((int)temp.X, (int)temp.Y, waterPlayer, speed);
                 sprites.Add(targetingNPC);
                 randomTimer = 0;

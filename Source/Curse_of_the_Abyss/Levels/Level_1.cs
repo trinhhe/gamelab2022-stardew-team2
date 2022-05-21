@@ -187,7 +187,6 @@ namespace Curse_of_the_Abyss
                 }
                 if(temp != Vector2.Zero)
                 {
-                    //temp = Vector2.Transform(temp, Constants.transform_matrix * camera_transform );
                     spritebatch.Draw(RedCircle, new Rectangle((int)temp.X, (int)temp.Y, 122, 118), Color.White);
                 }
             }
