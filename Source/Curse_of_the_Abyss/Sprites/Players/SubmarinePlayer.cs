@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Curse_of_the_Abyss
 {
@@ -19,6 +20,8 @@ namespace Curse_of_the_Abyss
         public bool movingRight;//needed for different situations in states
         public bool toMove;
         public int leftBound, rightBound;
+        private bool lastStanding;
+        private int idleTimer, idleMaxTimer;
 
 
 
@@ -37,7 +40,8 @@ namespace Curse_of_the_Abyss
             {
                 {"Standing",new Animation(content.Load<Texture2D>("Submarine_Player"),1,0.15f,true) },
                 {"RunRight", new Animation(content.Load<Texture2D>("SPWalk_right"), 8, 0.15f, true) },
-                {"RunLeft",new Animation(content.Load<Texture2D>("SPWalk_left"),8,0.15f,true) }
+                {"RunLeft",new Animation(content.Load<Texture2D>("SPWalk_left"),8,0.15f,true) },
+                {"Idle", new Animation(content.Load<Texture2D>("Submarine_Player_idle"),6,0.15f,false) }
             };
         }
 
@@ -62,6 +66,7 @@ namespace Curse_of_the_Abyss
 
                
             }
+            idleTimer += (int) gametime.ElapsedGameTime.TotalMilliseconds;
             setAnimation();
             
         }
@@ -73,9 +78,16 @@ namespace Curse_of_the_Abyss
             {
                 animationManager = new AnimationManager(animations.First().Value);
             }
-
-            //draw current frame
-            animationManager.Draw(spritebatch,position,0f,0, SpriteEffects.None);
+            if (animationManager.animation == animations["Idle"])
+            {
+                //idle animation has different width per frame
+                animationManager.Draw(spritebatch, new Rectangle(position.X - 8, position.Y, 52, position.Height), 0f, 0, SpriteEffects.None);
+            }
+            else
+            {
+                //draw current frame
+                animationManager.Draw(spritebatch, position, 0f, 0, SpriteEffects.None);
+            }
         }
 
         public void init()
@@ -253,14 +265,43 @@ namespace Curse_of_the_Abyss
 
         public void setAnimation()
         {
-            if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left)) 
-                    animationManager.Play(animations["RunRight"]);
-            else if(!KB_curState.IsKeyDown(Keys.Right) && KB_curState.IsKeyDown(Keys.Left))
+            if (KB_curState.IsKeyDown(Keys.Right) && !KB_curState.IsKeyDown(Keys.Left))
+            {
+                animationManager.Play(animations["RunRight"]);
+                lastStanding = false;
+            }
+            else if (!KB_curState.IsKeyDown(Keys.Right) && KB_curState.IsKeyDown(Keys.Left))
+            {
                 animationManager.Play(animations["RunLeft"]);
+                lastStanding = false;
+            }
             else
             {
-                // int extra = movingRight ? 1 : 0;
-                animationManager.Play(animations["Standing"]);
+                if (!lastStanding)
+                {
+                    lastStanding = true;
+                    idleTimer = 0;
+                    Random rand = new Random();
+                    idleMaxTimer = (rand.Next(16) + 5) * 1000; //set idle timer launch randomly between 10 and 25 seconds
+                }
+
+                if (idleTimer > idleMaxTimer)
+                {
+                    animationManager.Play(animations["Idle"]);
+                    if(animationManager.animation.CurrentFrame == 0 && idleTimer - idleMaxTimer>1000)
+                    {
+                        lastStanding = false;
+                        animationManager.animation = animations["Standing"];
+                    }
+                    else if (animationManager.animation.CurrentFrame == animationManager.animation.FrameCount -1)
+                    {
+                        animationManager.animation.FrameSpeed = 0.5f;
+                    }
+                    else
+                    {
+                        animationManager.animation.FrameSpeed = 0.15f;
+                    }
+                }else animationManager.Play(animations["Standing"]);
             }
         }
     }
