@@ -66,21 +66,24 @@ namespace Curse_of_the_Abyss
                     break;
                 case ("frogfish"):
                     FrogFish f = s as FrogFish;
-                    foreach (Rectangle r in f.mainBodyPosition)
+                    if (f.antenna.hit)
                     {
-                        if (position.Intersects(r))
+                        foreach (Rectangle r in f.mainBodyPosition)
+                        {
+                            if (position.Intersects(r))
+                            {
+                                f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                                remove = true;
+                                break;
+                            }
+                        }
+                        if (position.Intersects(f.antenna.position))
                         {
                             f.health.curr_health -= f.antenna.hit ? 1 : 0;
                             remove = true;
-                            break;
                         }
                     }
-                    if (position.Intersects(f.antenna.position))
-                    {
-                        f.health.curr_health -= f.antenna.hit ? 1 : 0;
-                        remove = true;
-                    }
-                    break;
+                    break;                    
                 case ("torch"):
                     Torch torch = s as Torch;
                     if (position.Intersects(torch.top))
@@ -103,19 +106,22 @@ namespace Curse_of_the_Abyss
                     break;
                 case ("frogfish"):
                     FrogFish f = s as FrogFish;
-                    foreach (Rectangle r in f.mainBodyPosition)
+                    if (f.antenna.hit)
                     {
-                        if (position.Intersects(r))
+                        foreach (Rectangle r in f.mainBodyPosition)
+                        {
+                            if (position.Intersects(r))
+                            {
+                                f.health.curr_health -= f.antenna.hit ? 1 : 0;
+                                remove = true;
+                                break;
+                            }
+                        }
+                        if (position.Intersects(f.antenna.position))
                         {
                             f.health.curr_health -= f.antenna.hit ? 1 : 0;
                             remove = true;
-                            break;
                         }
-                    }
-                    if (position.Intersects(f.antenna.position))
-                    {
-                        f.health.curr_health -= f.antenna.hit ? 1 : 0;
-                        remove = true;
                     }
                     break;
                 case ("torch"):

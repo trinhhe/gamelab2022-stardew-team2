@@ -34,13 +34,13 @@ namespace Curse_of_the_Abyss
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
-            stage = 1;
+            stage = 3;
             health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false);
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 274, scale * 177);
 
-            //create Body parts too build more precise hitbox
+            //create Body parts to build more precise hitbox
             mainBodyPosition = new Rectangle[] {
             new Rectangle(x+23*scale,y+scale*129,16*scale,38*scale),
             new Rectangle(x + 39 * scale, y + scale * 55, 103 * scale, 115 * scale),
@@ -205,7 +205,7 @@ namespace Curse_of_the_Abyss
             {
                 animationManager = new AnimationManager(animations.First().Value);
             }
-            animationManager.Draw(spritebatch, position, 0.1f, 0, SpriteEffects.None);
+            animationManager.Draw(spritebatch, position, 1f, 0, SpriteEffects.None);
             //spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
             //draw health
