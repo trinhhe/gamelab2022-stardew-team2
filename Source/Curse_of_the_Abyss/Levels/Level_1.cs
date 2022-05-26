@@ -17,6 +17,7 @@ namespace Curse_of_the_Abyss
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
+            base.LoadContent(content);
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             RedCircle = content.Load<Texture2D>("redcircle");
@@ -89,7 +90,7 @@ namespace Curse_of_the_Abyss
             base.Update(gameTime);
 
             // need to return here if dialogue still active otherwise NPCs will keep spawning
-            if (dialog.active)
+            if (dialog.active || waterPlayer.isDying)
             {
                 return;
             }

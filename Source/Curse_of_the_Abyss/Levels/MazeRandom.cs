@@ -19,7 +19,7 @@ namespace Curse_of_the_Abyss
         public bool keepMaze;
         public override void LoadContent(ContentManager content)
         {
-
+            base.LoadContent(content);
             wall_horizontal = content.Load<Texture2D>("Mazewall_horizontal");
             wall_vertical = content.Load<Texture2D>("Mazewall_vertical");
             background = content.Load<Texture2D>("bg");
@@ -106,6 +106,11 @@ namespace Curse_of_the_Abyss
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (dialog.active || waterPlayer.isDying)
+            {
+                return;
+            }
 
             if (waterPlayer.position.X > num_parts * 1920)
             {

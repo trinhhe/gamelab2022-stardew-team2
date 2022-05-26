@@ -269,6 +269,7 @@ namespace Curse_of_the_Abyss
                     current_level.InitMapManager(_spriteBatch);
                 else
                     current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
+                if (lifes == 1) current_level.lastLife = true;
                 // reset scrolling backgrounds
                 _scrollingBackgrounds = Backgrounds.init(Content, current_level.waterPlayer, current_level.num_parts, levelcounter, current_level);
                 // reset camera
@@ -332,6 +333,8 @@ namespace Curse_of_the_Abyss
                     current_level.InitMapManager(_spriteBatch);
                 else
                     current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
+                
+                if (lifes == 1) current_level.lastLife = true;
 
                 current_level.eggcounter.set(last_level_eggcount);
 

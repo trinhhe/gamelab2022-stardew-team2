@@ -17,7 +17,7 @@ namespace Curse_of_the_Abyss
 
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content){
-
+            base.LoadContent(content);
             tileset = content.Load<Texture2D>(TileMap.Tilesets[0].Name.ToString());
             background = content.Load<Texture2D>("bg");
             SeaUrchin.LoadContent(content);
@@ -105,7 +105,10 @@ namespace Curse_of_the_Abyss
         {
             base.Update(gameTime);
 
-            if (dialog.active) return;
+            if (dialog.active || waterPlayer.isDying)
+            {
+                return;
+            }
 
             if (waterPlayer.position.X > num_parts *1920)
             {

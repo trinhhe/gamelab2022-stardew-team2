@@ -18,7 +18,7 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State { Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp,hit;//needed for different situations in states
+        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp,hit,died,isDying;//needed for different situations in states
         private bool hitDraw;
         private int lastY,hitDrawTimer;//needed to decide how heigh player can jump
         public int hitTimer;
@@ -56,6 +56,7 @@ namespace Curse_of_the_Abyss
                 {"SwimDown" , new Animation(content.Load<Texture2D>("Swim_down"), 3, 0.15f, true) },
                 {"SwimLeft" , new Animation(content.Load<Texture2D>("Swim_left"), 3, 0.15f, true) },
                 {"SwimRight" , new Animation(content.Load<Texture2D>("Swim_right"), 3, 0.15f, true) },
+                {"Dying", new Animation(content.Load<Texture2D>("wp_die"),9,0.4f,false) }
             };
             jumpSFX = content.Load<SoundEffect>("Soundeffects/jump");
             gruntSFX = content.Load<SoundEffect>("Soundeffects/grunt");
@@ -142,7 +143,11 @@ namespace Curse_of_the_Abyss
             }
             else
                 animationManager.Draw(spritebatch, position, 0.1f, 0f, SpriteEffects.None);
-                
+            if(animationManager.animation == animations["Dying"] && animationManager.animation.CurrentFrame == animationManager.animation.FrameCount - 1)
+            {
+                died = true;
+                isDying = false;
+            }
         }
 
 
@@ -232,6 +237,7 @@ namespace Curse_of_the_Abyss
             movingRight = true;
             dodging = false;
             collidable = true;
+            died = false;
         }
 
         private void Standing(List<Sprite> sprites)
@@ -562,7 +568,12 @@ namespace Curse_of_the_Abyss
 
         public void setAnimation()
         {
-            if (dodging)
+            if (health.curr_health <= 0)
+            {
+                animationManager.Play(animations["Dying"]);
+                isDying = true;
+            }
+            else if (dodging)
             {
                 if (state == State.Standing|| state == State.Falling)
                 {

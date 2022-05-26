@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using TiledSharp;
@@ -36,6 +37,9 @@ namespace Curse_of_the_Abyss
         private bool enter_dialog;
         private int dialog_start;
         public Song song;
+        public bool lastLife;
+        SoundEffect gameOverSFX;
+        SoundEffectInstance gameOverInstance;
 
         public DarknessRender darknessRender;
         Rectangle wp_pos_prev = new Rectangle(0, 0, 0, 0);
@@ -64,7 +68,9 @@ namespace Curse_of_the_Abyss
 
         public virtual void LoadContent(ContentManager content)
         {
-
+            gameOverSFX = content.Load<SoundEffect>("Soundeffects/game_over");
+            gameOverInstance = gameOverSFX.CreateInstance();
+            gameOverInstance.Volume = 0.5f;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -75,6 +81,12 @@ namespace Curse_of_the_Abyss
                 inbounds_counter = 0;
             }
 
+            if(waterPlayer.isDying && lastLife)
+            {
+                waterPlayer.Update(sprites,gameTime);
+                gameOverInstance.Play();
+                return;
+            }
             check_dialog();
 
             if (dialog.active)
@@ -147,7 +159,8 @@ namespace Curse_of_the_Abyss
             // game over if oxygen runs out
             if (healthbar.curr_health <= 0)
             {
-                game_over = true;
+                if (lastLife) game_over = waterPlayer.died;
+                else game_over = true;
             }
 
             // update sprites
@@ -204,6 +217,7 @@ namespace Curse_of_the_Abyss
             wp_pos_prev = new Rectangle(0, 0, 0, 0);
             sb_pos_prev = new Rectangle(0, 0, 0, 0);
             eggs_collected = 0;
+            lastLife = false;
         }
 
         //spawns Targeting NPCs in given time interval (time in milliseconds)
