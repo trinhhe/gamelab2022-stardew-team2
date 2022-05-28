@@ -184,7 +184,6 @@ namespace Curse_of_the_Abyss
 				{
 					Game.stop_menusound = true;
 					FadeMusic.Fade(MediaPlayer.Volume);
-					
 				}
 
 				if (Game.loading)

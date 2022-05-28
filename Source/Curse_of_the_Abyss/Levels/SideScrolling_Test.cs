@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using TiledSharp;
 using System;
@@ -27,6 +28,9 @@ namespace Curse_of_the_Abyss
             Submarine.LoadContent(content);
 
             Egg.LoadContent(content);
+
+            //music
+            song = content.Load<Song>("Soundeffects/bg_music_fast");
         }
         public SideScrollingTest()
         {
@@ -48,7 +52,7 @@ namespace Curse_of_the_Abyss
             // completed = true;
             base.Update(gameTime);
 
-            if (waterPlayer.position.X > 3840)
+            if (waterPlayer.position.X > 200)//3840)
             {
                 completed = true;
             }

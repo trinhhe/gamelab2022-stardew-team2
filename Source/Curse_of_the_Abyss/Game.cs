@@ -141,12 +141,13 @@ namespace Curse_of_the_Abyss
             _mainmenu = new MainMenu(this);
             _desktop.Root = _mainmenu;
 
+            // menu music
+            MainMenu.LoadContent(Content);
+            MainMenu.PlayMusic();
+
             // game contents
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             current_level.LoadContent(Content);
-
-            MainMenu.LoadContent(Content);
-            MainMenu.PlayMusic();
 
             if (!current_level.is_maze_gen)
                 current_level.InitMapManager(_spriteBatch);
@@ -234,7 +235,7 @@ namespace Curse_of_the_Abyss
 
                     // play main menu music again
                     MainMenu.LoadContent(Content);
-                    MainMenu.PlayMusic();
+                    MainMenu.PlayMusicAsSFX();
                     stop_menusound = false;
 
                     player_life = Content.Load<Texture2D>("UI/player_UI");
@@ -314,7 +315,7 @@ namespace Curse_of_the_Abyss
                     current_level.LoadContent(Content);
                     // play main menu music again
                     MainMenu.LoadContent(Content);
-                    MainMenu.PlayMusic();
+                    MainMenu.PlayMusicAsSFX();
                     stop_menusound = false;
                 }
                 else
@@ -324,8 +325,7 @@ namespace Curse_of_the_Abyss
                     current_level = levels[levelcounter];
                     current_level.LoadContent(Content);
                 }
-                
-                stop_menusound = false;
+
                 player_life = Content.Load<Texture2D>("UI/player_UI");
                 life_counter = Content.Load<SpriteFont>("Eggcounter");
                 current_level.Reset();
@@ -333,7 +333,7 @@ namespace Curse_of_the_Abyss
                     current_level.InitMapManager(_spriteBatch);
                 else
                     current_level.InitMazeGenerator(_spriteBatch, current_level.num_parts * RenderWidth, RenderHeight);
-                
+
                 if (lifes == 1) current_level.lastLife = true;
 
                 current_level.eggcounter.set(last_level_eggcount);
@@ -395,6 +395,9 @@ namespace Curse_of_the_Abyss
             {
                 // mute SFX
                 SoundEffect.MasterVolume = 0f;
+
+                if (MainMenu.PlayingSFX)
+                    SoundEffect.MasterVolume = MediaPlayer.Volume;
             }
 
             base.Update(gameTime);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using System;
 
 namespace Curse_of_the_Abyss
@@ -16,7 +17,7 @@ namespace Curse_of_the_Abyss
         public static void Fade(float vol)
         {
             init_vol = vol;
-            curr_vol = init_vol - 0.0025f;
+            curr_vol = init_vol - 0.0025f;                
             increment = false;
             done = false;
         }
@@ -42,15 +43,25 @@ namespace Curse_of_the_Abyss
                 done = true;
                 MediaPlayer.Volume = init_vol;
             }
-            else if (curr_vol < 0)
+            else if (curr_vol <= 0)
             {
-                if(Game.current_level.song is not null)
+                if (Game.current_level.song is not null)
                     Game.current_level.play_music();
+                if (MainMenu.PlayingSFX)
+                {
+                    MainMenu.songSFXInstance.Stop();
+                    MainMenu.PlayingSFX = false;
+                }
+                    
                 increment = true;
             }
-            
-            if(!done)
+
+            if (!done)
+            {
                 MediaPlayer.Volume = curr_vol;
+                if (MainMenu.PlayingSFX)
+                    MainMenu.songSFXInstance.Volume = curr_vol;
+            }
         }
     }
 }

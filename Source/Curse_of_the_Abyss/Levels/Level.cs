@@ -268,8 +268,8 @@ namespace Curse_of_the_Abyss
 
         public void play_music()
         {
-            MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(song);
         }
     }
 

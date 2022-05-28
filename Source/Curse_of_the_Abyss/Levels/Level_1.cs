@@ -37,8 +37,8 @@ namespace Curse_of_the_Abyss
 
             //music
             song = content.Load<Song>("Soundeffects/bg_music_fast");
-            play_music();
         }
+
         public Level1()
         {
             // load tile map 

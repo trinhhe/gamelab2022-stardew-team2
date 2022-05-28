@@ -239,7 +239,7 @@ namespace Curse_of_the_Abyss
 				textBox11.Text = _parsed_time;
 				textBox11.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_108.fnt");
 				textBox11.DisabledTextColor = Color.Black;
-				textBox11.Left = (int)Math.Round(900 * scale);
+				textBox11.Left = (int)Math.Round(910 * scale);
 				textBox11.Top = (int)Math.Round(700 * scale);
 				textBox11.Enabled = false;
 				textBox11.Scale = new Vector2(0.3f * (float)scale, 0.3f * (float)scale);
