@@ -159,8 +159,8 @@ namespace Curse_of_the_Abyss
 				var textBox2 = new TextBox();
 				string name = sorted_entires[i].Name;
 				name = string.Concat(name[0].ToString().ToUpper(), name.AsSpan(1));
-				if (name[0] == 'B')
-					name = " " + name;
+				if (name[0] == 'B' || name[0] == 'D')
+					name = "." + name;
 				textBox2.Text = name;
 				textBox2.Font = MyraEnvironment.DefaultAssetManager.Load<FontStashSharp.SpriteFontBase>("Content/UI/pieces_of_eight_32.fnt");
 				textBox2.DisabledTextColor = Color.Black;
