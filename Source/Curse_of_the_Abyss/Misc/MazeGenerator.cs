@@ -205,6 +205,7 @@ namespace Curse_of_the_Abyss
         /*add walls as obstacles for collision detection*/
         public void AddAsObstacles(List<Sprite> sprites)
         {
+            // return; //CHANGEBACK
             for (int i = 0; i < walls.Count; ++i)
                 walls[i].AddAsObstacle(this, sprites);
         }

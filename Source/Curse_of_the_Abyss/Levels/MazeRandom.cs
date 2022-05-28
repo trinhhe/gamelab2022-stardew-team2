@@ -15,8 +15,8 @@ namespace Curse_of_the_Abyss
         //remember positions to restore eggs when Reset() gets called
         public List<Vector2> remember_eggs;
         public Texture2D wall_horizontal, wall_vertical;
-        Vector2 entry;
-        public bool keepMaze;
+        Vector2 entry, wp_spawn_position;
+        public bool keepMaze, got_reset;
         public override void LoadContent(ContentManager content)
         {
             base.LoadContent(content);
@@ -76,10 +76,10 @@ namespace Curse_of_the_Abyss
                 MazeGenerator.Generate(entry, exit);
                 MazeGenerator.AddAsObstacles(sprites);
                 //Vector2 test = new Vector2(4, 6);
-                Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
-                // Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(MazeGenerator.mazeExit, waterPlayer.position.Width, waterPlayer.position.Height); //CHANGEBACK
-                waterPlayer.position.X = (int)wp_pos.X;
-                waterPlayer.position.Y = (int)wp_pos.Y;
+                wp_spawn_position = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                // wp_spawn_position = MazeGenerator.placeInCenterOfNode(MazeGenerator.mazeExit, waterPlayer.position.Width, waterPlayer.position.Height); //CHANGEBACK
+                waterPlayer.position.X = (int)wp_spawn_position.X;
+                waterPlayer.position.Y = (int)wp_spawn_position.Y;
                 int num_eggs = 4;
                 Vector2 egg_pos;
                 remember_eggs = new List<Vector2>();
@@ -96,9 +96,9 @@ namespace Curse_of_the_Abyss
                     MazeGenerator.AddAsObstacles(sprites);
                     foreach (Vector2 t in remember_eggs)
                         eggs.addEgg((int)t.X, (int)t.Y);
-                    Vector2 tmp = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
-                    waterPlayer.position.X = (int)tmp.X;
-                    waterPlayer.position.Y = (int)tmp.Y;
+                    wp_spawn_position = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                    waterPlayer.position.X = (int)wp_spawn_position.X;
+                    waterPlayer.position.Y = (int)wp_spawn_position.Y;
                 }
             }
         }
@@ -106,7 +106,14 @@ namespace Curse_of_the_Abyss
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            //spawn wp position in conflict with wp_pos_prev when reset
+            if(got_reset) 
+            {
+                wp_spawn_position = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                waterPlayer.position.X = (int)wp_spawn_position.X;
+                waterPlayer.position.Y = (int)wp_spawn_position.Y;
+                got_reset=false;
+            }
             if (dialog.active || waterPlayer.isDying)
             {
                 return;
@@ -122,6 +129,7 @@ namespace Curse_of_the_Abyss
         public override void Reset()
         {
             base.Reset();
+            got_reset = true;
             num_parts = 1;
             game_over = false;
             completed = false;
@@ -147,9 +155,9 @@ namespace Curse_of_the_Abyss
                 MazeGenerator.AddAsObstacles(sprites);
                 foreach (Vector2 t in remember_eggs)
                     eggs.addEgg((int)t.X, (int)t.Y);
-                Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
-                waterPlayer.position.X = (int)wp_pos.X;
-                waterPlayer.position.Y = (int)wp_pos.Y;
+                wp_spawn_position = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                waterPlayer.position.X = (int)wp_spawn_position.X;
+                waterPlayer.position.Y = (int)wp_spawn_position.Y;
             }
 
             lightTargets.Add(waterPlayer);

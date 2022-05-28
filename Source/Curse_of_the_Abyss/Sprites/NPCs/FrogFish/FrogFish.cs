@@ -25,18 +25,17 @@ namespace Curse_of_the_Abyss
         public Rectangle[] mainBodyPosition;
         public static Dictionary<string, Animation> animations;
         AnimationManager animationManager;
-
+        bool played_victory_sound;
         public static Dictionary<int, SoundEffectInstance> songs;
         public static SoundEffect electroAttackSFX, winSFX;
         public static SoundEffectInstance winSFXInstance;
         public bool endAnimationAntenna; //used for not drawing seperate antenna spread during death animation
         public double celebrationTime = 0;
-        public int currentSong = 1;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
             stage = 1;
-            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false); //100
+            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false); //100 //CHANGEBACK
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 274, scale * 177);
@@ -101,12 +100,19 @@ namespace Curse_of_the_Abyss
             if (stage == 4)
             {
                 songs[3].Stop();
-                winSFXInstance.Volume = Constants.win_volume;
-                winSFXInstance.Play();
+                //play only once
+                if(!played_victory_sound) 
+                {
+                    winSFXInstance.Volume = Constants.win_volume;
+                    winSFXInstance.Play();
+                    played_victory_sound = true;
+                }
+                
                 antenna.hit = true;
                 endAnimationAntenna = true;
                 level.darkness = false;
                 position = new Rectangle(position.X, position.Y, scale * 283, scale * 230);
+                level.waterPlayer.health.curr_health = level.waterPlayer.health.maxhealth;
                 if (animationManager.animation.CurrentFrame == 5)
                     animationManager.Stop(5);
                 celebrationTime += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -127,7 +133,7 @@ namespace Curse_of_the_Abyss
             {
                 stage += 1;
                 if (stage < 4)
-                    health.curr_health = 100; //100
+                    health.curr_health = 100; //100 //CHANGEBACK
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
