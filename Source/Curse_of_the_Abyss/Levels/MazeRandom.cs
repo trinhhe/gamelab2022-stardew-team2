@@ -77,6 +77,7 @@ namespace Curse_of_the_Abyss
                 MazeGenerator.AddAsObstacles(sprites);
                 //Vector2 test = new Vector2(4, 6);
                 Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
+                // Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(MazeGenerator.mazeExit, waterPlayer.position.Width, waterPlayer.position.Height); //CHANGEBACK
                 waterPlayer.position.X = (int)wp_pos.X;
                 waterPlayer.position.Y = (int)wp_pos.Y;
                 int num_eggs = 4;
@@ -90,7 +91,6 @@ namespace Curse_of_the_Abyss
                     remember_eggs.Add(egg_pos);
                 }
                 keepMaze = true;
-
                 if(nrGameOver > 0)
                 {
                     MazeGenerator.AddAsObstacles(sprites);
@@ -121,6 +121,7 @@ namespace Curse_of_the_Abyss
         }
         public override void Reset()
         {
+            base.Reset();
             num_parts = 1;
             game_over = false;
             completed = false;
@@ -149,7 +150,6 @@ namespace Curse_of_the_Abyss
                 Vector2 wp_pos = MazeGenerator.placeInCenterOfNode(entry, waterPlayer.position.Width, waterPlayer.position.Height);
                 waterPlayer.position.X = (int)wp_pos.X;
                 waterPlayer.position.Y = (int)wp_pos.Y;
-                
             }
 
             lightTargets.Add(waterPlayer);

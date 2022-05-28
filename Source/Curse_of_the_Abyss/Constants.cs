@@ -90,7 +90,7 @@ namespace Curse_of_the_Abyss
         //boss attacks
         public static float spatial_electricity_volume = 0.20f;
         public static float electro_attack_volume = 0.4f;
-        public static float win_volume= 0.5f;
+        public static float win_volume= 0.4f;
 
         //dialogs
         public static float textspeed = 1;

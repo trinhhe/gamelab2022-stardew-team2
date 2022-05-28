@@ -26,16 +26,17 @@ namespace Curse_of_the_Abyss
         public static Dictionary<string, Animation> animations;
         AnimationManager animationManager;
 
-        public static Dictionary<int, Song> songs;
+        public static Dictionary<int, SoundEffectInstance> songs;
         public static SoundEffect electroAttackSFX, winSFX;
         public static SoundEffectInstance winSFXInstance;
         public bool endAnimationAntenna; //used for not drawing seperate antenna spread during death animation
         public double celebrationTime = 0;
+        public int currentSong = 1;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
             stage = 1;
-            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false);
+            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false); //100
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 274, scale * 177);
@@ -79,15 +80,15 @@ namespace Curse_of_the_Abyss
             healthBar = content.Load<Texture2D>("health");
             font = content.Load<SpriteFont>("O2");
             
-            songs = new Dictionary<int, Song>()
+            songs = new Dictionary<int, SoundEffectInstance>()
             {
-                {1,content.Load<Song>("Soundeffects/frogfish_stage1") },
-                {2,content.Load<Song>("Soundeffects/frogfish_stage2")},
-                {3,content.Load<Song>("Soundeffects/frogfish_stage3") },
+                {1,content.Load<SoundEffect>("Soundeffects/frogfish_stage1").CreateInstance() },
+                {2,content.Load<SoundEffect>("Soundeffects/frogfish_stage2").CreateInstance()},
+                {3,content.Load<SoundEffect>("Soundeffects/frogfish_stage3").CreateInstance() },
             };
-
-            MediaPlayer.Play(songs[1]);
-            MediaPlayer.IsRepeating = true;
+            songs[1].Volume = MediaPlayer.Volume;
+            songs[1].IsLooped = true;
+            songs[1].Play();
             electroAttackSFX = content.Load<SoundEffect>("Soundeffects/electro_attack");
             winSFX = content.Load<SoundEffect>("Soundeffects/win");
             winSFXInstance = winSFX.CreateInstance();
@@ -99,7 +100,7 @@ namespace Curse_of_the_Abyss
             //if (stage == 4) defeated = true;
             if (stage == 4)
             {
-                MediaPlayer.Stop();
+                songs[3].Stop();
                 winSFXInstance.Volume = Constants.win_volume;
                 winSFXInstance.Play();
                 antenna.hit = true;
@@ -111,7 +112,7 @@ namespace Curse_of_the_Abyss
                 celebrationTime += gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (celebrationTime > 10000) //coincides with win sound 10s
                     defeated = true;
-
+                
                 //kill remaining electro attacks and fish and stop player health from falling down
                 foreach(Sprite s in sprites)
                 {
@@ -119,26 +120,27 @@ namespace Curse_of_the_Abyss
                     else if (s.name == "waterplayer") ((WaterPlayer)s).health.curr_health += 1;
                     else if (new string[] { "electroSprite", "electroSpatial" }.Contains(s.name)) s.remove = true;
                 }
-                
+                if (position.Bottom == 1075) yVelocity = 0;
+                else yVelocity = 1;
             }
             else if (health.curr_health <= 0)
             {
                 stage += 1;
                 if (stage < 4)
-                    health.curr_health = 100;
+                    health.curr_health = 100; //100
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
-                hitTimer = 10000;
-                MediaPlayer.Stop();
+                hitTimer = 0;
                 int i = stage;
+                songs[stage-1].Stop();
                 if (stage > 3)
                 {
                     i = 3; //we only have 3 songs for frogfish atm
                 }
-
-                MediaPlayer.Play(songs[i]);
-                MediaPlayer.IsRepeating = true;
+                songs[i].IsLooped = true;
+                songs[i].Volume = MediaPlayer.Volume;
+                songs[i].Play();
             }
             
             //change back to light if needed

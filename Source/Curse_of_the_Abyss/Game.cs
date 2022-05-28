@@ -82,7 +82,7 @@ namespace Curse_of_the_Abyss
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish") };
+            levels = new Level[] { new Level1(), new MazeRandom(), new Level2(), new Bossfight("frogfish")};
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
@@ -93,7 +93,7 @@ namespace Curse_of_the_Abyss
         {
             paused = true;
             init_pause = true;
-            loading = true;
+            // loading = true; //
             stop_menusound = false;
 
             // default resolution
@@ -317,6 +317,15 @@ namespace Curse_of_the_Abyss
                     MainMenu.LoadContent(Content);
                     MainMenu.PlayMusicAsSFX();
                     stop_menusound = false;
+                    for (int i = 0; i < levels.Length; i++)
+                    {
+                        if (levels[i].GetType() == typeof(MazeRandom))
+                        {
+                            ((MazeRandom)levels[i]).keepMaze = false;
+                            ((MazeRandom)levels[i]).nrGameOver=0;
+                        }
+                            
+                    }
                 }
                 else
                 {

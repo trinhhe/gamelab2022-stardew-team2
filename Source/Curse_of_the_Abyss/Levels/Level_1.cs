@@ -134,8 +134,10 @@ namespace Curse_of_the_Abyss
             healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),5000, darkness,true);
             eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 965, healthbar);
+            // waterPlayer = new WaterPlayer(5400, 965, healthbar); //CHANGEBACK
             shooters = new List<StationaryShooterNPC>();
             submarine = new Submarine(10, 10, healthbar,this);
+            // submarine = new Submarine(5400, 10, healthbar,this); //CHANGEBACK
             sprites = new List<Sprite>();
             Initialize();
             sprites.Add(waterPlayer);
