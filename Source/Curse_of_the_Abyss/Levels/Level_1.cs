@@ -157,6 +157,8 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(4750, 1035);
             eggs.addEgg(4220, 650);
             eggs.addEgg(5026, 330);
+
+            // waterPlayer.maze = true; //CHANGEBACK
         }
 
         public override void Draw(SpriteBatch spritebatch)

@@ -9,6 +9,7 @@ namespace Curse_of_the_Abyss
         //screen related
         public static Matrix transform_matrix;
         //waterplayer
+        public static int number_of_lifes = 3;
         public static float max_run_velocity = 5;
         public static float init_max_run_velocity = max_run_velocity;
         public static float jump_velocity = -2;

@@ -86,7 +86,7 @@ namespace Curse_of_the_Abyss
             current_level = levels[0];
             levelcounter = 0;
             last_level_eggcount = 0;
-            lifes = 3;
+            lifes = Constants.number_of_lifes;
         }
 
         protected override void Initialize()
@@ -230,7 +230,7 @@ namespace Curse_of_the_Abyss
                     _desktop.Root = _mainmenu.gameover_screen;
                     paused = true;
                     IsMouseVisible = true;
-                    lifes = 3;
+                    lifes = Constants.number_of_lifes;
                     current_level.LoadContent(Content);
 
                     // play main menu music again
@@ -258,6 +258,9 @@ namespace Curse_of_the_Abyss
                 //player has remaining lives
                 else
                 {
+                    //needed to avoid game_over sfx and grundsfx to not play at the same time
+                    if(lifes == 2)
+                        current_level.waterPlayer.lastLife = true;
                     lifes--;
                     lost_life = true;
                     life_timer = 0;

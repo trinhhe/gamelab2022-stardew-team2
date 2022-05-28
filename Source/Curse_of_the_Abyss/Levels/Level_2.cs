@@ -177,6 +177,7 @@ namespace Curse_of_the_Abyss
             eggs.addEgg(798, 613);
 
             lightTargets.Add(waterPlayer);
+            // waterPlayer.maze = true; //CHANGEBACK
         }
         public override void check_dialog()
         {
