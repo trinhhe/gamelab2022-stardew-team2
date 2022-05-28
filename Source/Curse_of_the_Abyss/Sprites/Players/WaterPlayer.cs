@@ -475,7 +475,8 @@ namespace Curse_of_the_Abyss
                     }
                 }
             }
-            if (KB_curState.IsKeyDown(Keys.W) && !KB_curState.IsKeyDown(Keys.S))
+            if ((KB_curState.IsKeyDown(Keys.W) && !KB_curState.IsKeyDown(Keys.S))
+                || (KB_curState.IsKeyDown(Keys.I) && !KB_curState.IsKeyDown(Keys.K)))
             {//swim up
                 if (!swimmingUp)
                 {
@@ -491,7 +492,8 @@ namespace Curse_of_the_Abyss
                     yVelocity = -Constants.max_run_velocity;
                 }
             }
-            else if (KB_curState.IsKeyDown(Keys.S) && !KB_curState.IsKeyDown(Keys.W))
+            else if (KB_curState.IsKeyDown(Keys.S) && !KB_curState.IsKeyDown(Keys.W)
+                || (KB_curState.IsKeyDown(Keys.K) && !KB_curState.IsKeyDown(Keys.I)))
             { //swim down
                 if (swimmingUp)
                 {
