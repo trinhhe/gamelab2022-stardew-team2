@@ -31,11 +31,15 @@ namespace Curse_of_the_Abyss
         public static SoundEffectInstance winSFXInstance;
         public bool endAnimationAntenna; //used for not drawing seperate antenna spread during death animation
         public double celebrationTime = 0;
+        public double firework_intervall, firework_time_count;
+        string[] firework_types;
+        public List<Firework> fireworks;
+        public int number_of_fireworks_sametime;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
             stage = 1;
-            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false); //100 //CHANGEBACK
+            health = new Healthbar(new Rectangle(1840,110,80,810),100,true,false); //100 
             level.toAdd.Add(health);
             level.lightTargets.Add(health);
             position = new Rectangle(x, y, scale * 274, scale * 177);
@@ -58,6 +62,10 @@ namespace Curse_of_the_Abyss
             this.player = player;
             moveTimer = 5000;
             this.level = level;
+            firework_intervall = 1500;
+            firework_types = new string[] {"long_blue", "long_green", "long_orange", "default_blue", "default_green", "default_orange"};
+            fireworks = new List<Firework>();
+            number_of_fireworks_sametime = 3;
         }
 
         public static void LoadContent(ContentManager content)
@@ -73,7 +81,7 @@ namespace Curse_of_the_Abyss
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
             TargetingNPC.LoadContent(content);
-
+            Firework.LoadContent(content);
             //load healtbar
             bar = content.Load<Texture2D>("bar_dark");
             healthBar = content.Load<Texture2D>("health");
@@ -108,7 +116,7 @@ namespace Curse_of_the_Abyss
                     played_victory_sound = true;
                 }
                 
-                antenna.hit = true;
+                antenna.hit = false;
                 endAnimationAntenna = true;
                 level.darkness = false;
                 position = new Rectangle(position.X, position.Y, scale * 283, scale * 230);
@@ -126,14 +134,31 @@ namespace Curse_of_the_Abyss
                     else if (s.name == "waterplayer") ((WaterPlayer)s).health.curr_health += 1;
                     else if (new string[] { "electroSprite", "electroSpatial" }.Contains(s.name)) s.remove = true;
                 }
-                if (position.Bottom == 1075) yVelocity = 0;
+                //spawn fireworks in x ms interval
+                firework_time_count += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (firework_intervall < firework_time_count)
+                {
+                    firework_time_count = 0;
+                    for (int i = 0; i < number_of_fireworks_sametime; i++) 
+                    {
+                        fireworks.Add(new Firework(
+                                rand.Next(100,1800), 
+                                1022, 
+                                firework_types[rand.Next(firework_types.Length)],
+                                rand.Next(10,900), 
+                                rand.Next(2,5)
+                            )
+                        );
+                    }
+                }
+                if (position.Bottom - 55*scale> 1022) yVelocity = 0;
                 else yVelocity = 1;
             }
             else if (health.curr_health <= 0)
             {
                 stage += 1;
                 if (stage < 4)
-                    health.curr_health = 100; //100 //CHANGEBACK
+                    health.curr_health = 100; //100 
                 else
                     health.curr_health = 0;
                 antenna.hit = false;
@@ -171,7 +196,7 @@ namespace Curse_of_the_Abyss
                     moveTimer += 8000;
                 }
             }
-            else
+            else if(stage != 4)
             {
                 chooseAttack(gameTime);
                 //moves boss from time to time in random direction
@@ -204,6 +229,19 @@ namespace Curse_of_the_Abyss
             //update animation
             setAnimation();
             animationManager.Update(gameTime);
+
+            //update fireworks
+            foreach(Sprite f in fireworks)
+                f.Update(sprites,gameTime);
+            List<Firework> fireworksToRemove = new List<Firework>();
+            foreach (Firework f in fireworks)
+            {
+                if (f.remove) fireworksToRemove.Add(f);
+            }
+            foreach (Firework f in fireworksToRemove)
+            {
+                fireworks.Remove(f);
+            }
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -219,6 +257,10 @@ namespace Curse_of_the_Abyss
             //draw health
             health.Draw(spritebatch);
             spritebatch.DrawString(font,health.curr_health.ToString()+"/100",new Vector2(1840,920),Color.Black);
+            
+            //draw fireworks
+            foreach (Sprite f in fireworks)
+                f.Draw(spritebatch);
         }
 
         

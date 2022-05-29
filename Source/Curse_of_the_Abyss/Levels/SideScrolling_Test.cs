@@ -13,7 +13,6 @@ namespace Curse_of_the_Abyss
     {
         protected List<StationaryShooterNPC> shooters;
 
-
         //load the content of every item, object or character in this level
         public override void LoadContent(ContentManager content)
         {
@@ -31,6 +30,7 @@ namespace Curse_of_the_Abyss
 
             //music
             song = content.Load<Song>("Soundeffects/bg_music_fast");
+            Firework.LoadContent(content);
         }
         public SideScrollingTest()
         {
@@ -45,6 +45,8 @@ namespace Curse_of_the_Abyss
             Sprite leftborder = new Obstacle(new Rectangle(-50, 0, 51, 1080));
 
             sprites.Add(leftborder);
+            Firework firework = new Firework(500, 1022, "default_orange");
+            sprites.Add(firework);
         }
 
         public override void Update(GameTime gameTime)
@@ -65,6 +67,7 @@ namespace Curse_of_the_Abyss
             game_over = false;
             completed = false;
             darkness = false;
+            lightTargets = new List<Sprite>();
             healthbar = new Healthbar(new Rectangle(1, 1, 40, 310),5000, darkness,true);
             eggcounter = new Eggcounter(1875, 10);
             waterPlayer = new WaterPlayer(20, 962, healthbar);
