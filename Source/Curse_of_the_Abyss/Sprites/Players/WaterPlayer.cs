@@ -18,14 +18,14 @@ namespace Curse_of_the_Abyss
         //states are needed to decide in which phase the player is actually
         public enum State { Standing, Running, Jumping, Falling};
         public State state;
-        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp,hit,died,isDying;//needed for different situations in states
+        public bool movingRight, dodging, wasdodging, maze, swimmingRight,swimmingUp,hit,died,isDying, lastLife;//needed for different situations in states
         private bool hitDraw;
         private int lastY,hitDrawTimer;//needed to decide how heigh player can jump
         public int hitTimer;
         public Healthbar health;
         //list of objects the player can collide with
         private string[] collidables = {"obstacle", "targetingNPC", "pathNPC","stationaryNPC","rock","SeaUrchin"};
-        private string[] hitcollidables = { "obstacle", "stationaryNPC", "rock", "SeaUrchin" };
+        private string[] hitcollidables = { "obstacle", "stationaryNPC", "rock" };
         static SoundEffect jumpSFX, gruntSFX, swimSFX, breathingSFX;
         static SoundEffectInstance swimSFXInstance;
         static SoundEffectInstance breathingSFXInstance;
@@ -187,7 +187,10 @@ namespace Curse_of_the_Abyss
                     }
                 case ("SeaUrchin"):
                     health.curr_health = 0;
-                    gruntSFX.Play(0.5f, 0, 0);
+                    hit = true;
+                    hitTimer = 0;
+                    if (!lastLife)
+                        gruntSFX.Play(0.5f, 0, 0);
                     break;
             }
         }
@@ -228,7 +231,10 @@ namespace Curse_of_the_Abyss
                     }
                 case ("SeaUrchin"):
                     health.curr_health = 0;
-                    gruntSFX.Play(0.5f, 0, 0);
+                    hit = true;
+                    hitTimer = 0;
+                    if (!lastLife)
+                        gruntSFX.Play(0.5f, 0, 0);
                     break;
             }
         }
@@ -574,6 +580,8 @@ namespace Curse_of_the_Abyss
             {
                 animationManager.Play(animations["Dying"]);
                 isDying = true;
+                hit = true;
+                hitTimer = 0;
             }
             else if (dodging)
             {
