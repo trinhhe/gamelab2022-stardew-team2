@@ -93,7 +93,7 @@ namespace Curse_of_the_Abyss
         {
             paused = true;
             init_pause = true;
-            // loading = true; //
+            loading = true;
             stop_menusound = false;
 
             // default resolution
