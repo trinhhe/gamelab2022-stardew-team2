@@ -85,7 +85,7 @@ namespace Curse_of_the_Abyss
                 {2,content.Load<SoundEffect>("Soundeffects/frogfish_stage2").CreateInstance()},
                 {3,content.Load<SoundEffect>("Soundeffects/frogfish_stage3").CreateInstance() },
             };
-            songs[1].Volume = MediaPlayer.Volume;
+            songs[1].Volume = MediaPlayer.Volume / (SoundEffect.MasterVolume + 0.001f);
             songs[1].IsLooped = true;
             songs[1].Play();
             electroAttackSFX = content.Load<SoundEffect>("Soundeffects/electro_attack");
@@ -145,7 +145,7 @@ namespace Curse_of_the_Abyss
                     i = 3; //we only have 3 songs for frogfish atm
                 }
                 songs[i].IsLooped = true;
-                songs[i].Volume = MediaPlayer.Volume;
+                songs[i].Volume = MediaPlayer.Volume / (SoundEffect.MasterVolume + 0.001f);
                 songs[i].Play();
             }
             
