@@ -61,18 +61,6 @@
 /processorParam:TextureFormat=Color
 /build:backgrounds/bg_4.png
 
-#begin bar_dark.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:bar_dark.png
-
 #begin bar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -85,7 +73,7 @@
 /processorParam:TextureFormat=Color
 /build:bar.png
 
-#begin bfish_dead.png
+#begin bar_dark.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -95,7 +83,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:bfish_dead.png
+/build:bar_dark.png
+
+#begin beluga.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:beluga.png
 
 #begin bfish.png
 /importer:TextureImporter
@@ -109,7 +109,7 @@
 /processorParam:TextureFormat=Color
 /build:bfish.png
 
-#begin bg_wide.png
+#begin bfish_dead.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -119,7 +119,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:bg_wide.png
+/build:bfish_dead.png
 
 #begin bg.png
 /importer:TextureImporter
@@ -132,6 +132,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:bg.png
+
+#begin bg_wide.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:bg_wide.png
 
 #begin blowfish_die.png
 /importer:TextureImporter
@@ -181,6 +193,18 @@
 /processorParam:TextureFormat=Color
 /build:blowfish_move_h3.png
 
+#begin bomb.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:bomb.png
+
 #begin Bomb_Gauge.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -193,7 +217,7 @@
 /processorParam:TextureFormat=Color
 /build:Bomb_Gauge.png
 
-#begin bomb.png
+#begin Boss/Antenna.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -203,7 +227,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:bomb.png
+/build:Boss/Antenna.png
 
 #begin Boss/Antenna_Attack.png
 /importer:TextureImporter
@@ -228,18 +252,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Boss/Antenna_Hit.png
-
-#begin Boss/Antenna.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Boss/Antenna.png
 
 #begin Boss/Dynamite.png
 /importer:TextureImporter
@@ -760,29 +772,17 @@
 #begin maps/large_testmap.tmx
 /copy:maps/large_testmap.tmx
 
-#begin maps/map_lvl1_extension.tmx
-/copy:maps/map_lvl1_extension.tmx
-
 #begin maps/map_lvl1.tmx
 /copy:maps/map_lvl1.tmx
+
+#begin maps/map_lvl1_extension.tmx
+/copy:maps/map_lvl1_extension.tmx
 
 #begin maps/map_lvl2.tmx
 /copy:maps/map_lvl2.tmx
 
 #begin maps/maze.tmx
 /copy:maps/maze.tmx
-
-#begin Maze_onetile.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Maze_onetile.png
 
 #begin Maze.png
 /importer:TextureImporter
@@ -798,6 +798,18 @@
 
 #begin Maze.tsx
 /copy:Maze.tsx
+
+#begin Maze_onetile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maze_onetile.png
 
 #begin Mazewall_horizontal.png
 /importer:TextureImporter
@@ -1154,17 +1166,17 @@
 /processorParam:Quality=Best
 /build:Soundeffects/maze1.mp3
 
-#begin Soundeffects/nautilus_sfx.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Soundeffects/nautilus_sfx.wav
-
 #begin Soundeffects/nautilus.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Soundeffects/nautilus.mp3
+
+#begin Soundeffects/nautilus_sfx.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundeffects/nautilus_sfx.wav
 
 #begin Soundeffects/oxygen_refill.wav
 /importer:WavImporter
@@ -1262,6 +1274,18 @@
 /processorParam:TextureFormat=Color
 /build:SPWalk_right.png
 
+#begin submarine.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:submarine.png
+
 #begin submarine_animation.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1273,18 +1297,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:submarine_animation.png
-
-#begin Submarine_Player_idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Submarine_Player_idle.png
 
 #begin Submarine_Player.png
 /importer:TextureImporter
@@ -1298,7 +1310,7 @@
 /processorParam:TextureFormat=Color
 /build:Submarine_Player.png
 
-#begin submarine.png
+#begin Submarine_Player_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1308,7 +1320,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:submarine.png
+/build:Submarine_Player_idle.png
 
 #begin Swim_base.png
 /importer:TextureImporter
@@ -1370,9 +1382,6 @@
 /processorParam:TextureFormat=Color
 /build:Swim_up.png
 
-#begin tiles_new_.tsx
-/copy:tiles_new_.tsx
-
 #begin tiles_new.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1387,6 +1396,9 @@
 
 #begin tiles_new.tsx
 /copy:tiles_new.tsx
+
+#begin tiles_new_.tsx
+/copy:tiles_new_.tsx
 
 #begin TilesV1.png
 /importer:TextureImporter
@@ -1427,11 +1439,11 @@
 #begin UI/Button.png
 /copy:UI/Button.png
 
-#begin UI/credits_icon_highlight.png
-/copy:UI/credits_icon_highlight.png
-
 #begin UI/credits_icon.png
 /copy:UI/credits_icon.png
+
+#begin UI/credits_icon_highlight.png
+/copy:UI/credits_icon_highlight.png
 
 #begin UI/credits_logo.png
 /copy:UI/credits_logo.png
@@ -1448,11 +1460,11 @@
 #begin UI/leaderboard_bg.png
 /copy:UI/leaderboard_bg.png
 
-#begin UI/left_arrow_highlight.png
-/copy:UI/left_arrow_highlight.png
-
 #begin UI/left_arrow.png
 /copy:UI/left_arrow.png
+
+#begin UI/left_arrow_highlight.png
+/copy:UI/left_arrow_highlight.png
 
 #begin UI/Lifefont.spritefont
 /importer:FontDescriptionImporter
@@ -1464,6 +1476,9 @@
 #begin UI/Logo.png
 /copy:UI/Logo.png
 
+#begin UI/MenuBackground.png
+/copy:UI/MenuBackground.png
+
 #begin UI/MenuBackground_1080p.png
 /copy:UI/MenuBackground_1080p.png
 
@@ -1472,9 +1487,6 @@
 
 #begin UI/MenuBackground_2k.png
 /copy:UI/MenuBackground_2k.png
-
-#begin UI/MenuBackground.png
-/copy:UI/MenuBackground.png
 
 #begin UI/pieces_of_eight_108.fnt
 /copy:UI/pieces_of_eight_108.fnt
@@ -1512,11 +1524,11 @@
 /processorParam:TextureFormat=Color
 /build:UI/player_UI.png
 
-#begin UI/right_arrow_highlight.png
-/copy:UI/right_arrow_highlight.png
-
 #begin UI/right_arrow.png
 /copy:UI/right_arrow.png
+
+#begin UI/right_arrow_highlight.png
+/copy:UI/right_arrow_highlight.png
 
 #begin UI/score_logo.png
 /copy:UI/score_logo.png

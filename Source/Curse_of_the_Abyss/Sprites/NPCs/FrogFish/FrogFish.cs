@@ -29,12 +29,13 @@ namespace Curse_of_the_Abyss
         public static Dictionary<int, SoundEffectInstance> songs;
         public static SoundEffect electroAttackSFX, winSFX;
         public static SoundEffectInstance winSFXInstance;
-        public bool endAnimationAntenna; //used for not drawing seperate antenna spread during death animation
+        public bool endAnimationAntenna, beluga_spawned; //used for not drawing seperate antenna spread during death animation
         public double celebrationTime = 0;
         public double firework_intervall, firework_time_count;
         string[] firework_types;
         public List<Firework> fireworks;
         public int number_of_fireworks_sametime;
+        public Beluga beluga;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
@@ -82,6 +83,7 @@ namespace Curse_of_the_Abyss
             ShootingSprite.LoadContent(content);
             TargetingNPC.LoadContent(content);
             Firework.LoadContent(content);
+            Beluga.LoadContent(content);
             //load healtbar
             bar = content.Load<Texture2D>("bar_dark");
             healthBar = content.Load<Texture2D>("health");
@@ -151,6 +153,13 @@ namespace Curse_of_the_Abyss
                         );
                     }
                 }
+                //beluga victory
+                if (!beluga_spawned)
+                {
+                    beluga = new Beluga(1920, 200);
+                    beluga_spawned = true;
+                }
+                    
                 if (position.Bottom - 55*scale> 1022) yVelocity = 0;
                 else yVelocity = 1;
             }
@@ -242,6 +251,10 @@ namespace Curse_of_the_Abyss
             {
                 fireworks.Remove(f);
             }
+
+            //update beluga
+            if (beluga_spawned)
+                beluga.Update(sprites, gameTime);
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -261,6 +274,10 @@ namespace Curse_of_the_Abyss
             //draw fireworks
             foreach (Sprite f in fireworks)
                 f.Draw(spritebatch);
+
+            //draw beluga
+            if (beluga_spawned)
+                beluga.Draw(spritebatch);
         }
 
         
