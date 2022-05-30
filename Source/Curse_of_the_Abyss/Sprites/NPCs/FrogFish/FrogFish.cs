@@ -76,7 +76,7 @@ namespace Curse_of_the_Abyss
                 {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.6f,false) },
                 {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.6f, false) },
                 {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.6f,false) },
-                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.4f, false) },
+                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 11, 0.4f, false) },
             };
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
@@ -121,8 +121,8 @@ namespace Curse_of_the_Abyss
                 level.darkness = false;
                 position = new Rectangle(position.X, position.Y, scale * 283, scale * 230);
                 level.waterPlayer.health.curr_health = level.waterPlayer.health.maxhealth;
-                if (animationManager.animation.CurrentFrame == 5)
-                    animationManager.Stop(5);
+                if (animationManager.animation.CurrentFrame == 10)
+                    animationManager.Stop(10);
                 celebrationTime += gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (celebrationTime > 10000) //coincides with win sound 10s
                     defeated = true;
