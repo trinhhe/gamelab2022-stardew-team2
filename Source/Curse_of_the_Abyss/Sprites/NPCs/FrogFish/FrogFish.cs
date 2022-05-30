@@ -31,11 +31,12 @@ namespace Curse_of_the_Abyss
         public static SoundEffectInstance winSFXInstance;
         public bool endAnimationAntenna, beluga_spawned; //used for not drawing seperate antenna spread during death animation
         public double celebrationTime = 0;
-        public double firework_intervall, firework_time_count;
+        public double firework_intervall, firework_time_count, fade_interval, fade_time_count;
         string[] firework_types;
         public List<Firework> fireworks;
         public int number_of_fireworks_sametime;
         public Beluga beluga;
+        public float alpha_fade;
         public FrogFish(int x, int y, WaterPlayer player, Bossfight level)
         {
             name = "frogfish";
@@ -67,6 +68,8 @@ namespace Curse_of_the_Abyss
             firework_types = new string[] {"long_blue", "long_green", "long_orange", "default_blue", "default_green", "default_orange"};
             fireworks = new List<Firework>();
             number_of_fireworks_sametime = 3;
+            alpha_fade = 1f;
+            fade_interval = 150; // (10000ms celebration time - 6*0.4 ms until last "die frame") / 100%
         }
 
         public static void LoadContent(ContentManager content)
@@ -77,7 +80,7 @@ namespace Curse_of_the_Abyss
                 {"Stage1",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage1"),8,0.6f,false) },
                 {"Stage2", new Animation(content.Load<Texture2D>("Boss/FrogFish_stage2"), 8, 0.6f, false) },
                 {"Stage3",new Animation(content.Load<Texture2D>("Boss/FrogFish_stage3"),8,0.6f,false) },
-                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 11, 0.4f, false) },
+                {"Die", new Animation(content.Load<Texture2D>("Boss/FrogFish_die"), 7, 0.4f, false) },
             };
             Antenna.LoadContent(content);
             ShootingSprite.LoadContent(content);
@@ -123,8 +126,8 @@ namespace Curse_of_the_Abyss
                 level.darkness = false;
                 position = new Rectangle(position.X, position.Y, scale * 283, scale * 230);
                 level.waterPlayer.health.curr_health = level.waterPlayer.health.maxhealth;
-                if (animationManager.animation.CurrentFrame == 10)
-                    animationManager.Stop(10);
+                if (animationManager.animation.CurrentFrame == 5)
+                    animationManager.Stop(5);
                 celebrationTime += gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (celebrationTime > 10000) //coincides with win sound 10s
                     defeated = true;
@@ -159,7 +162,17 @@ namespace Curse_of_the_Abyss
                     beluga = new Beluga(1920, 200);
                     beluga_spawned = true;
                 }
-                    
+                //smooth fade transition alpha calculation
+                if (animationManager.animation.CurrentFrame == 5)
+                {
+                    fade_time_count += gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (fade_interval < fade_time_count)
+                    {
+                        fade_time_count = 0;
+                        alpha_fade -= 0.05f;
+                    }
+                }
+                
                 if (position.Bottom - 55*scale> 1022) yVelocity = 0;
                 else yVelocity = 1;
             }
@@ -264,7 +277,10 @@ namespace Curse_of_the_Abyss
             {
                 animationManager = new AnimationManager(animations.First().Value);
             }
-            animationManager.Draw(spritebatch, position, 1f, 0, SpriteEffects.None);
+            if (stage == 4 && animationManager.animation.CurrentFrame == 5)
+                animationManager.Draw(spritebatch, position, 1f, 0, SpriteEffects.None, Vector2.Zero, Color.White * alpha_fade);
+            else
+                animationManager.Draw(spritebatch, position, 1f, 0, SpriteEffects.None);
             //spritebatch.Draw(texture,position,null,Color.White,0,Vector2.Zero,SpriteEffects.None,0.1f);
 
             //draw health
