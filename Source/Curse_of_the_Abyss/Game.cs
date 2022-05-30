@@ -215,7 +215,7 @@ namespace Curse_of_the_Abyss
                 if(current_level.submarine.movementSoundInstance is not null)
                     current_level.submarine.movementSoundInstance.Stop();
                 int stage = 1;
-                //player has no lifes left
+                // player has no lifes left
                 if (lifes <= 1)
                 {
                     current_level = levels[0];
@@ -223,10 +223,13 @@ namespace Curse_of_the_Abyss
                     last_level_eggcount = 0;
                     Content.Unload();
                     LowHPScreen.LoadContent(Content);
+
+                    // reset dialogues after game over
                     for (int i = 0; i < levels.Length; i++)
                     {
-                        levels[i].dialogID = 0;     //reset dialogs after game over
+                        levels[i].dialogID = 0;     
                     }
+
                     _desktop.Root = _mainmenu.gameover_screen;
                     paused = true;
                     IsMouseVisible = true;
@@ -314,6 +317,12 @@ namespace Curse_of_the_Abyss
                     _timePaused = 0;
                     _pauseStart = 0;
                     total_eggs = 0;
+
+                    // reset dialogues after game completed
+                    for (int i = 0; i < levels.Length; i++)
+                    {
+                        levels[i].dialogID = 0;     
+                    }
 
                     current_level.LoadContent(Content);
                     // play main menu music again
