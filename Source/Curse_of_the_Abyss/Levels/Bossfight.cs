@@ -37,7 +37,7 @@ namespace Curse_of_the_Abyss
         public Bossfight(string bosstype)
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/bossfight.tmx");
+            TileMap = new TmxMap(System.AppContext.BaseDirectory + "Content/maps/bossfight.tmx");
             this.bosstype = bosstype;
             Reset();
         }

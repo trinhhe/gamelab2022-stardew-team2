@@ -26,7 +26,7 @@ namespace Curse_of_the_Abyss
 
         public Maze()
         {
-            TileMap = new TmxMap("./Content/maps/maze.tmx");
+            TileMap = new TmxMap(System.AppContext.BaseDirectory + "./Content/maps/maze.tmx");
             Reset();
         }
 

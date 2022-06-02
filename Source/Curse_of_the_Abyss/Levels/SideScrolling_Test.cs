@@ -35,7 +35,7 @@ namespace Curse_of_the_Abyss
         public SideScrollingTest()
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/large_testmap.tmx");
+            TileMap = new TmxMap(System.AppContext.BaseDirectory + "Content/maps/large_testmap.tmx");
             Reset();
         }
 

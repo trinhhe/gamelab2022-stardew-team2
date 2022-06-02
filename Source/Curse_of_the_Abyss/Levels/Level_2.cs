@@ -42,7 +42,7 @@ namespace Curse_of_the_Abyss
         public Level2()
         {
             // load tile map 
-            TileMap = new TmxMap("./Content/maps/map_lvl2.tmx");
+            TileMap = new TmxMap(System.AppContext.BaseDirectory + "Content/maps/map_lvl2.tmx");
             Reset();
         }
 

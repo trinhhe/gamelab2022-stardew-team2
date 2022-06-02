@@ -30,7 +30,6 @@ namespace Curse_of_the_Abyss
 		private void BuildUI(bool show_score)
 		{
 			// read entries from JSON
-			using (StreamWriter w = File.AppendText("leaderboard.json"));
 			string[] allLines = File.ReadAllLines("leaderboard.json");
 			int num_lines = allLines.Length;
 			List<data> entries = new();

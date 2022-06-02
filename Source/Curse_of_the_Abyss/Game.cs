@@ -1,6 +1,7 @@
 ﻿using Apos.Gui;
 using FontStashSharp;
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 using Myra.Assets;
@@ -123,6 +124,10 @@ namespace Curse_of_the_Abyss
             // default difficulty
             CurrDifficulty = Diffculty.Medium;
             Constants.init_constants();
+
+            // create leaderboard JSON file if it doesn't exist
+            if (!File.Exists("leaderboard.json"))
+                File.CreateText("leaderboard.json");
 
             base.Initialize();
         }
